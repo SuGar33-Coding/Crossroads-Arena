@@ -1,0 +1,25 @@
+[gd_scene load_steps=4 format=2]
+
+[ext_resource path="res://Player/Player.tscn" type="PackedScene" id=1]
+[ext_resource path="res://World/RandomGen.gd" type="Script" id=3]
+[ext_resource path="res://World/Camera2D.tscn" type="PackedScene" id=4]
+
+[node name="RandomGen" type="Node2D"]
+script = ExtResource( 3 )
+
+[node name="Player" parent="." instance=ExtResource( 1 )]
+collision_mask = 5
+
+[node name="RemoteTransform2D" type="RemoteTransform2D" parent="Player"]
+remote_path = NodePath("../../Camera2D")
+
+[node name="Camera2D" parent="." instance=ExtResource( 4 )]
+position = Vector2( 0, 0 )
+
+[node name="TopLeft" parent="Camera2D/Limits" index="0"]
+position = Vector2( -5349.81, -4552.48 )
+
+[node name="BottomRight" parent="Camera2D/Limits" index="1"]
+position = Vector2( 4416.83, 2890.69 )
+
+[editable path="Camera2D"]
