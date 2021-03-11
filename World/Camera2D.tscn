@@ -14,3 +14,6 @@ position = Vector2( -206.627, -183.948 )
 
 [node name="BottomRight" type="Position2D" parent="Limits"]
 position = Vector2( 771.072, 466.171 )
+
+[node name="Tween" type="Tween" parent="."]
+[connection signal="tween_all_completed" from="Tween" to="." method="_on_Tween_tween_all_completed"]

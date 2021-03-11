@@ -1,14 +1,10 @@
 extends Area2D
 
 
-# Declare member variables here. Examples:
-# var a = 2
-# var b = "text"
-
-
-# Called when the node enters the scene tree for the first time.
 func _ready():
+	# Direct parent should always be the room it's setting the boundary for
 	var parent : Room = self.get_parent()
 	self.connect("body_entered", parent, "_player_entered")
 	self.connect("body_exited", parent, "_player_exited")
+	# Room's parent should always be the overarching world/scene
 	self.connect("body_entered", parent.get_parent(), "_player_entered_room", [parent])

@@ -8,6 +8,10 @@ const Ranger = preload("res://Actors/Ranger/Ranger.tscn")
 
 onready var spawnPoints = $SpawnPoints
 
+# Coordinates of the room in the world
+var row : int
+var col : int
+
 func _ready():
 	randomize()
 	for spawnPoint in spawnPoints.get_children():
