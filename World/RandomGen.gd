@@ -4,9 +4,11 @@ extends Node2D
 const BaseRoom = preload("res://World/BaseRoom.tscn")
 const PlusRoom = preload("res://World/PlusRoom.tscn")
 
+export(bool) var scrollCamera = true
+
 # Create room arrays
 # roomTypes stores enums/ints of the type of each room
-var roomTypes = [[0,0,0,0],[0,0,0,0],[0,0,0,0],[0,0,0,0]]
+var roomTypes = []
 # rooms will store the actual room objects
 var rooms = []
 onready var camera = $Camera2D
@@ -15,24 +17,41 @@ onready var player = $Player
 # Change to having the matrix store a variety of integers / enums
 # This will store the type of every room that will give information about that location
 # Then we can lazily generate nearby rooms
-var startingRow = len(roomTypes)/2
-var startingCol = len(roomTypes[startingRow])/2
+
+var worldWidth = 17
+var worldHeight = 17
+var halfColumnWidth = 2
 var roomWidtth = 1088
 var roomHeight = 704
 var currentRoom : Room
+var startingRow : int = worldHeight/2
+var startingCol : int = worldWidth/2
 
 func _init():
 	randomize()
 	var x = startingRow
 	var y = startingCol
 	
-	for i in range(len(roomTypes)*len(roomTypes[0])):
+	for row in range(worldHeight):
+		roomTypes.append([])
+		for col in range(worldWidth):
+			roomTypes[row].append(0)
+			
+	for row in range(startingRow-halfColumnWidth, startingRow+halfColumnWidth+1):
+		for col in range(len(roomTypes[row])):
+			roomTypes[row][col] = randi() % 2 + 1
+			
+	for col in range(startingCol-halfColumnWidth, startingCol+halfColumnWidth+1):
+		for row in range(len(roomTypes)):
+			roomTypes[row][col] = randi() % 2 + 1
+	
+	"""for i in range(len(roomTypes)*len(roomTypes[0])):
 		roomTypes[x][y] = randi() % 2 + 1
 		var dir = (randi() % 4)*90
 		x += self.lengthdir_x(1, dir)
 		y += self.lengthdir_y(1, dir)
 		x = clamp(x, 0, len(roomTypes)-1)
-		y = clamp(y, 0, len(roomTypes[x])-1)
+		y = clamp(y, 0, len(roomTypes[x])-1)"""
 		
 func _ready():
 	print(roomTypes)
@@ -40,6 +59,8 @@ func _ready():
 		rooms.append([])
 		for col in range(len(roomTypes[row])):
 			rooms[row].append(null)
+			#uncomment this for instancing all rooms at once
+			#instanceRoom(row, col)
 			
 	instanceRoom(startingRow, startingCol)
 	currentRoom = rooms[startingRow][startingCol]
@@ -64,7 +85,7 @@ func _physics_process(delta):
 
 # Handles the boundaries of the room in position row, col
 func handleBoundaries(row : int, col : int):
-	if row < 0 or row > len(roomTypes) or col < 0 or col > len(roomTypes[row]):
+	if row < 0 or row >= len(roomTypes) or col < 0 or col >= len(roomTypes[row]):
 		return
 		
 	var roomType = roomTypes[row][col]
@@ -79,7 +100,7 @@ func handleBoundaries(row : int, col : int):
 		else:
 			boundaryTop.isOpen()
 			
-		if row == 3 or roomTypes[row+1][col] == 0:
+		if row == worldHeight-1 or roomTypes[row+1][col] == 0:
 			boundaryBottom.isClosed()
 		else:
 			boundaryBottom.isOpen()
@@ -89,7 +110,7 @@ func handleBoundaries(row : int, col : int):
 		else:
 			boundaryLeft.isOpen()
 			
-		if col == 3 or roomTypes[row][col+1] == 0:
+		if col == worldWidth-1 or roomTypes[row][col+1] == 0:
 			boundaryRight.isClosed()
 		else:
 			boundaryRight.isOpen()
@@ -144,7 +165,8 @@ func _player_entered_room(body, room : Room):
 	var row = room.row
 	var col = room.col
 	
-	self.setCameraLimitsForRoom(room)
+	if scrollCamera:
+		self.setCameraLimitsForRoom(room)
 	
 	# Now that we've found the room, make sure all adjacent rooms are instantiated
 	if row != 0:
