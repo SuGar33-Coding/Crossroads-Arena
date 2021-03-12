@@ -79,8 +79,11 @@ anims/MeleeAttack = SubResource( 3 )
 
 [node name="Stats" parent="." instance=ExtResource( 6 )]
 maxHealth = 5
+
+[node name="FireTimer" type="Timer" parent="."]
 [connection signal="area_entered" from="Hurtbox" to="." method="_on_hurtbox_area_entered"]
 [connection signal="noHealth" from="Stats" to="." method="_on_Stats_noHealth"]
+[connection signal="timeout" from="FireTimer" to="." method="_on_FireTimer_timeout"]
 
 [editable path="Hitbox"]
 
