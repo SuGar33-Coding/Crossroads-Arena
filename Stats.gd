@@ -19,7 +19,6 @@ func setMaxHealth(value):
 func getMaxHealth():
 	return maxHealth
 	
-	
 func setHealth(value):
 	health = clamp(value, 0, maxHealth)
 	emit_signal("healthChanged", health)

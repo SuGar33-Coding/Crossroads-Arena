@@ -2,13 +2,14 @@ extends KinematicBody2D
 
 export var ACCELERATION = 600
 export var MAX_SPEED = 75
-export var FRICTION = 850
+export var FRICTION = 750
 
 enum {
 	IDLE,
 	WANDER,
 	CHASE,
-	DYING
+	DYING,
+	STUNNED
 }
 
 var state = IDLE
@@ -28,7 +29,8 @@ func _physics_process(delta):
 		IDLE:
 			velocity = velocity.move_toward(Vector2.ZERO, FRICTION * delta)
 			seek_target()
-			
+		STUNNED:
+			velocity = velocity.move_toward(Vector2.ZERO, FRICTION * delta)
 		CHASE:
 			var target = detectionZone.target
 			if(target != null):
@@ -44,12 +46,18 @@ func _physics_process(delta):
 func _on_Stats_noHealth():
 	state = DYING
 	animationPlayer.play("Death")
-	
 
 func _on_hurtbox_area_entered(area):
+	state = STUNNED
 	stats.health -= area.damage
 	knockback = area.getKnockbackVector(self.global_position)
+	if(stats.health >= 1):
+		animationPlayer.play("Damaged")
+		#Only play damaged if we're not dead
 
 func seek_target():
 	if detectionZone.can_see_target():
 		state = CHASE
+
+func _on_AnimationPlayer_animation_finished(anim_name):
+	state = CHASE
