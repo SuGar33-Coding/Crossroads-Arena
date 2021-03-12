@@ -56,4 +56,6 @@ func fireArrow() -> void:
 	arrow.fire(hitboxCollision.global_position, self.global_rotation + deg2rad(-90))
 
 func _on_Stats_noHealth():
+	# When Player dies, return to main menu TODO: Change this
+	get_tree().change_scene("res://UI/StartMenu/StartMenu.tscn")
 	self.queue_free()

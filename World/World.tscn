@@ -4,7 +4,7 @@
 [ext_resource path="res://World/RandomGen.gd" type="Script" id=3]
 [ext_resource path="res://World/Camera2D.tscn" type="PackedScene" id=4]
 
-[node name="RandomGen" type="Node2D"]
+[node name="World" type="Node2D"]
 script = ExtResource( 3 )
 
 [node name="Player" parent="." instance=ExtResource( 1 )]

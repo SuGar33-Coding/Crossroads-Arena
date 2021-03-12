@@ -131,6 +131,7 @@ func instanceRoom(row : int, col : int):
 		var room_pos = Vector2(roomWidtth*col, roomHeight*row) + Vector2(-roomWidtth/2, -roomHeight/2) + Vector2(-roomWidtth*startingCol, -roomHeight*startingRow)
 		room.global_position = room_pos
 		self.call_deferred("add_child", room)
+		self.call_deferred("move_child", room ,0)
 		rooms[row][col] = room
 		self.call_deferred("handleBoundaries", row, col)
 		room.call_deferred("pauseRoom")
