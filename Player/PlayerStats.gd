@@ -1,7 +1,5 @@
 extends Node
 
-class_name Stats
-
 export(int) var maxHealth = 1 setget setMaxHealth, getMaxHealth
 
 var health = 0 setget setHealth, getHealth
@@ -32,3 +30,13 @@ func getHealth():
 
 func _on_hurtbox_area_entered(area):
 	self.health -= 1
+
+
+func connectHealthChanged(node):
+	self.connect("healthChanged", node, "_playerstats_health_changed")
+	
+func connectMaxHealthChanged(node):
+	self.connect("maxHealthChanged", node, "_playerstats_maxhealth_changed")
+	
+func connectNoHealth(node : Node):
+	self.connect("noHealth", node, "_playerstats_no_health")

@@ -42,6 +42,10 @@ config/name="The Grand Battle Arena"
 run/main_scene="res://UI/StartMenu/StartMenu.tscn"
 config/icon="res://icon.png"
 
+[autoload]
+
+PlayerStats="*res://Player/PlayerStats.gd"
+
 [display]
 
 window/size/width=960

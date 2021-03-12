@@ -2,17 +2,14 @@ extends CanvasLayer
 
 
 onready var healthbar : ProgressBar = $HealthbarContainer/Healthbar
-export(NodePath) var statsPath
-var stats : Stats
+onready var stats = get_node("/root/PlayerStats")
 
 func _ready():
-	stats = get_node(statsPath)
+	self.setHealthbarValue(stats.health / stats.getMaxHealth() * 100)
+	stats.connectHealthChanged(self)
 	
 func setHealthbarValue(value : float):
-	print(value)
 	healthbar.value = value
 
-func _on_Stats_healthChanged(value):
-	print(value)
-	print(stats.getMaxHealth())
+func _playerstats_health_changed(value):
 	self.setHealthbarValue(float(value) / stats.getMaxHealth() * 100)
