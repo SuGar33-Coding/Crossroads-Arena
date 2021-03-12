@@ -45,7 +45,7 @@ tracks/1/keys = {
 [node name="Player" type="KinematicBody2D"]
 collision_layer = 2
 script = ExtResource( 2 )
-maxPlayerHealth = 3
+maxPlayerHealth = 7
 
 [node name="Sprite" type="Sprite" parent="."]
 texture = ExtResource( 1 )

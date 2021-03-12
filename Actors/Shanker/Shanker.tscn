@@ -191,10 +191,10 @@ tracks/0/loop_wrap = true
 tracks/0/imported = false
 tracks/0/enabled = true
 tracks/0/keys = {
-"times": PoolRealArray( 0.7, 0.71, 0.72, 0.73, 0.74, 0.75, 0.76, 0.77, 0.78, 0.79, 0.8 ),
-"transitions": PoolRealArray( 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 ),
+"times": PoolRealArray( 0, 0.7, 0.71, 0.72, 0.73, 0.74, 0.75, 0.76, 0.77, 0.78, 0.79, 0.8 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 ),
 "update": 0,
-"values": [ 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 0 ]
+"values": [ 0, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 0 ]
 }
 tracks/1/type = "value"
 tracks/1/path = NodePath("MeleeHitbox/hitboxCollision:disabled")
@@ -252,7 +252,8 @@ collision_layer = 4
 script = ExtResource( 2 )
 
 [node name="Sprite" type="Sprite" parent="."]
-modulate = Color( 0.862745, 0.568627, 0.227451, 1 )
+modulate = Color( 0.862357, 0.559313, 0.226578, 1 )
+scale = Vector2( 1.01237, 1.01237 )
 texture = ExtResource( 1 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]

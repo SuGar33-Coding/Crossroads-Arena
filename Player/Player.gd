@@ -1,9 +1,9 @@
 extends KinematicBody2D
 
+export(int) var maxPlayerHealth = 1
 export var MAX_SPEED = 200
 export var ACCELERATION = 800
 export var FRICTION = 750
-export(int) var maxPlayerHealth = 1
 
 const Arrow = preload("res://Weapons/Arrow.tscn")
 
