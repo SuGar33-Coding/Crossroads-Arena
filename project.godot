@@ -12,7 +12,7 @@ _global_script_classes=[ {
 "base": "StaticBody2D",
 "class": "Boundary",
 "language": "GDScript",
-"path": "res://World/Boundary.gd"
+"path": "res://World/Rooms/Boundary.gd"
 }, {
 "base": "",
 "class": "GitAPI",
@@ -22,7 +22,7 @@ _global_script_classes=[ {
 "base": "Node2D",
 "class": "Room",
 "language": "GDScript",
-"path": "res://World/Room.gd"
+"path": "res://World/Rooms/Room.gd"
 } ]
 _global_script_class_icons={
 "Boundary": "",

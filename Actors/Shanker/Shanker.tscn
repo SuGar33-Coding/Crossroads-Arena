@@ -25,7 +25,7 @@ extents = Vector2( 16, 16 )
 radius = 19.3882
 height = 23.4287
 
-[sub_resource type="Animation" id=9]
+[sub_resource type="Animation" id=6]
 resource_name = "Damaged"
 length = 0.8
 tracks/0/type = "value"
@@ -65,8 +65,7 @@ tracks/2/keys = {
 "values": [ true ]
 }
 
-[sub_resource type="Animation" id=6]
-resource_name = "Death"
+[sub_resource type="Animation" id=7]
 length = 0.5
 step = 0.02
 tracks/0/type = "value"
@@ -132,8 +131,7 @@ tracks/4/keys = {
 } ]
 }
 
-[sub_resource type="Animation" id=7]
-resource_name = "Idle"
+[sub_resource type="Animation" id=8]
 tracks/0/type = "value"
 tracks/0/path = NodePath("Hitbox/hitboxCollision:disabled")
 tracks/0/interp = 1
@@ -183,7 +181,7 @@ tracks/3/keys = {
 "values": [ 0.0 ]
 }
 
-[sub_resource type="Animation" id=8]
+[sub_resource type="Animation" id=9]
 length = 0.81
 step = 0.01
 tracks/0/type = "value"
@@ -251,7 +249,6 @@ tracks/4/keys = {
 
 [node name="Shanker" type="KinematicBody2D"]
 collision_layer = 4
-collision_mask = 3
 script = ExtResource( 2 )
 
 [node name="Sprite" type="Sprite" parent="."]
@@ -312,10 +309,10 @@ disabled = true
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 autoplay = "Idle"
-anims/Damaged = SubResource( 9 )
-anims/Death = SubResource( 6 )
-anims/Idle = SubResource( 7 )
-anims/MeleeAttack = SubResource( 8 )
+anims/Damaged = SubResource( 6 )
+anims/Death = SubResource( 7 )
+anims/Idle = SubResource( 8 )
+anims/MeleeAttack = SubResource( 9 )
 [connection signal="area_entered" from="hurtbox" to="." method="_on_hurtbox_area_entered"]
 [connection signal="noHealth" from="Stats" to="." method="_on_Stats_noHealth"]
 [connection signal="body_entered" from="DetectionZone" to="DetectionZone" method="_on_DetectionZone_body_entered"]

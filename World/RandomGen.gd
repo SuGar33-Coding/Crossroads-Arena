@@ -1,8 +1,8 @@
 extends Node2D
 
 # Preload in all rooms
-const BaseRoom = preload("res://World/BaseRoom.tscn")
-const PlusRoom = preload("res://World/PlusRoom.tscn")
+const BaseRoom = preload("res://World/Rooms/BaseRoom.tscn")
+const PlusRoom = preload("res://World/Rooms/PlusRoom.tscn")
 
 export(bool) var scrollCamera = true
 
