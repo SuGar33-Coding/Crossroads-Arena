@@ -15,4 +15,5 @@ func fire(startingPosition : Vector2, startingRotation : float):
 
 
 func _on_hitbox_area_entered(area):
-	self.queue_free()
+	if not area.is_in_group("RoomStuff"):
+		self.queue_free()

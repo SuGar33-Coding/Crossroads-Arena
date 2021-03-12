@@ -62,7 +62,9 @@ func fireArrow() -> void:
 	fireTimer.start(timeBetweenShots)
 	var arrow = Arrow.instance()
 	var world = get_tree().current_scene
-	world.add_child(arrow)
+	# Have to set it before you add it as a child otherwise the room area's think you are exiting them
+	arrow.global_position = hitboxCollision.global_position
+	world.add_child(arrow)	
 	arrow.fire(hitboxCollision.global_position, self.global_rotation + deg2rad(-90))
 
 func _playerstats_no_health():

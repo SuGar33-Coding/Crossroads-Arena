@@ -61,7 +61,6 @@ func _physics_process(delta):
 
 func _on_Stats_noHealth():
 	state = DYING
-	animationPlayer.stop(true)
 	animationPlayer.play("Death")
 
 func _on_hurtbox_area_entered(area):

@@ -162,19 +162,20 @@ func setCameraLimitsForRoom(room : Room):
 	
 # Body should be player body and room is the room they entered
 func _player_entered_room(body, room : Room):
-	currentRoom = room
-	var row = room.row
-	var col = room.col
-	
-	if scrollCamera:
-		self.setCameraLimitsForRoom(room)
-	
-	# Now that we've found the room, make sure all adjacent rooms are instantiated
-	if row != 0:
-		instanceRoom(row-1, col)
-	if col != 0:
-		instanceRoom(row, col-1)
-	if row != len(rooms)-1:
-		instanceRoom(row+1, col)
-	if col != len(rooms[row])-1:
-		instanceRoom(row, col+1)
+	if not body.is_in_group("RangedWeapons"):
+		currentRoom = room
+		var row = room.row
+		var col = room.col
+		
+		if scrollCamera:
+			self.setCameraLimitsForRoom(room)
+		
+		# Now that we've found the room, make sure all adjacent rooms are instantiated
+		if row != 0:
+			instanceRoom(row-1, col)
+		if col != 0:
+			instanceRoom(row, col-1)
+		if row != len(rooms)-1:
+			instanceRoom(row+1, col)
+		if col != len(rooms[row])-1:
+			instanceRoom(row, col+1)

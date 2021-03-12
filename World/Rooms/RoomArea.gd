@@ -1,5 +1,6 @@
 extends Area2D
 
+class_name RoomArea
 
 func _ready():
 	# Direct parent should always be the room it's setting the boundary for
