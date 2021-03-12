@@ -21,11 +21,4 @@ position = Vector2( -5349.81, -4552.48 )
 [node name="BottomRight" parent="Camera2D/Limits" index="1"]
 position = Vector2( 4416.83, 2890.69 )
 
-[node name="Control" type="Control" parent="."]
-margin_right = 40.0
-margin_bottom = 40.0
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
 [editable path="Camera2D"]
