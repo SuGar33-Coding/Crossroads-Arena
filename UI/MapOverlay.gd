@@ -1,6 +1,7 @@
 extends CanvasLayer
 
 var emptyImage := preload("res://Assets/Wall.png")
+var borderStyle: StyleBoxFlat = preload("res://UI/CurrentRoomBorder.tres")
 
 var roomTypes := []
 var roomTextures := []
@@ -24,11 +25,20 @@ func generateMapOverlay(roomTypeArray : Array):
 			
 			textureRect.expand = true
 			textureRect.rect_min_size = rectScale
-			textureRect.modulate = Color(0,0,0, overlayOpacity)
 			
-			roomTextures[row].append(textureRect)
+			var roomPanel = Panel.new()
+			roomPanel.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+			roomPanel.size_flags_vertical = Control.SIZE_EXPAND_FILL
+			roomPanel.modulate = Color(0,0,0, overlayOpacity)
+			if (roomTypes[row][col] == 0):
+				roomPanel.modulate = Color(0,0,0,0)
+			if (row == 8 and col == 8):
+				roomPanel.add_stylebox_override("panel", borderStyle)
+			roomPanel.add_child(textureRect)
 			
-			gridContainer.call_deferred("add_child", textureRect)
+			roomTextures[row].append(roomPanel)
+			
+			gridContainer.call_deferred("add_child", roomPanel)
 	
 	
 func roomDiscovered(row : int, col : int):
