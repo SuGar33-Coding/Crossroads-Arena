@@ -1,6 +1,7 @@
-[gd_scene load_steps=4 format=2]
+[gd_scene load_steps=5 format=2]
 
 [ext_resource path="res://Player/Player.tscn" type="PackedScene" id=1]
+[ext_resource path="res://UI/MapOverlay.tscn" type="PackedScene" id=2]
 [ext_resource path="res://World/RandomGen.gd" type="Script" id=3]
 [ext_resource path="res://World/Camera2D.tscn" type="PackedScene" id=4]
 
@@ -21,4 +22,8 @@ position = Vector2( -5349.81, -4552.48 )
 [node name="BottomRight" parent="Camera2D/Limits" index="1"]
 position = Vector2( 4416.83, 2890.69 )
 
+[node name="MapOverlay" parent="." instance=ExtResource( 2 )]
+
 [editable path="Camera2D"]
+
+[editable path="MapOverlay"]

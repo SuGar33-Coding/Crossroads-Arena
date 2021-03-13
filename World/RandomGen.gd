@@ -13,6 +13,8 @@ var roomTypes = []
 var rooms = []
 onready var camera = $Camera2D
 onready var player = $Player
+onready var mapGridContainer = $MapOverlay/GridContainer
+onready var mapOverlay = $MapOverlay
 
 # Change to having the matrix store a variety of integers / enums
 # This will store the type of every room that will give information about that location
@@ -64,6 +66,7 @@ func _ready():
 			
 	instanceRoom(startingRow, startingCol)
 	currentRoom = rooms[startingRow][startingCol]
+	mapOverlay.generateMapOverlay(roomTypes)
 
 #Debug var
 var zoomLimit = .5
@@ -79,6 +82,9 @@ func _physics_process(delta):
 	if Input.is_action_just_released("wheelup") and $Camera2D.zoom.x > zoomLimit and $Camera2D.zoom.y > zoomLimit:
 		camera.zoom.x -= .25
 		camera.zoom.y -= .25
+		
+	if Input.is_action_just_released("openmap"):
+		mapGridContainer.visible = not mapGridContainer.visible
 	
 	if camera.zoom.x <= zoomLimit and camera.zoom.y <= zoomLimit:
 		self.setCameraLimitsForRoom(currentRoom)
@@ -114,6 +120,7 @@ func handleBoundaries(row : int, col : int):
 			boundaryRight.isClosed()
 		else:
 			boundaryRight.isOpen()
+		mapOverlay.roomDiscovered(row, col)
 		
 func instanceRoom(row : int, col : int):
 	if row < 0 or row > len(roomTypes) or col < 0 or col > len(roomTypes[row]):
