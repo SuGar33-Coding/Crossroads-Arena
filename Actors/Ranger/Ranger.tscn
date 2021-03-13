@@ -1,4 +1,4 @@
-[gd_scene load_steps=15 format=2]
+[gd_scene load_steps=16 format=2]
 
 [ext_resource path="res://Assets/Player.png" type="Texture" id=1]
 [ext_resource path="res://Actors/Ranger/Ranger.gd" type="Script" id=2]
@@ -21,6 +21,33 @@ radius = 337.436
 extents = Vector2( 16, 16 )
 
 [sub_resource type="Animation" id=5]
+resource_name = "Damaged"
+tracks/0/type = "value"
+tracks/0/path = NodePath("Sprite:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.2, 0.4, 0.6, 0.8 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1 ),
+"update": 0,
+"values": [ Color( 0.203922, 0.462745, 0.486275, 1 ), Color( 0.905882, 0.223529, 0.109804, 1 ), Color( 0.203922, 0.462745, 0.486275, 1 ), Color( 0.862745, 0.317647, 0.227451, 1 ), Color( 0.203922, 0.462745, 0.486275, 1 ) ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("Sprite:scale")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Vector2( 1, 1 ) ]
+}
+
+[sub_resource type="Animation" id=6]
 resource_name = "Death"
 tracks/0/type = "value"
 tracks/0/path = NodePath("Hitbox/hitboxCollision:disabled")
@@ -85,7 +112,7 @@ tracks/4/keys = {
 } ]
 }
 
-[sub_resource type="Animation" id=6]
+[sub_resource type="Animation" id=7]
 resource_name = "Idle"
 tracks/0/type = "value"
 tracks/0/path = NodePath("Hitbox/hitboxCollision:disabled")
@@ -136,7 +163,7 @@ tracks/3/keys = {
 "values": [ 0.0 ]
 }
 
-[sub_resource type="Animation" id=7]
+[sub_resource type="Animation" id=8]
 length = 2.7
 tracks/0/type = "value"
 tracks/0/path = NodePath("Sprite:modulate")
@@ -167,7 +194,6 @@ tracks/1/keys = {
 
 [node name="Ranger" type="KinematicBody2D"]
 collision_layer = 4
-collision_mask = 3
 script = ExtResource( 2 )
 
 [node name="Sprite" type="Sprite" parent="."]
@@ -206,6 +232,7 @@ collision_mask = 2
 script = ExtResource( 5 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="DetectionZone"]
+position = Vector2( 0.5, -2 )
 scale = Vector2( 0.996618, 1 )
 shape = SubResource( 3 )
 
@@ -219,9 +246,10 @@ disabled = true
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 autoplay = "Idle"
-anims/Death = SubResource( 5 )
-anims/Idle = SubResource( 6 )
-"anims/Wind Up" = SubResource( 7 )
+anims/Damaged = SubResource( 5 )
+anims/Death = SubResource( 6 )
+anims/Idle = SubResource( 7 )
+"anims/Wind Up" = SubResource( 8 )
 [connection signal="area_entered" from="hurtbox" to="." method="_on_hurtbox_area_entered"]
 [connection signal="noHealth" from="Stats" to="." method="_on_Stats_noHealth"]
 [connection signal="body_entered" from="DetectionZone" to="DetectionZone" method="_on_DetectionZone_body_entered"]

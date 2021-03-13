@@ -10,8 +10,11 @@ extents = Vector2( 6.1085, 2.00634 )
 [sub_resource type="RectangleShape2D" id=2]
 extents = Vector2( 6.10189, 2.03114 )
 
-[node name="Arrow" type="KinematicBody2D"]
-collision_layer = 0
+[node name="Arrow" type="KinematicBody2D" groups=[
+"RangedWeapons",
+]]
+collision_layer = 8
+collision_mask = 9
 script = ExtResource( 3 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]

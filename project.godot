@@ -12,7 +12,7 @@ _global_script_classes=[ {
 "base": "StaticBody2D",
 "class": "Boundary",
 "language": "GDScript",
-"path": "res://World/Boundary.gd"
+"path": "res://World/Rooms/Boundary.gd"
 }, {
 "base": "",
 "class": "GitAPI",
@@ -22,24 +22,40 @@ _global_script_classes=[ {
 "base": "Node2D",
 "class": "Room",
 "language": "GDScript",
-"path": "res://World/Room.gd"
+"path": "res://World/Rooms/Room.gd"
+}, {
+"base": "Area2D",
+"class": "RoomArea",
+"language": "GDScript",
+"path": "res://World/Rooms/RoomArea.gd"
+}, {
+"base": "Node",
+"class": "Stats",
+"language": "GDScript",
+"path": "res://Stats.gd"
 } ]
 _global_script_class_icons={
 "Boundary": "",
 "GitAPI": "",
-"Room": ""
+"Room": "",
+"RoomArea": "",
+"Stats": ""
 }
 
 [application]
 
 config/name="The Grand Battle Arena"
-run/main_scene="res://World/RandomGen.tscn"
+run/main_scene="res://UI/StartMenu/StartMenu.tscn"
 config/icon="res://icon.png"
+
+[autoload]
+
+PlayerStats="*res://Player/PlayerStats.gd"
 
 [display]
 
-window/size/width=544
-window/size/height=352
+window/size/width=960
+window/size/height=540
 window/size/test_width=1280
 window/size/test_height=720
 window/stretch/mode="2d"

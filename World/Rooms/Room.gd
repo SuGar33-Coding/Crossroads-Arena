@@ -58,7 +58,11 @@ func unpauseRoom():
 	set_pause_scene(self, false)
 	
 func _player_entered(body):
-	unpauseRoom()
+	if not body.is_in_group("RangedWeapons"):
+		unpauseRoom()
 	
-func _player_exited(body):
-	pauseRoom()
+func _player_exited(body : KinematicBody2D):
+	if body.is_in_group("RangedWeapons"):
+		body.queue_free()
+	else:
+		pauseRoom()

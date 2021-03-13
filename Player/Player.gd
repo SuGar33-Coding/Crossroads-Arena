@@ -1,23 +1,30 @@
 extends KinematicBody2D
 
+export(int) var maxPlayerHealth = 1
 export var MAX_SPEED = 200
 export var ACCELERATION = 800
 export var FRICTION = 750
 
 const Arrow = preload("res://Weapons/Arrow.tscn")
 
-var velocity = Vector2.ZERO
-var knockback = Vector2.ZERO
+var velocity := Vector2.ZERO
+var knockback := Vector2.ZERO
+var recentlyFired := false
+var timeBetweenShots : float = .4
 
 
 onready var sprite = $Sprite
 onready var hitboxCollision = $Hitbox/hitboxCollision
 onready var animationPlayer = $AnimationPlayer
 onready var swipe = $Swipe
-onready var stats = $Stats
+onready var stats = get_node("/root/PlayerStats")
+onready var fireTimer = $FireTimer
 
 func _ready():
+	stats.maxHealth = maxPlayerHealth
+	stats.health = maxPlayerHealth
 	swipe.frame = 0
+	stats.connectNoHealth(self)
 
 func _physics_process(delta):	
 	knockback = knockback.move_toward(Vector2.ZERO, FRICTION * delta)
@@ -41,7 +48,8 @@ func _physics_process(delta):
 		animationPlayer.play("MeleeAttack")
 		swipe.set_deferred("flip_h", not swipe.flip_h)
 	elif Input.is_action_just_pressed("fire"):
-		fireArrow()
+		if not recentlyFired:
+			fireArrow()
 
 
 func _on_hurtbox_area_entered(area):
@@ -50,10 +58,19 @@ func _on_hurtbox_area_entered(area):
 	#TODO: handle invuln
 
 func fireArrow() -> void:
+	recentlyFired = true
+	fireTimer.start(timeBetweenShots)
 	var arrow = Arrow.instance()
 	var world = get_tree().current_scene
-	world.add_child(arrow)
+	# Have to set it before you add it as a child otherwise the room area's think you are exiting them
+	arrow.global_position = hitboxCollision.global_position
+	world.add_child(arrow)	
 	arrow.fire(hitboxCollision.global_position, self.global_rotation + deg2rad(-90))
 
-func _on_Stats_noHealth():
+func _playerstats_no_health():
+	# When Player dies, return to main menu TODO: Change this
+	get_tree().change_scene("res://UI/StartMenu/StartMenu.tscn")
 	self.queue_free()
+
+func _on_FireTimer_timeout():
+	recentlyFired = false

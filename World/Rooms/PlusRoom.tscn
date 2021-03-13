@@ -1,16 +1,16 @@
 [gd_scene load_steps=7 format=2]
 
-[ext_resource path="res://World/Room.gd" type="Script" id=1]
-[ext_resource path="res://Assets/Wall.png" type="Texture" id=2]
-[ext_resource path="res://World/Boundary.tscn" type="PackedScene" id=3]
-[ext_resource path="res://World/RoomArea.tscn" type="PackedScene" id=4]
+[ext_resource path="res://World/Rooms/RoomArea.tscn" type="PackedScene" id=1]
+[ext_resource path="res://World/Rooms/Boundary.tscn" type="PackedScene" id=2]
+[ext_resource path="res://Assets/Wall.png" type="Texture" id=3]
+[ext_resource path="res://World/Rooms/Room.gd" type="Script" id=4]
 
 [sub_resource type="ConvexPolygonShape2D" id=1]
 points = PoolVector2Array( 0, 0, 32, 0, 32, 32, 0, 32 )
 
 [sub_resource type="TileSet" id=2]
 0/name = "Wall.png 0"
-0/texture = ExtResource( 2 )
+0/texture = ExtResource( 3 )
 0/tex_offset = Vector2( 0, 0 )
 0/modulate = Color( 1, 1, 1, 1 )
 0/region = Rect2( 0, 0, 32, 32 )
@@ -32,7 +32,15 @@ points = PoolVector2Array( 0, 0, 32, 0, 32, 32, 0, 32 )
 0/z_index = 0
 
 [node name="PlusRoom" type="Node2D"]
-script = ExtResource( 1 )
+script = ExtResource( 4 )
+
+[node name="Background" type="Sprite" parent="."]
+modulate = Color( 0.541176, 0.384314, 0.384314, 1 )
+position = Vector2( 1088, 0 )
+rotation = 1.5708
+scale = Vector2( 22, 34 )
+texture = ExtResource( 3 )
+centered = false
 
 [node name="TileMap" type="TileMap" parent="."]
 modulate = Color( 0.101961, 0.14902, 0.32549, 1 )
@@ -62,18 +70,18 @@ position = Vector2( 187.313, 373.039 )
 [node name="SpawnPoint6" type="Position2D" parent="SpawnPoints"]
 position = Vector2( 941.329, 369.864 )
 
-[node name="BoundaryLeft" parent="." instance=ExtResource( 3 )]
+[node name="BoundaryLeft" parent="." instance=ExtResource( 2 )]
 position = Vector2( 16, 368 )
 
-[node name="BoundaryRight" parent="." instance=ExtResource( 3 )]
+[node name="BoundaryRight" parent="." instance=ExtResource( 2 )]
 position = Vector2( 1072, 368 )
 
-[node name="BoundaryTop" parent="." instance=ExtResource( 3 )]
+[node name="BoundaryTop" parent="." instance=ExtResource( 2 )]
 position = Vector2( 560, 16 )
 rotation = 1.5708
 
-[node name="BoundaryBottom" parent="." instance=ExtResource( 3 )]
+[node name="BoundaryBottom" parent="." instance=ExtResource( 2 )]
 position = Vector2( 560, 688 )
 rotation = 1.5708
 
-[node name="RoomArea" parent="." instance=ExtResource( 4 )]
+[node name="RoomArea" parent="." instance=ExtResource( 1 )]

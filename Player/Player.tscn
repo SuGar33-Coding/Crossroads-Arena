@@ -5,7 +5,7 @@
 [ext_resource path="res://Actors/Generic/Hurtbox.tscn" type="PackedScene" id=3]
 [ext_resource path="res://Actors/Generic/Hitbox.tscn" type="PackedScene" id=4]
 [ext_resource path="res://Assets/TGBA swipe.png" type="Texture" id=5]
-[ext_resource path="res://Actors/Generic/Stats.tscn" type="PackedScene" id=6]
+[ext_resource path="res://UI/PlayerUI.tscn" type="PackedScene" id=7]
 
 [sub_resource type="RectangleShape2D" id=1]
 extents = Vector2( 16, 16 )
@@ -45,6 +45,7 @@ tracks/1/keys = {
 [node name="Player" type="KinematicBody2D"]
 collision_layer = 2
 script = ExtResource( 2 )
+maxPlayerHealth = 7
 
 [node name="Sprite" type="Sprite" parent="."]
 texture = ExtResource( 1 )
@@ -58,10 +59,12 @@ scale = Vector2( 1.90284, 2.07774 )
 texture = ExtResource( 5 )
 flip_h = true
 hframes = 10
+frame = 1
 
 [node name="Hitbox" parent="." instance=ExtResource( 4 )]
 collision_mask = 32
 damage = 2
+knockbackValue = 375
 
 [node name="hitboxCollision" parent="Hitbox" index="0"]
 position = Vector2( 0, -35.391 )
@@ -75,10 +78,11 @@ collision_mask = 0
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 anims/MeleeAttack = SubResource( 3 )
 
-[node name="Stats" parent="." instance=ExtResource( 6 )]
-maxHealth = 5
+[node name="FireTimer" type="Timer" parent="."]
+
+[node name="PlayerUI" parent="." instance=ExtResource( 7 )]
 [connection signal="area_entered" from="Hurtbox" to="." method="_on_hurtbox_area_entered"]
-[connection signal="noHealth" from="Stats" to="." method="_on_Stats_noHealth"]
+[connection signal="timeout" from="FireTimer" to="." method="_on_FireTimer_timeout"]
 
 [editable path="Hitbox"]
 

@@ -1,8 +1,8 @@
 extends Node2D
 
 # Preload in all rooms
-const BaseRoom = preload("res://World/BaseRoom.tscn")
-const PlusRoom = preload("res://World/PlusRoom.tscn")
+const BaseRoom = preload("res://World/Rooms/BaseRoom.tscn")
+const PlusRoom = preload("res://World/Rooms/PlusRoom.tscn")
 
 export(bool) var scrollCamera = true
 
@@ -131,6 +131,7 @@ func instanceRoom(row : int, col : int):
 		var room_pos = Vector2(roomWidtth*col, roomHeight*row) + Vector2(-roomWidtth/2, -roomHeight/2) + Vector2(-roomWidtth*startingCol, -roomHeight*startingRow)
 		room.global_position = room_pos
 		self.call_deferred("add_child", room)
+		self.call_deferred("move_child", room ,0)
 		rooms[row][col] = room
 		self.call_deferred("handleBoundaries", row, col)
 		room.call_deferred("pauseRoom")
@@ -161,19 +162,20 @@ func setCameraLimitsForRoom(room : Room):
 	
 # Body should be player body and room is the room they entered
 func _player_entered_room(body, room : Room):
-	currentRoom = room
-	var row = room.row
-	var col = room.col
-	
-	if scrollCamera:
-		self.setCameraLimitsForRoom(room)
-	
-	# Now that we've found the room, make sure all adjacent rooms are instantiated
-	if row != 0:
-		instanceRoom(row-1, col)
-	if col != 0:
-		instanceRoom(row, col-1)
-	if row != len(rooms)-1:
-		instanceRoom(row+1, col)
-	if col != len(rooms[row])-1:
-		instanceRoom(row, col+1)
+	if not body.is_in_group("RangedWeapons"):
+		currentRoom = room
+		var row = room.row
+		var col = room.col
+		
+		if scrollCamera:
+			self.setCameraLimitsForRoom(room)
+		
+		# Now that we've found the room, make sure all adjacent rooms are instantiated
+		if row != 0:
+			instanceRoom(row-1, col)
+		if col != 0:
+			instanceRoom(row, col-1)
+		if row != len(rooms)-1:
+			instanceRoom(row+1, col)
+		if col != len(rooms[row])-1:
+			instanceRoom(row, col+1)
