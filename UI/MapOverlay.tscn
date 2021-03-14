@@ -8,13 +8,13 @@ overlayOpacity = 0.6
 
 [node name="GridContainer" type="GridContainer" parent="."]
 anchor_left = 0.5
-anchor_top = 0.044
+anchor_top = 0.5
 anchor_right = 0.5
-anchor_bottom = 0.044
-margin_left = -416.0
-margin_top = 0.239998
-margin_right = 416.0
-margin_bottom = 488.24
+anchor_bottom = 0.5
+margin_left = -342.0
+margin_top = -197.0
+margin_right = 342.0
+margin_bottom = 250.0
 __meta__ = {
 "_edit_use_anchors_": false
 }
