@@ -24,6 +24,9 @@ position = Vector2( 4416.83, 2890.69 )
 
 [node name="MapOverlay" parent="." instance=ExtResource( 2 )]
 
+[node name="GridContainer" parent="MapOverlay" index="0"]
+visible = false
+
 [editable path="Camera2D"]
 
 [editable path="MapOverlay"]

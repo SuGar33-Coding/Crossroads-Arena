@@ -176,6 +176,7 @@ func _player_entered_room(body, room : Room):
 		currentRoom = room
 		var row = room.row
 		var col = room.col
+		mapOverlay.setCurrentRoom(row, col)
 		
 		if scrollCamera:
 			self.setCameraLimitsForRoom(room)
