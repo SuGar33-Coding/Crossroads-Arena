@@ -4,6 +4,7 @@
 
 [node name="MapOverlay" type="CanvasLayer"]
 script = ExtResource( 1 )
+overlayOpacity = 0.6
 
 [node name="GridContainer" type="GridContainer" parent="."]
 anchor_left = 0.5
