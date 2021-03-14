@@ -1,4 +1,4 @@
-[gd_scene load_steps=6 format=2]
+[gd_scene load_steps=8 format=2]
 
 [ext_resource path="res://PlayerUI.gd" type="Script" id=1]
 
@@ -35,6 +35,25 @@ corner_radius_top_right = 5
 corner_radius_bottom_right = 5
 corner_radius_bottom_left = 5
 
+[sub_resource type="DynamicFont" id=6]
+size = 14
+outline_size = 2
+outline_color = Color( 0, 0, 0, 1 )
+use_filter = true
+font_data = SubResource( 1 )
+
+[sub_resource type="StyleBoxFlat" id=5]
+bg_color = Color( 0.733333, 0.611765, 0.129412, 1 )
+border_width_left = 3
+border_width_top = 3
+border_width_right = 3
+border_width_bottom = 3
+border_color = Color( 0, 0, 0, 1 )
+corner_radius_top_left = 5
+corner_radius_top_right = 5
+corner_radius_bottom_right = 5
+corner_radius_bottom_left = 5
+
 [node name="PlayerUI" type="CanvasLayer"]
 script = ExtResource( 1 )
 
@@ -43,17 +62,16 @@ anchor_left = 0.05
 anchor_top = 0.044
 anchor_right = 0.05
 anchor_bottom = 0.044
-margin_top = 0.239998
-margin_right = 296.0
-margin_bottom = 40.24
+margin_top = 0.24
+margin_right = 840.0
+margin_bottom = 28.24
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
 [node name="HPLabel" type="Label" parent="HealthbarContainer"]
-margin_top = 6.0
 margin_right = 75.0
-margin_bottom = 34.0
+margin_bottom = 28.0
 rect_min_size = Vector2( 75, 0 )
 custom_fonts/font = SubResource( 2 )
 text = "HP:"
@@ -65,10 +83,78 @@ __meta__ = {
 
 [node name="Healthbar" type="ProgressBar" parent="HealthbarContainer"]
 margin_left = 79.0
-margin_right = 296.0
-margin_bottom = 40.0
+margin_right = 378.0
+margin_bottom = 28.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 custom_styles/fg = SubResource( 3 )
 custom_styles/bg = SubResource( 4 )
 value = 50.0
+percent_visible = false
+
+[node name="HealthbarLabel" type="Label" parent="HealthbarContainer/Healthbar"]
+anchor_left = 0.503
+anchor_right = 0.503
+margin_left = -149.397
+margin_right = 146.603
+margin_bottom = 28.0
+rect_min_size = Vector2( 75, 0 )
+custom_fonts/font = SubResource( 6 )
+text = "10/10"
+align = 1
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="XPLabel" type="Label" parent="HealthbarContainer"]
+margin_left = 382.0
+margin_right = 457.0
+margin_bottom = 28.0
+rect_min_size = Vector2( 75, 0 )
+custom_fonts/font = SubResource( 2 )
+text = "XP:"
+align = 1
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="XPbar" type="ProgressBar" parent="HealthbarContainer"]
+margin_left = 461.0
+margin_right = 761.0
+margin_bottom = 28.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+custom_styles/fg = SubResource( 5 )
+custom_styles/bg = SubResource( 4 )
+value = 50.0
+percent_visible = false
+
+[node name="XPbarLabel" type="Label" parent="HealthbarContainer/XPbar"]
+anchor_left = 0.503
+anchor_right = 0.503
+margin_left = -147.9
+margin_right = 148.1
+margin_bottom = 28.0
+rect_min_size = Vector2( 75, 0 )
+custom_fonts/font = SubResource( 6 )
+text = "10/10"
+align = 1
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="LvlLabel" type="Label" parent="HealthbarContainer"]
+margin_left = 765.0
+margin_right = 840.0
+margin_bottom = 28.0
+rect_min_size = Vector2( 75, 0 )
+custom_fonts/font = SubResource( 2 )
+text = "Lvl: 1"
+align = 1
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}

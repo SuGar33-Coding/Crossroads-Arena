@@ -85,6 +85,9 @@ func _physics_process(delta):
 		
 	if Input.is_action_just_released("openmap"):
 		mapGridContainer.visible = not mapGridContainer.visible
+		
+	if Input.is_action_just_pressed("addlevel"):
+		PlayerStats.playerLevel += 1
 	
 	if camera.zoom.x <= zoomLimit and camera.zoom.y <= zoomLimit:
 		self.setCameraLimitsForRoom(currentRoom)

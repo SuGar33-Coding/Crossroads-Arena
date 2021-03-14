@@ -1,6 +1,7 @@
 extends KinematicBody2D
 
 export(int) var maxPlayerHealth = 1
+export(int) var startingLevel = 1
 export var MAX_SPEED = 200
 export var ACCELERATION = 800
 export var FRICTION = 750
@@ -10,7 +11,6 @@ const Arrow = preload("res://Weapons/Arrow.tscn")
 var velocity := Vector2.ZERO
 var knockback := Vector2.ZERO
 var recentlyFired := false
-var timeBetweenShots : float = .4
 
 
 onready var sprite = $Sprite
@@ -23,6 +23,9 @@ onready var fireTimer = $FireTimer
 func _ready():
 	stats.maxHealth = maxPlayerHealth
 	stats.health = maxPlayerHealth
+	stats.playerLevel = startingLevel
+	stats.currentXP = 0
+	stats.healthIncrease = maxPlayerHealth
 	swipe.frame = 0
 	stats.connectNoHealth(self)
 
@@ -59,13 +62,13 @@ func _on_hurtbox_area_entered(area):
 
 func fireArrow() -> void:
 	recentlyFired = true
-	fireTimer.start(timeBetweenShots)
+	fireTimer.start(PlayerStats.attackSpeed)
 	var arrow = Arrow.instance()
 	var world = get_tree().current_scene
 	# Have to set it before you add it as a child otherwise the room area's think you are exiting them
 	arrow.global_position = hitboxCollision.global_position
 	world.add_child(arrow)	
-	arrow.fire(hitboxCollision.global_position, self.global_rotation + deg2rad(-90))
+	arrow.fire(hitboxCollision.global_position, self.global_rotation + deg2rad(-90), true)
 
 func _playerstats_no_health():
 	# When Player dies, return to main menu TODO: Change this
