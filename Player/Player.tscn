@@ -79,12 +79,12 @@ collision_mask = 0
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 anims/MeleeAttack = SubResource( 3 )
 
-[node name="FireTimer" type="Timer" parent="."]
+[node name="AttackTimer" type="Timer" parent="."]
 
 [node name="PlayerUI" parent="." instance=ExtResource( 7 )]
 [connection signal="area_entered" from="Hitbox" to="Hitbox" method="_on_Hitbox_area_entered"]
 [connection signal="area_entered" from="Hurtbox" to="." method="_on_hurtbox_area_entered"]
-[connection signal="timeout" from="FireTimer" to="." method="_on_FireTimer_timeout"]
+[connection signal="timeout" from="AttackTimer" to="." method="_on_AttackTimer_timeout"]
 
 [editable path="Hitbox"]
 

@@ -20,6 +20,11 @@ _global_script_classes=[ {
 "path": "res://git_api.gdns"
 }, {
 "base": "Area2D",
+"class": "HealthPotion",
+"language": "GDScript",
+"path": "res://Items/HealthPotion.gd"
+}, {
+"base": "Area2D",
 "class": "Hitbox",
 "language": "GDScript",
 "path": "res://Actors/Generic/hitbox.gd"
@@ -42,6 +47,7 @@ _global_script_classes=[ {
 _global_script_class_icons={
 "Boundary": "",
 "GitAPI": "",
+"HealthPotion": "",
 "Hitbox": "",
 "Room": "",
 "RoomArea": "",

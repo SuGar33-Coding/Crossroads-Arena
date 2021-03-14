@@ -39,7 +39,7 @@ func addXP(amount):
 	self.setCurrentXP(currentXP + amount)
 	
 func xpToNextLevel() -> float:
-	return pow(10, playerLevel)
+	return 10 * playerLevel
 	
 func setCurrentXP(value):
 	currentXP = value

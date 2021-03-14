@@ -79,8 +79,8 @@ func seek_target():
 func fireArrow() -> void:
 	var arrow = Arrow.instance()
 	var world = get_tree().current_scene
-	world.add_child(arrow)
 	arrow.fire(fireSpawnPosition.global_position, self.rotation + deg2rad(-90))
+	world.add_child(arrow)
 
 func _on_AnimationPlayer_animation_finished(anim_name):
 	state = CHASE
