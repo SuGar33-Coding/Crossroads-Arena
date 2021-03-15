@@ -10,10 +10,14 @@ signal healthChanged(value)
 signal maxHealthChanged(value)
 signal currentXPChanged(newXP)
 signal playerLevelChanged(newLevel)
+signal addedToInventory(newItem)
+signal removedFromInventory(removedItem)
 
 # How much health increases on every level
 var healthIncrease = maxHealth
 var health = 0 setget setHealth, getHealth
+# Will be an array of scenes/references to scene instances
+var inventory := []
 
 func _ready():
 	health = maxHealth
@@ -63,6 +67,35 @@ func setPlayerLevel(newLevel):
 	
 	emit_signal("playerLevelChanged", playerLevel)
 
+func addItemToInventory(item : Item):
+	inventory.append(item)
+	emit_signal("addedToInventory", item)
+	
+func removeItemFromInventory(item : Item):
+	removeItemFromInvByPos(inventory.find(item))
+	
+func removeItemFromInvByPos(itemPos : int):
+	if itemPos >= 0:
+		var itemToRemove = inventory[itemPos]
+		inventory.remove(itemPos)
+		emit_signal("removedFromInventory", itemToRemove)
+	
+func getNumItemsOfType(name : String) -> int:
+	var numItem = 0
+	for i in range(len(inventory)):
+		var item : Item = inventory[i]
+		if name in item.get_name():
+			numItem += 1
+	
+	return numItem
+	
+func getItemOfType(name : String) -> Item:
+	for i in range(len(inventory)):
+		var item : Item = inventory[i]
+		if name in item.get_name():
+			return item
+			
+	return null
 
 func _on_hurtbox_area_entered(area):
 	self.health -= 1

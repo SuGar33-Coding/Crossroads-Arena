@@ -69,9 +69,6 @@ rotation = 1.5708
 
 [node name="ItemSpawns" type="Node" parent="."]
 
-[node name="ItemSpawn2" type="Position2D" parent="ItemSpawns"]
-position = Vector2( 896, 368 )
-
 [node name="ItemSpawn3" type="Position2D" parent="ItemSpawns"]
 position = Vector2( 192, 128 )
 
@@ -80,15 +77,6 @@ position = Vector2( 896, 584 )
 
 [node name="ItemSpawn5" type="Position2D" parent="ItemSpawns"]
 position = Vector2( 192, 576 )
-
-[node name="ItemSpawn6" type="Position2D" parent="ItemSpawns"]
-position = Vector2( 552, 128 )
-
-[node name="ItemSpawn7" type="Position2D" parent="ItemSpawns"]
-position = Vector2( 192, 368 )
-
-[node name="ItemSpawn8" type="Position2D" parent="ItemSpawns"]
-position = Vector2( 560, 576 )
 
 [node name="ItemSpawn9" type="Position2D" parent="ItemSpawns"]
 position = Vector2( 896, 128 )

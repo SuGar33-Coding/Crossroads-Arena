@@ -92,7 +92,7 @@ func _physics_process(delta):
 	if Input.is_action_just_pressed("addlevel"):
 		PlayerStats.playerLevel += 1
 	
-	if camera.zoom.x <= zoomLimit and camera.zoom.y <= zoomLimit:
+	if camera.zoom.x <= zoomLimit or camera.zoom.y <= zoomLimit:
 		self.setCameraLimitsForRoom(currentRoom)
 
 # Randomly selects and returns a random enum/int that determines room type

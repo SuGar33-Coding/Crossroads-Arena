@@ -58,6 +58,10 @@ func _physics_process(delta):
 			recentlyAttacked = true
 			attackTimer.start(PlayerStats.attackSpeed)
 			fireArrow()
+	elif Input.is_action_just_pressed("use_pot"):
+		if stats.getNumItemsOfType("HealthPotion") > 0:
+			var healthPot = stats.getItemOfType("HealthPotion")
+			healthPot.usePot()
 
 
 func _on_hurtbox_area_entered(area):

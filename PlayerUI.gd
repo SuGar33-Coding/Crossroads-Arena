@@ -1,11 +1,12 @@
 extends CanvasLayer
 
 
-onready var healthbar : ProgressBar = $HealthbarContainer/Healthbar
-onready var xpbar : ProgressBar = $HealthbarContainer/XPbar
-onready var lvllabel : Label = $HealthbarContainer/LvlLabel
-onready var healthbarLabel : Label = $HealthbarContainer/Healthbar/HealthbarLabel
-onready var xpbarLabel : Label = $HealthbarContainer/XPbar/XPbarLabel
+onready var healthbar : ProgressBar = $HBoxContainer/VBoxContainer/HealthbarContainer/Healthbar
+onready var xpbar : ProgressBar = $HBoxContainer/VBoxContainer/HBoxContainer/XPbar
+onready var lvllabel : Label = $HBoxContainer/VBoxContainer/HBoxContainer/LvlLabel
+onready var healthbarLabel : Label = $HBoxContainer/VBoxContainer/HealthbarContainer/Healthbar/HealthbarLabel
+onready var xpbarLabel : Label = $HBoxContainer/VBoxContainer/HBoxContainer/XPbar/XPbarLabel
+onready var potLabel : Label = $HBoxContainer/PanelContainer/HBoxContainer/PotLabel
 onready var stats = get_node("/root/PlayerStats")
 
 func _ready():
@@ -13,6 +14,8 @@ func _ready():
 	stats.connectHealthChanged(self)
 	stats.connect("currentXPChanged", self, "_player_xp_changed")
 	stats.connect("playerLevelChanged", self, "_player_level_changed")
+	stats.connect("addedToInventory", self, "_item_added_to_inv")
+	stats.connect("removedFromInventory", self, "_item_removed_from_inv")
 	
 func setHealthbarValue(value : float):
 	healthbar.value = value
@@ -31,3 +34,10 @@ func _player_xp_changed(newXP):
 func _player_level_changed(newLevel):
 	lvllabel.text = "Lvl: " + str(stats.playerLevel)
 	
+func _item_added_to_inv(newItem):
+	if newItem is HealthPotion:
+		potLabel.text = str(PlayerStats.getNumItemsOfType("HealthPotion"))
+
+func _item_removed_from_inv(removedItem):
+	if removedItem is HealthPotion:
+		potLabel.text = str(PlayerStats.getNumItemsOfType("HealthPotion"))
