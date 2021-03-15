@@ -59,7 +59,7 @@ func _physics_process(delta):
 			attackTimer.start(PlayerStats.attackSpeed)
 			fireArrow()
 	elif Input.is_action_just_pressed("use_pot"):
-		if stats.getNumItemsOfType("HealthPotion") > 0:
+		if stats.getNumItemsOfType("HealthPotion") > 0 and stats.health < stats.maxHealth:
 			var healthPot = stats.getItemOfType("HealthPotion")
 			healthPot.usePot()
 
