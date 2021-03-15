@@ -27,6 +27,9 @@ onready var sprite = $Sprite
 onready var firingRange = $FiringRange
 onready var fireSpawnPosition = $FiringRange/SpawnPosition
 onready var animationPlayer = $AnimationPlayer
+onready var primaryAttackEffect = $PrimaryAttackEffect
+onready var dmgEffect = $DmgEffect
+onready var deathEffect = $DeathEffect
 
 func _physics_process(delta):
 	knockback = knockback.move_toward(Vector2.ZERO, FRICTION * delta)
@@ -61,6 +64,7 @@ func _physics_process(delta):
 
 func _on_Stats_noHealth():
 	state = DYING
+	deathEffect.play()
 	animationPlayer.play("Death")
 
 func _on_hurtbox_area_entered(area):
@@ -68,8 +72,9 @@ func _on_hurtbox_area_entered(area):
 	stats.health -= area.damage
 	knockback = area.getKnockbackVector(self.global_position)
 	if(stats.health >= 1):
-		animationPlayer.play("Damaged")
 		#Only play damaged if we're not dead
+		dmgEffect.play()
+		animationPlayer.play("Damaged")
 
 func seek_target():
 	if detectionZone.can_see_target():
@@ -79,6 +84,8 @@ func seek_target():
 func fireArrow() -> void:
 	var arrow = Arrow.instance()
 	var world = get_tree().current_scene
+	world.add_child(arrow)
+	primaryAttackEffect.play()
 	arrow.fire(fireSpawnPosition.global_position, self.rotation + deg2rad(-90))
 	world.add_child(arrow)
 

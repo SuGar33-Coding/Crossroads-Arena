@@ -20,6 +20,8 @@ onready var stats = $Stats
 onready var detectionZone = $DetectionZone
 onready var sprite = $Sprite
 onready var animationPlayer = $AnimationPlayer
+onready var dmgEffect = $DmgEffect
+onready var deathEffect = $DeathEffect
 
 func _physics_process(delta):
 	knockback = knockback.move_toward(Vector2.ZERO, FRICTION * delta)
@@ -45,6 +47,7 @@ func _physics_process(delta):
 
 func _on_Stats_noHealth():
 	state = DYING
+	deathEffect.play()
 	animationPlayer.play("Death")
 
 func _on_hurtbox_area_entered(area):
@@ -52,6 +55,7 @@ func _on_hurtbox_area_entered(area):
 	stats.health -= area.damage
 	knockback = area.getKnockbackVector(self.global_position)
 	if(stats.health >= 1):
+		dmgEffect.play()
 		animationPlayer.play("Damaged")
 		#Only play damaged if we're not dead
 

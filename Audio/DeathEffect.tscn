@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=2]
+
+[ext_resource path="res://Audio/sfx_deathscream_human2.wav" type="AudioStream" id=1]
+
+[node name="DeathEffect" type="AudioStreamPlayer2D"]
+stream = ExtResource( 1 )

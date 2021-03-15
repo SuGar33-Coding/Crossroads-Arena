@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=2]
+[gd_scene load_steps=14 format=2]
 
 [ext_resource path="res://Assets/Player.png" type="Texture" id=1]
 [ext_resource path="res://Player/Player.gd" type="Script" id=2]
@@ -7,6 +7,9 @@
 [ext_resource path="res://Assets/TGBA swipe.png" type="Texture" id=5]
 [ext_resource path="res://Player/PlayerMeleeHitbox.gd" type="Script" id=6]
 [ext_resource path="res://UI/PlayerUI.tscn" type="PackedScene" id=7]
+[ext_resource path="res://Audio/sfx_wpn_punch1.wav" type="AudioStream" id=8]
+[ext_resource path="res://Audio/sfx_weapon_singleshot12.wav" type="AudioStream" id=9]
+[ext_resource path="res://Audio/DmgEffect.tscn" type="PackedScene" id=10]
 
 [sub_resource type="RectangleShape2D" id=1]
 extents = Vector2( 16, 16 )
@@ -60,7 +63,6 @@ scale = Vector2( 1.90284, 2.07774 )
 texture = ExtResource( 5 )
 flip_h = true
 hframes = 10
-frame = 1
 
 [node name="Hitbox" parent="." instance=ExtResource( 4 )]
 collision_mask = 32
@@ -82,6 +84,16 @@ anims/MeleeAttack = SubResource( 3 )
 [node name="AttackTimer" type="Timer" parent="."]
 
 [node name="PlayerUI" parent="." instance=ExtResource( 7 )]
+
+[node name="MeleeEffect" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource( 8 )
+bus = "AttackSFX"
+
+[node name="RangedEffect" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource( 9 )
+bus = "AttackSFX"
+
+[node name="DmgEffect" parent="." instance=ExtResource( 10 )]
 [connection signal="area_entered" from="Hitbox" to="Hitbox" method="_on_Hitbox_area_entered"]
 [connection signal="area_entered" from="Hurtbox" to="." method="_on_hurtbox_area_entered"]
 [connection signal="timeout" from="AttackTimer" to="." method="_on_AttackTimer_timeout"]
