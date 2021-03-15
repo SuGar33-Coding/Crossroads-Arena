@@ -19,6 +19,9 @@ onready var animationPlayer = $AnimationPlayer
 onready var swipe = $Swipe
 onready var stats = get_node("/root/PlayerStats")
 onready var fireTimer = $FireTimer
+onready var meleeEffect = $MeleeEffect
+onready var rangedEffect = $RangedEffect
+onready var dmgEffect = $DmgEffect
 
 func _ready():
 	stats.maxHealth = maxPlayerHealth
@@ -49,13 +52,16 @@ func _physics_process(delta):
 	
 	if Input.is_action_just_pressed("attack"):
 		animationPlayer.play("MeleeAttack")
+		meleeEffect.play()
 		swipe.set_deferred("flip_h", not swipe.flip_h)
 	elif Input.is_action_just_pressed("fire"):
 		if not recentlyFired:
+			rangedEffect.play()
 			fireArrow()
 
 
 func _on_hurtbox_area_entered(area):
+	dmgEffect.play() 
 	stats.health -= area.damage
 	knockback = area.getKnockbackVector(self.global_position)
 	#TODO: handle invuln
