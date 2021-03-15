@@ -24,6 +24,9 @@ onready var detectionZone = $DetectionZone
 onready var meleeRange = $MeleeRange
 onready var animationPlayer = $AnimationPlayer
 onready var swipe = $Swipe
+onready var primaryAttackEffect = $PrimaryAttackEffect
+onready var dmgEffect = $DmgEffect
+onready var deathEffect = $DeathEffect
 
 func _ready():
 	swipe.frame = 0
@@ -61,6 +64,7 @@ func _physics_process(delta):
 
 func _on_Stats_noHealth():
 	state = DYING
+	deathEffect.play()
 	animationPlayer.play("Death")
 
 func _on_hurtbox_area_entered(area):
@@ -68,6 +72,7 @@ func _on_hurtbox_area_entered(area):
 	stats.health -= area.damage
 	knockback = area.getKnockbackVector(self.global_position)
 	if(stats.health >= 1):
+		dmgEffect.play()
 		animationPlayer.stop(true)
 		animationPlayer.play("Damaged")
 		#Only play damaged if we're not dead
@@ -77,6 +82,7 @@ func seek_target():
 		state = CHASE
 
 func meleeAttack() -> void:
+	primaryAttackEffect.play()
 	swipe.set_deferred("flip_h", not swipe.flip_h)
 
 func _on_AnimationPlayer_animation_finished(anim_name):
