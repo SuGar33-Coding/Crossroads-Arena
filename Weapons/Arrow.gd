@@ -8,8 +8,9 @@ var velocity = Vector2.ZERO
 var playerArrow = false
 
 func _physics_process(delta):
-	var test = move_and_collide(velocity * delta)
-	if test != null:
+	var move = move_and_collide(velocity * delta)
+	if move != null:
+		# Kills if runs into a wall
 		self.queue_free()
 
 func fire(startingPosition : Vector2, startingRotation : float, fromPlayer := false):

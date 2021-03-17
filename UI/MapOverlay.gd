@@ -48,9 +48,13 @@ func roomDiscovered(row : int, col : int):
 	
 	match roomTypes[row][col]:
 		1:
-			roomTexture.modulate = Color(0,0,1,1)
+			roomTexture.modulate = Color("#5c7072")
 		2:
-			roomTexture.modulate = Color(1,0,0,1)
+			roomTexture.modulate = Color("#8a6262")
+		3:
+			roomTexture.modulate = Color("#8a826a")
+		4:
+			roomTexture.modulate = Color("#7e5f8c")
 
 func setCurrentRoom(row: int, col: int):
 	var roomTexture: TextureRect = roomTextures[row][col]

@@ -1,6 +1,8 @@
-[gd_scene load_steps=8 format=2]
+[gd_scene load_steps=11 format=2]
 
 [ext_resource path="res://PlayerUI.gd" type="Script" id=1]
+[ext_resource path="res://Themes/MainFont.tres" type="DynamicFont" id=2]
+[ext_resource path="res://Assets/HealthPotion.png" type="Texture" id=3]
 
 [sub_resource type="DynamicFontData" id=1]
 font_path = "res://Assets/Adventurer.ttf"
@@ -35,14 +37,14 @@ corner_radius_top_right = 5
 corner_radius_bottom_right = 5
 corner_radius_bottom_left = 5
 
-[sub_resource type="DynamicFont" id=6]
+[sub_resource type="DynamicFont" id=5]
 size = 14
 outline_size = 2
 outline_color = Color( 0, 0, 0, 1 )
 use_filter = true
 font_data = SubResource( 1 )
 
-[sub_resource type="StyleBoxFlat" id=5]
+[sub_resource type="StyleBoxFlat" id=6]
 bg_color = Color( 0.733333, 0.611765, 0.129412, 1 )
 border_width_left = 3
 border_width_top = 3
@@ -54,22 +56,42 @@ corner_radius_top_right = 5
 corner_radius_bottom_right = 5
 corner_radius_bottom_left = 5
 
+[sub_resource type="StyleBoxFlat" id=7]
+bg_color = Color( 0.4, 0.298039, 0.298039, 1 )
+corner_radius_top_left = 20
+corner_radius_top_right = 20
+corner_radius_bottom_right = 20
+corner_radius_bottom_left = 20
+
 [node name="PlayerUI" type="CanvasLayer"]
 script = ExtResource( 1 )
 
-[node name="HealthbarContainer" type="HBoxContainer" parent="."]
-anchor_left = 0.05
-anchor_top = 0.044
-anchor_right = 0.05
-anchor_bottom = 0.044
-margin_top = 0.24
-margin_right = 840.0
-margin_bottom = 28.24
+[node name="HBoxContainer" type="HBoxContainer" parent="."]
+margin_left = 32.0
+margin_top = 32.0
+margin_right = 912.0
+margin_bottom = 92.0
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="HPLabel" type="Label" parent="HealthbarContainer"]
+[node name="VBoxContainer" type="VBoxContainer" parent="HBoxContainer"]
+margin_right = 628.0
+margin_bottom = 60.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="HealthbarContainer" type="HBoxContainer" parent="HBoxContainer/VBoxContainer"]
+margin_right = 628.0
+margin_bottom = 28.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="HPLabel" type="Label" parent="HBoxContainer/VBoxContainer/HealthbarContainer"]
 margin_right = 75.0
 margin_bottom = 28.0
 rect_min_size = Vector2( 75, 0 )
@@ -81,9 +103,9 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Healthbar" type="ProgressBar" parent="HealthbarContainer"]
+[node name="Healthbar" type="ProgressBar" parent="HBoxContainer/VBoxContainer/HealthbarContainer"]
 margin_left = 79.0
-margin_right = 378.0
+margin_right = 628.0
 margin_bottom = 28.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
@@ -92,14 +114,14 @@ custom_styles/bg = SubResource( 4 )
 value = 50.0
 percent_visible = false
 
-[node name="HealthbarLabel" type="Label" parent="HealthbarContainer/Healthbar"]
+[node name="HealthbarLabel" type="Label" parent="HBoxContainer/VBoxContainer/HealthbarContainer/Healthbar"]
 anchor_left = 0.503
 anchor_right = 0.503
 margin_left = -149.397
 margin_right = 146.603
 margin_bottom = 28.0
 rect_min_size = Vector2( 75, 0 )
-custom_fonts/font = SubResource( 6 )
+custom_fonts/font = SubResource( 5 )
 text = "10/10"
 align = 1
 valign = 1
@@ -107,9 +129,16 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="XPLabel" type="Label" parent="HealthbarContainer"]
-margin_left = 382.0
-margin_right = 457.0
+[node name="HBoxContainer" type="HBoxContainer" parent="HBoxContainer/VBoxContainer"]
+margin_top = 32.0
+margin_right = 628.0
+margin_bottom = 60.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="XPLabel" type="Label" parent="HBoxContainer/VBoxContainer/HBoxContainer"]
+margin_right = 75.0
 margin_bottom = 28.0
 rect_min_size = Vector2( 75, 0 )
 custom_fonts/font = SubResource( 2 )
@@ -120,25 +149,25 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="XPbar" type="ProgressBar" parent="HealthbarContainer"]
-margin_left = 461.0
-margin_right = 761.0
+[node name="XPbar" type="ProgressBar" parent="HBoxContainer/VBoxContainer/HBoxContainer"]
+margin_left = 79.0
+margin_right = 549.0
 margin_bottom = 28.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
-custom_styles/fg = SubResource( 5 )
+custom_styles/fg = SubResource( 6 )
 custom_styles/bg = SubResource( 4 )
 value = 50.0
 percent_visible = false
 
-[node name="XPbarLabel" type="Label" parent="HealthbarContainer/XPbar"]
+[node name="XPbarLabel" type="Label" parent="HBoxContainer/VBoxContainer/HBoxContainer/XPbar"]
 anchor_left = 0.503
 anchor_right = 0.503
 margin_left = -147.9
 margin_right = 148.1
 margin_bottom = 28.0
 rect_min_size = Vector2( 75, 0 )
-custom_fonts/font = SubResource( 6 )
+custom_fonts/font = SubResource( 5 )
 text = "10/10"
 align = 1
 valign = 1
@@ -146,9 +175,9 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="LvlLabel" type="Label" parent="HealthbarContainer"]
-margin_left = 765.0
-margin_right = 840.0
+[node name="LvlLabel" type="Label" parent="HBoxContainer/VBoxContainer/HBoxContainer"]
+margin_left = 553.0
+margin_right = 628.0
 margin_bottom = 28.0
 rect_min_size = Vector2( 75, 0 )
 custom_fonts/font = SubResource( 2 )
@@ -158,3 +187,38 @@ valign = 1
 __meta__ = {
 "_edit_use_anchors_": false
 }
+
+[node name="SpaceHolder" type="Control" parent="HBoxContainer"]
+margin_left = 632.0
+margin_right = 732.0
+margin_bottom = 60.0
+rect_min_size = Vector2( 100, 0 )
+
+[node name="PanelContainer" type="PanelContainer" parent="HBoxContainer"]
+margin_left = 736.0
+margin_right = 880.0
+margin_bottom = 60.0
+custom_styles/panel = SubResource( 7 )
+
+[node name="HBoxContainer" type="HBoxContainer" parent="HBoxContainer/PanelContainer"]
+margin_right = 144.0
+margin_bottom = 60.0
+rect_min_size = Vector2( 100, 0 )
+
+[node name="PotLabel" type="Label" parent="HBoxContainer/PanelContainer/HBoxContainer"]
+margin_top = 2.0
+margin_right = 70.0
+margin_bottom = 57.0
+rect_min_size = Vector2( 70, 0 )
+size_flags_horizontal = 3
+custom_fonts/font = ExtResource( 2 )
+text = "0"
+align = 2
+
+[node name="TextureRect" type="TextureRect" parent="HBoxContainer/PanelContainer/HBoxContainer"]
+margin_left = 74.0
+margin_right = 144.0
+margin_bottom = 60.0
+rect_min_size = Vector2( 70, 0 )
+texture = ExtResource( 3 )
+stretch_mode = 1
