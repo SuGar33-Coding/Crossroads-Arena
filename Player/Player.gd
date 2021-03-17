@@ -72,6 +72,7 @@ func _physics_process(delta):
 func _on_hurtbox_area_entered(area):
 	dmgEffect.play() 
 	stats.health -= area.damage
+	stats.currentXP += area.damage
 	knockback = area.getKnockbackVector(self.global_position)
 	#TODO: handle invuln
 
