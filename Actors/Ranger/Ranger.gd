@@ -45,6 +45,7 @@ func _physics_process(delta):
 			target = detectionZone.target
 			if(firingRange.targetInRange(target)):
 				state = FIRING
+				animationPlayer.playback_speed = 2.5
 				animationPlayer.play("Wind Up")
 			elif(target != null):
 				direction = global_position.direction_to(target.global_position)
@@ -89,4 +90,5 @@ func fireArrow() -> void:
 	primaryAttackEffect.play()
 
 func _on_AnimationPlayer_animation_finished(anim_name):
+	animationPlayer.playback_speed = 1
 	state = CHASE

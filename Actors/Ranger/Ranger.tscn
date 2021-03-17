@@ -25,6 +25,7 @@ extents = Vector2( 16, 16 )
 
 [sub_resource type="Animation" id=5]
 resource_name = "Damaged"
+length = 0.8
 tracks/0/type = "value"
 tracks/0/path = NodePath("Sprite:modulate")
 tracks/0/interp = 1
@@ -197,6 +198,7 @@ tracks/1/keys = {
 
 [node name="Ranger" type="KinematicBody2D"]
 collision_layer = 4
+collision_mask = 5
 script = ExtResource( 2 )
 
 [node name="Sprite" type="Sprite" parent="."]
