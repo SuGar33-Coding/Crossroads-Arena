@@ -2,11 +2,15 @@ extends Node2D
 
 class_name Room
 
+export(int) var dropPercentage = 50
+
 const Zombie = preload("res://Actors/Zombie/Zombie.tscn")
 const Shanker = preload("res://Actors/Shanker/Shanker.tscn")
 const Ranger = preload("res://Actors/Ranger/Ranger.tscn")
+const HealthPotion = preload("res://Items/HealthPotion.tscn")
 
 onready var spawnPoints = $SpawnPoints
+onready var itemSpawns = $ItemSpawns
 
 # Coordinates of the room in the world
 var row : int
@@ -29,6 +33,13 @@ func _ready():
 					
 			enemy.global_position = spawnPoint.global_position
 			self.add_child(enemy)
+			
+	for itemSpawn in itemSpawns.get_children():
+		var r = randi() % 100
+		if r <= dropPercentage:
+			var healthPot = HealthPotion.instance()
+			healthPot.global_position = itemSpawn.global_position
+			self.add_child(healthPot)
 
 #(Un)pauses a single node
 func set_pause_node(node : Node, pause : bool) -> void:

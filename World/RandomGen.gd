@@ -3,6 +3,8 @@ extends Node2D
 # Preload in all rooms
 const BaseRoom = preload("res://World/Rooms/BaseRoom.tscn")
 const PlusRoom = preload("res://World/Rooms/PlusRoom.tscn")
+const TreasureRoom = preload("res://World/Rooms/TreasureRoom.tscn")
+const StartRoom = preload("res://World/Rooms/HomeRoom.tscn")
 
 export(bool) var scrollCamera = true
 
@@ -41,11 +43,11 @@ func _init():
 			
 	for row in range(startingRow-halfColumnWidth, startingRow+halfColumnWidth+1):
 		for col in range(len(roomTypes[row])):
-			roomTypes[row][col] = randi() % 2 + 1
+			roomTypes[row][col] = self.generateRandomRoomType() 
 			
 	for col in range(startingCol-halfColumnWidth, startingCol+halfColumnWidth+1):
 		for row in range(len(roomTypes)):
-			roomTypes[row][col] = randi() % 2 + 1
+			roomTypes[row][col] = self.generateRandomRoomType() 
 	
 	"""for i in range(len(roomTypes)*len(roomTypes[0])):
 		roomTypes[x][y] = randi() % 2 + 1
@@ -64,6 +66,7 @@ func _ready():
 			#uncomment this for instancing all rooms at once
 			#instanceRoom(row, col)
 			
+	roomTypes[startingRow][startingCol] = 4
 	instanceRoom(startingRow, startingCol)
 	currentRoom = rooms[startingRow][startingCol]
 	mapOverlay.generateMapOverlay(roomTypes)
@@ -89,8 +92,20 @@ func _physics_process(delta):
 	if Input.is_action_just_pressed("addlevel"):
 		PlayerStats.playerLevel += 1
 	
-	if camera.zoom.x <= zoomLimit and camera.zoom.y <= zoomLimit:
+	if camera.zoom.x <= zoomLimit or camera.zoom.y <= zoomLimit:
 		self.setCameraLimitsForRoom(currentRoom)
+
+# Randomly selects and returns a random enum/int that determines room type
+# Sets percentages for each room type
+func generateRandomRoomType() -> int:
+	var r = randi() % 100
+	
+	if r < 45:
+		return 1
+	elif r < 90:
+		return 2
+	else:
+		return 3
 
 # Handles the boundaries of the room in position row, col
 func handleBoundaries(row : int, col : int):
@@ -135,6 +150,10 @@ func instanceRoom(row : int, col : int):
 				room = BaseRoom.instance()
 			2:
 				room = PlusRoom.instance()
+			3:
+				room = TreasureRoom.instance()
+			4:
+				room = StartRoom.instance()
 		room.row = row
 		room.col = col
 		# Multiply by room size, shift back so centered, shift back again so that the central room is centered
