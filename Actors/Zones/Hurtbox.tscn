@@ -1,0 +1,13 @@
+[gd_scene load_steps=2 format=2]
+
+[sub_resource type="CapsuleShape2D" id=1]
+radius = 7.46734
+height = 13.2342
+
+[node name="Hurtbox" type="Area2D"]
+collision_layer = 0
+collision_mask = 16
+
+[node name="HurtboxCollision" type="CollisionShape2D" parent="."]
+position = Vector2( 0, -3 )
+shape = SubResource( 1 )
