@@ -11,6 +11,7 @@ const Arrow = preload("res://Weapons/Arrow.tscn")
 var velocity := Vector2.ZERO
 var knockback := Vector2.ZERO
 var recentlyAttacked := false
+var camera : MainCamera
 
 
 onready var sprite = $Sprite
@@ -31,6 +32,8 @@ func _ready():
 	stats.healthIncrease = maxPlayerHealth
 	swipe.frame = 0
 	stats.connectNoHealth(self)
+	
+	camera = get_node("../MainCamera")
 
 func _physics_process(delta):	
 	knockback = knockback.move_toward(Vector2.ZERO, FRICTION * delta)
@@ -74,6 +77,7 @@ func _on_hurtbox_area_entered(area):
 	stats.health -= area.damage
 	stats.currentXP += area.damage
 	knockback = area.getKnockbackVector(self.global_position)
+	camera.add_trauma(.4)
 	#TODO: handle invuln
 
 func fireArrow() -> void:
@@ -81,8 +85,9 @@ func fireArrow() -> void:
 	var world = get_tree().current_scene
 	# Have to set it before you add it as a child otherwise the room area's think you are exiting them
 	arrow.global_position = hitboxCollision.global_position
-	arrow.fire(hitboxCollision.global_position, self.global_rotation + deg2rad(-90), true)
 	world.add_child(arrow)
+	arrow.fire(hitboxCollision.global_position, self.global_rotation + deg2rad(-90), true)
+	
 
 func _playerstats_no_health():
 	# When Player dies, return to main menu TODO: Change this

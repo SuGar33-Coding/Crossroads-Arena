@@ -1,9 +1,23 @@
 extends Camera2D
 
+class_name MainCamera
 
 onready var topLeft = $Limits/TopLeft
 onready var bottomRight = $Limits/BottomRight
 onready var tween = $Tween
+
+# Camera shake stuff
+export var decay = 1
+export var max_offset = Vector2(100,75)
+export var max_roll = .1
+export (NodePath) var target
+
+var noise = OpenSimplexNoise.new()
+
+var trauma = 0.0
+var trauma_power = 2
+var noise_y = 0
+
 
 var tweenDuration = .5
 
@@ -16,6 +30,17 @@ enum {
 
 func _ready():
 	setLimitsToPositions()
+	randomize()
+	noise.seed = randi()
+	noise.period = 4
+	noise.octaves = 2
+	
+func _process(delta):
+	if target:
+		global_position = get_node(target).global_position
+	if trauma:
+		trauma = max(trauma - decay * delta, 0)
+		shake()
 	
 func transitionToRoom(topLeftVal, bottomRightVal, direction):
 	var viewPortSize = get_viewport().get_visible_rect().size * self.zoom
@@ -52,3 +77,14 @@ func setLimitsToPositions():
 
 func _on_Tween_tween_all_completed():
 	setLimitsToPositions()
+
+func add_trauma(amount):
+	trauma = min(trauma + amount, 1.0)
+	
+func shake():
+	var amount = pow(trauma, trauma_power)
+	noise_y += 1
+	rotation = max_roll * amount * noise.get_noise_2d(noise.seed, noise_y)
+	offset.x = max_offset.x * amount * noise.get_noise_2d(noise.seed*2, noise_y)
+	offset.y = max_offset.y * amount * noise.get_noise_2d(noise.seed*3, noise_y)
+	

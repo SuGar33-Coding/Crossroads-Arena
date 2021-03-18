@@ -27,28 +27,28 @@ extents = Vector2( 16, 16 )
 resource_name = "Damaged"
 length = 0.8
 tracks/0/type = "value"
-tracks/0/path = NodePath("Sprite:modulate")
+tracks/0/path = NodePath("Sprite:scale")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/imported = false
 tracks/0/enabled = true
 tracks/0/keys = {
-"times": PoolRealArray( 0, 0.2, 0.4, 0.6, 0.8 ),
-"transitions": PoolRealArray( 1, 1, 1, 1, 1 ),
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
 "update": 0,
-"values": [ Color( 0.203922, 0.462745, 0.486275, 1 ), Color( 0.905882, 0.223529, 0.109804, 1 ), Color( 0.203922, 0.462745, 0.486275, 1 ), Color( 0.862745, 0.317647, 0.227451, 1 ), Color( 0.203922, 0.462745, 0.486275, 1 ) ]
+"values": [ Vector2( 1, 1 ) ]
 }
 tracks/1/type = "value"
-tracks/1/path = NodePath("Sprite:scale")
+tracks/1/path = NodePath("Sprite:modulate")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/imported = false
 tracks/1/enabled = true
 tracks/1/keys = {
-"times": PoolRealArray( 0 ),
-"transitions": PoolRealArray( 1 ),
+"times": PoolRealArray( 0, 0.2, 0.4, 0.6, 0.8 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1 ),
 "update": 0,
-"values": [ Vector2( 1, 1 ) ]
+"values": [ Color( 0.203922, 0.462745, 0.486275, 1 ), Color( 0.905882, 0.223529, 0.109804, 1 ), Color( 0.203922, 0.462745, 0.486275, 1 ), Color( 0.862745, 0.317647, 0.227451, 1 ), Color( 0.203922, 0.462745, 0.486275, 1 ) ]
 }
 
 [sub_resource type="Animation" id=6]
@@ -168,7 +168,7 @@ tracks/3/keys = {
 }
 
 [sub_resource type="Animation" id=8]
-length = 2.7
+length = 1.1
 tracks/0/type = "value"
 tracks/0/path = NodePath("Sprite:modulate")
 tracks/0/interp = 1
@@ -176,7 +176,7 @@ tracks/0/loop_wrap = true
 tracks/0/imported = false
 tracks/0/enabled = true
 tracks/0/keys = {
-"times": PoolRealArray( 0, 2.5, 2.7 ),
+"times": PoolRealArray( 0, 1, 1.08 ),
 "transitions": PoolRealArray( 1.36604, 1, 1 ),
 "update": 0,
 "values": [ Color( 0.203922, 0.462745, 0.486275, 1 ), Color( 0.152941, 0.160784, 0.160784, 1 ), Color( 0.203922, 0.462745, 0.486275, 1 ) ]
@@ -188,7 +188,7 @@ tracks/1/loop_wrap = true
 tracks/1/imported = false
 tracks/1/enabled = true
 tracks/1/keys = {
-"times": PoolRealArray( 2.5 ),
+"times": PoolRealArray( 1 ),
 "transitions": PoolRealArray( 1 ),
 "values": [ {
 "args": [  ],

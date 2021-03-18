@@ -34,6 +34,11 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://Items/Item.gd"
 }, {
+"base": "Camera2D",
+"class": "MainCamera",
+"language": "GDScript",
+"path": "res://World/Camera2D.gd"
+}, {
 "base": "Node2D",
 "class": "Room",
 "language": "GDScript",
@@ -55,6 +60,7 @@ _global_script_class_icons={
 "HealthPotion": "",
 "Hitbox": "",
 "Item": "",
+"MainCamera": "",
 "Room": "",
 "RoomArea": "",
 "Stats": ""
