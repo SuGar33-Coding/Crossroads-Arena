@@ -69,7 +69,7 @@ _global_script_class_icons={
 [application]
 
 config/name="The Grand Battle Arena"
-run/main_scene="res://UI/StartMenu/StartMenu.tscn"
+run/main_scene="res://TestWorld.tscn"
 config/icon="res://icon.png"
 
 [autoload]
