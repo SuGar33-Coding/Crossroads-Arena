@@ -111,4 +111,7 @@ anims/MeleeAttack = SubResource( 2 )
 [node name="DamagedPlayer" type="AnimationPlayer" parent="."]
 anims/Damaged = SubResource( 4 )
 
+[node name="DashTimer" type="Timer" parent="."]
+one_shot = true
+
 [editable path="AttackPivot"]

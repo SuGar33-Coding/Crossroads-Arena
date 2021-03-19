@@ -4,10 +4,14 @@ export(int) var maxPlayerHealth = 1
 export(int) var startingLevel = 1
 export var MaxSpeed = 275
 export var Acceleration = 2000
-export var Friction = 1000
+export var Friction = 2000
+export var dashSpeed := 500
+export var dashDelay := .75
 
 var velocity := Vector2.ZERO
-var knockback = Vector2.ZERO
+var knockback := Vector2.ZERO
+var dashVector := Vector2.ZERO
+
 
 onready var stats = get_node("/root/PlayerStats")
 onready var sprite := $Sprite
@@ -15,6 +19,7 @@ onready var attackPivot := $AttackPivot
 onready var hurtbox := $Hurtbox
 onready var camera := $MainCamera
 onready var damagedPlayer := $DamagedPlayer
+onready var dashTimer := $DashTimer
 
 func _ready():
 	Engine.set_target_fps(Engine.get_iterations_per_second())
@@ -32,13 +37,19 @@ func _physics_process(delta):
 	knockback = knockback.move_toward(Vector2.ZERO, Friction * delta)
 	knockback = move_and_slide(knockback)
 	
+	dashVector = dashVector.move_toward(Vector2.ZERO, Friction * delta)
+	dashVector = move_and_slide(dashVector)
+	
 	var inputVector = Vector2.ZERO
 
 	inputVector.x = Input.get_action_strength("right") - Input.get_action_strength("left")
 	inputVector.y = Input.get_action_strength("down") - Input.get_action_strength("up")
 	inputVector = inputVector.normalized()
-
-	if inputVector != Vector2.ZERO:
+	
+	if Input.is_action_just_pressed("dash") and dashTimer.is_stopped():
+		dashVector = inputVector * dashSpeed
+		dashTimer.start(dashDelay)
+	elif inputVector != Vector2.ZERO:
 		velocity = velocity.move_toward(inputVector * MaxSpeed, Acceleration * delta)
 	else:
 		velocity = velocity.move_toward(Vector2.ZERO, Friction * delta)
