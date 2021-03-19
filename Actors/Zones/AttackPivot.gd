@@ -9,7 +9,7 @@ onready var restingPos := $MeleeRestingPos
 onready var swipe := $Swipe
 onready var tween := $WeaponTween
 onready var collision := $WeaponHitbox/WeaponCollision
-onready var weaponHitbox := $WeaponHitbox
+onready var weaponHitbox : WeaponHitbox = $WeaponHitbox
 onready var restingRotation = weapon.rotation
 
 var swordAnimDist

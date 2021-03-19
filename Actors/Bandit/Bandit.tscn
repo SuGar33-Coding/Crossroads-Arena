@@ -73,6 +73,18 @@ tracks/4/keys = {
 "update": 1,
 "values": [ 0 ]
 }
+tracks/5/type = "value"
+tracks/5/path = NodePath("AttackPivot/WeaponHitbox/ParryHitbox/ParryCollision:disabled")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ true ]
+}
 
 [sub_resource type="Animation" id=1]
 resource_name = "MeleeAttack"
@@ -123,7 +135,7 @@ tracks/3/loop_wrap = true
 tracks/3/imported = false
 tracks/3/enabled = true
 tracks/3/keys = {
-"times": PoolRealArray( 0, 0.42, 0.5 ),
+"times": PoolRealArray( 0, 0.44, 0.5 ),
 "transitions": PoolRealArray( 1, 1, 1 ),
 "update": 1,
 "values": [ true, false, true ]
@@ -142,6 +154,18 @@ tracks/4/keys = {
 "method": "startAttack"
 } ]
 }
+tracks/5/type = "value"
+tracks/5/path = NodePath("AttackPivot/WeaponHitbox/ParryHitbox/ParryCollision:disabled")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/keys = {
+"times": PoolRealArray( 0, 0.39, 0.5 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 1,
+"values": [ true, false, true ]
+}
 
 [node name="Bandit" instance=ExtResource( 1 )]
 script = ExtResource( 3 )
@@ -154,9 +178,7 @@ texture = ExtResource( 2 )
 maxHealth = 5
 
 [node name="DetectionZone" parent="." index="4" instance=ExtResource( 5 )]
-
-[node name="CollisionShape2D" parent="DetectionZone" index="0"]
-visible = false
+detectionRange = 250
 
 [node name="AttackPivot" parent="." index="5" instance=ExtResource( 6 )]
 

@@ -1,6 +1,17 @@
 extends Area2D
 
+export(int) var detectionRange = 300
+
 var target: KinematicBody2D = null
+
+onready var collision = $CollisionShape2D
+
+func _ready():
+	# Allow user to set detectionRange in the editor
+	# Editing the actual circle resource made it a global change
+	var shape : CircleShape2D = CircleShape2D.new()
+	shape.radius = detectionRange
+	collision.shape = shape
 
 func hasTarget() -> bool:
 	return target != null

@@ -3,12 +3,13 @@
 [ext_resource path="res://Actors/Zones/DetectionZone.gd" type="Script" id=1]
 
 [sub_resource type="CircleShape2D" id=1]
-radius = 1000.0
+radius = 150.0
 
 [node name="DetectionZone" type="Area2D"]
 collision_layer = 0
 collision_mask = 2
 script = ExtResource( 1 )
+detectionRange = 100
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource( 1 )

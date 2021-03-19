@@ -4,11 +4,13 @@ var weaponStats : WeaponStats
 
 onready var detectionZone := $DetectionZone
 onready var attackPivot := $AttackPivot
-onready var meleeHitbox := $AttackPivot/WeaponHitbox
+onready var weaponHitbox := $AttackPivot/WeaponHitbox
 onready var animationPlayer := $AnimationPlayer
 
 func _ready():
-	weaponStats = meleeHitbox.weaponStats
+	weaponStats = weaponHitbox.weaponStats
+	weaponHitbox.connect("parried", self, "_weapon_parried")
+	
 	
 func lookAtTarget():
 	attackPivot.lookAtTarget(detectionZone.target.position)
@@ -40,10 +42,21 @@ func _hurtbox_area_entered(area : WeaponHitbox):
 	# Only play damaged if we're not dead
 	if(stats.health >= 1):
 		animationPlayer.stop(true)
+		animationPlayer.playback_speed = 1
 		animationPlayer.play("Damaged")
+
+# Handle actor's weapon being parried by player
+func _weapon_parried(area : WeaponHitbox):
+	state = State.STUN
+	knockback = area.getKnockbackVector(self.global_position)
+	animationPlayer.stop(true)
+	animationPlayer.playback_speed = .3
+	animationPlayer.play("Damaged")
+	
 	
 func switchToAttack():
 	.switchToAttack()
+	animationPlayer.playback_speed = 1
 	animationPlayer.play("MeleeAttack")
 
 
