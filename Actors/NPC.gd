@@ -10,7 +10,8 @@ export var Friction: float = 1000
 enum State {
 	IDLE,
 	CHASE,
-	ATTACK
+	ATTACK,
+	STUN
 }
 
 var state = State.IDLE
@@ -45,6 +46,8 @@ func _physics_process(delta):
 					switchToAttack()
 				velocity = movement.getMovementVelocity(self, target, delta)
 		State.ATTACK:
+			velocity = movement.getIdleVelocity(self, delta)
+		State.STUN:
 			velocity = movement.getIdleVelocity(self, delta)
 	
 	if velocity.x < 0:
@@ -83,6 +86,7 @@ func flipRight():
 	pass
 	
 func _hurtbox_area_entered(area : WeaponHitbox):
+	state = State.STUN
 	stats.health -= area.damage
 	knockback = area.getKnockbackVector(self.global_position)
 

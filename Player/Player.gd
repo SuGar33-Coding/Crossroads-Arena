@@ -2,24 +2,22 @@ extends KinematicBody2D
 
 export(int) var maxPlayerHealth = 1
 export(int) var startingLevel = 1
-export var MAX_SPEED = 275
-export var ACCEL = 2000
-export var FRICTION = 1000
+export var MaxSpeed = 275
+export var Acceleration = 2000
+export var Friction = 1000
 
 var velocity := Vector2.ZERO
-var restingPosStart
+var knockback = Vector2.ZERO
 
 onready var stats = get_node("/root/PlayerStats")
 onready var sprite := $Sprite
-onready var pivot := $AttackPivot
-onready var weapon := $AttackPivot/MeleeRestingPos/Weapon
-onready var restingPos := $AttackPivot/MeleeRestingPos
+onready var attackPivot := $AttackPivot
 onready var hurtbox := $Hurtbox
 onready var camera := $MainCamera
+onready var damagedPlayer := $DamagedPlayer
 
 func _ready():
 	Engine.set_target_fps(Engine.get_iterations_per_second())
-	restingPosStart = restingPos.position
 	
 	stats.maxHealth = maxPlayerHealth
 	stats.health = maxPlayerHealth
@@ -30,7 +28,9 @@ func _ready():
 	stats.connect("noHealth", self, "_playerstats_no_health")
 	hurtbox.connect("area_entered", self, "_hurtbox_area_entered")
 
-func _physics_process(delta):	
+func _physics_process(delta):
+	knockback = knockback.move_toward(Vector2.ZERO, Friction * delta)
+	knockback = move_and_slide(knockback)
 	
 	var inputVector = Vector2.ZERO
 
@@ -39,20 +39,20 @@ func _physics_process(delta):
 	inputVector = inputVector.normalized()
 
 	if inputVector != Vector2.ZERO:
-		velocity = velocity.move_toward(inputVector * MAX_SPEED, ACCEL * delta)
+		velocity = velocity.move_toward(inputVector * MaxSpeed, Acceleration * delta)
 	else:
-		velocity = velocity.move_toward(Vector2.ZERO, FRICTION * delta)
+		velocity = velocity.move_toward(Vector2.ZERO, Friction * delta)
 
 	# Make sprite turn towards mouse
 	var mousePos = self.get_global_mouse_position()
 	if mousePos.x < global_position.x:
 		sprite.flip_h = true
-		$AttackPivot.scale.y = -1
+		attackPivot.scale.y = -1
 	else:
 		sprite.flip_h = false
-		$AttackPivot.scale.y = 1
+		attackPivot.scale.y = 1
 		
-	pivot.look_at(mousePos)
+	attackPivot.look_at(mousePos)
 		
 	velocity = move_and_slide(velocity)
 
@@ -60,6 +60,8 @@ func _hurtbox_area_entered(area : WeaponHitbox):
 	stats.health -= area.damage
 	stats.currentXP += area.damage
 	camera.add_trauma(.4)
+	knockback = area.getKnockbackVector(self.global_position)
+	damagedPlayer.play("Damaged")
 
 func _playerstats_no_health():
 	# When Player dies, return to main menu TODO: Change this
