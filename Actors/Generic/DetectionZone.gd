@@ -2,8 +2,6 @@ extends Area2D
 
 var target = null
 
-onready var myBody = self.get_parent()
-
 func can_see_target():
 	return target != null
 	

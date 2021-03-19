@@ -1,0 +1,37 @@
+[gd_scene load_steps=5 format=2]
+
+[ext_resource path="res://Actors/Zones/AttackPivot.gd" type="Script" id=1]
+[ext_resource path="res://Assets/TGBA swipe.png" type="Texture" id=4]
+[ext_resource path="res://Assets/WeaponAssets/Item__12.png" type="Texture" id=5]
+[ext_resource path="res://Actors/Zones/WeaponHitbox.tscn" type="PackedScene" id=6]
+
+[node name="AttackPivot" type="Position2D"]
+position = Vector2( 0, -5 )
+script = ExtResource( 1 )
+
+[node name="WeaponHitbox" parent="." instance=ExtResource( 6 )]
+
+[node name="Swipe" type="Sprite" parent="."]
+position = Vector2( 28.731, 0 )
+rotation = 1.5708
+scale = Vector2( 0.6, 1.5 )
+texture = ExtResource( 4 )
+flip_h = true
+hframes = 10
+frame = 5
+
+[node name="WeaponTween" type="Tween" parent="."]
+
+[node name="BackTween" type="Tween" parent="."]
+
+[node name="MeleeRestingPos" type="Position2D" parent="."]
+position = Vector2( 6.44608, -8.35962 )
+
+[node name="Weapon" type="Sprite" parent="MeleeRestingPos"]
+rotation = -0.523599
+z_index = -1
+texture = ExtResource( 5 )
+flip_h = true
+[connection signal="tween_completed" from="WeaponTween" to="." method="_on_WeaponTween_tween_completed"]
+
+[editable path="WeaponHitbox"]

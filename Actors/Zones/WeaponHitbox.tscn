@@ -1,0 +1,19 @@
+[gd_scene load_steps=4 format=2]
+
+[ext_resource path="res://Actors/Zones/WeaponHitbox.gd" type="Script" id=1]
+[ext_resource path="res://Weapons/BaseSword.tres" type="Resource" id=2]
+
+[sub_resource type="CapsuleShape2D" id=1]
+height = 0.0
+
+[node name="WeaponHitbox" type="Area2D"]
+collision_layer = 0
+collision_mask = 16
+script = ExtResource( 1 )
+weaponStatsResource = ExtResource( 2 )
+
+[node name="WeaponCollision" type="CollisionShape2D" parent="."]
+position = Vector2( 28, 0 )
+rotation = 1.5708
+shape = SubResource( 1 )
+disabled = true

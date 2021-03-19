@@ -10,7 +10,6 @@ onready var tween = $Tween
 export var decay = 1
 export var max_offset = Vector2(100,75)
 export var max_roll = .1
-export (NodePath) var target
 
 var noise = OpenSimplexNoise.new()
 
@@ -36,8 +35,6 @@ func _ready():
 	noise.octaves = 2
 	
 func _process(delta):
-	if target:
-		global_position = get_node(target).global_position
 	if trauma:
 		trauma = max(trauma - decay * delta, 0)
 		shake()

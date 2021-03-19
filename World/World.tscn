@@ -3,7 +3,8 @@
 [ext_resource path="res://Player/[Old]Player.tscn" type="PackedScene" id=1]
 [ext_resource path="res://UI/MapOverlay.tscn" type="PackedScene" id=2]
 [ext_resource path="res://World/RandomGen.gd" type="Script" id=3]
-[ext_resource path="res://World/Camera2D.tscn" type="PackedScene" id=4]
+[ext_resource path="res://World/PlayerCamera.tscn" type="PackedScene" id=4]
+
 
 
 [node name="World" type="Node2D"]

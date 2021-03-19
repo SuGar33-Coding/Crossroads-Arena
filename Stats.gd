@@ -26,7 +26,6 @@ func setHealth(value):
 	emit_signal("healthChanged", health)
 	if (health <= 0):
 		emit_signal("noHealth")
-		get_parent().queue_free()
 		
 func getHealth():
 	return health

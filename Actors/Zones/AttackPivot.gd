@@ -1,13 +1,15 @@
 extends Position2D
 
+class_name AttackPivot
+
 export var swingDegrees := 80.0
 
 onready var weapon := $MeleeRestingPos/Weapon
 onready var restingPos := $MeleeRestingPos
 onready var swipe := $Swipe
 onready var tween := $WeaponTween
-onready var collision := $Hitbox/HitboxCollision
-
+onready var collision := $WeaponHitbox/WeaponCollision
+onready var weaponHitbox := $WeaponHitbox
 onready var restingRotation = weapon.rotation
 
 var swordAnimDist
@@ -15,13 +17,21 @@ var tweenLength
 
 func _ready():
 	swordAnimDist = collision.global_position - restingPos.global_position
+	swipe.frame = 0
+	
+	var weaponStats : WeaponStats = weaponHitbox.weaponStats
+	weapon.texture = weaponStats.texture
+	
+	swipe.position = collision.position
+	swipe.scale.x = .6 * (weaponStats.radius)/10
+	swipe.scale.y = 1.5 * (weaponStats.length/2 + weaponStats.radius)/10
 
 # Rotate pivot to look at target position
 func lookAtTarget(targetPos: Vector2):
 	self.look_at(targetPos)
 
-func startAttack(tweenLength: float):
-		self.tweenLength = tweenLength
+func startAttack(animLength: float):
+		self.tweenLength = animLength/2
 		swipe.set_deferred("flip_h", not swipe.flip_h)
 		tween.interpolate_property(weapon, "position", Vector2.ZERO, swordAnimDist, tweenLength)
 		var endRotation = restingRotation + deg2rad(swingDegrees) 
