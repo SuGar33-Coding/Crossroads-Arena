@@ -39,6 +39,11 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://World/Camera2D.gd"
 }, {
+"base": "Resource",
+"class": "Movement",
+"language": "GDScript",
+"path": "res://Actors/Movement.gd"
+}, {
 "base": "Node2D",
 "class": "Room",
 "language": "GDScript",
@@ -61,6 +66,7 @@ _global_script_class_icons={
 "Hitbox": "",
 "Item": "",
 "MainCamera": "",
+"Movement": "",
 "Room": "",
 "RoomArea": "",
 "Stats": ""

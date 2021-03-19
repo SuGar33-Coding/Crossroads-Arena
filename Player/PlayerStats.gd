@@ -97,7 +97,7 @@ func getItemOfType(name : String) -> Item:
 			
 	return null
 
-func _on_hurtbox_area_entered(area):
+func _on_hurtbox_area_entered(_area):
 	self.health -= 1
 
 func connectHealthChanged(node):

@@ -31,5 +31,5 @@ func setHealth(value):
 func getHealth():
 	return health
 
-func _on_hurtbox_area_entered(area):
+func _on_hurtbox_area_entered(_area):
 	self.health -= 1
