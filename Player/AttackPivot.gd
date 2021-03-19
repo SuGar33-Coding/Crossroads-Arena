@@ -16,24 +16,20 @@ var swordAnimDist
 func _ready():
 	swordAnimDist = collision.global_position - restingPos.global_position
 
-func _physics_process(delta):
-	
-	# Make sword pivot to correct position
-	var toMouse = restingPos.global_position.direction_to(get_global_mouse_position())
+func _physics_process(_delta):
 	
 	self.look_at(get_global_mouse_position())
 	
 	if Input.is_action_just_pressed("attack"):
 		swipe.set_deferred("flip_h", not swipe.flip_h)
 		animationPlayer.play("MeleeAttack")
-		weapon.z_index = not weapon.z_index
 		var tweenLength = animationPlayer.current_animation_length/2		
 		tween.interpolate_property(weapon, "position", Vector2.ZERO, swordAnimDist, tweenLength)
 		var endRotation = restingRotation + deg2rad(swingDegrees) 
 			
 		tween.interpolate_property(weapon, "rotation", restingRotation, endRotation, tweenLength)
 		
-		tween.interpolate_property(weapon, "z_index", weapon.z_index, weapon.z_index, tweenLength)
+		tween.interpolate_property(weapon, "z_index", weapon.z_index, weapon.z_index * -1, tweenLength)
 		tween.start()
 
 

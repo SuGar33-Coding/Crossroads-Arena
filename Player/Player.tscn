@@ -7,11 +7,11 @@
 [ext_resource path="res://Assets/TGBA swipe.png" type="Texture" id=5]
 [ext_resource path="res://Assets/WeaponAssets/Item__00.png" type="Texture" id=6]
 
-[sub_resource type="CapsuleShape2D" id=2]
+[sub_resource type="CapsuleShape2D" id=1]
 radius = 5.5
 height = 5.0
 
-[sub_resource type="CapsuleShape2D" id=1]
+[sub_resource type="CapsuleShape2D" id=2]
 radius = 15.4091
 height = 10.5629
 
@@ -51,7 +51,7 @@ script = ExtResource( 2 )
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2( 0, 6 )
 rotation = 1.5708
-shape = SubResource( 2 )
+shape = SubResource( 1 )
 
 [node name="Sprite" type="Sprite" parent="."]
 position = Vector2( 1, -5 )
@@ -66,9 +66,9 @@ collision_layer = 0
 collision_mask = 32
 
 [node name="HitboxCollision" type="CollisionShape2D" parent="AttackPivot/Hitbox"]
-position = Vector2( 28.3732, -3.37323 )
+position = Vector2( 28, 0 )
 rotation = 1.5708
-shape = SubResource( 1 )
+shape = SubResource( 2 )
 disabled = true
 
 [node name="Swipe" type="Sprite" parent="AttackPivot"]
@@ -76,6 +76,7 @@ position = Vector2( 28.7307, -3.77008 )
 rotation = 1.5708
 scale = Vector2( 0.913189, 2.92224 )
 texture = ExtResource( 5 )
+flip_h = true
 hframes = 10
 
 [node name="WeaponTween" type="Tween" parent="AttackPivot"]
@@ -87,7 +88,7 @@ position = Vector2( 6.44608, -8.35962 )
 
 [node name="Weapon" type="Sprite" parent="AttackPivot/MeleeRestingPos"]
 rotation = 1.0472
-z_index = 1
+z_index = -1
 texture = ExtResource( 6 )
 
 [node name="Hurtbox" parent="." instance=ExtResource( 4 )]
