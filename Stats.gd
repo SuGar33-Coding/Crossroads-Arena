@@ -4,7 +4,7 @@ class_name Stats
 
 export(int) var maxHealth = 1 setget setMaxHealth, getMaxHealth
 
-var health = 0 setget setHealth, getHealth
+var health = 1 setget setHealth, getHealth
 
 signal noHealth
 signal healthChanged(value)
@@ -26,6 +26,7 @@ func setHealth(value):
 	emit_signal("healthChanged", health)
 	if (health <= 0):
 		emit_signal("noHealth")
+		get_parent().queue_free()
 		
 func getHealth():
 	return health

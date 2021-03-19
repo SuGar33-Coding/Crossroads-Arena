@@ -1,10 +1,10 @@
 extends Position2D
 
-export var swingDegrees := 65.0
+export var swingDegrees := 80.0
 
 onready var animationPlayer := get_node("../AnimationPlayer")
-onready var weapon := get_node("../RestingPivot/MeleeRestingPos/Weapon")
-onready var restingPos := get_node("../RestingPivot/MeleeRestingPos")
+onready var weapon := $MeleeRestingPos/Weapon
+onready var restingPos := $MeleeRestingPos
 onready var swipe := $Swipe
 onready var tween := $WeaponTween
 onready var collision := $Hitbox/HitboxCollision
@@ -18,6 +18,11 @@ func _ready():
 
 func _physics_process(delta):
 	
+	# Make sword pivot to correct position
+	var toMouse = restingPos.global_position.direction_to(get_global_mouse_position())
+	
+	self.look_at(get_global_mouse_position())
+	
 	if Input.is_action_just_pressed("attack"):
 		swipe.set_deferred("flip_h", not swipe.flip_h)
 		animationPlayer.play("MeleeAttack")
@@ -28,15 +33,14 @@ func _physics_process(delta):
 			
 		tween.interpolate_property(weapon, "rotation", restingRotation, endRotation, tweenLength)
 		
-		tween.interpolate_property(weapon, "z_index", weapon.z_index, not weapon.z_index, tweenLength)
+		tween.interpolate_property(weapon, "z_index", weapon.z_index, weapon.z_index, tweenLength)
 		tween.start()
 
 
 func _on_WeaponTween_tween_completed(object, key):
-	var backTween = Tween.new()
+	var backTween = $BackTween
 	var tweenLength = animationPlayer.current_animation_length/2
 	
 	backTween.interpolate_property(weapon, "position", weapon.position, Vector2.ZERO, animationPlayer.current_animation_length/2, Tween.TRANS_LINEAR, Tween.EASE_IN_OUT)
 	backTween.interpolate_property(weapon, "rotation", weapon.rotation, restingRotation, tweenLength)
-	self.add_child(backTween)
 	backTween.start()

@@ -10,8 +10,8 @@ var restingPosStart
 
 onready var sprite := $Sprite
 onready var pivot := $AttackPivot
-onready var weapon := $RestingPivot/MeleeRestingPos/Weapon
-onready var restingPos := $RestingPivot/MeleeRestingPos
+onready var weapon := $AttackPivot/MeleeRestingPos/Weapon
+onready var restingPos := $AttackPivot/MeleeRestingPos
 
 func _ready():
 	Engine.set_target_fps(Engine.get_iterations_per_second())
@@ -34,11 +34,11 @@ func _physics_process(delta):
 	var mousePos = self.get_global_mouse_position()
 	if mousePos.x < global_position.x:
 		sprite.flip_h = true
-		$RestingPivot.scale.y = -1
+		#$RestingPivot.scale.y = -1
 		$AttackPivot.scale.y = -1
 	else:
 		sprite.flip_h = false
-		$RestingPivot.scale.y = 1
+		#$RestingPivot.scale.y = 1
 		$AttackPivot.scale.y = 1
 		
 	pivot.look_at(mousePos)
