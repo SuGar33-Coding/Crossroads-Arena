@@ -6,6 +6,7 @@ export var movementResource: Resource
 export var MaxSpeed: float = 175
 export var Acceleration: float = 1000
 export var Friction: float = 1000
+export var debug: bool = false
 
 enum State {
 	IDLE,
@@ -29,6 +30,8 @@ func _ready():
 	stats.connect("noHealth", self, "_stats_no_health")
 	
 func _physics_process(delta):
+	if debug:
+		update()
 	knockback = knockback.move_toward(Vector2.ZERO, Friction * delta)
 	knockback = move_and_slide(knockback)
 	
@@ -57,6 +60,18 @@ func _physics_process(delta):
 		flipRight()
 		
 	velocity = move_and_slide(velocity)
+
+func _draw():
+	if debug:
+		# Draw some debug info
+		var color = Color(1,0,0)
+		draw_line(Vector2.ZERO, velocity, color)
+		draw_line(velocity, velocity - velocity.rotated(deg2rad(-30)) * 0.1, color)
+		draw_line(velocity, velocity - velocity.rotated(deg2rad(30)) * 0.1, color)
+		
+		var label = Label.new()
+		var font = label.get_font("")
+		draw_string(font, Vector2(-15,-25), State.keys()[state], Color(1,1,1))
 	
 func lookAtTarget():
 	pass
