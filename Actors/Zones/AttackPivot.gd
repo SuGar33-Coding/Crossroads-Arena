@@ -14,12 +14,13 @@ onready var restingRotation = weapon.rotation
 
 var swordAnimDist
 var tweenLength
+var weaponStats : WeaponStats
 
 func _ready():
 	swordAnimDist = collision.global_position - restingPos.global_position
 	swipe.frame = 0
 	
-	var weaponStats : WeaponStats = weaponHitbox.weaponStats
+	weaponStats = weaponHitbox.weaponStats
 	weapon.texture = weaponStats.texture
 	
 	swipe.position = collision.position

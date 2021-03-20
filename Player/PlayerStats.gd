@@ -3,7 +3,8 @@ extends Node
 export(int) var maxHealth = 1 setget setMaxHealth, getMaxHealth
 export(int) var playerLevel = 1 setget setPlayerLevel
 export(int) var currentXP = 0 setget setCurrentXP, getCurrentXP
-export(float) var attackSpeed = .5
+# AttackSpeed starts at 1 and then will slowly scale down as it's multiplied by weapon attack speed
+export(float) var attackSpeed = 1
 
 signal noHealth
 signal healthChanged(value)

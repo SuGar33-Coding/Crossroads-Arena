@@ -9,4 +9,5 @@ damage = 1
 knockbackValue = 350
 length = 30.0
 radius = 20.0
+attackSpeed = 0.5
 texture = ExtResource( 2 )

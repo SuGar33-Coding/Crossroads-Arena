@@ -6,7 +6,7 @@ onready var detectionZone := $DetectionZone
 onready var attackPivot := $AttackPivot
 onready var weaponHitbox := $AttackPivot/WeaponHitbox
 onready var animationPlayer := $AnimationPlayer
-onready var attackTimer := $AttackTimer
+onready var attackTimer := $AttackPivot/AttackTimer
 onready var moveDirTimer := $MoveDirTimer
 
 var sinX = rand_range(0, TAU)

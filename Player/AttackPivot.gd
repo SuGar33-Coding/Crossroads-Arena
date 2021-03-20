@@ -3,6 +3,7 @@ extends AttackPivot
 # TODO: Make this a signal call
 onready var animationPlayer := get_node("../AnimationPlayer")
 onready var parryHitbox := $WeaponHitbox/ParryHitbox
+onready var attackTimer := $AttackTimer
 
 func _ready():
 	parryHitbox.connect("area_entered", self, "_parried_weapon")
@@ -13,8 +14,9 @@ func _physics_process(_delta):
 	self.lookAtTarget(get_global_mouse_position())
 	
 	if not animationPlayer.is_playing():
-		if Input.is_action_just_pressed("attack"):
+		if Input.is_action_just_pressed("attack") and attackTimer.is_stopped():
 			animationPlayer.play("MeleeAttack")
+			attackTimer.start(weaponStats.attackSpeed * PlayerStats.attackSpeed)
 			
 			var animLength = animationPlayer.current_animation_length
 			self.startAttack(animLength)
