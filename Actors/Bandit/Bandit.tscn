@@ -195,6 +195,8 @@ anims/MeleeAttack = SubResource( 2 )
 [node name="AttackTimer" type="Timer" parent="." index="7"]
 one_shot = true
 
+[node name="MoveDirTimer" type="Timer" parent="." index="8"]
+
 [editable path="DetectionZone"]
 
 [editable path="AttackPivot"]

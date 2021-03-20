@@ -13,7 +13,7 @@ func getMovementDirection(sourcePos: Vector2, targetPos: Vector2):
 	return sourcePos.direction_to(targetPos)
 
 func getMovementVelocity(selfNode: KinematicBody2D, targetNode: Node2D, delta: float):
-	var newSinX = fmod(selfNode.sinX + delta, TAU)
+	var newSinX = fmod(selfNode.sinX + delta * selfNode.moveDir, TAU)
 	var oldPos = Vector2(selfNode.sinX, cos(selfNode.sinX*frequency)*amplitude)
 	var newPos = Vector2(newSinX, cos(newSinX*frequency)*amplitude)
 	var sinDirection = oldPos.direction_to(newPos)
