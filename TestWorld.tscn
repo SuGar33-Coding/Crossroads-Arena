@@ -65,25 +65,25 @@ position = Vector2( 1512, 1176 )
 position = Vector2( 576, 512 )
 
 [node name="Bandit2" parent="YSort" instance=ExtResource( 4 )]
-position = Vector2( 352, 552 )
+position = Vector2( 848, 600 )
 
 [node name="Bandit6" parent="YSort" instance=ExtResource( 4 )]
-position = Vector2( 1096, 512 )
+position = Vector2( 1320, 424 )
 
 [node name="Bandit7" parent="YSort" instance=ExtResource( 4 )]
 position = Vector2( 912, 400 )
 
 [node name="Bandit8" parent="YSort" instance=ExtResource( 4 )]
-position = Vector2( 616, 768 )
+position = Vector2( 584, 960 )
 
 [node name="Bandit3" parent="YSort" instance=ExtResource( 4 )]
 position = Vector2( 1152, 712 )
 
 [node name="Bandit4" parent="YSort" instance=ExtResource( 4 )]
-position = Vector2( 880, 832 )
+position = Vector2( 936, 904 )
 
 [node name="Bandit5" parent="YSort" instance=ExtResource( 4 )]
-position = Vector2( 448, 400 )
+position = Vector2( 504, 144 )
 
 [editable path="YSort/Player"]
 

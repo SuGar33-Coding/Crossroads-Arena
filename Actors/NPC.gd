@@ -53,10 +53,10 @@ func _physics_process(delta):
 		State.STUN:
 			velocity = movement.getIdleVelocity(self, delta)
 	
-	if velocity.x < 0:
+	if willFlipLeft():
 		flipLeft()
 		
-	elif velocity.x > 0:
+	elif willFlipRight():
 		flipRight()
 		
 	velocity = move_and_slide(velocity)
@@ -93,6 +93,12 @@ func switchToChase():
 	
 func switchToAttack():
 	self.state = State.ATTACK
+	
+func willFlipLeft() -> bool:
+	return velocity.x < 0
+	
+func willFlipRight() -> bool:
+	return velocity.x > 0
 	
 func flipLeft():
 	pass

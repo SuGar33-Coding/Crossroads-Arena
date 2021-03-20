@@ -13,24 +13,26 @@ func getMovementDirection(sourcePos: Vector2, targetPos: Vector2):
 	return sourcePos.direction_to(targetPos)
 
 func getMovementVelocity(selfNode: KinematicBody2D, targetNode: Node2D, delta: float):
-	var newSinX = fmod(selfNode.sinX + delta * selfNode.moveDir, TAU)
-	var oldPos = Vector2(selfNode.sinX, cos(selfNode.sinX*frequency)*amplitude)
-	var newPos = Vector2(newSinX, cos(newSinX*frequency)*amplitude)
-	var sinDirection = oldPos.direction_to(newPos)
-	selfNode.sinX = newSinX
-		
+	# Get the derivative along the sine wave
+	var sinDirection : Vector2 = getSinVector(selfNode, delta)
+	
+	# Proportionally weight our pathfinding algorithm to how close unit is to target
 	var pathFindingDir = getMovementDirection(selfNode.global_position, targetNode.global_position)
-	var pathFindingVelocity : Vector2 = pathFindingDir * clamp((targetNode.global_position - selfNode.global_position).length() / radius, 0, 1)
+	var pathFindingWeight : Vector2 = pathFindingDir * clamp((targetNode.global_position - selfNode.global_position).length() / radius, 0, 1)
 	
+	# Rebase sine wave to be circling around the target
 	var perpendicularVector = pathFindingDir.rotated(deg2rad(90))
-	var worldSinDirection = Vector2.ZERO
-	worldSinDirection.x = sinDirection.dot(perpendicularVector) * (selfNode.noise.get_noise_2d(selfNode.noise.seed, selfNode.noiseY) + 1)
+	var worldSinDirection = rebaseVector(sinDirection, perpendicularVector, pathFindingDir)
+	worldSinDirection.x *= (selfNode.noise.get_noise_2d(selfNode.noise.seed, selfNode.noiseY) + 1)
 	selfNode.noiseY += 1
-	worldSinDirection.y = sinDirection.dot(pathFindingDir)
 	
-	var combatVelocity =  (worldSinDirection).normalized()  * clamp(radius/(targetNode.global_position - selfNode.global_position).length(), 0, 1)
-	var desiredVelocity = (pathFindingVelocity + combatVelocity).normalized() * selfNode.MaxSpeed
+	# Inversely weight our combat movement vector to how close unit is to target
+	var combatWeight =  (worldSinDirection).normalized()  * clamp(radius/(targetNode.global_position - selfNode.global_position).length(), 0, 1)
 	
+	# Combine the weights to get the desired direction and speed
+	var desiredVelocity = (pathFindingWeight + combatWeight).normalized() * selfNode.MaxSpeed
+	
+	# Use steering to smooth our movement towards desired vector
 	var steer = (desiredVelocity - selfNode.velocity)
 	return selfNode.velocity.move_toward(selfNode.velocity + (steer * SmoothForce), selfNode.Acceleration * delta)
 	
@@ -40,3 +42,29 @@ func getMovementVelocity(selfNode: KinematicBody2D, targetNode: Node2D, delta: f
 
 func getIdleVelocity(selfNode: KinematicBody2D, delta: float):
 	return selfNode.velocity.move_toward(Vector2.ZERO, selfNode.Friction * delta)
+
+func getSinVector(selfNode: KinematicBody2D, delta: float) -> Vector2:
+	# Move along the sin wave
+	var newSinX = fmod(selfNode.sinX + delta * selfNode.moveDir, TAU)
+	
+	# Calculate sin wave positions
+	var oldPos = Vector2(selfNode.sinX, cos(selfNode.sinX*frequency)*amplitude)
+	var newPos = Vector2(newSinX, cos(newSinX*frequency)*amplitude)
+	
+	# Update sin x coordinates
+	selfNode.sinX = newSinX
+	
+	# Return derivative between two points
+	return oldPos.direction_to(newPos)
+	
+# Takes in two bases and rebases given vector to them (should normalize bases before calling)
+func rebaseVector(vectorToRebase: Vector2, xBase:Vector2, yBase:Vector2):
+	var newVector = Vector2.ZERO
+	
+	newVector.x = vectorToRebase.dot(xBase) 
+	newVector.y = vectorToRebase.dot(yBase)
+	
+	return newVector
+	
+	
+

@@ -6,11 +6,11 @@
 [ext_resource path="res://Actors/TestingSteering.tres" type="Resource" id=4]
 [ext_resource path="res://Actors/Zones/DetectionZone.tscn" type="PackedScene" id=5]
 [ext_resource path="res://Actors/Zones/AttackPivot.tscn" type="PackedScene" id=6]
-[ext_resource path="res://Weapons/LongSword.tres" type="Resource" id=10]
+[ext_resource path="res://Weapons/Glaive.tres" type="Resource" id=7]
 
 [sub_resource type="Animation" id=1]
 resource_name = "Damaged"
-length = 0.4
+length = 0.3
 tracks/0/type = "method"
 tracks/0/path = NodePath(".")
 tracks/0/interp = 1
@@ -18,7 +18,7 @@ tracks/0/loop_wrap = true
 tracks/0/imported = false
 tracks/0/enabled = true
 tracks/0/keys = {
-"times": PoolRealArray( 0.4 ),
+"times": PoolRealArray( 0.3 ),
 "transitions": PoolRealArray( 1 ),
 "values": [ {
 "args": [  ],
@@ -32,7 +32,7 @@ tracks/1/loop_wrap = true
 tracks/1/imported = false
 tracks/1/enabled = true
 tracks/1/keys = {
-"times": PoolRealArray( 0, 0.1, 0.2, 0.3, 0.4 ),
+"times": PoolRealArray( 0, 0.075, 0.15, 0.225, 0.3 ),
 "transitions": PoolRealArray( 1, 1, 1, 1, 1 ),
 "update": 0,
 "values": [ Color( 1, 1, 1, 1 ), Color( 0.682353, 0, 0, 1 ), Color( 1, 1, 1, 1 ), Color( 0.682353, 0, 0, 1 ), Color( 1, 1, 1, 1 ) ]
@@ -175,7 +175,7 @@ MaxSpeed = 125.0
 texture = ExtResource( 2 )
 
 [node name="Stats" parent="." index="3"]
-maxHealth = 5
+maxHealth = 10
 
 [node name="DetectionZone" parent="." index="4" instance=ExtResource( 5 )]
 detectionRange = 325
@@ -183,7 +183,7 @@ detectionRange = 325
 [node name="AttackPivot" parent="." index="5" instance=ExtResource( 6 )]
 
 [node name="WeaponHitbox" parent="AttackPivot" index="0"]
-weaponStatsResource = ExtResource( 10 )
+weaponStatsResource = ExtResource( 7 )
 
 [node name="Swipe" parent="AttackPivot" index="1"]
 frame = 0

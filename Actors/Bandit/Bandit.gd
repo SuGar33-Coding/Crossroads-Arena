@@ -52,6 +52,19 @@ func willAttack() -> bool:
 	var distanceToTarget = (self.position - detectionZone.target.position).length()
 	return distanceToTarget <= (weaponStats.length + weaponStats.radius) * 2
 	
+func willFlipLeft():
+	if state == State.CHASE:
+		return global_position.x > target.global_position.x
+	else:
+		return .willFlipLeft()
+		
+func willFlipRight():
+	if state == State.CHASE:
+		return global_position.x < target.global_position.x
+	else:
+		return .willFlipRight()
+
+	
 func flipLeft():
 	sprite.flip_h = true
 	attackPivot.scale.y = -1
