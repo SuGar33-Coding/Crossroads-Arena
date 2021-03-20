@@ -69,6 +69,11 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://Stats.gd"
 }, {
+"base": "Movement",
+"class": "TestingSteering",
+"language": "GDScript",
+"path": "res://Actors/TestingSteering.gd"
+}, {
 "base": "Area2D",
 "class": "WeaponHitbox",
 "language": "GDScript",
@@ -92,6 +97,7 @@ _global_script_class_icons={
 "Room": "",
 "RoomArea": "",
 "Stats": "",
+"TestingSteering": "",
 "WeaponHitbox": "",
 "WeaponStats": ""
 }

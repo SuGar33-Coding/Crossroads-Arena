@@ -25,10 +25,10 @@ frame = 5
 [node name="BackTween" type="Tween" parent="."]
 
 [node name="MeleeRestingPos" type="Position2D" parent="."]
-position = Vector2( 6.44608, -8.35962 )
+position = Vector2( 2.32574, -8.7342 )
 
 [node name="Weapon" type="Sprite" parent="MeleeRestingPos"]
-rotation = -0.523599
+rotation = -1.0472
 z_index = -1
 texture = ExtResource( 5 )
 flip_h = true

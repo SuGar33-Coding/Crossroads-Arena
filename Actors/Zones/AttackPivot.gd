@@ -2,7 +2,7 @@ extends Position2D
 
 class_name AttackPivot
 
-export var swingDegrees := 80.0
+export var swingDegrees := 110.0
 
 onready var weapon := $MeleeRestingPos/Weapon
 onready var restingPos := $MeleeRestingPos

@@ -6,18 +6,34 @@ onready var detectionZone := $DetectionZone
 onready var attackPivot := $AttackPivot
 onready var weaponHitbox := $AttackPivot/WeaponHitbox
 onready var animationPlayer := $AnimationPlayer
+onready var attackTimer := $AttackTimer
+
+var sinX = rand_range(0, TAU)
+var noise := OpenSimplexNoise.new()
+var noiseY = 1
 
 func _ready():
+	randomize()
 	weaponStats = weaponHitbox.weaponStats
 	weaponHitbox.connect("parried", self, "_weapon_parried")
-	
+	noise.seed = randi()
+	noise.octaves = 4
+	noise.period = 20
+	noise.persistence = .8
 	
 func lookAtTarget():
 	attackPivot.lookAtTarget(detectionZone.target.position)
 
-func switchToChase():
+func switchToChase() -> void:
 	.switchToChase()
 	target = detectionZone.target
+	
+func switchToAttack():
+	if attackTimer.is_stopped():
+		.switchToAttack()
+		animationPlayer.playback_speed = 1
+		animationPlayer.play("MeleeAttack")
+		attackTimer.start(1)
 
 func willIdle() -> bool:
 	return !detectionZone.hasTarget()
@@ -52,12 +68,7 @@ func _weapon_parried(area : WeaponHitbox):
 	animationPlayer.stop(true)
 	animationPlayer.playback_speed = .3
 	animationPlayer.play("Damaged")
-	
-	
-func switchToAttack():
-	.switchToAttack()
-	animationPlayer.playback_speed = 1
-	animationPlayer.play("MeleeAttack")
+
 
 
 

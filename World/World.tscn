@@ -5,8 +5,6 @@
 [ext_resource path="res://World/RandomGen.gd" type="Script" id=3]
 [ext_resource path="res://World/PlayerCamera.tscn" type="PackedScene" id=4]
 
-
-
 [node name="World" type="Node2D"]
 script = ExtResource( 3 )
 
@@ -17,7 +15,6 @@ remote_path = NodePath("../../MainCamera")
 
 [node name="MainCamera" parent="." instance=ExtResource( 4 )]
 position = Vector2( 0, 0 )
-target = NodePath("../Player")
 
 [node name="TopLeft" parent="MainCamera/Limits" index="0"]
 position = Vector2( -544, -357 )

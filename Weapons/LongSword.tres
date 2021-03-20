@@ -5,8 +5,8 @@
 
 [resource]
 script = ExtResource( 1 )
-damage = 1
-knockbackValue = 350
+damage = 2
+knockbackValue = 400
 length = 20.0
 radius = 15.5
 texture = ExtResource( 2 )
