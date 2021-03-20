@@ -7,6 +7,7 @@ export var MaxSpeed: float = 175
 export var Acceleration: float = 1000
 export var Friction: float = 1000
 export var debug: bool = false
+export var movementGroup: String = "NPC"
 
 enum State {
 	IDLE,
@@ -19,6 +20,7 @@ var state = State.IDLE
 var velocity = Vector2.ZERO
 var knockback = Vector2.ZERO
 var target = null
+var closestAlly : NPC = null
 
 onready var movement: Movement = movementResource
 onready var sprite := $Sprite
@@ -26,6 +28,7 @@ onready var stats := $Stats
 onready var hurtbox := $Hurtbox
 
 func _ready():
+	self.add_to_group(movementGroup)
 	hurtbox.connect("area_entered", self, "_hurtbox_area_entered")
 	stats.connect("noHealth", self, "_stats_no_health")
 	
@@ -34,6 +37,8 @@ func _physics_process(delta):
 		update()
 	knockback = knockback.move_toward(Vector2.ZERO, Friction * delta)
 	knockback = move_and_slide(knockback)
+	
+	findClosestAlly()
 	
 	match state:
 		State.IDLE:
@@ -104,6 +109,9 @@ func flipLeft():
 	pass
 	
 func flipRight():
+	pass
+	
+func findClosestAlly():
 	pass
 	
 func _hurtbox_area_entered(area : WeaponHitbox):

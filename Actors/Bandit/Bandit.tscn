@@ -166,7 +166,9 @@ tracks/5/keys = {
 "values": [ true, false, true ]
 }
 
-[node name="Bandit" instance=ExtResource( 1 )]
+[node name="Bandit" groups=[
+"Enemies",
+] instance=ExtResource( 1 )]
 script = ExtResource( 3 )
 movementResource = ExtResource( 4 )
 MaxSpeed = 125.0

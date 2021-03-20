@@ -50,7 +50,7 @@ func willChase() -> bool:
 
 func willAttack() -> bool:
 	var distanceToTarget = (self.position - detectionZone.target.position).length()
-	return distanceToTarget <= (weaponStats.length + weaponStats.radius) * 2
+	return distanceToTarget <= (weaponStats.length + weaponStats.radius*2)
 	
 func willFlipLeft():
 	if state == State.CHASE:
@@ -63,7 +63,6 @@ func willFlipRight():
 		return global_position.x < target.global_position.x
 	else:
 		return .willFlipRight()
-
 	
 func flipLeft():
 	sprite.flip_h = true
@@ -72,6 +71,24 @@ func flipLeft():
 func flipRight():
 	sprite.flip_h = false
 	attackPivot.scale.y = 1
+	
+func findClosestAlly():
+	var otherActors = get_parent().get_children()
+	
+	var allies = []
+	for actor in otherActors:
+		if(actor.is_in_group(movementGroup)):
+			allies.append(actor)
+	
+	var minDist = 1000
+	for ally in allies:
+		var distance = (ally.global_position - self.global_position).length()
+		if distance < minDist and ally != self:
+			minDist = distance
+			closestAlly = ally
+		
+	if minDist >= 1000:
+		closestAlly = null
 
 func _hurtbox_area_entered(area : WeaponHitbox):
 	._hurtbox_area_entered(area)

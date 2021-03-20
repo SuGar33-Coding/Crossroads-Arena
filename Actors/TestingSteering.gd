@@ -4,33 +4,27 @@ class_name TestingSteering
 
 export var SmoothForce : float = .02
 export var radius : float = 150
-export var amplitude : float = .7
+export var amplitude : float = .5
 
-const frequency : float = 3.0
+const frequency : float = 1.0
 
 # Get direction directly towards target
 func getMovementDirection(sourcePos: Vector2, targetPos: Vector2):
 	return sourcePos.direction_to(targetPos)
 
 func getMovementVelocity(selfNode: KinematicBody2D, targetNode: Node2D, delta: float):
-	# Get the derivative along the sine wave
-	var sinDirection : Vector2 = getSinVector(selfNode, delta)
-	
 	# Proportionally weight our pathfinding algorithm to how close unit is to target
-	var pathFindingDir = getMovementDirection(selfNode.global_position, targetNode.global_position)
-	var pathFindingWeight : Vector2 = pathFindingDir * clamp((targetNode.global_position - selfNode.global_position).length() / radius, 0, 1)
+	var pathfindingDir = getMovementDirection(selfNode.global_position, targetNode.global_position)
+	var pathfindingWeight := getPathfindingWeight(selfNode, targetNode, pathfindingDir)
 	
-	# Rebase sine wave to be circling around the target
-	var perpendicularVector = pathFindingDir.rotated(deg2rad(90))
-	var worldSinDirection = rebaseVector(sinDirection, perpendicularVector, pathFindingDir)
-	worldSinDirection.x *= (selfNode.noise.get_noise_2d(selfNode.noise.seed, selfNode.noiseY) + 1)
-	selfNode.noiseY += 1
+	# Get the weight of our combat movement vector
+	var combatWeight :=  getCombatWeight(selfNode, targetNode, pathfindingDir, delta)
 	
-	# Inversely weight our combat movement vector to how close unit is to target
-	var combatWeight =  (worldSinDirection).normalized()  * clamp(radius/(targetNode.global_position - selfNode.global_position).length(), 0, 1)
+	# Get the weight of moving away from nearby allies to avoid clumping
+	var avoidanceWeight := getAvoidanceWeight(selfNode)
 	
 	# Combine the weights to get the desired direction and speed
-	var desiredVelocity = (pathFindingWeight + combatWeight).normalized() * selfNode.MaxSpeed
+	var desiredVelocity = (pathfindingWeight + combatWeight + avoidanceWeight).normalized() * selfNode.MaxSpeed
 	
 	# Use steering to smooth our movement towards desired vector
 	var steer = (desiredVelocity - selfNode.velocity)
@@ -66,5 +60,29 @@ func rebaseVector(vectorToRebase: Vector2, xBase:Vector2, yBase:Vector2):
 	
 	return newVector
 	
+func getCombatWeight(selfNode: KinematicBody2D, targetNode, pathFindingDir: Vector2, delta: float) -> Vector2:
+	# Get the derivative along the sine wave
+	var sinDirection : Vector2 = getSinVector(selfNode, delta)
 	
-
+	# Rebase the sinDirection to place it on the circle around the target
+	var perpendicularVector = pathFindingDir.rotated(deg2rad(90))
+	var worldSinDirection = rebaseVector(sinDirection, perpendicularVector, pathFindingDir)
+	worldSinDirection.x *= (selfNode.noise.get_noise_2d(selfNode.noise.seed, selfNode.noiseY) + 1)
+	selfNode.noiseY += 1
+	
+	# Inversely weight our combat movement vector to how close unit is to target
+	var combatWeight =  (worldSinDirection).normalized()  * clamp(radius/(targetNode.global_position - selfNode.global_position).length(), 0, 1)
+	return combatWeight
+	
+func getPathfindingWeight(selfNode: KinematicBody2D, targetNode: KinematicBody2D, pathfindingDir: Vector2) -> Vector2:
+	return pathfindingDir * clamp((targetNode.global_position - selfNode.global_position).length() / radius, 0, 1)
+	
+func getAvoidanceWeight(selfNode: KinematicBody2D) -> Vector2:
+	var ally : KinematicBody2D = selfNode.closestAlly
+	if ally != null:
+		var dirAwayFromAlly = ally.global_position.direction_to(selfNode.global_position)
+		
+		# TODO: did radius/3 for now just to make it so you can get closer to allies before it takes over
+		return dirAwayFromAlly * clamp((radius/3) / (ally.global_position - selfNode.global_position).length(), 0, 1)
+	else:
+		return Vector2.ZERO
