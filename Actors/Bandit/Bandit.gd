@@ -7,10 +7,13 @@ onready var attackPivot := $AttackPivot
 onready var weaponHitbox := $AttackPivot/WeaponHitbox
 onready var animationPlayer := $AnimationPlayer
 onready var attackTimer := $AttackTimer
+onready var moveDirTimer := $MoveDirTimer
 
 var sinX = rand_range(0, TAU)
 var noise := OpenSimplexNoise.new()
 var noiseY = 1
+var moveDir = 1
+var moveDirMaxLen = 10
 
 func _ready():
 	randomize()
@@ -20,6 +23,10 @@ func _ready():
 	noise.octaves = 4
 	noise.period = 20
 	noise.persistence = .8
+	moveDir = pow(-1, randi() % 2)
+	moveDirTimer.start(rand_range(1, moveDirMaxLen))
+	moveDirTimer.connect("timeout", self, "_change_direction")
+	
 	
 func lookAtTarget():
 	attackPivot.lookAtTarget(detectionZone.target.position)
@@ -69,6 +76,8 @@ func _weapon_parried(area : WeaponHitbox):
 	animationPlayer.playback_speed = .3
 	animationPlayer.play("Damaged")
 
-
+func _change_direction():
+	moveDir *= -1
+	moveDirTimer.start(rand_range(1, moveDirMaxLen))
 
 

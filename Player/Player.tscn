@@ -5,7 +5,7 @@
 [ext_resource path="res://Player/AttackPivot.gd" type="Script" id=3]
 [ext_resource path="res://Actors/Zones/Hurtbox.tscn" type="PackedScene" id=4]
 [ext_resource path="res://Actors/Zones/AttackPivot.tscn" type="PackedScene" id=5]
-[ext_resource path="res://Weapons/LongSword.tres" type="Resource" id=6]
+[ext_resource path="res://Weapons/Glaive.tres" type="Resource" id=6]
 [ext_resource path="res://World/PlayerCamera.tscn" type="PackedScene" id=7]
 [ext_resource path="res://UI/PlayerUI.tscn" type="PackedScene" id=8]
 
