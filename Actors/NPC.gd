@@ -120,7 +120,6 @@ func _hurtbox_area_entered(area : WeaponHitbox):
 	state = State.STUN
 	stats.health -= area.damage
 	knockback = area.getKnockbackVector(self.global_position)
-	
 
 func _stats_no_health():
 	queue_free()

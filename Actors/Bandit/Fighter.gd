@@ -12,6 +12,8 @@ onready var moveDirTimer := $MoveDirTimer
 var sinX = rand_range(0, TAU)
 var noise := OpenSimplexNoise.new()
 var noiseY = 1
+
+# TODO: Possibly not necessary for the generic fighter class
 var moveDir = 1
 var moveDirMaxLen = 10
 
@@ -27,6 +29,9 @@ func _ready():
 	moveDirTimer.start(rand_range(1, moveDirMaxLen))
 	moveDirTimer.connect("timeout", self, "_change_direction")
 	
+	# Set everything to default values
+	animationPlayer.play("Idle")
+	
 	
 func lookAtTarget():
 	attackPivot.lookAtTarget(detectionZone.target.position)
@@ -39,8 +44,12 @@ func switchToAttack():
 	if attackTimer.is_stopped():
 		.switchToAttack()
 		animationPlayer.playback_speed = 1
-		animationPlayer.play("MeleeAttack")
+		# TODO: Make this a more well defined ratio
 		attackTimer.start(weaponStats.attackSpeed * 2)
+		if weaponStats.weaponType == WeaponStats.WeaponType.MELEE:
+			animationPlayer.play("MeleeAttack")
+		else:
+			animationPlayer.play("RangedAttack")
 
 func willIdle() -> bool:
 	return !detectionZone.hasTarget()
@@ -49,8 +58,11 @@ func willChase() -> bool:
 	return detectionZone.hasTarget()
 
 func willAttack() -> bool:
-	var distanceToTarget = (self.position - detectionZone.target.position).length()
-	return distanceToTarget <= (weaponStats.length + weaponStats.radius*2)
+	var distanceToTarget = self.position.distance_to(detectionZone.target.position)
+	if weaponStats.weaponType == WeaponStats.WeaponType.MELEE:
+		return distanceToTarget <= (weaponStats.length + weaponStats.radius*2)
+	else:
+		return distanceToTarget <= weaponStats.projectileRange
 	
 func willFlipLeft():
 	if state == State.CHASE:
@@ -97,6 +109,9 @@ func _hurtbox_area_entered(area : WeaponHitbox):
 		animationPlayer.stop(true)
 		animationPlayer.playback_speed = 1
 		animationPlayer.play("Damaged")
+	else:
+		# If you die add some extra knockback
+		knockback = area.getKnockbackVector(self.global_position) * 1.5
 
 # Handle actor's weapon being parried by player
 func _weapon_parried(area : WeaponHitbox):
@@ -105,6 +120,10 @@ func _weapon_parried(area : WeaponHitbox):
 	animationPlayer.stop(true)
 	animationPlayer.playback_speed = .3
 	animationPlayer.play("Damaged")
+	
+func _stats_no_health():
+	state = State.STUN
+	animationPlayer.play("Death")
 
 func _change_direction():
 	moveDir *= -1
