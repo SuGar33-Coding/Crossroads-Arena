@@ -2,10 +2,11 @@ extends Position2D
 
 class_name AttackPivot
 
+# TODO: make it so you can load different projectiles
 const RangedProjectile = preload("res://Weapons/RangedProjectile.tscn")
 
 export var swingDegrees := 110.0
-export var weaponStatsResource : Resource
+export(Array, Resource) var weaponStatsResources : Array
 
 onready var weapon : Sprite = $WeaponRestingPos/Weapon
 onready var restingPos := $WeaponRestingPos
@@ -14,7 +15,7 @@ onready var tween := $WeaponTween
 onready var collision := $WeaponHitbox/WeaponCollision
 onready var weaponHitbox = $WeaponHitbox
 onready var restingRotation = weapon.rotation
-onready var weaponStats : WeaponStats = weaponStatsResource
+onready var weaponStats : WeaponStats
 
 # TODO: Probably change these?
 onready var meleeRestingCoord : Vector2 = restingPos.position
@@ -25,6 +26,10 @@ var tweenLength
 
 
 func _ready():
+	# Choose random weapon
+	randomize()
+	
+	weaponStats = weaponStatsResources[randi() % weaponStatsResources.size()]
 	setWeapon(weaponStats)
 
 # Rotate pivot to look at target position

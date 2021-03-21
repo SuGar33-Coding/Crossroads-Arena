@@ -2,7 +2,7 @@
 
 [ext_resource path="res://Actors/Zones/AttackPivot.gd" type="Script" id=1]
 [ext_resource path="res://Assets/WeaponAssets/Item__01.png" type="Texture" id=2]
-[ext_resource path="res://Weapons/Glaive.tres" type="Resource" id=3]
+[ext_resource path="res://Weapons/BaseSword.tres" type="Resource" id=3]
 [ext_resource path="res://Assets/TGBA swipe.png" type="Texture" id=4]
 [ext_resource path="res://Actors/Zones/WeaponHitbox.tscn" type="PackedScene" id=6]
 
@@ -10,7 +10,7 @@
 show_behind_parent = true
 position = Vector2( 0, -5 )
 script = ExtResource( 1 )
-weaponStatsResource = ExtResource( 3 )
+weaponStatsResources = [ ExtResource( 3 ) ]
 
 [node name="WeaponHitbox" parent="." instance=ExtResource( 6 )]
 

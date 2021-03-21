@@ -29,6 +29,8 @@ func _ready():
 	moveDirTimer.start(rand_range(1, moveDirMaxLen))
 	moveDirTimer.connect("timeout", self, "_change_direction")
 	
+	# Choose a random weapon
+	
 	# Set everything to default values
 	animationPlayer.play("Idle")
 	
