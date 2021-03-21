@@ -50,7 +50,7 @@ func startRangedAttack(fromPlayer := false):
 	# Have to set it before you add it as a child otherwise the room area's think you are exiting them
 	rangedProjectile.global_position = restingPos.global_position
 	world.add_child(rangedProjectile)
-	rangedProjectile.fire(restingPos.global_position, self.global_rotation, true)
+	rangedProjectile.fire(restingPos.global_position, self.global_rotation)
 
 func setWeapon(weaponStats : WeaponStats):
 	self.weaponStats = weaponStats
