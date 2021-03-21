@@ -24,7 +24,7 @@ var closestAlly : NPC = null
 
 onready var movement: Movement = movementResource
 onready var sprite := $Sprite
-onready var stats := $Stats
+onready var stats : Stats = $Stats
 onready var hurtbox := $Hurtbox
 
 func _ready():
@@ -115,9 +115,12 @@ func findClosestAlly():
 	pass
 	
 func _hurtbox_area_entered(area : WeaponHitbox):
+	if area.fromPlayer:
+		PlayerStats.currentXP += min(stats.health, area.damage)
 	state = State.STUN
 	stats.health -= area.damage
 	knockback = area.getKnockbackVector(self.global_position)
+	
 
 func _stats_no_health():
 	queue_free()

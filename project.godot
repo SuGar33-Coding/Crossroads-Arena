@@ -54,6 +54,11 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://Actors/NPC.gd"
 }, {
+"base": "KinematicBody2D",
+"class": "RangedProjectile",
+"language": "GDScript",
+"path": "res://Weapons/RangedProjectile.gd"
+}, {
 "base": "Node2D",
 "class": "Room",
 "language": "GDScript",
@@ -94,6 +99,7 @@ _global_script_class_icons={
 "MainCamera": "",
 "Movement": "",
 "NPC": "",
+"RangedProjectile": "",
 "Room": "",
 "RoomArea": "",
 "Stats": "",

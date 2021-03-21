@@ -12,7 +12,6 @@ onready var meleeWeapon : WeaponStats = weaponStats
 
 func _ready():
 	parryHitbox.connect("area_entered", self, "_parried_weapon")
-	weaponHitbox.connect("area_entered", self, "_damaged_enemy")
 
 func _physics_process(_delta):
 	
@@ -28,7 +27,7 @@ func _physics_process(_delta):
 				self.startMeleeAttack(animLength)
 			else:
 				# Ranged Weapon
-				pass
+				self.startRangedAttack(true)
 				
 				
 		elif Input.is_action_just_pressed("fire"):
@@ -46,7 +45,3 @@ func _parried_weapon(area):
 	var parriedWeapon : WeaponHitbox = area.get_parent()
 	parriedWeapon.parry(weaponHitbox)
 	PlayerStats.currentXP += parriedWeapon.damage
-
-# Player gains xp for the damage they do to each enemy
-func _damaged_enemy(_area):
-	PlayerStats.currentXP += weaponHitbox.damage

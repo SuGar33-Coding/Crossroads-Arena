@@ -2,6 +2,8 @@ extends Position2D
 
 class_name AttackPivot
 
+const RangedProjectile = preload("res://Weapons/RangedProjectile.tscn")
+
 export var swingDegrees := 110.0
 export var weaponStatsResource : Resource
 
@@ -10,7 +12,7 @@ onready var restingPos := $WeaponRestingPos
 onready var swipe := $Swipe
 onready var tween := $WeaponTween
 onready var collision := $WeaponHitbox/WeaponCollision
-onready var weaponHitbox : WeaponHitbox = $WeaponHitbox
+onready var weaponHitbox = $WeaponHitbox
 onready var restingRotation = weapon.rotation
 onready var weaponStats : WeaponStats = weaponStatsResource
 
@@ -20,6 +22,7 @@ onready var meleeRestingRotation = weapon.rotation
 
 var swordAnimDist
 var tweenLength
+
 
 func _ready():
 	setWeapon(weaponStats)
@@ -39,8 +42,15 @@ func startMeleeAttack(animLength: float):
 		
 		tween.start()
 		
-func startRangedAttack():
-	pass
+func startRangedAttack(fromPlayer := false):
+	var rangedProjectile = RangedProjectile.instance()
+	rangedProjectile.init(weaponStats, fromPlayer)
+	
+	var world = get_tree().current_scene
+	# Have to set it before you add it as a child otherwise the room area's think you are exiting them
+	rangedProjectile.global_position = restingPos.global_position
+	world.add_child(rangedProjectile)
+	rangedProjectile.fire(restingPos.global_position, self.global_rotation, true)
 
 func setWeapon(weaponStats : WeaponStats):
 	self.weaponStats = weaponStats
@@ -66,7 +76,6 @@ func setWeapon(weaponStats : WeaponStats):
 func _on_WeaponTween_tween_completed():
 	var backTween = $BackTween
 	self.show_behind_parent = not self.show_behind_parent
-	print(self.show_behind_parent)
 	backTween.interpolate_property(weapon, "position", weapon.position, Vector2.ZERO, self.tweenLength, Tween.TRANS_LINEAR, Tween.EASE_IN_OUT)
 	backTween.interpolate_property(weapon, "rotation", weapon.rotation, restingRotation, self.tweenLength)
 	backTween.start()

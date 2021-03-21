@@ -3,10 +3,12 @@
 [ext_resource path="res://Actors/Zones/WeaponHitbox.gd" type="Script" id=1]
 
 [sub_resource type="CapsuleShape2D" id=1]
-height = 0.0
+radius = 2.32892
+height = 8.20477
 
 [sub_resource type="CapsuleShape2D" id=2]
-height = 0.0
+radius = 1.73883
+height = 3.79595
 
 [node name="WeaponHitbox" type="Area2D"]
 collision_layer = 0

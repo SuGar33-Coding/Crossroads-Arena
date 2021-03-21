@@ -2,10 +2,11 @@ extends Area2D
 
 class_name WeaponHitbox
 
+export var fromPlayer: bool = false
 var damage
 var knockbackValue
 var hitboxOffset = 5
-var weaponStats : WeaponStats
+var weaponStats: WeaponStats
 
 onready var collision := $WeaponCollision
 onready var parryCollision := $ParryHitbox/ParryCollision
@@ -31,16 +32,18 @@ func setWeapon(weapon : WeaponStats):
 		collision.position.x = weaponStats.length/2 + weaponStats.radius + hitboxOffset
 		parryCollision.position.x = weaponStats.length/2 + weaponStats.radius + hitboxOffset
 		
-		# Create a new shape of the proper size for the loaded weapon
-		var shape : CapsuleShape2D = CapsuleShape2D.new()
-		shape.height = weaponStats.length
-		shape.radius = weaponStats.radius
-		collision.shape = shape
-		parryCollision.shape = shape
+		
 	else:
 		#is ranged, no local weapon collision
-		collision.disabled = true
-		parryCollision.disabled = true
+		collision.position.x = 0
+		parryCollision.position.x = 0
+		
+	# Create a new shape of the proper size for the loaded weapon
+	var shape : CapsuleShape2D = CapsuleShape2D.new()
+	shape.height = weaponStats.length
+	shape.radius = weaponStats.radius
+	collision.shape = shape
+	parryCollision.shape = shape
 
 # Let everyone know that you've been parried
 func parry(area : WeaponHitbox):
