@@ -19,7 +19,7 @@ func getMovementDirection(selfNode: KinematicBody2D, targetPos: Vector2, delta: 
 	var toTargetVector = toTargetDir * toTargetWeight
 	
 	# Inversely weight combat movement with how close unit is to target radius
-	var combatDir := getCombatDir(selfNode, targetPos, toTargetDir, delta)
+	var combatDir := getCombatDir(selfNode, toTargetDir, delta)
 	var combatWeight :=  getCombatWeight(selfNode, targetPos)
 	var combatVector = combatDir * combatWeight
 	
@@ -70,7 +70,7 @@ func rebaseVector(vectorToRebase: Vector2, xBase:Vector2, yBase:Vector2):
 	
 	return newVector
 	
-func getCombatDir(selfNode: KinematicBody2D, targetNode, pathFindingDir: Vector2, delta: float) -> Vector2:
+func getCombatDir(selfNode: KinematicBody2D, pathFindingDir: Vector2, delta: float) -> Vector2:
 	# Get the derivative along the sine wave
 	var sinDirection : Vector2 = getSinVector(selfNode, delta)
 	

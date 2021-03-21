@@ -41,7 +41,6 @@ func _process(delta):
 	
 func transitionToRoom(topLeftVal, bottomRightVal, direction):
 	var viewPortSize = get_viewport().get_visible_rect().size * self.zoom
-	var halfViewPortSize = viewPortSize/2
 	
 	topLeft.position = topLeftVal
 	bottomRight.position = bottomRightVal

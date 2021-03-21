@@ -31,7 +31,7 @@ func _player_xp_changed(newXP):
 	self.setXPbarValue(float(newXP) / stats.xpToNextLevel() * 100)
 	xpbarLabel.text = str(int(newXP)) + " / " + str(stats.xpToNextLevel())
 	
-func _player_level_changed(newLevel):
+func _player_level_changed(_newLevel):
 	lvllabel.text = "Lvl: " + str(stats.playerLevel)
 	
 func _item_added_to_inv(newItem):

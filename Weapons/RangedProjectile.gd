@@ -32,13 +32,12 @@ func _physics_process(delta):
 		# Kills if runs into a wall
 		self.queue_free()
 
-func fire(startingPosition : Vector2, startingRotation : float, fromPlayer := false):
+func fire(startingPosition : Vector2, startingRotation : float):
 	
 	# TODO: Temporarily if it is from player then change its layer mask, will eventually do this with groups instead
 	if fromPlayer:
 		self.weaponHitbox.set_collision_mask_bit(4, false)
 		self.weaponHitbox.set_collision_mask_bit(5, true)
-	#playerArrow = fromPlayer
 	self.global_position = startingPosition
 	self.global_rotation = startingRotation
 	velocity =  Vector2(1,0).rotated(self.global_rotation) * speed
