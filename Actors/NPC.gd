@@ -19,7 +19,7 @@ enum State {
 var state = State.IDLE
 var velocity = Vector2.ZERO
 var knockback = Vector2.ZERO
-var target = null
+var target: Node2D = null
 var closestAlly : NPC = null
 
 onready var movement: Movement = movementResource
@@ -52,7 +52,7 @@ func _physics_process(delta):
 				lookAtTarget()
 				if willAttack():
 					switchToAttack()
-				velocity = movement.getMovementVelocity(self, target, delta)
+				velocity = movement.getMovementVelocity(self, target.global_position, delta)
 		State.ATTACK:
 			velocity = movement.getIdleVelocity(self, delta)
 		State.STUN:
