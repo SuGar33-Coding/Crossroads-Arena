@@ -12,7 +12,6 @@ var velocity := Vector2.ZERO
 var knockback := Vector2.ZERO
 var dashVector := Vector2.ZERO
 
-
 onready var stats = get_node("/root/PlayerStats")
 onready var sprite := $Sprite
 onready var attackPivot := $AttackPivot

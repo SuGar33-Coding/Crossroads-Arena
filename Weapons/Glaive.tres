@@ -5,6 +5,8 @@
 
 [resource]
 script = ExtResource( 1 )
+name = "Glaive"
+weaponType = 0
 damage = 1
 knockbackValue = 350
 length = 30.0

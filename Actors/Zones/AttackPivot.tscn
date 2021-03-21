@@ -1,13 +1,16 @@
-[gd_scene load_steps=5 format=2]
+[gd_scene load_steps=6 format=2]
 
 [ext_resource path="res://Actors/Zones/AttackPivot.gd" type="Script" id=1]
+[ext_resource path="res://Assets/WeaponAssets/Item__01.png" type="Texture" id=2]
+[ext_resource path="res://Weapons/Glaive.tres" type="Resource" id=3]
 [ext_resource path="res://Assets/TGBA swipe.png" type="Texture" id=4]
-[ext_resource path="res://Assets/WeaponAssets/Item__12.png" type="Texture" id=5]
 [ext_resource path="res://Actors/Zones/WeaponHitbox.tscn" type="PackedScene" id=6]
 
 [node name="AttackPivot" type="Position2D"]
+show_behind_parent = true
 position = Vector2( 0, -5 )
 script = ExtResource( 1 )
+weaponStatsResource = ExtResource( 3 )
 
 [node name="WeaponHitbox" parent="." instance=ExtResource( 6 )]
 
@@ -24,17 +27,16 @@ frame = 5
 
 [node name="BackTween" type="Tween" parent="."]
 
-[node name="MeleeRestingPos" type="Position2D" parent="."]
+[node name="WeaponRestingPos" type="Position2D" parent="."]
 position = Vector2( 2.32574, -8.7342 )
 
-[node name="Weapon" type="Sprite" parent="MeleeRestingPos"]
+[node name="Weapon" type="Sprite" parent="WeaponRestingPos"]
 rotation = -1.0472
-z_index = -1
-texture = ExtResource( 5 )
+texture = ExtResource( 2 )
 flip_h = true
 
 [node name="AttackTimer" type="Timer" parent="."]
 one_shot = true
-[connection signal="tween_completed" from="WeaponTween" to="." method="_on_WeaponTween_tween_completed"]
+[connection signal="tween_all_completed" from="WeaponTween" to="." method="_on_WeaponTween_tween_completed"]
 
 [editable path="WeaponHitbox"]

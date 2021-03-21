@@ -2,6 +2,13 @@ extends Resource
 
 class_name WeaponStats
 
+enum WeaponType {
+	MELEE,
+	RANGED
+}
+
+export(String) var name = "Base Sword"
+export(WeaponType) var weaponType = WeaponType.MELEE
 export var damage : int = 1
 export var knockbackValue : int = 350
 export var length : float = 10.5

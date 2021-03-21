@@ -40,7 +40,7 @@ func switchToAttack():
 		.switchToAttack()
 		animationPlayer.playback_speed = 1
 		animationPlayer.play("MeleeAttack")
-		attackTimer.start(1)
+		attackTimer.start(weaponStats.attackSpeed * 2)
 
 func willIdle() -> bool:
 	return !detectionZone.hasTarget()

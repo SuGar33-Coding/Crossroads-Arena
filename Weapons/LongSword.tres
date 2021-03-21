@@ -5,6 +5,8 @@
 
 [resource]
 script = ExtResource( 1 )
+name = "Long Sword"
+weaponType = 0
 damage = 2
 knockbackValue = 400
 length = 20.0

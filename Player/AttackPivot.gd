@@ -5,6 +5,11 @@ onready var animationPlayer := get_node("../AnimationPlayer")
 onready var parryHitbox := $WeaponHitbox/ParryHitbox
 onready var attackTimer := $AttackTimer
 
+# TODO: remove this cus it should be through inventory
+onready var rangedWeapon : WeaponStats = preload("res://Weapons/BaseBow.tres")
+onready var meleeWeapon : WeaponStats = weaponStats
+
+
 func _ready():
 	parryHitbox.connect("area_entered", self, "_parried_weapon")
 	weaponHitbox.connect("area_entered", self, "_damaged_enemy")
@@ -15,13 +20,25 @@ func _physics_process(_delta):
 	
 	if not animationPlayer.is_playing():
 		if Input.is_action_just_pressed("attack") and attackTimer.is_stopped():
-			animationPlayer.play("MeleeAttack")
 			attackTimer.start(weaponStats.attackSpeed * PlayerStats.attackSpeed)
-			
-			var animLength = animationPlayer.current_animation_length
-			self.startAttack(animLength)
+			if weaponStats.weaponType == WeaponStats.WeaponType.MELEE:
+				animationPlayer.play("MeleeAttack")				
+				
+				var animLength = animationPlayer.current_animation_length
+				self.startMeleeAttack(animLength)
+			else:
+				# Ranged Weapon
+				pass
+				
+				
 		elif Input.is_action_just_pressed("fire"):
 			animationPlayer.play("Parry")
+		elif Input.is_action_just_pressed("swap"):
+			if weaponStats.name == meleeWeapon.name:
+				setWeapon(rangedWeapon)
+			else:
+				setWeapon(meleeWeapon)
+	
 
 # Called when another parry hitbox hit's player's during parry action
 func _parried_weapon(area):
