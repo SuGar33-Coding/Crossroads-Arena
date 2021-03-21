@@ -7,16 +7,17 @@ radius = 4.05255
 height = 6.43132
 
 [node name="Tree" type="StaticBody2D"]
-position = Vector2( 0.132431, -10.3298 )
+scale = Vector2( 2, 2 )
 
 [node name="Sprite" type="Sprite" parent="."]
 modulate = Color( 0.769531, 0.769531, 0.769531, 1 )
+position = Vector2( 0.0883904, -10.253 )
 texture = ExtResource( 1 )
 vframes = 2
 hframes = 2
 frame = 1
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2( 0, 14.2244 )
+position = Vector2( 0.0883904, 3.97135 )
 rotation = 1.5708
 shape = SubResource( 1 )

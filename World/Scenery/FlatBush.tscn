@@ -8,6 +8,7 @@ height = 7.9411
 
 [node name="FlatBush" type="StaticBody2D"]
 position = Vector2( 0, -2.00226 )
+scale = Vector2( 2, 2 )
 
 [node name="Sprite" type="Sprite" parent="."]
 texture = ExtResource( 1 )

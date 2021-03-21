@@ -17,7 +17,6 @@ rotation = 1.5708
 shape = SubResource( 1 )
 
 [node name="Sprite" type="Sprite" parent="."]
-scale = Vector2( 0.5, 0.5 )
 texture = ExtResource( 2 )
 
 [node name="WeaponHitbox" parent="." instance=ExtResource( 1 )]
