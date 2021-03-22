@@ -21,6 +21,7 @@ onready var hurtbox := $Hurtbox
 onready var camera := $MainCamera
 onready var damagedPlayer := $DamagedPlayer
 onready var dashTimer := $DashTimer
+onready var movementAnimation := $MovementAnimation
 
 func _ready():
 	Engine.set_target_fps(Engine.get_iterations_per_second())
@@ -53,7 +54,8 @@ func _physics_process(delta):
 	elif inputVector != Vector2.ZERO:
 		velocity = velocity.move_toward(inputVector * MaxSpeed, Acceleration * delta)
 		
-		spawnDirtFx()
+		#spawnDirtFx()
+		movementAnimation.play("Walking")
 	else:
 		velocity = velocity.move_toward(Vector2.ZERO, Friction * delta)
 
