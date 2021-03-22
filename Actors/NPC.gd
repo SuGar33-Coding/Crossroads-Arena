@@ -52,7 +52,8 @@ func _physics_process(delta):
 				lookAtTarget()
 				if willAttack():
 					switchToAttack()
-				velocity = movement.getMovementVelocity(self, target.global_position, delta)
+				if target != null: # TODO: look into this fix some more
+					velocity = movement.getMovementVelocity(self, target.global_position, delta)
 		State.ATTACK:
 			velocity = movement.getIdleVelocity(self, delta)
 		State.STUN:

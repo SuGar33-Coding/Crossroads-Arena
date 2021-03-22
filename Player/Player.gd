@@ -1,6 +1,7 @@
 extends KinematicBody2D
 
 var dirtFx = preload("res://FX/DirtSpread.tscn")
+var dashCloudFx = preload("res://FX/DashCloud.tscn")
 
 export(int) var maxPlayerHealth = 1
 export(int) var startingLevel = 1
@@ -51,10 +52,12 @@ func _physics_process(delta):
 	if Input.is_action_just_pressed("dash") and dashTimer.is_stopped():
 		dashVector = inputVector * dashSpeed
 		dashTimer.start(dashDelay)
+		movementAnimation.play("Dashing")
 	elif inputVector != Vector2.ZERO:
 		velocity = velocity.move_toward(inputVector * MaxSpeed, Acceleration * delta)
 		
-		movementAnimation.play("Walking")
+		if !movementAnimation.is_playing():
+			movementAnimation.play("Walking")
 	else:
 		velocity = velocity.move_toward(Vector2.ZERO, Friction * delta)
 
@@ -71,13 +74,23 @@ func _physics_process(delta):
 		
 	velocity = move_and_slide(velocity)
 
-func spawnDirtFx():
+func spawnDirtFx(initVelocity = 50):
 	var dirtFxInstance: Particles2D = dirtFx.instance()
+	var newMat: ParticlesMaterial = dirtFxInstance.process_material
+	newMat.initial_velocity = initVelocity
+	dirtFxInstance.material = newMat
 	dirtFxInstance.global_position = Vector2(self.global_position.x, self.global_position.y + 12)
 	# TODO: Probably want to avoid using negative z values, maybe scale everything up?
-	dirtFxInstance.z_index = -1
+	dirtFxInstance.z_index = -2
 	dirtFxInstance.emitting = true
 	get_tree().current_scene.add_child(dirtFxInstance)
+
+func spawnDashFx():
+	var dashCloudFxInstance: Particles2D = dashCloudFx.instance()
+	dashCloudFxInstance.global_position = Vector2(self.global_position.x, self.global_position.y + 12)
+	dashCloudFxInstance.z_index = -1
+	dashCloudFxInstance.emitting = true
+	get_tree().current_scene.add_child(dashCloudFxInstance)
 
 func _hurtbox_area_entered(area : WeaponHitbox):
 	stats.health -= area.damage
