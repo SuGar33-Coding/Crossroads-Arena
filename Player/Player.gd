@@ -3,9 +3,12 @@ extends KinematicBody2D
 var dirtFx = preload("res://FX/DirtSpread.tscn")
 var dashCloudFx = preload("res://FX/DashCloud.tscn")
 
-export(int) var maxPlayerHealth = 1
+export(int) var startingMaxHealth = 5
 export(int) var startingLevel = 1
-export var MaxSpeed = 275
+export(int) var startingStr = 0
+export(int) var startingCon = 0
+export(int) var startingDex = 0
+export var MaxSpeed = 200
 export var Acceleration = 2000
 export var Friction = 2000
 export var dashSpeed := 500
@@ -28,13 +31,15 @@ onready var movementAnimation := $MovementAnimation
 func _ready():
 	Engine.set_target_fps(Engine.get_iterations_per_second())
 	
-	stats.maxHealth = maxPlayerHealth
-	stats.health = maxPlayerHealth
+	stats.startingMaxHealth = startingMaxHealth
 	stats.playerLevel = startingLevel
 	stats.currentXP = 0
-	stats.healthIncrease = maxPlayerHealth
+	stats.strength = startingStr
+	stats.con = startingCon
+	stats.dex = startingDex
 	
 	stats.connect("noHealth", self, "_playerstats_no_health")
+	stats.connect("playerLevelChanged", self, "_player_level_changed")
 	hurtbox.connect("area_entered", self, "_hurtbox_area_entered")
 
 func _physics_process(delta):
@@ -92,6 +97,9 @@ func spawnDashFx():
 	dashCloudFxInstance.z_index = -1
 	dashCloudFxInstance.emitting = true
 	get_tree().current_scene.add_child(dashCloudFxInstance)
+	
+func _player_level_changed(_newPlayerLevel):
+	attackPivot.userStr = PlayerStats.strength
 
 func _hurtbox_area_entered(area : WeaponHitbox):
 	var text = floatingText.instance()

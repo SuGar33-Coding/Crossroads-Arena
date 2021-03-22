@@ -24,6 +24,7 @@ onready var meleeRestingRotation = weapon.rotation
 var swordAnimDist
 var tweenLength
 var source : KinematicBody2D
+var userStr: int = 0 setget setUserStr
 
 func _ready():
 	# Choose random weapon
@@ -36,6 +37,11 @@ func _ready():
 # Rotate pivot to look at target position
 func lookAtTarget(targetPos: Vector2):
 	self.look_at(targetPos)
+	
+func setUserStr(sourceStr):
+	userStr = sourceStr
+	weaponHitbox.userStr = sourceStr
+	print(weaponHitbox.userStr)
 
 func startMeleeAttack(animLength: float):
 	if weaponStats.weaponType == WeaponStats.WeaponType.MELEE:
@@ -48,9 +54,9 @@ func startMeleeAttack(animLength: float):
 		
 		tween.start()
 		
-func startRangedAttack(fromPlayer := false):
+func startRangedAttack(sourceStr := 0):
 	var rangedProjectile = RangedProjectile.instance()
-	rangedProjectile.init(weaponStats, source)
+	rangedProjectile.init(weaponStats, source, sourceStr)
 	
 	var world = get_tree().current_scene
 	# Have to set it before you add it as a child otherwise the room area's think you are exiting them

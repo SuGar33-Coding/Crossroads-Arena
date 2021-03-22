@@ -3,7 +3,8 @@ extends Area2D
 class_name WeaponHitbox
 
 var fromPlayer: bool = false
-var damage
+var damage: int = 0
+var userStr: int = 0 setget setUserStr
 var knockbackValue
 var source
 var hitboxOffset = 5
@@ -14,9 +15,14 @@ onready var parryCollision := $ParryHitbox/ParryCollision
 
 signal parried(area)
 
-func setSource(newSource):
+func setSource(newSource, sourceStr := 0):
 	self.source = newSource
 	fromPlayer = (self.source.name == "Player")
+	setUserStr(sourceStr)
+	
+func setUserStr(value):
+	self.damage = self.damage - self.userStr + value
+	userStr = value
 
 func getSource():
 	return self.source
@@ -32,7 +38,7 @@ func getKnockbackVector(position) -> Vector2:
 	
 func setWeapon(weapon : WeaponStats):
 	weaponStats = weapon
-	damage = weaponStats.damage
+	damage = weaponStats.damage + userStr
 	knockbackValue = weaponStats.knockbackValue
 		
 	if weaponStats.weaponType == WeaponStats.WeaponType.MELEE:

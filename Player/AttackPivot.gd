@@ -27,7 +27,7 @@ func _physics_process(_delta):
 				self.startMeleeAttack(animLength)
 			else:
 				# Ranged Weapon
-				self.startRangedAttack(true)
+				self.startRangedAttack(PlayerStats.strength)
 				
 				
 		elif Input.is_action_just_pressed("fire"):
@@ -37,7 +37,6 @@ func _physics_process(_delta):
 				setWeapon(rangedWeapon)
 			else:
 				setWeapon(meleeWeapon)
-	
 
 # Called when another parry hitbox hit's player's during parry action
 func _parried_weapon(area):

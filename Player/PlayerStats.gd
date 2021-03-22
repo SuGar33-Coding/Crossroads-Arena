@@ -1,10 +1,14 @@
 extends Node
 
-export(int) var maxHealth = 1 setget setMaxHealth, getMaxHealth
-export(int) var playerLevel = 1 setget setPlayerLevel
-export(int) var currentXP = 0 setget setCurrentXP, getCurrentXP
+var maxHealth : int = 1 setget setMaxHealth, getMaxHealth
+var startingMaxHealth : int = 5 setget setStartingHealth
+var playerLevel : int = 0 setget setPlayerLevel
+var currentXP : int = 0 setget setCurrentXP, getCurrentXP
+var strength : int = 0 setget setStr
+var con : int = 0 setget setCon
+var dex : int = 0 setget setDex
 # AttackSpeed starts at 1 and then will slowly scale down as it's multiplied by weapon attack speed
-export(float) var attackSpeed = 1
+var attackSpeed : float = 1
 
 signal noHealth
 signal healthChanged(value)
@@ -15,13 +19,15 @@ signal addedToInventory(newItem)
 signal removedFromInventory(removedItem)
 
 # How much health increases on every level
-var healthIncrease = maxHealth
-var health = 0 setget setHealth, getHealth
+var healthIncrease = 7
+var health = 1 setget setHealth, getHealth
 # Will be an array of scenes/references to scene instances
 var inventory := []
 
-func _ready():
-	health = maxHealth
+func setStartingHealth(value):
+	startingMaxHealth = value
+	self.maxHealth = value
+	self.health = value
 
 func setMaxHealth(value):
 	maxHealth = max(value, 1)
@@ -43,7 +49,7 @@ func getHealth():
 func addXP(amount):
 	self.setCurrentXP(currentXP + amount)
 	
-func xpToNextLevel() -> float:
+func xpToNextLevel() -> int:
 	return 10 * playerLevel
 	
 func setCurrentXP(value):
@@ -57,14 +63,28 @@ func setCurrentXP(value):
 func getCurrentXP() -> int:
 	return currentXP
 
+func setStr(value):
+	strength = value
+	
+func setCon(value):
+	if con < value:
+		con += 1
+		self.maxHealth = startingMaxHealth + con * healthIncrease
+		self.health += healthIncrease
+	
+func setDex(value):
+	dex = value
+	self.attackSpeed = pow(.925, dex)
+
 func setPlayerLevel(newLevel):
 	if playerLevel < newLevel:
 		while playerLevel != newLevel:
 			playerLevel += 1
 			# Increase player's stats here
-			self.maxHealth += healthIncrease
-			self.health += healthIncrease
-			self.attackSpeed = self.attackSpeed * .925
+			if playerLevel % 2 == 0:
+				self.con += 1
+				self.strength += 1
+			self.dex += 1
 	
 	emit_signal("playerLevelChanged", playerLevel)
 

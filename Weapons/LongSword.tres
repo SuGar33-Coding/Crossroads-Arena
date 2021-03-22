@@ -13,5 +13,5 @@ radius = 15.5
 length = 20.0
 attackSpeed = 0.5
 texture = ExtResource( 2 )
-projectileSpeed = 750.0
+projectileSpeed = 1000.0
 projectileRange = 350.0

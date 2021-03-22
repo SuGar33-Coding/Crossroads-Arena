@@ -20,5 +20,5 @@ export var texture : Texture
 
 # Ranged Weapon stuff
 export var projectileTexture : Texture
-export var projectileSpeed : float = 750
+export var projectileSpeed : float = 1000
 export var projectileRange : float = 350
