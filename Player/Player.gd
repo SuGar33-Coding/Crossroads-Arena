@@ -1,5 +1,7 @@
 extends KinematicBody2D
 
+var dirtFx = preload("res://FX/DirtSpread.tscn")
+
 export(int) var maxPlayerHealth = 1
 export(int) var startingLevel = 1
 export var MaxSpeed = 275
@@ -50,6 +52,8 @@ func _physics_process(delta):
 		dashTimer.start(dashDelay)
 	elif inputVector != Vector2.ZERO:
 		velocity = velocity.move_toward(inputVector * MaxSpeed, Acceleration * delta)
+		
+		spawnDirtFx()
 	else:
 		velocity = velocity.move_toward(Vector2.ZERO, Friction * delta)
 
@@ -65,6 +69,14 @@ func _physics_process(delta):
 	attackPivot.look_at(mousePos)
 		
 	velocity = move_and_slide(velocity)
+
+func spawnDirtFx():
+	var dirtFxInstance: Particles2D = dirtFx.instance()
+	dirtFxInstance.global_position = self.global_position
+	# TODO: Probably want to avoid using negative z values, maybe scale everything up?
+	dirtFxInstance.z_index = -1
+	dirtFxInstance.emitting = true
+	get_tree().current_scene.add_child(dirtFxInstance)
 
 func _hurtbox_area_entered(area : WeaponHitbox):
 	stats.health -= area.damage
