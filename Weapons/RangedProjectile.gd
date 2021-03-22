@@ -42,5 +42,5 @@ func fire(startingPosition : Vector2, startingRotation : float):
 	self.global_rotation = startingRotation
 	velocity =  Vector2(1,0).rotated(self.global_rotation) * speed
 
-func _area_entered(area):
+func _area_entered(_area):
 	queue_free()

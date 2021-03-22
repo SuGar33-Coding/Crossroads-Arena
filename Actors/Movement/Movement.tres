@@ -2,6 +2,5 @@
 
 [ext_resource path="res://Actors/Movement/Movement.gd" type="Script" id=1]
 
-
 [resource]
 script = ExtResource( 1 )

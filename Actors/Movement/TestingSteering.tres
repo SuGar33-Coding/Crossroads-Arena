@@ -4,4 +4,6 @@
 
 [resource]
 script = ExtResource( 1 )
-SmoothForce = 0.05
+SmoothForce = 0.1
+radius = 150.0
+amplitude = 0.5

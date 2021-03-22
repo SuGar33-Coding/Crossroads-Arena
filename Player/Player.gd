@@ -69,7 +69,7 @@ func _physics_process(delta):
 func _hurtbox_area_entered(area : WeaponHitbox):
 	stats.health -= area.damage
 	stats.currentXP += area.damage
-	camera.add_trauma(.4)
+	camera.add_trauma(area.knockbackValue / 1000.0)
 	knockback = area.getKnockbackVector(self.global_position)
 	damagedPlayer.play("Damaged")
 

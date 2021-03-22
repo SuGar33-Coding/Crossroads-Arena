@@ -2,7 +2,7 @@ extends Movement
 
 class_name TestingSteering
 
-export var SmoothForce : float = .02
+export var SmoothForce : float = .1
 export var radius : float = 150
 export var amplitude : float = .5
 

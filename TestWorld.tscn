@@ -66,47 +66,44 @@ position = Vector2( 2376, 1656 )
 
 [node name="People" type="YSort" parent="YSort"]
 
-[node name="Bandit8" parent="YSort/People" instance=ExtResource( 4 )]
-position = Vector2( 1032, 1112 )
+[node name="Fighter" parent="YSort/People" instance=ExtResource( 4 )]
+position = Vector2( 1376, 792 )
 
-[node name="Bandit7" parent="YSort/People" instance=ExtResource( 4 )]
-position = Vector2( 1408, 880 )
+[node name="Fighter3" parent="YSort/People" instance=ExtResource( 4 )]
+position = Vector2( 1032, 1000 )
 
-[node name="Bandit6" parent="YSort/People" instance=ExtResource( 4 )]
-position = Vector2( 1728, 1048 )
+[node name="Fighter4" parent="YSort/People" instance=ExtResource( 4 )]
+position = Vector2( 808, 752 )
 
-[node name="Bandit3" parent="YSort/People" instance=ExtResource( 4 )]
-position = Vector2( 1152, 712 )
+[node name="Fighter5" parent="YSort/People" instance=ExtResource( 4 )]
+position = Vector2( 1440, 992 )
 
-[node name="Bandit4" parent="YSort/People" instance=ExtResource( 4 )]
-position = Vector2( 696, 544 )
+[node name="Fighter6" parent="YSort/People" instance=ExtResource( 4 )]
+position = Vector2( 1776, 928 )
 
-[node name="Bandit2" parent="YSort/People" instance=ExtResource( 4 )]
-position = Vector2( 912, 832 )
+[node name="Fighter7" parent="YSort/People" instance=ExtResource( 4 )]
+position = Vector2( 1760, 1144 )
 
-[node name="Bandit" parent="YSort/People" instance=ExtResource( 4 )]
-position = Vector2( 664, 896 )
+[node name="Fighter8" parent="YSort/People" instance=ExtResource( 4 )]
+position = Vector2( 1624, 456 )
 
-[node name="Bandit5" parent="YSort/People" instance=ExtResource( 4 )]
-position = Vector2( 984, 504 )
+[node name="Fighter9" parent="YSort/People" instance=ExtResource( 4 )]
+position = Vector2( 928, 328 )
 
-[node name="Bandit9" parent="YSort/People" instance=ExtResource( 4 )]
-position = Vector2( 1320, 1336 )
+[node name="Fighter10" parent="YSort/People" instance=ExtResource( 4 )]
+position = Vector2( 672, 368 )
 
-[node name="Bandit10" parent="YSort/People" instance=ExtResource( 4 )]
-position = Vector2( 888, 1440 )
+[node name="Fighter11" parent="YSort/People" instance=ExtResource( 4 )]
+position = Vector2( 456, 944 )
 
-[node name="Bandit11" parent="YSort/People" instance=ExtResource( 4 )]
-position = Vector2( 1928, 560 )
+[node name="Fighter12" parent="YSort/People" instance=ExtResource( 4 )]
+position = Vector2( 920, 1384 )
 
-[node name="Bandit12" parent="YSort/People" instance=ExtResource( 4 )]
-position = Vector2( 1712, 360 )
+[node name="Fighter13" parent="YSort/People" instance=ExtResource( 4 )]
+position = Vector2( 1344, 1384 )
 
-[node name="Bandit13" parent="YSort/People" instance=ExtResource( 4 )]
-position = Vector2( 760, 160 )
-
-[node name="Bandit14" parent="YSort/People" instance=ExtResource( 4 )]
-position = Vector2( 280, 1024 )
+[node name="Fighter2" parent="YSort/People" instance=ExtResource( 4 )]
+position = Vector2( 1128, 688 )
 
 [node name="Scenery" type="YSort" parent="YSort"]
 
@@ -179,5 +176,3 @@ position = Vector2( 1256, 880 )
 [editable path="YSort/Player"]
 
 [editable path="YSort/Player/MainCamera"]
-
-[editable path="YSort/People/Bandit3"]

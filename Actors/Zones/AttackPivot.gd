@@ -63,6 +63,7 @@ func setWeapon(weaponStats : WeaponStats):
 	weapon.texture = weaponStats.texture
 	
 	if weaponStats.weaponType == WeaponStats.WeaponType.MELEE:
+		print("here")
 		restingPos.position = meleeRestingCoord
 		weapon.rotation = restingRotation
 		swordAnimDist = collision.position - restingPos.position
@@ -74,9 +75,9 @@ func setWeapon(weaponStats : WeaponStats):
 		swipe.scale.y = 1.5 * (weaponStats.length/2 + weaponStats.radius)/10
 		
 	else:
-		restingPos.position = Vector2(15, 0)
-		weapon.rotation = deg2rad(45)
-		weapon.z_index = 0
+		restingPos.set_deferred("position", Vector2(15, 0))
+		weapon.set_deferred("rotation", deg2rad(45))
+		weapon.set_deferred("z_index", 0)
 
 func _on_WeaponTween_tween_completed():
 	var backTween = $BackTween
