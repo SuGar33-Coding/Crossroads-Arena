@@ -109,10 +109,10 @@ tracks/0/keys = {
 "values": [ Color( 1, 1, 1, 1 ), Color( 0.682353, 0, 0, 1 ), Color( 1, 1, 1, 1 ), Color( 0.682353, 0, 0, 1 ), Color( 1, 1, 1, 1 ) ]
 }
 
-[sub_resource type="Animation" id=6]
+[sub_resource type="Animation" id=5]
 resource_name = "Blink"
-length = 0.2
-step = 0.05
+length = 0.15
+step = 0.01
 tracks/0/type = "value"
 tracks/0/path = NodePath(".:scale")
 tracks/0/interp = 1
@@ -120,7 +120,7 @@ tracks/0/loop_wrap = true
 tracks/0/imported = false
 tracks/0/enabled = true
 tracks/0/keys = {
-"times": PoolRealArray( 0, 0.05, 0.15, 0.2 ),
+"times": PoolRealArray( 0, 0.050025, 0.10005, 0.150075 ),
 "transitions": PoolRealArray( 1, 1, 1, 1 ),
 "update": 0,
 "values": [ Vector2( 1, 1 ), Vector2( 2.5, 1e-05 ), Vector2( 2.5, 1e-05 ), Vector2( 1, 1 ) ]
@@ -132,13 +132,13 @@ tracks/1/loop_wrap = true
 tracks/1/imported = false
 tracks/1/enabled = true
 tracks/1/keys = {
-"times": PoolRealArray( 0, 0.05, 0.15, 0.2 ),
+"times": PoolRealArray( 0, 0.050025, 0.10005, 0.150075 ),
 "transitions": PoolRealArray( 1, 1, 1, 1 ),
 "update": 0,
 "values": [ Color( 1, 1, 1, 1 ), Color( 0.0784314, 0, 1, 1 ), Color( 0.0784314, 0, 1, 1 ), Color( 1, 1, 1, 1 ) ]
 }
 
-[sub_resource type="Animation" id=7]
+[sub_resource type="Animation" id=6]
 resource_name = "Dashing"
 length = 0.2
 step = 0.05
@@ -183,9 +183,8 @@ tracks/1/keys = {
 } ]
 }
 
-[sub_resource type="Animation" id=5]
-resource_name = "Walking"
-length = 0.8
+[sub_resource type="Animation" id=7]
+length = 0.6
 tracks/0/type = "value"
 tracks/0/path = NodePath("Sprite:rotation_degrees")
 tracks/0/interp = 1
@@ -193,7 +192,7 @@ tracks/0/loop_wrap = true
 tracks/0/imported = false
 tracks/0/enabled = true
 tracks/0/keys = {
-"times": PoolRealArray( 0, 0.2, 0.6, 0.8 ),
+"times": PoolRealArray( 0, 0.15, 0.45, 0.6 ),
 "transitions": PoolRealArray( 1, 1, 1, 1 ),
 "update": 0,
 "values": [ 0.0, 6.0, -6.0, 0.0 ]
@@ -205,7 +204,7 @@ tracks/1/loop_wrap = true
 tracks/1/imported = false
 tracks/1/enabled = true
 tracks/1/keys = {
-"times": PoolRealArray( 0.2, 0.6 ),
+"times": PoolRealArray( 0.15, 0.45 ),
 "transitions": PoolRealArray( 1, 1 ),
 "values": [ {
 "args": [  ],
@@ -265,9 +264,9 @@ one_shot = true
 [node name="PlayerUI" parent="." instance=ExtResource( 8 )]
 
 [node name="MovementAnimation" type="AnimationPlayer" parent="."]
-anims/Blink = SubResource( 6 )
-anims/Dashing = SubResource( 7 )
-anims/Walking = SubResource( 5 )
+anims/Blink = SubResource( 5 )
+anims/Dashing = SubResource( 6 )
+anims/Walking = SubResource( 7 )
 
 [editable path="AttackPivot"]
 
