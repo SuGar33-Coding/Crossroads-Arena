@@ -16,6 +16,7 @@ enum State {
 	STUN
 }
 
+var floatingText = preload("res://UI/FloatingText.tscn")
 var state = State.IDLE
 var velocity = Vector2.ZERO
 var knockback = Vector2.ZERO
@@ -115,7 +116,10 @@ func findClosestAlly():
 	pass
 	
 func _hurtbox_area_entered(area : WeaponHitbox):
-	print(area.fromPlayer)
+	var text = floatingText.instance()
+	text.amount = area.damage
+	add_child(text)
+	
 	if area.fromPlayer:
 		PlayerStats.currentXP += min(stats.health, area.damage)
 	state = State.STUN

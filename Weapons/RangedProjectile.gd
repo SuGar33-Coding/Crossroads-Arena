@@ -37,7 +37,6 @@ func _physics_process(delta):
 func fire(startingPosition : Vector2, startingRotation : float):
 	
 	# TODO: Temporarily if it is from player then change its layer mask, will eventually do this with groups instead
-	print("Firing ", fromPlayer)
 	if fromPlayer:
 		self.weaponHitbox.set_collision_mask_bit(4, false)
 		self.weaponHitbox.set_collision_mask_bit(5, true)

@@ -11,6 +11,7 @@ export var dashDelay := .75
 var velocity := Vector2.ZERO
 var knockback := Vector2.ZERO
 var dashVector := Vector2.ZERO
+var floatingText = preload("res://UI/FloatingText.tscn")
 
 onready var stats = get_node("/root/PlayerStats")
 onready var sprite := $Sprite
@@ -67,6 +68,10 @@ func _physics_process(delta):
 	velocity = move_and_slide(velocity)
 
 func _hurtbox_area_entered(area : WeaponHitbox):
+	var text = floatingText.instance()
+	text.amount = area.damage
+	add_child(text)
+	
 	stats.health -= area.damage
 	stats.currentXP += area.damage
 	camera.add_trauma(area.knockbackValue / 1000.0)
