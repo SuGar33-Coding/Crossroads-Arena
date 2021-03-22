@@ -114,6 +114,7 @@ func _hurtbox_area_entered(area: WeaponHitbox):
 	else:
 		# If you die add some extra knockback
 		knockback = area.getKnockbackVector(self.global_position) * 1.5
+		Friction = Friction * 1.8
 
 # Handle actor's weapon being parried by player
 func _weapon_parried(area : WeaponHitbox):
