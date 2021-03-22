@@ -54,7 +54,6 @@ func _physics_process(delta):
 	elif inputVector != Vector2.ZERO:
 		velocity = velocity.move_toward(inputVector * MaxSpeed, Acceleration * delta)
 		
-		#spawnDirtFx()
 		movementAnimation.play("Walking")
 	else:
 		velocity = velocity.move_toward(Vector2.ZERO, Friction * delta)
@@ -74,7 +73,7 @@ func _physics_process(delta):
 
 func spawnDirtFx():
 	var dirtFxInstance: Particles2D = dirtFx.instance()
-	dirtFxInstance.global_position = self.global_position
+	dirtFxInstance.global_position = Vector2(self.global_position.x, self.global_position.y + 12)
 	# TODO: Probably want to avoid using negative z values, maybe scale everything up?
 	dirtFxInstance.z_index = -1
 	dirtFxInstance.emitting = true

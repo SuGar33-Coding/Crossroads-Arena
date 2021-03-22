@@ -16,14 +16,14 @@ initial_velocity = 50.0
 orbit_velocity = 0.0
 orbit_velocity_random = 0.0
 damping = 200.0
-scale = 5.0
+scale = 3.0
 scale_curve = SubResource( 2 )
 color = Color( 0.32549, 0.180392, 0.0588235, 1 )
 
 [node name="DirtSpread" type="Particles2D"]
 position = Vector2( 0, 7.71701 )
 emitting = false
-amount = 4
+amount = 5
 lifetime = 3.0
 one_shot = true
 explosiveness = 1.0
