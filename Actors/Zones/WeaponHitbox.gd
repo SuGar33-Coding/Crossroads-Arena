@@ -2,9 +2,10 @@ extends Area2D
 
 class_name WeaponHitbox
 
-export var fromPlayer: bool = false
+var fromPlayer: bool = false
 var damage
 var knockbackValue
+var source
 var hitboxOffset = 5
 var weaponStats: WeaponStats
 
@@ -13,8 +14,15 @@ onready var parryCollision := $ParryHitbox/ParryCollision
 
 signal parried(area)
 
+func setSource(newSource):
+	self.source = newSource
+	fromPlayer = (self.source.name == "Player")
+
+func getSource():
+	return self.source
+
 func getSourcePos() -> Vector2:
-	return self.get_parent().global_position
+	return self.source.global_position
 
 func getKnockbackDirection(position) -> Vector2:
 	return self.getSourcePos().direction_to(position)
@@ -31,7 +39,6 @@ func setWeapon(weapon : WeaponStats):
 		# Position the collision boxes to the right side of the player
 		collision.position.x = weaponStats.length/2 + weaponStats.radius + hitboxOffset
 		parryCollision.position.x = weaponStats.length/2 + weaponStats.radius + hitboxOffset
-		
 		
 	else:
 		#is ranged, no local weapon collision

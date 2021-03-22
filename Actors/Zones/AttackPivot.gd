@@ -23,12 +23,13 @@ onready var meleeRestingRotation = weapon.rotation
 
 var swordAnimDist
 var tweenLength
-
+var source : KinematicBody2D
 
 func _ready():
 	# Choose random weapon
 	randomize()
-	
+	source = get_parent()
+	weaponHitbox.setSource(source)
 	weaponStats = weaponStatsResources[randi() % weaponStatsResources.size()]
 	setWeapon(weaponStats)
 
@@ -49,7 +50,7 @@ func startMeleeAttack(animLength: float):
 		
 func startRangedAttack(fromPlayer := false):
 	var rangedProjectile = RangedProjectile.instance()
-	rangedProjectile.init(weaponStats, fromPlayer)
+	rangedProjectile.init(weaponStats, source)
 	
 	var world = get_tree().current_scene
 	# Have to set it before you add it as a child otherwise the room area's think you are exiting them
@@ -63,7 +64,6 @@ func setWeapon(weaponStats : WeaponStats):
 	weapon.texture = weaponStats.texture
 	
 	if weaponStats.weaponType == WeaponStats.WeaponType.MELEE:
-		print("here")
 		restingPos.position = meleeRestingCoord
 		weapon.rotation = restingRotation
 		swordAnimDist = collision.position - restingPos.position

@@ -115,6 +115,7 @@ func findClosestAlly():
 	pass
 	
 func _hurtbox_area_entered(area : WeaponHitbox):
+	print(area.fromPlayer)
 	if area.fromPlayer:
 		PlayerStats.currentXP += min(stats.health, area.damage)
 	state = State.STUN

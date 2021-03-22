@@ -2,22 +2,24 @@ extends KinematicBody2D
 
 class_name RangedProjectile
 
-
+var fromPlayer : bool = false
 var speed
 var velocity := Vector2.ZERO
 var weaponStats : WeaponStats
-var fromPlayer : bool
+var source
 
 onready var weaponHitbox := $WeaponHitbox
 onready var sprite := $Sprite
 
-func init(weaponStats: WeaponStats, fromPlayer: bool = false):
+func init(weaponStats: WeaponStats, source):
 	self.weaponStats = weaponStats
-	self.fromPlayer = fromPlayer
+	self.source = source
+	
+	self.fromPlayer = (source.name == "Player")
 
 func _ready():
 	weaponHitbox.setWeapon(weaponStats)
-	weaponHitbox.fromPlayer = fromPlayer
+	weaponHitbox.setSource(source)
 	
 	speed = weaponStats.projectileSpeed
 	
@@ -35,6 +37,7 @@ func _physics_process(delta):
 func fire(startingPosition : Vector2, startingRotation : float):
 	
 	# TODO: Temporarily if it is from player then change its layer mask, will eventually do this with groups instead
+	print("Firing ", fromPlayer)
 	if fromPlayer:
 		self.weaponHitbox.set_collision_mask_bit(4, false)
 		self.weaponHitbox.set_collision_mask_bit(5, true)
