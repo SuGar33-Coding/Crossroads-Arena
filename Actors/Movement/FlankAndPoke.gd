@@ -1,9 +1,7 @@
-extends Movement
+extends MoveAndAvoid
 
 class_name FlankAndPoke
 
-export var SmoothForce : float = .1
-export var radius : float = 150
 export var amplitude : float = .5
 
 const frequency : float = 1.0
@@ -44,9 +42,6 @@ func getMovementVelocity(selfNode: KinematicBody2D, targetPos: Vector2, delta: f
 	# If we want to slow the guys down as they get closer, make a vector that points out that scales inversely with distance
 	# But then like only weight it half the way
 
-func getIdleVelocity(selfNode: KinematicBody2D, delta: float):
-	return selfNode.velocity.move_toward(Vector2.ZERO, selfNode.Friction * delta)
-
 func getSinVector(selfNode: KinematicBody2D, delta: float) -> Vector2:
 	# Move along the sin wave
 	var newSinX = fmod(selfNode.sinX + delta * selfNode.moveDir, TAU)
@@ -60,15 +55,6 @@ func getSinVector(selfNode: KinematicBody2D, delta: float) -> Vector2:
 	
 	# Return derivative between two points
 	return oldPos.direction_to(newPos)
-	
-# Takes in two bases and rebases given vector to them (should normalize bases before calling)
-func rebaseVector(vectorToRebase: Vector2, xBase:Vector2, yBase:Vector2):
-	var newVector = Vector2.ZERO
-	
-	newVector.x = vectorToRebase.dot(xBase) 
-	newVector.y = vectorToRebase.dot(yBase)
-	
-	return newVector
 	
 func getCombatDir(selfNode: KinematicBody2D, pathFindingDir: Vector2, delta: float) -> Vector2:
 	# Get the derivative along the sine wave
@@ -91,19 +77,3 @@ func getCombatWeight(selfNode: KinematicBody2D, targetPos: Vector2) -> float:
 func getToTargetWeight(selfNode: KinematicBody2D, targetPos: Vector2) -> float:
 	return clamp((targetPos - selfNode.global_position).length() / radius, 0, 1)
 
-# Get direction to closest ally
-func getAvoidanceDir(selfNode: KinematicBody2D) -> Vector2:
-	var ally : KinematicBody2D = selfNode.closestAlly
-	if ally != null:
-		return ally.global_position.direction_to(selfNode.global_position)
-	else:
-		return Vector2.ZERO
-
-func getAvoidanceWeight(selfNode: KinematicBody2D) -> float:
-	var ally : KinematicBody2D = selfNode.closestAlly
-	if ally != null:
-		# TODO: did radius/3 for now just to make it so you can get closer to allies before it takes over
-		return clamp((radius/3) / (ally.global_position - selfNode.global_position).length(), 0, 1)
-	else:
-		return 0.0
-	

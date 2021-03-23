@@ -5,8 +5,13 @@
 
 [resource]
 script = ExtResource( 1 )
+name = "Base Sword"
+weaponType = 0
 damage = 10
 knockbackValue = 690
-length = 420.0
 radius = 69.0
+length = 420.0
+attackSpeed = 0.7
 texture = ExtResource( 2 )
+projectileSpeed = 1000.0
+projectileRange = 350.0

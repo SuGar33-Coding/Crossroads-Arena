@@ -45,7 +45,7 @@ func switchToAttack():
 		.switchToAttack()
 		animationPlayer.playback_speed = 1
 		# TODO: Make this a more well defined ratio
-		attackTimer.start(weaponStats.attackSpeed * 2)
+		attackTimer.start(weaponStats.attackSpeed * 1.5)
 		if weaponStats.weaponType == WeaponStats.WeaponType.MELEE:
 			animationPlayer.play("MeleeAttack")
 		else:
