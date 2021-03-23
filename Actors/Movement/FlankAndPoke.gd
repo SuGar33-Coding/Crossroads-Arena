@@ -29,19 +29,6 @@ func getMovementDirection(selfNode: KinematicBody2D, targetPos: Vector2, delta: 
 	# Combine the weights to get the desired direction
 	return (toTargetVector + combatVector + avoidanceVector).normalized()
 
-# Steer towards desired velocity in Movement Direction
-func getMovementVelocity(selfNode: KinematicBody2D, targetPos: Vector2, delta: float):	
-	var movementDir = getMovementDirection(selfNode, targetPos, delta)
-	
-	var desiredVelocity = movementDir * selfNode.MaxSpeed
-	
-	# Use steering to smooth our movement towards desired vector
-	var steer = (desiredVelocity - selfNode.velocity)
-	return selfNode.velocity.move_toward(selfNode.velocity + (steer * SmoothForce), selfNode.Acceleration * delta)
-	
-	# If we want to slow the guys down as they get closer, make a vector that points out that scales inversely with distance
-	# But then like only weight it half the way
-
 func getSinVector(selfNode: KinematicBody2D, delta: float) -> Vector2:
 	# Move along the sin wave
 	var newSinX = fmod(selfNode.sinX + delta * selfNode.moveDir, TAU)
@@ -72,8 +59,3 @@ func getCombatDir(selfNode: KinematicBody2D, pathFindingDir: Vector2, delta: flo
 func getCombatWeight(selfNode: KinematicBody2D, targetPos: Vector2) -> float:
 	# Inversely weight our combat movement vector to how close unit is to target
 	return clamp(radius/(targetPos - selfNode.global_position).length(), 0, 1)
-
-# Weight proportional to distance from radius around target
-func getToTargetWeight(selfNode: KinematicBody2D, targetPos: Vector2) -> float:
-	return clamp((targetPos - selfNode.global_position).length() / radius, 0, 1)
-
