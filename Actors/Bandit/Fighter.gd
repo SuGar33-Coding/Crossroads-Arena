@@ -102,7 +102,7 @@ func findClosestAlly():
 	if minDist >= 1000:
 		closestAlly = null
 
-func _hurtbox_area_entered(area: WeaponHitbox):
+func _hurtbox_area_entered(area: Hitbox):
 	._hurtbox_area_entered(area)
 	# Only play damaged if we're not dead
 	if(stats.health >= 1):

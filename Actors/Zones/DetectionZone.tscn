@@ -9,7 +9,6 @@ radius = 150.0
 collision_layer = 0
 collision_mask = 2
 script = ExtResource( 1 )
-detectionRange = 100
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource( 1 )

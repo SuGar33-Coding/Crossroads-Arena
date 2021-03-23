@@ -1,11 +1,9 @@
-extends Area2D
+extends Hitbox
 
 class_name WeaponHitbox
 
 var fromPlayer: bool = false
-var damage: int = 0
 var userStr: int = 0 setget setUserStr
-var knockbackValue
 var source
 var hitboxOffset = 5
 var weaponStats: WeaponStats
@@ -29,12 +27,6 @@ func getSource():
 
 func getSourcePos() -> Vector2:
 	return self.source.global_position
-
-func getKnockbackDirection(position) -> Vector2:
-	return self.getSourcePos().direction_to(position)
-	
-func getKnockbackVector(position) -> Vector2:
-	return self.getKnockbackDirection(position) * knockbackValue
 	
 func setWeapon(weapon : WeaponStats):
 	weaponStats = weapon

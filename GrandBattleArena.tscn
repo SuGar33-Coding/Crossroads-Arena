@@ -127,6 +127,9 @@ position = Vector2( 0, 0 )
 [node name="BottomRight" parent="YSort/Player/MainCamera/Limits" index="1"]
 position = Vector2( 2376, 1656 )
 
+[node name="AttackPivot" parent="YSort/Player" index="3"]
+swingDegrees = 110.0
+
 [node name="People" type="YSort" parent="YSort"]
 
 [node name="Scenery" type="YSort" parent="YSort"]

@@ -42,7 +42,7 @@ _global_script_classes=[ {
 "base": "Area2D",
 "class": "Hitbox",
 "language": "GDScript",
-"path": "res://Actors/Generic/hitbox.gd"
+"path": "res://Actors/Zones/hitbox.gd"
 }, {
 "base": "Node2D",
 "class": "Item",
@@ -99,7 +99,7 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://Actors/Movement/TestingSteering.gd"
 }, {
-"base": "Area2D",
+"base": "Hitbox",
 "class": "WeaponHitbox",
 "language": "GDScript",
 "path": "res://Actors/Zones/WeaponHitbox.gd"
