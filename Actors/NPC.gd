@@ -22,11 +22,14 @@ var velocity = Vector2.ZERO
 var knockback = Vector2.ZERO
 var target: Node2D = null
 var closestAlly : NPC = null
+var path: PoolVector2Array
+var flag = true
 
 onready var movement: Movement = movementResource
 onready var sprite := $Sprite
 onready var stats : Stats = $Stats
 onready var hurtbox := $Hurtbox
+onready var nav2d: Navigation2D = get_node("../../../Navigation2D")
 
 func _ready():
 	self.add_to_group(movementGroup)
@@ -54,6 +57,10 @@ func _physics_process(delta):
 				if willAttack():
 					switchToAttack()
 				if target != null: # TODO: look into this fix some more
+					if nav2d != null and flag:
+						path = nav2d.get_simple_path(global_position, target.global_position)
+						flag = false
+					print(path)
 					velocity = movement.getMovementVelocity(self, target.global_position, delta)
 		State.ATTACK:
 			velocity = movement.getIdleVelocity(self, delta)
@@ -79,6 +86,14 @@ func _draw():
 		var label = Label.new()
 		var font = label.get_font("")
 		draw_string(font, Vector2(-15,-25), State.keys()[state], Color(1,1,1))
+		
+		if path != null and path.size() > 0:
+			var from = path[0] - global_position
+			var to
+			for pos in path:
+				to = pos - global_position
+				draw_line(from, to, Color(0,0,1))
+				from = to
 	
 func lookAtTarget():
 	pass

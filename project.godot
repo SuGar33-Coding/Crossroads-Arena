@@ -74,6 +74,11 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://Actors/NPC.gd"
 }, {
+"base": "Movement",
+"class": "Pathfind",
+"language": "GDScript",
+"path": "res://Actors/Movement/Pathfind.gd"
+}, {
 "base": "KinematicBody2D",
 "class": "RangedProjectile",
 "language": "GDScript",
@@ -123,6 +128,7 @@ _global_script_class_icons={
 "MoveAndAvoid": "",
 "Movement": "",
 "NPC": "",
+"Pathfind": "",
 "RangedProjectile": "",
 "Room": "",
 "RoomArea": "",
