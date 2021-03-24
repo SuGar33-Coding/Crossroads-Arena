@@ -23,6 +23,7 @@ var knockback = Vector2.ZERO
 var target: Node2D = null
 var closestAlly : NPC = null
 var path: PoolVector2Array
+var pathIdx := 1
 var flag = true
 
 onready var movement: Movement = movementResource
@@ -30,6 +31,7 @@ onready var sprite := $Sprite
 onready var stats : Stats = $Stats
 onready var hurtbox := $Hurtbox
 onready var nav2d: Navigation2D = get_node("../../../Navigation2D")
+onready var pathfindTimer: Timer = $PathfindTimer
 
 func _ready():
 	self.add_to_group(movementGroup)
@@ -57,10 +59,10 @@ func _physics_process(delta):
 				if willAttack():
 					switchToAttack()
 				if target != null: # TODO: look into this fix some more
-					if nav2d != null and flag:
-						path = nav2d.get_simple_path(global_position, target.global_position)
-						flag = false
-					print(path)
+					if nav2d != null and pathfindTimer.is_stopped() and pathIdx > 0: # Last check is to make it not refresh if it doesn't use it
+						path = nav2d.get_simple_path(global_position, target.global_position, false)
+						pathfindTimer.start(1.0)
+						pathIdx = 0
 					velocity = movement.getMovementVelocity(self, target.global_position, delta)
 		State.ATTACK:
 			velocity = movement.getIdleVelocity(self, delta)
