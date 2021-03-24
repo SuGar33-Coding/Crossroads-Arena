@@ -1,6 +1,7 @@
 extends Node2D
 
 var Fighter = preload("res://Actors/Bandit/Fighter.tscn")
+var Slime = preload("res://Actors/Slime/Slime.tscn")
 
 onready var people = $YSort/People
 onready var spawns = $Spawns

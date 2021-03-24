@@ -133,7 +133,7 @@ func flipRight():
 func findClosestAlly():
 	pass
 	
-func _hurtbox_area_entered(area : WeaponHitbox):
+func _hurtbox_area_entered(area : Hitbox):
 	var text = floatingText.instance()
 	text.amount = area.damage
 	add_child(text)

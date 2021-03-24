@@ -3,7 +3,8 @@ extends Movement
 class_name MoveAndAvoid
 
 export var SmoothForce : float = .1
-export var radius : float = 150
+export var radius : float = 1.0
+export var avoidanceRadius : float = 25
 
 # Calculate direction from three weighted unit vectors:
 # - Direction to target
@@ -62,8 +63,7 @@ func getAvoidanceDir(selfNode: KinematicBody2D) -> Vector2:
 func getAvoidanceWeight(selfNode: KinematicBody2D) -> float:
 	var ally : KinematicBody2D = selfNode.closestAlly
 	if ally != null:
-		# TODO: did radius/3 for now just to make it so you can get closer to allies before it takes over
-		return clamp((radius/3) / (ally.global_position - selfNode.global_position).length(), 0, 1)
+		return clamp((avoidanceRadius) / (ally.global_position - selfNode.global_position).length(), 0, 1)
 	else:
 		return 0.0
 	

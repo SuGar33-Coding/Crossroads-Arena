@@ -1,6 +1,6 @@
 extends Area2D
 
-export(int) var detectionRange = 300
+export(int) var detectionRange = 150
 export(int) var leaveRange = 600
 
 var target: KinematicBody2D = null
