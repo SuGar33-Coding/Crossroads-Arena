@@ -7,6 +7,6 @@ script = ExtResource( 1 )
 pointIncrementThreshold = 10
 SmoothForce = 0.1
 radius = 150.0
-avoidanceRadius = 50.0
+avoidanceRadius = 25.0
 amplitude = 0.5
 frequency = 1.0

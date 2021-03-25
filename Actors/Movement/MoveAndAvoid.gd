@@ -50,7 +50,7 @@ func rebaseVector(vectorToRebase: Vector2, xBase:Vector2, yBase:Vector2):
 
 # Weight proportional to distance from radius around target
 func getToTargetWeight(selfNode: KinematicBody2D, targetPos: Vector2) -> float:
-	return clamp(pow((targetPos - selfNode.global_position).length(), 1) / radius, 0, 1)
+	return clamp((targetPos - selfNode.global_position).length() / radius, 0, 1)
 
 # Get direction to closest ally
 func getAvoidanceDir(selfNode: KinematicBody2D) -> Vector2:

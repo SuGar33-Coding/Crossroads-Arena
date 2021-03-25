@@ -17,8 +17,14 @@ func getMovementDirection(selfNode: KinematicBody2D, targetPos: Vector2, delta: 
 	var toTargetVector = toTargetDir * toTargetWeight
 	
 	# Inversely weight combat movement with how close unit is to target radius
-	var combatDir := getCombatDir(selfNode, toTargetDir, delta)
-	var combatWeight :=  getCombatWeight(selfNode, targetPos)
+	var combatDir: Vector2
+	var combatWeight: float
+	if selfNode.isEnemyVisible:
+		combatDir = getCombatDir(selfNode, toTargetDir, delta)
+		combatWeight = getCombatWeight(selfNode, targetPos)
+	else:
+		combatWeight = 0.0
+		combatDir = Vector2.ZERO
 	var combatVector = combatDir * combatWeight
 	
 	# Move away from allies with strength proportional to how close you are to closest ally
