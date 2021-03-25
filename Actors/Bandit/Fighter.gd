@@ -38,7 +38,9 @@ func lookAtTarget():
 
 func switchToChase() -> void:
 	.switchToChase()
-	target = detectionZone.target
+	var newTarget = detectionZone.getNewTarget()
+	if newTarget != null:
+		target = newTarget
 	
 func switchToAttack():
 	if attackTimer.is_stopped():

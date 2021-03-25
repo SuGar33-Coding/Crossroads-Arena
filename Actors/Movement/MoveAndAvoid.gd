@@ -1,4 +1,4 @@
-extends Movement
+extends Pathfind
 
 class_name MoveAndAvoid
 
@@ -11,7 +11,7 @@ export var avoidanceRadius : float = 25
 # - Negative potential from closest group member
 func getMovementDirection(selfNode: KinematicBody2D, targetPos: Vector2, delta: float):
 	# Proportionally weight our pathfinding algorithm to how close unit is to target radius
-	var toTargetDir := selfNode.global_position.direction_to(targetPos)
+	var toTargetDir = getToTargetDirection(selfNode, targetPos)
 	var toTargetWeight := getToTargetWeight(selfNode, targetPos)
 	var toTargetVector = toTargetDir * toTargetWeight
 	
@@ -50,7 +50,7 @@ func rebaseVector(vectorToRebase: Vector2, xBase:Vector2, yBase:Vector2):
 
 # Weight proportional to distance from radius around target
 func getToTargetWeight(selfNode: KinematicBody2D, targetPos: Vector2) -> float:
-	return clamp((targetPos - selfNode.global_position).length() / radius, 0, 1)
+	return clamp(pow((targetPos - selfNode.global_position).length(), 1) / radius, 0, 1)
 
 # Get direction to closest ally
 func getAvoidanceDir(selfNode: KinematicBody2D) -> Vector2:
@@ -60,7 +60,7 @@ func getAvoidanceDir(selfNode: KinematicBody2D) -> Vector2:
 	else:
 		return Vector2.ZERO
 
-func getAvoidanceWeight(selfNode: KinematicBody2D) -> float:
+func getAvoidanceWeight(selfNode: NPC) -> float:
 	var ally : KinematicBody2D = selfNode.closestAlly
 	if ally != null:
 		return clamp((avoidanceRadius) / (ally.global_position - selfNode.global_position).length(), 0, 1)

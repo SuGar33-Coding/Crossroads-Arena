@@ -8,6 +8,7 @@ export var Acceleration: float = 1000
 export var Friction: float = 1000
 export var debug: bool = false
 export var movementGroup: String = "NPC"
+export var pathfindTime = .5
 
 enum State {
 	IDLE,
@@ -23,7 +24,7 @@ var knockback = Vector2.ZERO
 var target: Node2D = null
 var closestAlly : NPC = null
 var path: PoolVector2Array
-var pathIdx := 1
+var pathIdx := 0
 var flag = true
 
 onready var movement: Movement = movementResource
@@ -59,9 +60,9 @@ func _physics_process(delta):
 				if willAttack():
 					switchToAttack()
 				if target != null: # TODO: look into this fix some more
-					if nav2d != null and pathfindTimer.is_stopped() and pathIdx > 0: # Last check is to make it not refresh if it doesn't use it
+					if nav2d != null and pathfindTimer.is_stopped(): # Last check is to make it not refresh if it doesn't use it
 						path = nav2d.get_simple_path(global_position, target.global_position, false)
-						pathfindTimer.start(1.0)
+						pathfindTimer.start(pathfindTime)
 						pathIdx = 0
 					velocity = movement.getMovementVelocity(self, target.global_position, delta)
 		State.ATTACK:
@@ -132,6 +133,16 @@ func flipRight():
 	
 func findClosestAlly():
 	pass
+	
+# Returns whether NPC can see target or not
+func sightCheck() -> bool:
+	if target != null:
+		var spaceState := get_world_2d().direct_space_state
+		var rayCollision := spaceState.intersect_ray(global_position, target.global_position, [self], collision_mask)
+		
+		return rayCollision.empty()
+	
+	return false
 	
 func _hurtbox_area_entered(area : Hitbox):
 	var text = floatingText.instance()

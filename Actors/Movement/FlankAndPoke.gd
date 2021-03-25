@@ -4,7 +4,7 @@ class_name FlankAndPoke
 
 export var amplitude : float = .5
 
-const frequency : float = 1.0
+export var frequency : float = 1.0
 
 # Calculate direction from three weighted unit vectors:
 # - Direction to target
@@ -12,7 +12,7 @@ const frequency : float = 1.0
 # - Negative potential from closest group member
 func getMovementDirection(selfNode: KinematicBody2D, targetPos: Vector2, delta: float):
 	# Proportionally weight our pathfinding algorithm to how close unit is to target radius
-	var toTargetDir := selfNode.global_position.direction_to(targetPos)
+	var toTargetDir = getToTargetDirection(selfNode, targetPos)
 	var toTargetWeight := getToTargetWeight(selfNode, targetPos)
 	var toTargetVector = toTargetDir * toTargetWeight
 	

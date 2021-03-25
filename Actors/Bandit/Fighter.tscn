@@ -523,6 +523,7 @@ maxHealth = 10
 
 [node name="DetectionZone" parent="." index="4" instance=ExtResource( 5 )]
 detectionRange = 325
+leaveRange = 1000
 
 [node name="AttackPivot" parent="." index="5" instance=ExtResource( 6 )]
 weaponStatsResources = [ ExtResource( 9 ), ExtResource( 8 ) ]

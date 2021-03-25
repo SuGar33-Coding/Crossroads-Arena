@@ -59,7 +59,7 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://Actors/Movement/MaintainDistance.gd"
 }, {
-"base": "Movement",
+"base": "Pathfind",
 "class": "MoveAndAvoid",
 "language": "GDScript",
 "path": "res://Actors/Movement/MoveAndAvoid.gd"

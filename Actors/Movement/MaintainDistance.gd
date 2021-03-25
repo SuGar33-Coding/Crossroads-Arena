@@ -9,7 +9,7 @@ export var Radius : float = 200
 func getMovementDirection(selfNode: KinematicBody2D, targetPos: Vector2, delta: float):
 	var distToTarget = selfNode.global_position.distance_to(targetPos)
 	# get direction towards target
-	var movementDir = selfNode.global_position.direction_to(targetPos)
+	var movementDir = getToTargetDirection(selfNode, targetPos)
 	if distToTarget - Radius <= 0:
 		# if within radius, move away
 		movementDir *= -1

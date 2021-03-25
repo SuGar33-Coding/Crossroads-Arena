@@ -4,6 +4,7 @@
 
 [resource]
 script = ExtResource( 1 )
+pointIncrementThreshold = 10
 SmoothForce = 0.1
 radius = 1.0
 avoidanceRadius = 25.0
