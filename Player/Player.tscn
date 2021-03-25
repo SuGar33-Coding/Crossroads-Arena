@@ -172,13 +172,13 @@ tracks/1/keys = {
 "times": PoolRealArray( 0.05, 0.1, 0.15 ),
 "transitions": PoolRealArray( 1, 1, 1 ),
 "values": [ {
-"args": [ 100 ],
+"args": [ 100, 3.0 ],
 "method": "spawnDirtFx"
 }, {
-"args": [ 100 ],
+"args": [ 100, 3.0 ],
 "method": "spawnDirtFx"
 }, {
-"args": [ 100 ],
+"args": [ 100, 3.0 ],
 "method": "spawnDirtFx"
 } ]
 }

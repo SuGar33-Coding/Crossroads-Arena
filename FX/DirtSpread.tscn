@@ -3,7 +3,7 @@
 [ext_resource path="res://FX/SelfKillFX.gd" type="Script" id=1]
 
 [sub_resource type="Curve" id=1]
-_data = [ Vector2( 0, 1 ), 0.0, 0.0, 0, 0, Vector2( 0.926471, 0.998864 ), 0.0, 0.0, 0, 0, Vector2( 1, 0 ), 0.0, 0.0, 0, 0 ]
+_data = [ Vector2( 0, 0.523864 ), 0.0, 0.0, 0, 0, Vector2( 0.141176, 0.998864 ), 0.0, 0.0, 0, 0, Vector2( 1, 0 ), 0.0, 0.0, 0, 0 ]
 
 [sub_resource type="CurveTexture" id=2]
 curve = SubResource( 1 )
@@ -24,7 +24,7 @@ color = Color( 0.32549, 0.180392, 0.0588235, 1 )
 position = Vector2( 0, 7.71701 )
 emitting = false
 amount = 5
-lifetime = 3.0
+lifetime = 0.4
 one_shot = true
 explosiveness = 1.0
 process_material = SubResource( 3 )

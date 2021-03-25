@@ -80,11 +80,12 @@ func _physics_process(delta):
 		
 	velocity = move_and_slide(velocity)
 
-func spawnDirtFx(initVelocity = 50):
+func spawnDirtFx(initVelocity = 50, lifetime = 0.4):
 	var dirtFxInstance: Particles2D = dirtFx.instance()
 	var newMat: ParticlesMaterial = dirtFxInstance.process_material
 	newMat.initial_velocity = initVelocity
 	dirtFxInstance.material = newMat
+	dirtFxInstance.lifetime = lifetime
 	dirtFxInstance.global_position = Vector2(self.global_position.x, self.global_position.y + 12)
 	# TODO: Probably want to avoid using negative z values, maybe scale everything up?
 	dirtFxInstance.z_index = -2
