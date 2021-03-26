@@ -8,7 +8,7 @@ export(int) var startingLevel = 1
 export(int) var startingStr = 0
 export(int) var startingCon = 0
 export(int) var startingDex = 0
-export var MaxSpeed = 200
+export var startingSpeed = 200
 export var Acceleration = 2000
 export var Friction = 2000
 export var dashSpeed := 500
@@ -37,6 +37,8 @@ func _ready():
 	stats.strength = startingStr
 	stats.con = startingCon
 	stats.dex = startingDex
+	stats.baseSpeed = startingSpeed
+	stats.maxSpeed = startingSpeed
 	
 	stats.connect("noHealth", self, "_playerstats_no_health")
 	stats.connect("playerLevelChanged", self, "_player_level_changed")
@@ -60,7 +62,7 @@ func _physics_process(delta):
 		dashTimer.start(dashDelay)
 		movementAnimation.play("Dashing")
 	elif inputVector != Vector2.ZERO:
-		velocity = velocity.move_toward(inputVector * MaxSpeed, Acceleration * delta)
+		velocity = velocity.move_toward(inputVector * stats.maxSpeed, Acceleration * delta)
 		
 		if !movementAnimation.is_playing():
 			movementAnimation.play("Walking")

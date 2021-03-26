@@ -1,7 +1,11 @@
 extends Node
 
+var levelUpMenu = preload("res://UI/LevelUp.tscn")
+
 var maxHealth : int = 1 setget setMaxHealth, getMaxHealth
 var startingMaxHealth : int = 5 setget setStartingHealth
+var baseSpeed : int = 200
+var maxSpeed : int = 200
 var playerLevel : int = 0 setget setPlayerLevel
 var currentXP : int = 0 setget setCurrentXP, getCurrentXP
 var strength : int = 0 setget setStr
@@ -75,17 +79,24 @@ func setCon(value):
 func setDex(value):
 	dex = value
 	self.attackSpeed = pow(.925, dex)
+	self.maxSpeed = self.baseSpeed * pow(1.1, dex)
 
 func setPlayerLevel(newLevel):
 	if playerLevel < newLevel:
 		while playerLevel != newLevel:
 			playerLevel += 1
-			# Increase player's stats here
-			if playerLevel % 2 == 0:
-				self.con += 1
-				self.strength += 1
-			self.dex += 1
-	
+			if playerLevel != 1:
+				var newMenu = levelUpMenu.instance()
+				newMenu.connect("upgradeChosen", self, "_emit_level_changed")
+				var world = get_tree().current_scene
+				#world.set_pause_scene(world.get_node("./YSort"), true)
+				world.call_deferred("add_child", newMenu)
+				
+				
+func _emit_level_changed():
+	#TODO: Pause when screen pops up
+	#var world = get_tree().current_scene
+	#world.set_pause_scene(world.get_node("./YSort"), false)
 	emit_signal("playerLevelChanged", playerLevel)
 
 func addItemToInventory(item : Item):
