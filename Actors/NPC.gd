@@ -8,6 +8,7 @@ export var Acceleration: float = 1000
 export var Friction: float = 1000
 export var debug: bool = false
 export var movementGroup: String = "NPC"
+export var pathfindTime = .5
 
 enum State {
 	IDLE,
@@ -16,16 +17,23 @@ enum State {
 	STUN
 }
 
+var floatingText = preload("res://UI/FloatingText.tscn")
 var state = State.IDLE
 var velocity = Vector2.ZERO
 var knockback = Vector2.ZERO
 var target: Node2D = null
 var closestAlly : NPC = null
+var path: PoolVector2Array
+var pathIdx := 0
+var flag = true
+var isEnemyVisible := false
 
 onready var movement: Movement = movementResource
 onready var sprite := $Sprite
 onready var stats : Stats = $Stats
 onready var hurtbox := $Hurtbox
+onready var nav2d: Navigation2D = get_node("../../../Navigation2D")
+onready var pathfindTimer: Timer = $PathfindTimer
 
 func _ready():
 	self.add_to_group(movementGroup)
@@ -52,7 +60,13 @@ func _physics_process(delta):
 				lookAtTarget()
 				if willAttack():
 					switchToAttack()
-				velocity = movement.getMovementVelocity(self, target.global_position, delta)
+				if target != null: # TODO: look into this fix some more
+					isEnemyVisible = sightCheck()
+					if nav2d != null and pathfindTimer.is_stopped(): # Last check is to make it not refresh if it doesn't use it
+						path = nav2d.get_simple_path(global_position, target.global_position, false)
+						pathfindTimer.start(pathfindTime)
+						pathIdx = 0
+					velocity = movement.getMovementVelocity(self, target.global_position, delta)
 		State.ATTACK:
 			velocity = movement.getIdleVelocity(self, delta)
 		State.STUN:
@@ -77,6 +91,14 @@ func _draw():
 		var label = Label.new()
 		var font = label.get_font("")
 		draw_string(font, Vector2(-15,-25), State.keys()[state], Color(1,1,1))
+		
+		if path != null and path.size() > 0:
+			var from = path[0] - global_position
+			var to
+			for pos in path:
+				to = pos - global_position
+				draw_line(from, to, Color(0,0,1))
+				from = to
 	
 func lookAtTarget():
 	pass
@@ -114,7 +136,21 @@ func flipRight():
 func findClosestAlly():
 	pass
 	
-func _hurtbox_area_entered(area : WeaponHitbox):
+# Returns whether NPC can see target or not
+func sightCheck() -> bool:
+	if target != null:
+		var spaceState := get_world_2d().direct_space_state
+		var rayCollision := spaceState.intersect_ray(global_position, target.global_position, [self], collision_mask)
+		
+		return rayCollision.empty()
+	
+	return false
+	
+func _hurtbox_area_entered(area : Hitbox):
+	var text = floatingText.instance()
+	text.amount = area.damage
+	add_child(text)
+	
 	if area.fromPlayer:
 		PlayerStats.currentXP += min(stats.health, area.damage)
 	state = State.STUN

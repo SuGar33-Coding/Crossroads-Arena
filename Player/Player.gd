@@ -1,10 +1,14 @@
 extends KinematicBody2D
 
 var dirtFx = preload("res://FX/DirtSpread.tscn")
+var dashCloudFx = preload("res://FX/DashCloud.tscn")
 
-export(int) var maxPlayerHealth = 1
+export(int) var startingMaxHealth = 5
 export(int) var startingLevel = 1
-export var MaxSpeed = 275
+export(int) var startingStr = 0
+export(int) var startingCon = 0
+export(int) var startingDex = 0
+export var MaxSpeed = 200
 export var Acceleration = 2000
 export var Friction = 2000
 export var dashSpeed := 500
@@ -13,6 +17,7 @@ export var dashDelay := .75
 var velocity := Vector2.ZERO
 var knockback := Vector2.ZERO
 var dashVector := Vector2.ZERO
+var floatingText = preload("res://UI/FloatingText.tscn")
 
 onready var stats = get_node("/root/PlayerStats")
 onready var sprite := $Sprite
@@ -26,13 +31,15 @@ onready var movementAnimation := $MovementAnimation
 func _ready():
 	Engine.set_target_fps(Engine.get_iterations_per_second())
 	
-	stats.maxHealth = maxPlayerHealth
-	stats.health = maxPlayerHealth
+	stats.startingMaxHealth = startingMaxHealth
 	stats.playerLevel = startingLevel
 	stats.currentXP = 0
-	stats.healthIncrease = maxPlayerHealth
+	stats.strength = startingStr
+	stats.con = startingCon
+	stats.dex = startingDex
 	
 	stats.connect("noHealth", self, "_playerstats_no_health")
+	stats.connect("playerLevelChanged", self, "_player_level_changed")
 	hurtbox.connect("area_entered", self, "_hurtbox_area_entered")
 
 func _physics_process(delta):
@@ -51,11 +58,12 @@ func _physics_process(delta):
 	if Input.is_action_just_pressed("dash") and dashTimer.is_stopped():
 		dashVector = inputVector * dashSpeed
 		dashTimer.start(dashDelay)
+		movementAnimation.play("Dashing")
 	elif inputVector != Vector2.ZERO:
 		velocity = velocity.move_toward(inputVector * MaxSpeed, Acceleration * delta)
 		
-		#spawnDirtFx()
-		movementAnimation.play("Walking")
+		if !movementAnimation.is_playing():
+			movementAnimation.play("Walking")
 	else:
 		velocity = velocity.move_toward(Vector2.ZERO, Friction * delta)
 
@@ -72,18 +80,36 @@ func _physics_process(delta):
 		
 	velocity = move_and_slide(velocity)
 
-func spawnDirtFx():
+func spawnDirtFx(initVelocity = 50, lifetime = 0.4):
 	var dirtFxInstance: Particles2D = dirtFx.instance()
-	dirtFxInstance.global_position = self.global_position
+	var newMat: ParticlesMaterial = dirtFxInstance.process_material
+	newMat.initial_velocity = initVelocity
+	dirtFxInstance.material = newMat
+	dirtFxInstance.lifetime = lifetime
+	dirtFxInstance.global_position = Vector2(self.global_position.x, self.global_position.y + 12)
 	# TODO: Probably want to avoid using negative z values, maybe scale everything up?
-	dirtFxInstance.z_index = -1
+	dirtFxInstance.z_index = -2
 	dirtFxInstance.emitting = true
 	get_tree().current_scene.add_child(dirtFxInstance)
 
-func _hurtbox_area_entered(area : WeaponHitbox):
+func spawnDashFx():
+	var dashCloudFxInstance: Particles2D = dashCloudFx.instance()
+	dashCloudFxInstance.global_position = Vector2(self.global_position.x, self.global_position.y + 12)
+	dashCloudFxInstance.z_index = -1
+	dashCloudFxInstance.emitting = true
+	get_tree().current_scene.add_child(dashCloudFxInstance)
+	
+func _player_level_changed(_newPlayerLevel):
+	attackPivot.userStr = PlayerStats.strength
+
+func _hurtbox_area_entered(area : Hitbox):
+	var text = floatingText.instance()
+	text.amount = area.damage
+	add_child(text)
+	
 	stats.health -= area.damage
 	stats.currentXP += area.damage
-	camera.add_trauma(.4)
+	camera.add_trauma(area.knockbackValue / 1000.0)
 	knockback = area.getKnockbackVector(self.global_position)
 	damagedPlayer.play("Damaged")
 

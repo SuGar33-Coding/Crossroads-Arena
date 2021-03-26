@@ -1,10 +1,10 @@
-extends Area2D
+extends Hitbox
 
 class_name WeaponHitbox
 
-export var fromPlayer: bool = false
-var damage
-var knockbackValue
+var fromPlayer: bool = false
+var userStr: int = 0 setget setUserStr
+var source
 var hitboxOffset = 5
 var weaponStats: WeaponStats
 
@@ -13,25 +13,30 @@ onready var parryCollision := $ParryHitbox/ParryCollision
 
 signal parried(area)
 
-func getSourcePos() -> Vector2:
-	return self.get_parent().global_position
-
-func getKnockbackDirection(position) -> Vector2:
-	return self.getSourcePos().direction_to(position)
+func setSource(newSource, sourceStr := 0):
+	self.source = newSource
+	fromPlayer = (self.source.name == "Player")
+	setUserStr(sourceStr)
 	
-func getKnockbackVector(position) -> Vector2:
-	return self.getKnockbackDirection(position) * knockbackValue
+func setUserStr(value):
+	self.damage = self.damage - self.userStr + value
+	userStr = value
+
+func getSource():
+	return self.source
+
+func getSourcePos() -> Vector2:
+	return self.source.global_position
 	
 func setWeapon(weapon : WeaponStats):
 	weaponStats = weapon
-	damage = weaponStats.damage
+	damage = weaponStats.damage + userStr
 	knockbackValue = weaponStats.knockbackValue
 		
 	if weaponStats.weaponType == WeaponStats.WeaponType.MELEE:
 		# Position the collision boxes to the right side of the player
 		collision.position.x = weaponStats.length/2 + weaponStats.radius + hitboxOffset
 		parryCollision.position.x = weaponStats.length/2 + weaponStats.radius + hitboxOffset
-		
 		
 	else:
 		#is ranged, no local weapon collision

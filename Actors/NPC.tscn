@@ -5,15 +5,15 @@
 [ext_resource path="res://Actors/NPC.gd" type="Script" id=3]
 
 [sub_resource type="CapsuleShape2D" id=1]
-radius = 5.5
-height = 4.0
+radius = 4.5
+height = 5.0
 
 [node name="NPC" type="KinematicBody2D"]
 collision_layer = 4
 script = ExtResource( 3 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2( 0, 6 )
+position = Vector2( 0, 3 )
 rotation = 1.5708
 shape = SubResource( 1 )
 
@@ -24,3 +24,6 @@ position = Vector2( 1, -5 )
 
 [node name="Stats" parent="." instance=ExtResource( 2 )]
 maxHealth = 2
+
+[node name="PathfindTimer" type="Timer" parent="."]
+one_shot = true

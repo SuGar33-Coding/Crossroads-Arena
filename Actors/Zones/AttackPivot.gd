@@ -12,10 +12,12 @@ onready var weapon : Sprite = $WeaponRestingPos/Weapon
 onready var restingPos := $WeaponRestingPos
 onready var swipe := $Swipe
 onready var tween := $WeaponTween
+onready var backTween := $BackTween
 onready var collision := $WeaponHitbox/WeaponCollision
 onready var weaponHitbox = $WeaponHitbox
 onready var restingRotation = weapon.rotation
 onready var weaponStats : WeaponStats
+onready var attackTimer := $AttackTimer
 
 # TODO: Probably change these?
 onready var meleeRestingCoord : Vector2 = restingPos.position
@@ -23,18 +25,24 @@ onready var meleeRestingRotation = weapon.rotation
 
 var swordAnimDist
 var tweenLength
-
+var source : KinematicBody2D
+var userStr: int = 0 setget setUserStr
 
 func _ready():
 	# Choose random weapon
 	randomize()
-	
+	source = get_parent()
+	weaponHitbox.setSource(source)
 	weaponStats = weaponStatsResources[randi() % weaponStatsResources.size()]
 	setWeapon(weaponStats)
 
 # Rotate pivot to look at target position
 func lookAtTarget(targetPos: Vector2):
 	self.look_at(targetPos)
+	
+func setUserStr(sourceStr):
+	userStr = sourceStr
+	weaponHitbox.userStr = sourceStr
 
 func startMeleeAttack(animLength: float):
 	if weaponStats.weaponType == WeaponStats.WeaponType.MELEE:
@@ -47,9 +55,9 @@ func startMeleeAttack(animLength: float):
 		
 		tween.start()
 		
-func startRangedAttack(fromPlayer := false):
+func startRangedAttack(sourceStr := 0):
 	var rangedProjectile = RangedProjectile.instance()
-	rangedProjectile.init(weaponStats, fromPlayer)
+	rangedProjectile.init(weaponStats, source, sourceStr)
 	
 	var world = get_tree().current_scene
 	# Have to set it before you add it as a child otherwise the room area's think you are exiting them
@@ -74,13 +82,18 @@ func setWeapon(weaponStats : WeaponStats):
 		swipe.scale.y = 1.5 * (weaponStats.length/2 + weaponStats.radius)/10
 		
 	else:
-		restingPos.position = Vector2(15, 0)
-		weapon.rotation = deg2rad(45)
-		weapon.z_index = 0
+		restingPos.set_deferred("position", Vector2(15, 0))
+		weapon.set_deferred("rotation", deg2rad(45))
+		weapon.set_deferred("z_index", 0)
 
+# TODO: Can set tween delay rather than making multiple tweens
 func _on_WeaponTween_tween_completed():
-	var backTween = $BackTween
 	self.show_behind_parent = not self.show_behind_parent
-	backTween.interpolate_property(weapon, "position", weapon.position, Vector2.ZERO, self.tweenLength, Tween.TRANS_LINEAR, Tween.EASE_IN_OUT)
-	backTween.interpolate_property(weapon, "rotation", weapon.rotation, restingRotation, self.tweenLength)
+	backTween.interpolate_property(weapon, "position", weapon.position, Vector2(-15, 5), self.tweenLength, Tween.TRANS_LINEAR, Tween.EASE_IN_OUT)
+	backTween.interpolate_property(weapon, "rotation", weapon.rotation, restingRotation - deg2rad(50), self.tweenLength)
+	
+	# Add the .007 so if player is spam clicking it feels more fluid/no stop on swing
+	backTween.interpolate_property(weapon, "position", Vector2(-15, 5), Vector2.ZERO, attackTimer.time_left + .007, Tween.TRANS_LINEAR, Tween.EASE_IN_OUT, self.tweenLength)
+	backTween.interpolate_property(weapon, "rotation", restingRotation - deg2rad(50), restingRotation, attackTimer.time_left + .007, self.tweenLength)
+	
 	backTween.start()

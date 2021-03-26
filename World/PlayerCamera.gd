@@ -75,7 +75,8 @@ func _on_Tween_tween_all_completed():
 	setLimitsToPositions()
 
 func add_trauma(amount):
-	trauma = min(trauma + amount, 1.0)
+	# Minimum amount of hit trauma is .3
+	trauma = max(.3, min(trauma + amount, 1.0))
 	
 func shake():
 	var amount = pow(trauma, trauma_power)

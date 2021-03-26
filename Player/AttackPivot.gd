@@ -3,7 +3,7 @@ extends AttackPivot
 # TODO: Make this a signal call
 onready var animationPlayer := get_node("../AnimationPlayer")
 onready var parryHitbox := $WeaponHitbox/ParryHitbox
-onready var attackTimer := $AttackTimer
+onready var returnTween := $ReturnTween
 
 # TODO: remove this cus it should be through inventory
 onready var rangedWeapon : WeaponStats = preload("res://Weapons/BaseBow.tres")
@@ -27,7 +27,7 @@ func _physics_process(_delta):
 				self.startMeleeAttack(animLength)
 			else:
 				# Ranged Weapon
-				self.startRangedAttack(true)
+				self.startRangedAttack(PlayerStats.strength)
 				
 				
 		elif Input.is_action_just_pressed("fire"):
@@ -37,7 +37,6 @@ func _physics_process(_delta):
 				setWeapon(rangedWeapon)
 			else:
 				setWeapon(meleeWeapon)
-	
 
 # Called when another parry hitbox hit's player's during parry action
 func _parried_weapon(area):
@@ -45,3 +44,6 @@ func _parried_weapon(area):
 	var parriedWeapon : WeaponHitbox = area.get_parent()
 	parriedWeapon.parry(weaponHitbox)
 	PlayerStats.currentXP += parriedWeapon.damage
+
+
+

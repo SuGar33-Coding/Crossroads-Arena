@@ -29,8 +29,6 @@ func _ready():
 	moveDirTimer.start(rand_range(1, moveDirMaxLen))
 	moveDirTimer.connect("timeout", self, "_change_direction")
 	
-	# Choose a random weapon
-	
 	# Set everything to default values
 	animationPlayer.play("Idle")
 	
@@ -40,7 +38,9 @@ func lookAtTarget():
 
 func switchToChase() -> void:
 	.switchToChase()
-	target = detectionZone.target
+	var newTarget = detectionZone.getNewTarget()
+	if newTarget != null:
+		target = newTarget
 	
 func switchToAttack():
 	if attackTimer.is_stopped():
@@ -104,7 +104,7 @@ func findClosestAlly():
 	if minDist >= 1000:
 		closestAlly = null
 
-func _hurtbox_area_entered(area : WeaponHitbox):
+func _hurtbox_area_entered(area: Hitbox):
 	._hurtbox_area_entered(area)
 	# Only play damaged if we're not dead
 	if(stats.health >= 1):
@@ -114,6 +114,7 @@ func _hurtbox_area_entered(area : WeaponHitbox):
 	else:
 		# If you die add some extra knockback
 		knockback = area.getKnockbackVector(self.global_position) * 1.5
+		Friction = Friction * 1.8
 
 # Handle actor's weapon being parried by player
 func _weapon_parried(area : WeaponHitbox):

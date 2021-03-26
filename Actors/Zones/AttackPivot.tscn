@@ -10,6 +10,7 @@
 show_behind_parent = true
 position = Vector2( 0, -5 )
 script = ExtResource( 1 )
+swingDegrees = 125.0
 weaponStatsResources = [ ExtResource( 3 ) ]
 
 [node name="WeaponHitbox" parent="." instance=ExtResource( 6 )]
@@ -28,10 +29,10 @@ frame = 5
 [node name="BackTween" type="Tween" parent="."]
 
 [node name="WeaponRestingPos" type="Position2D" parent="."]
-position = Vector2( 2.32574, -8.7342 )
+position = Vector2( -1, -8 )
 
 [node name="Weapon" type="Sprite" parent="WeaponRestingPos"]
-rotation = -1.0472
+rotation = -1.309
 texture = ExtResource( 2 )
 flip_h = true
 

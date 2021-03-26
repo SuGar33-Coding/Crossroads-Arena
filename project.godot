@@ -19,10 +19,15 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://World/Rooms/Boundary.gd"
 }, {
-"base": "Movement",
+"base": "MoveAndAvoid",
 "class": "FlankAndPoke",
 "language": "GDScript",
 "path": "res://Actors/Movement/FlankAndPoke.gd"
+}, {
+"base": "Position2D",
+"class": "FloatingText",
+"language": "GDScript",
+"path": "res://UI/FloatingText.gd"
 }, {
 "base": "",
 "class": "GitAPI",
@@ -37,7 +42,7 @@ _global_script_classes=[ {
 "base": "Area2D",
 "class": "Hitbox",
 "language": "GDScript",
-"path": "res://Actors/Generic/hitbox.gd"
+"path": "res://Actors/Zones/hitbox.gd"
 }, {
 "base": "Node2D",
 "class": "Item",
@@ -54,6 +59,11 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://Actors/Movement/MaintainDistance.gd"
 }, {
+"base": "Pathfind",
+"class": "MoveAndAvoid",
+"language": "GDScript",
+"path": "res://Actors/Movement/MoveAndAvoid.gd"
+}, {
 "base": "Resource",
 "class": "Movement",
 "language": "GDScript",
@@ -63,6 +73,11 @@ _global_script_classes=[ {
 "class": "NPC",
 "language": "GDScript",
 "path": "res://Actors/NPC.gd"
+}, {
+"base": "Movement",
+"class": "Pathfind",
+"language": "GDScript",
+"path": "res://Actors/Movement/Pathfind.gd"
 }, {
 "base": "KinematicBody2D",
 "class": "RangedProjectile",
@@ -89,7 +104,7 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://Actors/Movement/TestingSteering.gd"
 }, {
-"base": "Area2D",
+"base": "Hitbox",
 "class": "WeaponHitbox",
 "language": "GDScript",
 "path": "res://Actors/Zones/WeaponHitbox.gd"
@@ -103,14 +118,17 @@ _global_script_class_icons={
 "AttackPivot": "",
 "Boundary": "",
 "FlankAndPoke": "",
+"FloatingText": "",
 "GitAPI": "",
 "HealthPotion": "",
 "Hitbox": "",
 "Item": "",
 "MainCamera": "",
 "MaintainDistance": "",
+"MoveAndAvoid": "",
 "Movement": "",
 "NPC": "",
+"Pathfind": "",
 "RangedProjectile": "",
 "Room": "",
 "RoomArea": "",
@@ -123,7 +141,7 @@ _global_script_class_icons={
 [application]
 
 config/name="The Grand Battle Arena"
-run/main_scene="res://TestWorld.tscn"
+run/main_scene="res://GrandBattleArena.tscn"
 config/icon="res://icon.png"
 
 [autoload]
@@ -151,7 +169,7 @@ texture={
 "compress/lossy_quality": 0.7,
 "compress/mode": 0,
 "compress/normal_map": 0,
-"detect_3d": true,
+"detect_3d": false,
 "flags/anisotropic": false,
 "flags/filter": false,
 "flags/mipmaps": false,

@@ -5,11 +5,12 @@
 [ext_resource path="res://Actors/Generic/Hurtbox.tscn" type="PackedScene" id=3]
 [ext_resource path="res://Actors/Generic/Stats.tscn" type="PackedScene" id=4]
 [ext_resource path="res://Actors/Generic/DetectionZone.gd" type="Script" id=5]
-[ext_resource path="res://Actors/Generic/Hitbox.tscn" type="PackedScene" id=6]
+[ext_resource path="res://Actors/Zones/Hitbox.tscn" type="PackedScene" id=6]
 [ext_resource path="res://Actors/Generic/FiringRange.gd" type="Script" id=7]
 [ext_resource path="res://Audio/PrimaryAttackEffect.tscn" type="PackedScene" id=8]
 [ext_resource path="res://Audio/DmgEffect.tscn" type="PackedScene" id=9]
 [ext_resource path="res://Audio/DeathEffect.tscn" type="PackedScene" id=10]
+
 
 [sub_resource type="RectangleShape2D" id=1]
 extents = Vector2( 16, 16 )
