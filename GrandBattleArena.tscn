@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=2]
+[gd_scene load_steps=11 format=2]
 
 [ext_resource path="res://GrandBattleArena.gd" type="Script" id=1]
 [ext_resource path="res://Assets/TileSets/RockBase.tres" type="TileSet" id=2]
@@ -7,6 +7,7 @@
 [ext_resource path="res://World/Scenery/FlatBush.tscn" type="PackedScene" id=5]
 [ext_resource path="res://World/Scenery/Tree.tscn" type="PackedScene" id=6]
 [ext_resource path="res://Assets/Wall.png" type="Texture" id=7]
+[ext_resource path="res://UI/PauseMenu.tscn" type="PackedScene" id=8]
 
 [sub_resource type="NavigationPolygon" id=1]
 vertices = PoolVector2Array( 0, 0, 24, 0, 24, 24, 0, 24 )
@@ -284,6 +285,8 @@ position = Vector2( 704, 264 )
 
 [node name="Bush28" parent="YSort/Scenery" instance=ExtResource( 4 )]
 position = Vector2( 1072, 1128 )
+
+[node name="CanvasLayer" parent="." instance=ExtResource( 8 )]
 
 [editable path="YSort/Player"]
 
