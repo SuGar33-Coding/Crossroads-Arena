@@ -3,16 +3,16 @@
 [ext_resource path="res://UI/PlayerUI.gd" type="Script" id=1]
 [ext_resource path="res://Assets/ItemAssets/HealthPotion.png" type="Texture" id=3]
 
-[sub_resource type="DynamicFontData" id=2]
+[sub_resource type="DynamicFontData" id=1]
 font_path = "res://Assets/Adventurer.ttf"
 
-[sub_resource type="DynamicFont" id=3]
+[sub_resource type="DynamicFont" id=2]
 size = 17
 outline_size = 4
 outline_color = Color( 0, 0, 0, 1 )
-font_data = SubResource( 2 )
+font_data = SubResource( 1 )
 
-[sub_resource type="StyleBoxFlat" id=4]
+[sub_resource type="StyleBoxFlat" id=5]
 bg_color = Color( 0.596078, 0.105882, 0.105882, 1 )
 border_width_left = 3
 border_width_top = 3
@@ -24,7 +24,7 @@ corner_radius_top_right = 5
 corner_radius_bottom_right = 5
 corner_radius_bottom_left = 5
 
-[sub_resource type="StyleBoxFlat" id=5]
+[sub_resource type="StyleBoxFlat" id=6]
 bg_color = Color( 0.301961, 0.301961, 0.301961, 1 )
 border_width_left = 3
 border_width_top = 3
@@ -36,14 +36,14 @@ corner_radius_top_right = 5
 corner_radius_bottom_right = 5
 corner_radius_bottom_left = 5
 
-[sub_resource type="DynamicFont" id=6]
+[sub_resource type="DynamicFont" id=7]
 size = 14
 outline_size = 2
 outline_color = Color( 0, 0, 0, 1 )
 use_filter = true
-font_data = SubResource( 2 )
+font_data = SubResource( 1 )
 
-[sub_resource type="StyleBoxFlat" id=7]
+[sub_resource type="StyleBoxFlat" id=8]
 bg_color = Color( 0.733333, 0.611765, 0.129412, 1 )
 border_width_left = 3
 border_width_top = 3
@@ -55,21 +55,21 @@ corner_radius_top_right = 5
 corner_radius_bottom_right = 5
 corner_radius_bottom_left = 5
 
-[sub_resource type="StyleBoxFlat" id=8]
+[sub_resource type="StyleBoxFlat" id=9]
 bg_color = Color( 0.4, 0.298039, 0.298039, 1 )
 corner_radius_top_left = 20
 corner_radius_top_right = 20
 corner_radius_bottom_right = 20
 corner_radius_bottom_left = 20
 
-[sub_resource type="DynamicFontData" id=1]
+[sub_resource type="DynamicFontData" id=10]
 font_path = "res://Assets/Adventurer.ttf"
 
-[sub_resource type="DynamicFont" id=9]
+[sub_resource type="DynamicFont" id=11]
 size = 25
 outline_size = 4
 outline_color = Color( 0, 0, 0, 1 )
-font_data = SubResource( 1 )
+font_data = SubResource( 10 )
 
 [node name="PlayerUI" type="CanvasLayer"]
 script = ExtResource( 1 )
@@ -103,7 +103,7 @@ __meta__ = {
 margin_right = 75.0
 margin_bottom = 18.0
 rect_min_size = Vector2( 75, 0 )
-custom_fonts/font = SubResource( 3 )
+custom_fonts/font = SubResource( 2 )
 text = "HP:"
 align = 1
 valign = 1
@@ -117,8 +117,8 @@ margin_right = 664.0
 margin_bottom = 18.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
-custom_styles/fg = SubResource( 4 )
-custom_styles/bg = SubResource( 5 )
+custom_styles/fg = SubResource( 5 )
+custom_styles/bg = SubResource( 6 )
 value = 50.0
 percent_visible = false
 
@@ -129,7 +129,7 @@ margin_left = -149.255
 margin_right = 146.745
 margin_bottom = 16.0
 rect_min_size = Vector2( 75, 0 )
-custom_fonts/font = SubResource( 6 )
+custom_fonts/font = SubResource( 7 )
 text = "10/10"
 align = 1
 valign = 1
@@ -149,7 +149,7 @@ __meta__ = {
 margin_right = 75.0
 margin_bottom = 18.0
 rect_min_size = Vector2( 75, 0 )
-custom_fonts/font = SubResource( 3 )
+custom_fonts/font = SubResource( 2 )
 text = "XP:"
 align = 1
 valign = 1
@@ -163,8 +163,8 @@ margin_right = 585.0
 margin_bottom = 18.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
-custom_styles/fg = SubResource( 7 )
-custom_styles/bg = SubResource( 5 )
+custom_styles/fg = SubResource( 8 )
+custom_styles/bg = SubResource( 6 )
 value = 50.0
 percent_visible = false
 
@@ -175,7 +175,7 @@ margin_left = -147.518
 margin_right = 148.482
 margin_bottom = 18.0
 rect_min_size = Vector2( 75, 0 )
-custom_fonts/font = SubResource( 6 )
+custom_fonts/font = SubResource( 7 )
 text = "10/10"
 align = 1
 valign = 1
@@ -188,7 +188,7 @@ margin_left = 589.0
 margin_right = 664.0
 margin_bottom = 18.0
 rect_min_size = Vector2( 75, 0 )
-custom_fonts/font = SubResource( 3 )
+custom_fonts/font = SubResource( 2 )
 text = "Lvl: 1"
 align = 1
 valign = 1
@@ -206,7 +206,7 @@ rect_min_size = Vector2( 100, 0 )
 margin_left = 772.0
 margin_right = 872.0
 margin_bottom = 40.0
-custom_styles/panel = SubResource( 8 )
+custom_styles/panel = SubResource( 9 )
 
 [node name="HBoxContainer" type="HBoxContainer" parent="HBoxContainer/PanelContainer"]
 margin_right = 100.0
@@ -219,7 +219,7 @@ margin_right = 51.0
 margin_bottom = 33.0
 rect_min_size = Vector2( 45, 0 )
 size_flags_horizontal = 3
-custom_fonts/font = SubResource( 9 )
+custom_fonts/font = SubResource( 11 )
 text = "0"
 align = 2
 
@@ -230,3 +230,5 @@ margin_bottom = 40.0
 rect_min_size = Vector2( 45, 0 )
 texture = ExtResource( 3 )
 stretch_mode = 1
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]

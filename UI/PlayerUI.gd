@@ -8,6 +8,7 @@ onready var healthbarLabel : Label = $HBoxContainer/VBoxContainer/HealthbarConta
 onready var xpbarLabel : Label = $HBoxContainer/VBoxContainer/HBoxContainer/XPbar/XPbarLabel
 onready var potLabel : Label = $HBoxContainer/PanelContainer/HBoxContainer/PotLabel
 onready var stats = get_node("/root/PlayerStats")
+onready var animationPlayer := $AnimationPlayer
 
 func _ready():
 	self.setHealthbarValue(stats.health / stats.getMaxHealth() * 100)
@@ -24,7 +25,10 @@ func setXPbarValue(value : float):
 	xpbar.value = value
 
 func _playerstats_health_changed(value):
-	self.setHealthbarValue(float(value) / stats.getMaxHealth() * 100)
+	var newBarVal = float(value) / stats.getMaxHealth() * 100
+	if newBarVal < healthbar.value:
+		pass#animationPlayer.play("DamageTaken")
+	self.setHealthbarValue(newBarVal)
 	healthbarLabel.text = str(value) + " / " + str(stats.getMaxHealth())
 
 func _player_xp_changed(newXP):

@@ -3,7 +3,7 @@ extends AttackPivot
 # TODO: Make this a signal call
 onready var animationPlayer := get_node("../AnimationPlayer")
 onready var parryHitbox := $WeaponHitbox/ParryHitbox
-onready var attackTimer := $AttackTimer
+onready var returnTween := $ReturnTween
 
 # TODO: remove this cus it should be through inventory
 onready var rangedWeapon : WeaponStats = preload("res://Weapons/BaseBow.tres")
@@ -44,3 +44,6 @@ func _parried_weapon(area):
 	var parriedWeapon : WeaponHitbox = area.get_parent()
 	parriedWeapon.parry(weaponHitbox)
 	PlayerStats.currentXP += parriedWeapon.damage
+
+
+
