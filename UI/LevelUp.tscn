@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=2]
+[gd_scene load_steps=14 format=2]
 
 [ext_resource path="res://Themes/SelectedButtonTheme.tres" type="StyleBox" id=1]
 [ext_resource path="res://Themes/UnselectedButtonTheme.tres" type="StyleBox" id=2]
@@ -41,7 +41,72 @@ outline_color = Color( 0, 0, 0, 1 )
 use_filter = true
 font_data = SubResource( 2 )
 
+[sub_resource type="Animation" id=5]
+resource_name = "FadeIn"
+length = 0.4
+tracks/0/type = "value"
+tracks/0/path = NodePath("Label:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.4 ),
+"transitions": PoolRealArray( 2.14355, 1 ),
+"update": 0,
+"values": [ Color( 1, 1, 1, 0 ), Color( 1, 1, 1, 1 ) ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("PanelContainer:modulate")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0, 0.4 ),
+"transitions": PoolRealArray( 2.14355, 1 ),
+"update": 0,
+"values": [ Color( 1, 1, 1, 0 ), Color( 1, 1, 1, 1 ) ]
+}
+tracks/2/type = "value"
+tracks/2/path = NodePath("PanelContainer/MarginContainer/HBoxContainer/DexButton:disabled")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0, 0.4 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 1,
+"values": [ true, false ]
+}
+tracks/3/type = "value"
+tracks/3/path = NodePath("PanelContainer/MarginContainer/HBoxContainer/ConButton:disabled")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/keys = {
+"times": PoolRealArray( 0, 0.4 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 1,
+"values": [ true, false ]
+}
+tracks/4/type = "value"
+tracks/4/path = NodePath("PanelContainer/MarginContainer/HBoxContainer/StrButton:disabled")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/keys = {
+"times": PoolRealArray( 0, 0.4 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 1,
+"values": [ true, false ]
+}
+
 [node name="Control" type="CanvasLayer"]
+pause_mode = 2
 script = ExtResource( 8 )
 
 [node name="PanelContainer" type="PanelContainer" parent="."]
@@ -77,6 +142,7 @@ margin_bottom = 286.0
 size_flags_horizontal = 3
 custom_styles/hover = ExtResource( 1 )
 custom_styles/pressed = ExtResource( 3 )
+custom_styles/disabled = ExtResource( 2 )
 custom_styles/normal = ExtResource( 2 )
 
 [node name="VBoxContainer" type="VBoxContainer" parent="PanelContainer/MarginContainer/HBoxContainer/StrButton"]
@@ -132,6 +198,7 @@ margin_bottom = 286.0
 size_flags_horizontal = 3
 custom_styles/hover = ExtResource( 1 )
 custom_styles/pressed = ExtResource( 3 )
+custom_styles/disabled = ExtResource( 2 )
 custom_styles/normal = ExtResource( 2 )
 
 [node name="VBoxContainer" type="VBoxContainer" parent="PanelContainer/MarginContainer/HBoxContainer/ConButton"]
@@ -186,6 +253,7 @@ margin_bottom = 286.0
 size_flags_horizontal = 3
 custom_styles/hover = ExtResource( 1 )
 custom_styles/pressed = ExtResource( 3 )
+custom_styles/disabled = ExtResource( 2 )
 custom_styles/normal = ExtResource( 2 )
 
 [node name="VBoxContainer" type="VBoxContainer" parent="PanelContainer/MarginContainer/HBoxContainer/DexButton"]
@@ -236,7 +304,7 @@ anchor_top = 0.16
 anchor_right = 0.5
 anchor_bottom = 0.16
 margin_left = -230.47
-margin_top = -0.572983
+margin_top = -0.57299
 margin_right = 232.53
 margin_bottom = 25.427
 grow_horizontal = 2
@@ -247,3 +315,6 @@ align = 1
 __meta__ = {
 "_edit_use_anchors_": false
 }
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+anims/FadeIn = SubResource( 5 )

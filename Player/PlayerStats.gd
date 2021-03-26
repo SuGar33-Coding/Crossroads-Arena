@@ -89,14 +89,12 @@ func setPlayerLevel(newLevel):
 				var newMenu = levelUpMenu.instance()
 				newMenu.connect("upgradeChosen", self, "_emit_level_changed")
 				var world = get_tree().current_scene
-				#world.set_pause_scene(world.get_node("./YSort"), true)
 				world.call_deferred("add_child", newMenu)
+				get_tree().paused = true
 				
 				
 func _emit_level_changed():
-	#TODO: Pause when screen pops up
-	#var world = get_tree().current_scene
-	#world.set_pause_scene(world.get_node("./YSort"), false)
+	get_tree().paused = false
 	emit_signal("playerLevelChanged", playerLevel)
 
 func addItemToInventory(item : Item):
