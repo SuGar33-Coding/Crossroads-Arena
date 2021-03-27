@@ -406,9 +406,12 @@ tracks/4/loop_wrap = true
 tracks/4/imported = false
 tracks/4/enabled = true
 tracks/4/keys = {
-"times": PoolRealArray( 0.4 ),
-"transitions": PoolRealArray( 1 ),
+"times": PoolRealArray( 0, 0.4 ),
+"transitions": PoolRealArray( 1, 1 ),
 "values": [ {
+"args": [  ],
+"method": "playAttackSignal"
+}, {
 "args": [ 0.1 ],
 "method": "startMeleeAttack"
 } ]
@@ -420,7 +423,7 @@ tracks/5/loop_wrap = true
 tracks/5/imported = false
 tracks/5/enabled = true
 tracks/5/keys = {
-"times": PoolRealArray( 0, 0.39, 0.5 ),
+"times": PoolRealArray( 0, 0.35, 0.5 ),
 "transitions": PoolRealArray( 1, 1, 1 ),
 "update": 1,
 "values": [ true, false, true ]
@@ -510,28 +513,21 @@ tracks/5/keys = {
 ] instance=ExtResource( 1 )]
 script = ExtResource( 3 )
 movementResource = ExtResource( 4 )
-MaxSpeed = 125.0
 
 [node name="Sprite" parent="." index="1"]
 position = Vector2( 0, -5 )
-scale = Vector2( 0.8, 0.8 )
 texture = ExtResource( 2 )
 
 [node name="HurtboxCollision" parent="Hurtbox" index="0"]
 disabled = true
 
-[node name="Stats" parent="." index="3"]
-maxHealth = 10
-
 [node name="DetectionZone" parent="." index="4" instance=ExtResource( 5 )]
+visible = false
 detectionRange = 325
 leaveRange = 1000
 
 [node name="AttackPivot" parent="." index="5" instance=ExtResource( 6 )]
 weaponStatsResources = [ ExtResource( 9 ), ExtResource( 8 ) ]
-
-[node name="ParryCollision" parent="AttackPivot/WeaponHitbox/ParryHitbox" index="0"]
-disabled = false
 
 [node name="Swipe" parent="AttackPivot" index="1"]
 frame = 0

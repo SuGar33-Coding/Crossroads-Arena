@@ -4,6 +4,7 @@ class_name AttackPivot
 
 # TODO: make it so you can load different projectiles
 const RangedProjectile = preload("res://Weapons/RangedProjectile.tscn")
+const AttackSignal = preload("res://FX/AttackSignal.tscn")
 
 export var swingDegrees := 110.0
 export(Array, Resource) var weaponStatsResources : Array
@@ -18,6 +19,7 @@ onready var weaponHitbox = $WeaponHitbox
 onready var restingRotation = weapon.rotation
 onready var weaponStats : WeaponStats
 onready var attackTimer := $AttackTimer
+onready var attackSignalPos := $WeaponRestingPos/AttackSignalPos
 
 # TODO: Probably change these?
 onready var meleeRestingCoord : Vector2 = restingPos.position
@@ -54,6 +56,13 @@ func startMeleeAttack(animLength: float):
 		tween.interpolate_property(weapon, "rotation", restingRotation, endRotation, tweenLength)
 		
 		tween.start()
+		
+func playAttackSignal():
+	var atkSignal : Particles2D = AttackSignal.instance()
+	atkSignal.position = attackSignalPos.position
+	restingPos.add_child(atkSignal)
+	atkSignal.set_deferred("emitting", true)
+
 		
 func startRangedAttack(sourceStr := 0):
 	var rangedProjectile = RangedProjectile.instance()

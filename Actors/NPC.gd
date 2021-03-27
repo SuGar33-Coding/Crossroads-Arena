@@ -3,7 +3,7 @@ extends KinematicBody2D
 class_name NPC
 
 export var movementResource: Resource
-export var MaxSpeed: float = 175
+export var baseSpeed: float = 125
 export var Acceleration: float = 1000
 export var Friction: float = 1000
 export var debug: bool = false
@@ -27,6 +27,7 @@ var path: PoolVector2Array
 var pathIdx := 0
 var flag = true
 var isEnemyVisible := false
+var MaxSpeed: float
 
 onready var movement: Movement = movementResource
 onready var sprite := $Sprite
@@ -39,6 +40,8 @@ func _ready():
 	self.add_to_group(movementGroup)
 	hurtbox.connect("area_entered", self, "_hurtbox_area_entered")
 	stats.connect("noHealth", self, "_stats_no_health")
+	self.MaxSpeed = self.baseSpeed * pow(PlayerStats.dexRatio, stats.dex)
+	stats.connect("dexChanged", self, "_dexterity_changed")
 	
 func _physics_process(delta):
 	if debug:
@@ -156,6 +159,9 @@ func _hurtbox_area_entered(area : Hitbox):
 	state = State.STUN
 	stats.health -= area.damage
 	knockback = area.getKnockbackVector(self.global_position)
+
+func _dexterity_changed(value):
+	self.MaxSpeed = self.baseSpeed * pow(PlayerStats.dexRatio, value)
 
 func _stats_no_health():
 	queue_free()

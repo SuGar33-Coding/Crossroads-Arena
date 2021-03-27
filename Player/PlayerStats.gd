@@ -9,8 +9,11 @@ var maxSpeed : int = 200
 var playerLevel : int = 0 setget setPlayerLevel
 var currentXP : int = 0 setget setCurrentXP, getCurrentXP
 var strength : int = 0 setget setStr
+export(float) var strRatio := 1.2
 var con : int = 0 setget setCon
+var conRatio : float = 1.15
 var dex : int = 0 setget setDex
+var dexRatio : float = 1.075
 # AttackSpeed starts at 1 and then will slowly scale down as it's multiplied by weapon attack speed
 var attackSpeed : float = 1
 
@@ -22,8 +25,7 @@ signal playerLevelChanged(newLevel)
 signal addedToInventory(newItem)
 signal removedFromInventory(removedItem)
 
-# How much health increases on every level
-var healthIncrease = 7
+
 var health = 1 setget setHealth, getHealth
 # Will be an array of scenes/references to scene instances
 var inventory := []
@@ -54,7 +56,7 @@ func addXP(amount):
 	self.setCurrentXP(currentXP + amount)
 	
 func xpToNextLevel() -> int:
-	return 10 * playerLevel
+	return 100 * playerLevel
 	
 func setCurrentXP(value):
 	currentXP = value
@@ -71,15 +73,15 @@ func setStr(value):
 	strength = value
 	
 func setCon(value):
-	if con < value:
-		con += 1
-		self.maxHealth = startingMaxHealth + con * healthIncrease
-		self.health += healthIncrease
+	con = value
+	var oldMaxHealth = self.maxHealth
+	self.maxHealth = startingMaxHealth * pow(conRatio, con)
+	self.health += self.maxHealth - oldMaxHealth
 	
 func setDex(value):
 	dex = value
-	self.attackSpeed = pow(.925, dex)
-	self.maxSpeed = self.baseSpeed * pow(1.1, dex)
+	self.attackSpeed = pow(1/dexRatio, dex)
+	self.maxSpeed = self.baseSpeed * pow(dexRatio, dex)
 
 func setPlayerLevel(newLevel):
 	if playerLevel < newLevel:

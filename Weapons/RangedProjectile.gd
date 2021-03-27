@@ -7,7 +7,7 @@ var speed
 var velocity := Vector2.ZERO
 var weaponStats : WeaponStats
 var source
-var userStr
+var userStr : int
 
 onready var weaponHitbox := $WeaponHitbox
 onready var sprite := $Sprite
@@ -17,7 +17,7 @@ func init(weaponStats: WeaponStats, source, sourceStr := 0):
 	self.source = source
 	
 	# Ranged stuff scales less with strength
-	self.userStr = sourceStr / 2
+	self.userStr = sourceStr * 3/4
 	
 	self.fromPlayer = (source.name == "Player")
 

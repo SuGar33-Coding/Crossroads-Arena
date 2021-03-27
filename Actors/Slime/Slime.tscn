@@ -11,7 +11,7 @@
 radius = 2.75343
 height = 5.29347
 
-[sub_resource type="Animation" id=3]
+[sub_resource type="Animation" id=2]
 resource_name = "Damaged"
 length = 0.3
 tracks/0/type = "method"
@@ -41,8 +41,7 @@ tracks/1/keys = {
 "values": [ Color( 1, 1, 1, 1 ), Color( 0.682353, 0, 0, 1 ), Color( 1, 1, 1, 1 ), Color( 0.682353, 0, 0, 1 ), Color( 1, 1, 1, 1 ) ]
 }
 
-[sub_resource type="Animation" id=2]
-resource_name = "Idle"
+[sub_resource type="Animation" id=3]
 length = 0.6
 loop = true
 step = 0.15
@@ -106,8 +105,8 @@ leaveRange = 450
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="." index="6"]
 autoplay = "Idle"
-anims/Damaged = SubResource( 3 )
-anims/Idle = SubResource( 2 )
+anims/Damaged = SubResource( 2 )
+anims/Idle = SubResource( 3 )
 
 [editable path="Hurtbox"]
 

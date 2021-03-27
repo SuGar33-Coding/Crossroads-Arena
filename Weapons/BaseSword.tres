@@ -7,7 +7,7 @@
 script = ExtResource( 1 )
 name = "Base Sword"
 weaponType = 0
-damage = 1
+damage = 10
 knockbackValue = 350
 radius = 15.5
 length = 10.5

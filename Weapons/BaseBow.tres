@@ -8,7 +8,7 @@
 script = ExtResource( 1 )
 name = "Base Bow"
 weaponType = 1
-damage = 1
+damage = 8
 knockbackValue = 100
 radius = 3.478
 length = 7.592

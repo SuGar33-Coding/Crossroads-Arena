@@ -7,6 +7,7 @@ var userStr: int = 0 setget setUserStr
 var source
 var hitboxOffset = 5
 var weaponStats: WeaponStats
+var weaponDamage: int
 
 onready var collision := $WeaponCollision
 onready var parryCollision := $ParryHitbox/ParryCollision
@@ -19,8 +20,8 @@ func setSource(newSource, sourceStr := 0):
 	setUserStr(sourceStr)
 	
 func setUserStr(value):
-	self.damage = self.damage - self.userStr + value
 	userStr = value
+	self.damage = self.weaponDamage *  pow(PlayerStats.strRatio, self.userStr)
 
 func getSource():
 	return self.source
@@ -30,7 +31,8 @@ func getSourcePos() -> Vector2:
 	
 func setWeapon(weapon : WeaponStats):
 	weaponStats = weapon
-	damage = weaponStats.damage + userStr
+	weaponDamage = weapon.damage
+	damage = self.weaponDamage *  pow(PlayerStats.strRatio, self.userStr)
 	knockbackValue = weaponStats.knockbackValue
 		
 	if weaponStats.weaponType == WeaponStats.WeaponType.MELEE:

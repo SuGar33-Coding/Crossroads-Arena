@@ -36,6 +36,9 @@ rotation = -1.309
 texture = ExtResource( 2 )
 flip_h = true
 
+[node name="AttackSignalPos" type="Position2D" parent="WeaponRestingPos"]
+position = Vector2( -4.13908, -8.41847 )
+
 [node name="AttackTimer" type="Timer" parent="."]
 one_shot = true
 [connection signal="tween_all_completed" from="WeaponTween" to="." method="_on_WeaponTween_tween_completed"]

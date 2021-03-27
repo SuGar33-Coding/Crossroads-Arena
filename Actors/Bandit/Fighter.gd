@@ -32,6 +32,9 @@ func _ready():
 	# Set everything to default values
 	animationPlayer.play("Idle")
 	
+	attackPivot.setUserStr(stats.strength)
+	stats.connect("strChanged", self, "_strength_changed")
+	
 	
 func lookAtTarget():
 	attackPivot.lookAtTarget(detectionZone.target.position)
@@ -47,7 +50,7 @@ func switchToAttack():
 		.switchToAttack()
 		animationPlayer.playback_speed = 1
 		# TODO: Make this a more well defined ratio
-		attackTimer.start(weaponStats.attackSpeed * 2)
+		attackTimer.start(weaponStats.attackSpeed * stats.attackSpeed * 2)
 		if weaponStats.weaponType == WeaponStats.WeaponType.MELEE:
 			animationPlayer.play("MeleeAttack")
 		else:
@@ -70,13 +73,13 @@ func willFlipLeft():
 	if state == State.CHASE:
 		return global_position.x > target.global_position.x
 	else:
-		return .willFlipLeft()
+		return false
 		
 func willFlipRight():
 	if state == State.CHASE:
 		return global_position.x < target.global_position.x
 	else:
-		return .willFlipRight()
+		return false
 	
 func flipLeft():
 	sprite.flip_h = true
@@ -132,4 +135,5 @@ func _change_direction():
 	moveDir *= -1
 	moveDirTimer.start(rand_range(1, moveDirMaxLen))
 
-
+func _strength_changed(value):
+	attackPivot.setUserStr(value)
