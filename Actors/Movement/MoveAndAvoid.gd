@@ -32,9 +32,7 @@ func getMovementVelocity(selfNode: KinematicBody2D, targetPos: Vector2, delta: f
 	# Use steering to smooth our movement towards desired vector
 	var steer = (desiredVelocity - selfNode.velocity)
 	return selfNode.velocity.move_toward(selfNode.velocity + (steer * SmoothForce), selfNode.Acceleration * delta)
-	
-	# If we want to slow the guys down as they get closer, make a vector that points out that scales inversely with distance
-	# But then like only weight it half the way
+
 
 func getIdleVelocity(selfNode: KinematicBody2D, delta: float):
 	return selfNode.velocity.move_toward(Vector2.ZERO, selfNode.Friction * delta)

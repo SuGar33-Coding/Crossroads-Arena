@@ -8,9 +8,9 @@ export(int) var startingLevel = 1
 export(int) var startingStr = 0
 export(int) var startingCon = 0
 export(int) var startingDex = 0
-export var startingSpeed = 200
-export var Acceleration = 2000
-export var Friction = 2000
+export var startingSpeed : float = 200
+export var Acceleration : float = 2000
+export var startingFriction : float = 2000
 export var dashSpeed := 500
 export var dashDelay := .75
 
@@ -18,6 +18,7 @@ var velocity := Vector2.ZERO
 var knockback := Vector2.ZERO
 var dashVector := Vector2.ZERO
 var floatingText = preload("res://UI/FloatingText.tscn")
+var Friction : float
 
 onready var stats = get_node("/root/PlayerStats")
 onready var sprite := $Sprite
@@ -40,6 +41,7 @@ func _ready():
 	stats.baseSpeed = startingSpeed
 	stats.maxSpeed = startingSpeed
 	
+	Friction = startingFriction
 	stats.connect("noHealth", self, "_playerstats_no_health")
 	stats.connect("playerLevelChanged", self, "_player_level_changed")
 	hurtbox.connect("area_entered", self, "_hurtbox_area_entered")
@@ -103,6 +105,7 @@ func spawnDashFx():
 	
 func _player_level_changed(_newPlayerLevel):
 	attackPivot.userStr = PlayerStats.strength
+	self.Friction = self.startingFriction * pow(PlayerStats.conFrictionRatio, PlayerStats.con)
 
 func _hurtbox_area_entered(area : Hitbox):
 	var text = floatingText.instance()

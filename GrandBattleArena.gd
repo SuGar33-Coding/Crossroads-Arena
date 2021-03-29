@@ -13,6 +13,8 @@ func _ready():
 func _physics_process(_delta):
 	if Input.is_action_just_pressed("openmap"):
 		spawnEnemies()
+	elif Input.is_action_just_pressed("addlevel"):
+		PlayerStats.playerLevel += 1
 
 func spawnEnemies():
 	for spawn in spawns.get_children():

@@ -20,6 +20,11 @@ _global_script_classes=[ {
 "path": "res://World/Rooms/Boundary.gd"
 }, {
 "base": "MoveAndAvoid",
+"class": "BurstMoveAA",
+"language": "GDScript",
+"path": "res://Actors/Movement/BurstMoveAA.gd"
+}, {
+"base": "MoveAndAvoid",
 "class": "FlankAndPoke",
 "language": "GDScript",
 "path": "res://Actors/Movement/FlankAndPoke.gd"
@@ -117,6 +122,7 @@ _global_script_classes=[ {
 _global_script_class_icons={
 "AttackPivot": "",
 "Boundary": "",
+"BurstMoveAA": "",
 "FlankAndPoke": "",
 "FloatingText": "",
 "GitAPI": "",

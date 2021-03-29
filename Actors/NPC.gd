@@ -9,6 +9,7 @@ export var Friction: float = 1000
 export var debug: bool = false
 export var movementGroup: String = "NPC"
 export var pathfindTime = .5
+export var movementMaxTime : float = 5.0
 
 enum State {
 	IDLE,
@@ -35,6 +36,7 @@ onready var stats : Stats = $Stats
 onready var hurtbox := $Hurtbox
 onready var nav2d: Navigation2D = get_node("../../../Navigation2D")
 onready var pathfindTimer: Timer = $PathfindTimer
+onready var movementTimer := $MovementTimer
 
 func _ready():
 	self.add_to_group(movementGroup)
@@ -42,6 +44,7 @@ func _ready():
 	stats.connect("noHealth", self, "_stats_no_health")
 	self.MaxSpeed = self.baseSpeed * pow(PlayerStats.dexRatio, stats.dex)
 	stats.connect("dexChanged", self, "_dexterity_changed")
+	self.Friction = self.Friction * pow(PlayerStats.conFrictionRatio, stats.con)
 	
 func _physics_process(delta):
 	if debug:
