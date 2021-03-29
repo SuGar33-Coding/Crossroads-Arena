@@ -132,32 +132,26 @@ position = Vector2( 2376, 1656 )
 
 [node name="StaticBody2D" parent="YSort/Scenery" instance=ExtResource( 6 )]
 position = Vector2( 1352, 704 )
-collision_layer = 0
 collision_mask = 0
 
 [node name="StaticBody2D2" parent="YSort/Scenery" instance=ExtResource( 6 )]
 position = Vector2( 904, 672 )
-collision_layer = 0
 collision_mask = 0
 
 [node name="StaticBody2D3" parent="YSort/Scenery" instance=ExtResource( 6 )]
 position = Vector2( 1192, 1003 )
-collision_layer = 0
 collision_mask = 0
 
 [node name="StaticBody2D4" parent="YSort/Scenery" instance=ExtResource( 6 )]
 position = Vector2( 792, 1080 )
-collision_layer = 0
 collision_mask = 0
 
 [node name="StaticBody2D5" parent="YSort/Scenery" instance=ExtResource( 6 )]
 position = Vector2( 1096, 1272 )
-collision_layer = 0
 collision_mask = 0
 
 [node name="StaticBody2D6" parent="YSort/Scenery" instance=ExtResource( 6 )]
 position = Vector2( 712, 800 )
-collision_layer = 0
 collision_mask = 0
 
 [node name="Bush6" parent="YSort/Scenery" instance=ExtResource( 4 )]
