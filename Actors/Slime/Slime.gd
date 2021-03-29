@@ -28,6 +28,7 @@ func switchToChase() -> void:
 	.switchToChase()
 	animationPlayer.play("Idle")
 	target = detectionZone.target
+	movementTimer.start(movementMaxTime/2)
 	
 func willIdle() -> bool:
 	return !detectionZone.hasTarget()

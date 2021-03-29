@@ -12,6 +12,7 @@ var strength : int = 0 setget setStr
 export(float) var strRatio := 1.2
 var con : int = 0 setget setCon
 var conRatio : float = 1.15
+var conFrictionRatio : float = 1.05
 var dex : int = 0 setget setDex
 var dexRatio : float = 1.075
 # AttackSpeed starts at 1 and then will slowly scale down as it's multiplied by weapon attack speed

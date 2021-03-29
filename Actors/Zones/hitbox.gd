@@ -3,7 +3,7 @@ extends Area2D
 class_name Hitbox
 
 export var damage : int = 1
-export var knockbackValue = 475
+export var knockbackValue : float = 475.0
 
 func getSourcePos() -> Vector2:
 	return self.get_parent().global_position

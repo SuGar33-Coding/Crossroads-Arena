@@ -7,7 +7,6 @@ onready var attackPivot := $AttackPivot
 onready var weaponHitbox := $AttackPivot/WeaponHitbox
 onready var animationPlayer := $AnimationPlayer
 onready var attackTimer := $AttackPivot/AttackTimer
-onready var moveDirTimer := $MoveDirTimer
 
 var sinX = rand_range(0, TAU)
 var noise := OpenSimplexNoise.new()
@@ -15,7 +14,6 @@ var noiseY = 1
 
 # TODO: Possibly not necessary for the generic fighter class
 var moveDir = 1
-var moveDirMaxLen = 10
 
 func _ready():
 	randomize()
@@ -26,8 +24,8 @@ func _ready():
 	noise.period = 20
 	noise.persistence = .8
 	moveDir = pow(-1, randi() % 2)
-	moveDirTimer.start(rand_range(1, moveDirMaxLen))
-	moveDirTimer.connect("timeout", self, "_change_direction")
+	movementTimer.start(rand_range(1, movementMaxTime))
+	movementTimer.connect("timeout", self, "_change_direction")
 	
 	# Set everything to default values
 	animationPlayer.play("Idle")
@@ -133,7 +131,7 @@ func _stats_no_health():
 
 func _change_direction():
 	moveDir *= -1
-	moveDirTimer.start(rand_range(1, moveDirMaxLen))
+	movementTimer.start(rand_range(1, movementMaxTime))
 
 func _strength_changed(value):
 	attackPivot.setUserStr(value)

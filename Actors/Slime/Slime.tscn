@@ -5,7 +5,7 @@
 [ext_resource path="res://Actors/Zones/Hitbox.tscn" type="PackedScene" id=3]
 [ext_resource path="res://Actors/Zones/DetectionZone.tscn" type="PackedScene" id=4]
 [ext_resource path="res://Actors/Slime/Slime.gd" type="Script" id=5]
-[ext_resource path="res://Actors/Movement/SeekAndAvoid.tres" type="Resource" id=6]
+[ext_resource path="res://Actors/Movement/BurstMoveAA.tres" type="Resource" id=6]
 
 [sub_resource type="CapsuleShape2D" id=1]
 radius = 2.75343
@@ -73,6 +73,11 @@ tracks/1/keys = {
 [node name="Slime" instance=ExtResource( 1 )]
 script = ExtResource( 5 )
 movementResource = ExtResource( 6 )
+baseSpeed = 300.0
+Acceleration = 350.0
+Friction = 800.0
+pathfindTime = 1.0
+movementMaxTime = 1.5
 
 [node name="CollisionShape2D" parent="." index="0"]
 position = Vector2( -0.0873377, 1.71341 )
@@ -91,9 +96,12 @@ position = Vector2( 0.078743, -0.0787449 )
 position = Vector2( -0.157494, 0.386038 )
 rotation = -1.5708
 
+[node name="Stats" parent="." index="3"]
+con = -10
+
 [node name="Hitbox" parent="." index="4" instance=ExtResource( 3 )]
-damage = 3
-knockbackValue = 525
+damage = 25
+knockbackValue = 550.0
 
 [node name="hitboxCollision" parent="Hitbox" index="0"]
 position = Vector2( 0.0701599, 0.420925 )

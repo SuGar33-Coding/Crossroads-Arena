@@ -513,6 +513,7 @@ tracks/5/keys = {
 ] instance=ExtResource( 1 )]
 script = ExtResource( 3 )
 movementResource = ExtResource( 4 )
+movementMaxTime = 10.0
 
 [node name="Sprite" parent="." index="1"]
 position = Vector2( 0, -5 )
@@ -548,8 +549,6 @@ anims/Death = SubResource( 5 )
 anims/Idle = SubResource( 6 )
 anims/MeleeAttack = SubResource( 7 )
 anims/RangedAttack = SubResource( 8 )
-
-[node name="MoveDirTimer" type="Timer" parent="." index="7"]
 
 [editable path="Hurtbox"]
 

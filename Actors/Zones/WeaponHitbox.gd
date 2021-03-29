@@ -2,12 +2,15 @@ extends Hitbox
 
 class_name WeaponHitbox
 
+const strKnockbackRatio = 1.05
+
 var fromPlayer: bool = false
 var userStr: int = 0 setget setUserStr
 var source
 var hitboxOffset = 5
 var weaponStats: WeaponStats
 var weaponDamage: int
+var baseKnockback : float
 
 onready var collision := $WeaponCollision
 onready var parryCollision := $ParryHitbox/ParryCollision
@@ -22,6 +25,7 @@ func setSource(newSource, sourceStr := 0):
 func setUserStr(value):
 	userStr = value
 	self.damage = self.weaponDamage *  pow(PlayerStats.strRatio, self.userStr)
+	self.knockbackValue = self.baseKnockback * pow(strKnockbackRatio, self.userStr)
 
 func getSource():
 	return self.source
@@ -32,8 +36,9 @@ func getSourcePos() -> Vector2:
 func setWeapon(weapon : WeaponStats):
 	weaponStats = weapon
 	weaponDamage = weapon.damage
-	damage = self.weaponDamage *  pow(PlayerStats.strRatio, self.userStr)
-	knockbackValue = weaponStats.knockbackValue
+	baseKnockback = weaponStats.knockbackValue
+	self.damage = self.weaponDamage *  pow(PlayerStats.strRatio, self.userStr)
+	self.knockbackValue = self.baseKnockback * pow(strKnockbackRatio, self.userStr)
 		
 	if weaponStats.weaponType == WeaponStats.WeaponType.MELEE:
 		# Position the collision boxes to the right side of the player
