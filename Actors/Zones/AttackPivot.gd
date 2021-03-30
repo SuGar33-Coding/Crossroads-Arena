@@ -29,6 +29,8 @@ var swordAnimDist
 var tweenLength
 var source : KinematicBody2D
 var userStr: int = 0 setget setUserStr
+var weaponMat: ShaderMaterial
+var shaderTime: = 0.0
 
 func _ready():
 	# Choose random weapon
@@ -37,6 +39,19 @@ func _ready():
 	weaponHitbox.setSource(source)
 	weaponStats = weaponStatsResources[randi() % weaponStatsResources.size()]
 	setWeapon(weaponStats)
+	
+	# Get a local copy of weapon mat
+	weapon.material = weapon.material.duplicate()
+	weaponMat = weapon.material
+
+func _process(delta):
+	# If the sheen shader is active, increment it from the beginning
+	var shaderActive: bool = weaponMat.get_shader_param("active")
+	if shaderActive:
+		weaponMat.set_shader_param("time", shaderTime)
+		shaderTime += delta
+	else:
+		shaderTime = 0.0
 
 # Rotate pivot to look at target position
 func lookAtTarget(targetPos: Vector2):
@@ -47,6 +62,8 @@ func setUserStr(sourceStr):
 	weaponHitbox.userStr = sourceStr
 
 func startMeleeAttack(animLength: float):
+	weaponMat.set_shader_param("active", false)
+	
 	if weaponStats.weaponType == WeaponStats.WeaponType.MELEE:
 		self.tweenLength = animLength/2
 		swipe.set_deferred("flip_h", not swipe.flip_h)
@@ -57,11 +74,15 @@ func startMeleeAttack(animLength: float):
 		
 		tween.start()
 		
-func playAttackSignal():
+func playAttackSignal(windUpTime: float):
 	var atkSignal : Particles2D = AttackSignal.instance()
 	atkSignal.position = attackSignalPos.position
 	restingPos.add_child(atkSignal)
 	atkSignal.set_deferred("emitting", true)
+	
+	# Activate the sheen shader
+	weaponMat.set_shader_param("frequency", 1.0 / windUpTime)
+	weaponMat.set_shader_param("active", true)
 
 		
 func startRangedAttack(sourceStr := 0):
@@ -106,3 +127,4 @@ func _on_WeaponTween_tween_completed():
 	backTween.interpolate_property(weapon, "rotation", restingRotation - deg2rad(50), restingRotation, attackTimer.time_left + .007, self.tweenLength)
 	
 	backTween.start()
+

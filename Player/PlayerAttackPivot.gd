@@ -21,7 +21,7 @@ func _physics_process(_delta):
 		if Input.is_action_just_pressed("attack") and attackTimer.is_stopped():
 			attackTimer.start(weaponStats.attackSpeed * PlayerStats.attackSpeed)
 			if weaponStats.weaponType == WeaponStats.WeaponType.MELEE:
-				animationPlayer.play("MeleeAttack")				
+				animationPlayer.play("MeleeAttack")
 				
 				var animLength = animationPlayer.current_animation_length
 				self.startMeleeAttack(animLength)
@@ -45,5 +45,5 @@ func _parried_weapon(area):
 	parriedWeapon.parry(weaponHitbox)
 	PlayerStats.currentXP += parriedWeapon.damage
 
-
-
+func applyWeaonSheen():
+	pass

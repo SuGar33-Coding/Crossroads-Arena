@@ -409,7 +409,7 @@ tracks/4/keys = {
 "times": PoolRealArray( 0, 0.4 ),
 "transitions": PoolRealArray( 1, 1 ),
 "values": [ {
-"args": [  ],
+"args": [ 0.4 ],
 "method": "playAttackSignal"
 }, {
 "args": [ 0.1 ],
