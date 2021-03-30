@@ -117,6 +117,7 @@ func _hurtbox_area_entered(area : Hitbox):
 	camera.add_trauma(area.knockbackValue / 1000.0)
 	knockback = area.getKnockbackVector(self.global_position)
 	damagedPlayer.play("Damaged")
+	hurtbox.startInvincibility(PlayerStats.invulnTimer)
 
 func _playerstats_no_health():
 	# When Player dies, return to main menu TODO: Change this

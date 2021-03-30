@@ -17,6 +17,7 @@ var dex : int = 0 setget setDex
 var dexRatio : float = 1.075
 # AttackSpeed starts at 1 and then will slowly scale down as it's multiplied by weapon attack speed
 var attackSpeed : float = 1
+var invulnTimer : float = .6
 
 signal noHealth
 signal healthChanged(value)
