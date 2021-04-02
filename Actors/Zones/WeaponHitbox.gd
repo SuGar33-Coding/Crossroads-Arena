@@ -10,7 +10,8 @@ var source
 var hitboxOffset = 5
 var weaponStats: WeaponStats
 var weaponDamage: int
-var baseKnockback : float
+var baseDamage : int = 1 setget setBaseDamage
+var baseKnockback : float setget setBaseKnockback
 
 onready var collision := $WeaponCollision
 onready var parryCollision := $ParryHitbox/ParryCollision
@@ -24,9 +25,18 @@ func setSource(newSource, sourceStr := 0):
 	
 func setUserStr(value):
 	userStr = value
-	self.damage = self.weaponDamage *  pow(PlayerStats.strRatio, self.userStr)
-	self.knockbackValue = self.baseKnockback * pow(strKnockbackRatio, self.userStr)
+	self.baseDamage = self.weaponDamage *  pow(PlayerStats.strRatio, self.userStr)
+	self.baseKnockback = self.baseKnockback * pow(strKnockbackRatio, self.userStr)
 
+# Anytime base values are affected, current damage and knockback are reset
+func setBaseDamage(value):
+	baseDamage = value
+	self.damage = baseDamage
+	
+func setBaseKnockback(value):
+	baseKnockback = value
+	self.knockbackValue = baseKnockback
+	
 func getSource():
 	return self.source
 
@@ -36,9 +46,8 @@ func getSourcePos() -> Vector2:
 func setWeapon(weapon : WeaponStats):
 	weaponStats = weapon
 	weaponDamage = weapon.damage
-	baseKnockback = weaponStats.knockbackValue
-	self.damage = self.weaponDamage *  pow(PlayerStats.strRatio, self.userStr)
-	self.knockbackValue = self.baseKnockback * pow(strKnockbackRatio, self.userStr)
+	self.baseDamage = self.weaponDamage *  pow(PlayerStats.strRatio, self.userStr)
+	self.baseKnockback = weaponStats.knockbackValue * pow(strKnockbackRatio, self.userStr)
 		
 	if weaponStats.weaponType == WeaponStats.WeaponType.MELEE:
 		# Position the collision boxes to the right side of the player
@@ -56,6 +65,15 @@ func setWeapon(weapon : WeaponStats):
 	shape.radius = weaponStats.radius
 	collision.shape = shape
 	parryCollision.shape = shape
+
+# TODO: there may be a better way to do this so that we don't actually change the base value
+# This might cause issues with like forgetting to reset value after combo
+# Should really only be used for a combo scaling
+func scaleDamage(scalar := 1.0):
+	self.damage = float(self.baseDamage) * scalar
+	
+func scaleKnockback(scalar := 1.0):
+	self.knockbackValue = self.baseKnockback * scalar
 
 # Let everyone know that you've been parried
 func parry(area : WeaponHitbox):

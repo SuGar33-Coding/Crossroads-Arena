@@ -1,9 +1,14 @@
 extends AttackPivot
 
+# Amount of time between last attack and end of combo in seconds
+export var comboTime : float = 1
+
+var comboCounter : int = 0 setget setComboCounter
+
 # TODO: Make this a signal call
 onready var animationPlayer := get_node("../AnimationPlayer")
 onready var parryHitbox := $WeaponHitbox/ParryHitbox
-onready var returnTween := $ReturnTween
+onready var comboTimer := $ComboTimer
 
 # TODO: remove this cus it should be through inventory
 onready var rangedWeapon : WeaponStats = preload("res://Weapons/BaseBow.tres")
@@ -12,6 +17,7 @@ onready var meleeWeapon : WeaponStats = weaponStats
 
 func _ready():
 	parryHitbox.connect("area_entered", self, "_parried_weapon")
+	comboTimer.connect("timeout", self, "_combo_finished")
 
 func _physics_process(_delta):
 	
@@ -19,7 +25,18 @@ func _physics_process(_delta):
 	
 	if not animationPlayer.is_playing():
 		if Input.is_action_just_pressed("attack") and attackTimer.is_stopped():
-			attackTimer.start(weaponStats.attackSpeed * PlayerStats.attackSpeed)
+			var timerAmount
+			if comboCounter == 0:
+				# Minimum time between attacks is the time it takes to play the attack animation
+				attackTimer.start(max(weaponStats.attackSpeed * .4 * PlayerStats.attackSpeed, .1))
+			elif comboCounter == 1:
+				attackTimer.start(max(weaponStats.attackSpeed * .75 * PlayerStats.attackSpeed, .1))
+			else:
+				attackTimer.start(max(weaponStats.attackSpeed * PlayerStats.attackSpeed, .1))
+			
+			self.comboCounter = (self.comboCounter + 1) % 3
+			comboTimer.start(comboTime)
+			
 			if weaponStats.weaponType == WeaponStats.WeaponType.MELEE:
 				animationPlayer.play("MeleeAttack")
 				
@@ -33,10 +50,20 @@ func _physics_process(_delta):
 		elif Input.is_action_just_pressed("fire"):
 			animationPlayer.play("Parry")
 		elif Input.is_action_just_pressed("swap"):
+			self.comboCounter = 0
 			if weaponStats.name == meleeWeapon.name:
 				setWeapon(rangedWeapon)
 			else:
 				setWeapon(meleeWeapon)
+
+func setComboCounter(value):
+	if comboCounter < 2:
+		weaponHitbox.scaleDamage(1)
+		weaponHitbox.scaleKnockback(.5)
+	else:
+		weaponHitbox.scaleDamage(2)
+		weaponHitbox.scaleKnockback(1)
+	comboCounter = value
 
 # Called when another parry hitbox hit's player's during parry action
 func _parried_weapon(area):
@@ -45,5 +72,32 @@ func _parried_weapon(area):
 	parriedWeapon.parry(weaponHitbox)
 	PlayerStats.currentXP += parriedWeapon.damage
 
-func applyWeaonSheen():
-	pass
+func _on_WeaponTween_tween_completed():
+	self.show_behind_parent = not self.show_behind_parent
+	
+	if comboCounter < 2:
+		backTween.interpolate_property(weapon, "position", weapon.position, Vector2(-20, 5), self.tweenLength, Tween.TRANS_LINEAR, Tween.EASE_IN_OUT)
+		backTween.interpolate_property(weapon, "rotation", weapon.rotation, restingRotation - deg2rad(50), self.tweenLength)
+		
+		# Add the .007 so if player is spam clicking it feels more fluid/no stop on swing
+		backTween.interpolate_property(weapon, "position", Vector2(-20, 5), Vector2.ZERO, attackTimer.time_left + .007, Tween.TRANS_LINEAR, Tween.EASE_IN_OUT, self.tweenLength)
+		backTween.interpolate_property(weapon, "rotation", restingRotation - deg2rad(50), restingRotation, attackTimer.time_left + .007, self.tweenLength)
+	
+	else:
+		backTween.interpolate_property(weapon, "position", weapon.position, Vector2(-10, 5), self.tweenLength, Tween.TRANS_LINEAR, Tween.EASE_IN_OUT)
+		backTween.interpolate_property(weapon, "rotation", weapon.rotation, restingRotation + deg2rad(70), self.tweenLength)
+		
+		# Add the .007 so if player is spam clicking it feels more fluid/no stop on swing
+		backTween.interpolate_property(weapon, "position", Vector2(-10, 5), Vector2(5, 7), attackTimer.time_left + .007, Tween.TRANS_LINEAR, Tween.EASE_IN_OUT, self.tweenLength)
+		backTween.interpolate_property(weapon, "rotation", restingRotation + deg2rad(70), restingRotation + deg2rad(110), attackTimer.time_left + .007, self.tweenLength)
+	
+	backTween.start()
+
+# Reset weapon back to its original position
+func _combo_finished():
+	self.comboCounter = 0
+	
+	backTween.interpolate_property(weapon, "position", weapon.position, Vector2.ZERO, .4, Tween.TRANS_LINEAR, Tween.EASE_IN_OUT)
+	backTween.interpolate_property(weapon, "rotation", weapon.rotation, restingRotation, .4, Tween.TRANS_LINEAR, Tween.EASE_IN_OUT)
+
+	backTween.start()

@@ -259,7 +259,8 @@ frame = 0
 [node name="Weapon" parent="AttackPivot/WeaponRestingPos" index="0"]
 texture = ExtResource( 6 )
 
-[node name="ReturnTween" type="Tween" parent="AttackPivot"]
+[node name="ComboTimer" type="Timer" parent="AttackPivot"]
+one_shot = true
 
 [node name="Hurtbox" parent="." instance=ExtResource( 4 )]
 collision_layer = 16

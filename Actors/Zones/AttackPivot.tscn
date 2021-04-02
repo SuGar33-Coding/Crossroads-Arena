@@ -5,7 +5,7 @@
 [ext_resource path="res://Assets/TGBA swipe.png" type="Texture" id=4]
 [ext_resource path="res://Actors/Zones/WeaponHitbox.tscn" type="PackedScene" id=6]
 
-[sub_resource type="Shader" id=7]
+[sub_resource type="Shader" id=1]
 resource_local_to_scene = true
 resource_name = "Sheen"
 code = "shader_type canvas_item;
@@ -43,15 +43,14 @@ colors = PoolColorArray( 0, 0, 0, 1, 1, 1, 1, 1, 0, 0, 0, 1 )
 [sub_resource type="GradientTexture" id=3]
 gradient = SubResource( 2 )
 
-[sub_resource type="ShaderMaterial" id=5]
-shader = SubResource( 7 )
+[sub_resource type="ShaderMaterial" id=4]
+shader = SubResource( 1 )
 shader_param/active = false
 shader_param/time = 0.0
 shader_param/frequency = 0.8
 shader_param/sheen_texure = SubResource( 3 )
 
-[sub_resource type="StreamTexture" id=6]
-flags = 2
+[sub_resource type="StreamTexture" id=5]
 load_path = "res://.import/Item__01.png-25300138ce0bf7e2dfe3713d23a746d3.stex"
 
 [node name="AttackPivot" type="Position2D"]
@@ -80,9 +79,9 @@ frame = 5
 position = Vector2( -1, -8 )
 
 [node name="Weapon" type="Sprite" parent="WeaponRestingPos"]
-material = SubResource( 5 )
+material = SubResource( 4 )
 rotation = -1.309
-texture = SubResource( 6 )
+texture = SubResource( 5 )
 flip_h = true
 
 [node name="AttackSignalPos" type="Position2D" parent="WeaponRestingPos"]
@@ -90,6 +89,5 @@ position = Vector2( -4.13908, -8.41847 )
 
 [node name="AttackTimer" type="Timer" parent="."]
 one_shot = true
-[connection signal="tween_all_completed" from="WeaponTween" to="." method="_on_WeaponTween_tween_completed"]
 
 [editable path="WeaponHitbox"]

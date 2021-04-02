@@ -40,6 +40,8 @@ func _ready():
 	weaponStats = weaponStatsResources[randi() % weaponStatsResources.size()]
 	setWeapon(weaponStats)
 	
+	tween.connect("tween_all_completed", self, "_on_WeaponTween_tween_completed")
+	
 	# Get a local copy of weapon mat
 	weapon.material = weapon.material.duplicate()
 	weaponMat = weapon.material
@@ -123,7 +125,7 @@ func _on_WeaponTween_tween_completed():
 	backTween.interpolate_property(weapon, "rotation", weapon.rotation, restingRotation - deg2rad(50), self.tweenLength)
 	
 	# Add the .007 so if player is spam clicking it feels more fluid/no stop on swing
-	backTween.interpolate_property(weapon, "position", Vector2(-15, 5), Vector2.ZERO, attackTimer.time_left + .007, Tween.TRANS_LINEAR, Tween.EASE_IN_OUT, self.tweenLength)
+	backTween.interpolate_property(weapon, "position", Vector2(-20, 5), Vector2.ZERO, attackTimer.time_left + .007, Tween.TRANS_LINEAR, Tween.EASE_IN_OUT, self.tweenLength)
 	backTween.interpolate_property(weapon, "rotation", restingRotation - deg2rad(50), restingRotation, attackTimer.time_left + .007, self.tweenLength)
 	
 	backTween.start()
