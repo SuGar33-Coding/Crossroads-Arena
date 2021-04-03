@@ -29,7 +29,7 @@ func _ready():
 	stats.health = maxPlayerHealth
 	stats.playerLevel = startingLevel
 	stats.currentXP = 0
-	stats.healthIncrease = maxPlayerHealth
+	#stats.healthIncrease = maxPlayerHealth
 	swipe.frame = 0
 	stats.connectNoHealth(self)
 	
