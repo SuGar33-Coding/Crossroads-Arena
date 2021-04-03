@@ -1,4 +1,4 @@
-[gd_scene load_steps=18 format=2]
+[gd_scene load_steps=21 format=2]
 
 [ext_resource path="res://Assets/CharacterAssets/knight 24x24 v2 walk.png" type="Texture" id=1]
 [ext_resource path="res://Player/Player.gd" type="Script" id=2]
@@ -10,6 +10,8 @@
 [ext_resource path="res://UI/PlayerUI.tscn" type="PackedScene" id=8]
 [ext_resource path="res://Audio/Slash.wav" type="AudioStream" id=9]
 [ext_resource path="res://Audio/Stab.wav" type="AudioStream" id=10]
+[ext_resource path="res://Audio/Footstep2.wav" type="AudioStream" id=11]
+[ext_resource path="res://Audio/Footstep1.wav" type="AudioStream" id=12]
 
 [sub_resource type="CapsuleShape2D" id=1]
 radius = 4.5
@@ -96,7 +98,7 @@ tracks/2/keys = {
 "values": [ -90.0 ]
 }
 
-[sub_resource type="Animation" id=8]
+[sub_resource type="Animation" id=4]
 resource_name = "Stab"
 length = 0.1
 step = 0.01
@@ -137,7 +139,7 @@ tracks/2/keys = {
 "values": [ Vector2( 0, 0 ), Vector2( 30, 0 ), Vector2( 28.7, 0 ) ]
 }
 
-[sub_resource type="Animation" id=4]
+[sub_resource type="Animation" id=5]
 length = 0.6
 tracks/0/type = "value"
 tracks/0/path = NodePath("Sprite:modulate")
@@ -152,8 +154,7 @@ tracks/0/keys = {
 "values": [ Color( 1, 1, 1, 1 ), Color( 0.682353, 0, 0, 1 ), Color( 1, 1, 1, 1 ), Color( 0.682353, 0, 0, 1 ), Color( 1, 1, 1, 1 ), Color( 0.682353, 0, 0, 1 ), Color( 1, 1, 1, 1 ) ]
 }
 
-[sub_resource type="Animation" id=5]
-resource_name = "Blink"
+[sub_resource type="Animation" id=6]
 length = 0.15
 step = 0.01
 tracks/0/type = "value"
@@ -181,8 +182,7 @@ tracks/1/keys = {
 "values": [ Color( 1, 1, 1, 1 ), Color( 0.0784314, 0, 1, 1 ), Color( 0.0784314, 0, 1, 1 ), Color( 1, 1, 1, 1 ) ]
 }
 
-[sub_resource type="Animation" id=6]
-resource_name = "Dashing"
+[sub_resource type="Animation" id=7]
 length = 0.2
 step = 0.05
 tracks/0/type = "method"
@@ -226,8 +226,9 @@ tracks/1/keys = {
 } ]
 }
 
-[sub_resource type="Animation" id=7]
+[sub_resource type="Animation" id=8]
 length = 0.6
+step = 0.05
 tracks/0/type = "value"
 tracks/0/path = NodePath("Sprite:rotation_degrees")
 tracks/0/interp = 1
@@ -268,6 +269,23 @@ tracks/2/keys = {
 "transitions": PoolRealArray( 1, 1, 1, 1, 1, 1, 1 ),
 "update": 1,
 "values": [ 0, 1, 2, 3, 4, 5, 0 ]
+}
+tracks/3/type = "method"
+tracks/3/path = NodePath(".")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/keys = {
+"times": PoolRealArray( 0.15, 0.45 ),
+"transitions": PoolRealArray( 1, 1 ),
+"values": [ {
+"args": [ 1 ],
+"method": "playFootstep"
+}, {
+"args": [ 2 ],
+"method": "playFootstep"
+} ]
 }
 
 [node name="Player" type="KinematicBody2D"]
@@ -324,10 +342,10 @@ position = Vector2( 0, -4 )
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 anims/MeleeAttack = SubResource( 2 )
 anims/Parry = SubResource( 3 )
-anims/Stab = SubResource( 8 )
+anims/Stab = SubResource( 4 )
 
 [node name="DamagedPlayer" type="AnimationPlayer" parent="."]
-anims/Damaged = SubResource( 4 )
+anims/Damaged = SubResource( 5 )
 
 [node name="DashTimer" type="Timer" parent="."]
 one_shot = true
@@ -335,9 +353,17 @@ one_shot = true
 [node name="PlayerUI" parent="." instance=ExtResource( 8 )]
 
 [node name="MovementAnimation" type="AnimationPlayer" parent="."]
-anims/Blink = SubResource( 5 )
-anims/Dashing = SubResource( 6 )
-anims/Walking = SubResource( 7 )
+anims/Blink = SubResource( 6 )
+anims/Dashing = SubResource( 7 )
+anims/Walking = SubResource( 8 )
+
+[node name="Footstep1" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource( 12 )
+bus = "PlayerWalking"
+
+[node name="Footstep2" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource( 11 )
+bus = "PlayerWalking"
 
 [editable path="AttackPivot"]
 
