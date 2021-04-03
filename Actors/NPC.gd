@@ -37,6 +37,7 @@ onready var hurtbox := $Hurtbox
 onready var nav2d: Navigation2D = get_node("../../../Navigation2D")
 onready var pathfindTimer: Timer = $PathfindTimer
 onready var movementTimer := $MovementTimer
+onready var damagedSfx := $DamagedSFX
 
 func _ready():
 	self.add_to_group(movementGroup)
@@ -162,6 +163,8 @@ func _hurtbox_area_entered(area : Hitbox):
 	state = State.STUN
 	stats.health -= area.damage
 	knockback = area.getKnockbackVector(self.global_position)
+	
+	damagedSfx.play()
 
 func _dexterity_changed(value):
 	self.MaxSpeed = self.baseSpeed * pow(PlayerStats.dexRatio, value)

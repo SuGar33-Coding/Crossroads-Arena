@@ -9,11 +9,12 @@ var comboCounter : int = 0 setget setComboCounter
 onready var animationPlayer := get_node("../AnimationPlayer")
 onready var parryHitbox := $WeaponHitbox/ParryHitbox
 onready var comboTimer := $ComboTimer
+onready var quickSfx := $QuickSFX
+onready var longSfx := $LongSFX
 
 # TODO: remove this cus it should be through inventory
 onready var rangedWeapon : WeaponStats = preload("res://Weapons/BaseBow.tres")
 onready var meleeWeapon : WeaponStats = weaponStats
-
 
 func _ready():
 	parryHitbox.connect("area_entered", self, "_parried_weapon")
@@ -28,10 +29,13 @@ func _physics_process(_delta):
 			var timerAmount
 			if comboCounter == 0:
 				# Minimum time between attacks is the time it takes to play the attack animation
+				quickSfx.play()
 				attackTimer.start(max(weaponStats.attackSpeed * .4 * PlayerStats.attackSpeed, .1))
 			elif comboCounter == 1:
+				quickSfx.play()
 				attackTimer.start(max(weaponStats.attackSpeed * .75 * PlayerStats.attackSpeed, .1))
 			else:
+				longSfx.play()
 				attackTimer.start(max(weaponStats.attackSpeed * PlayerStats.attackSpeed, .1))
 			
 			self.comboCounter = (self.comboCounter + 1) % 3

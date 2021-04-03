@@ -51,6 +51,7 @@ shader_param/frequency = 0.8
 shader_param/sheen_texure = SubResource( 3 )
 
 [sub_resource type="StreamTexture" id=5]
+flags = 2
 load_path = "res://.import/Item__01.png-25300138ce0bf7e2dfe3713d23a746d3.stex"
 
 [node name="AttackPivot" type="Position2D"]

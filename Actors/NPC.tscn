@@ -1,8 +1,9 @@
-[gd_scene load_steps=5 format=2]
+[gd_scene load_steps=6 format=2]
 
 [ext_resource path="res://Actors/Zones/Hurtbox.tscn" type="PackedScene" id=1]
 [ext_resource path="res://Actors/Generic/Stats.tscn" type="PackedScene" id=2]
 [ext_resource path="res://Actors/NPC.gd" type="Script" id=3]
+[ext_resource path="res://Audio/Damaged1.wav" type="AudioStream" id=4]
 
 [sub_resource type="CapsuleShape2D" id=1]
 radius = 4.5
@@ -29,3 +30,8 @@ one_shot = true
 
 [node name="MovementTimer" type="Timer" parent="."]
 one_shot = true
+
+[node name="DamagedSFX" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource( 4 )
+volume_db = 3.753
+bus = "DmgSFX"
