@@ -9,9 +9,12 @@ onready var xpbarLabel : Label = $HBoxContainer/VBoxContainer/HBoxContainer/XPba
 onready var potLabel : Label = $HBoxContainer/PanelContainer/HBoxContainer/PotLabel
 onready var stats = get_node("/root/PlayerStats")
 onready var animationPlayer := $AnimationPlayer
+onready var hpTween := $HPTween
+onready var timer := $Timer
 
 func _ready():
-	self.setHealthbarValue(stats.health / stats.getMaxHealth() * 100)
+	self._playerstats_health_changed(stats.health)
+	self._player_xp_changed(stats.currentXP)
 	stats.connectHealthChanged(self)
 	stats.connect("currentXPChanged", self, "_player_xp_changed")
 	stats.connect("playerLevelChanged", self, "_player_level_changed")
@@ -19,7 +22,10 @@ func _ready():
 	stats.connect("removedFromInventory", self, "_item_removed_from_inv")
 	
 func setHealthbarValue(value : float):
-	healthbar.value = value
+	if hpTween.is_active():
+		hpTween.remove_all()
+	hpTween.interpolate_property(healthbar, "value", healthbar.value, value, 1, Tween.TRANS_LINEAR, Tween.EASE_IN_OUT)
+	hpTween.start()
 
 func setXPbarValue(value : float):
 	xpbar.value = value

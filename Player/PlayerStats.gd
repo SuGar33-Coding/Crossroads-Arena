@@ -2,8 +2,10 @@ extends Node
 
 var levelUpMenu = preload("res://UI/LevelUp.tscn")
 
-var maxHealth : int = 1 setget setMaxHealth, getMaxHealth
+
 var startingMaxHealth : int = 75 setget setStartingHealth
+var maxHealth : int = startingMaxHealth setget setMaxHealth, getMaxHealth
+var health = startingMaxHealth setget setHealth, getHealth
 var baseSpeed : int = 150
 var maxSpeed : float = baseSpeed
 var playerLevel : int = 1 setget setPlayerLevel
@@ -21,6 +23,9 @@ var dexDashRatio : float = .95
 var attackSpeed : float = 1
 var invulnTimer : float = .6
 
+# Will be an array of scenes/references to scene instances
+var inventory := []
+
 signal noHealth
 signal healthChanged(value)
 signal maxHealthChanged(value)
@@ -29,10 +34,10 @@ signal playerLevelChanged(newLevel)
 signal addedToInventory(newItem)
 signal removedFromInventory(removedItem)
 
+func _ready():
+	self.maxHealth = startingMaxHealth
+	self.health = maxHealth
 
-var health = 1 setget setHealth, getHealth
-# Will be an array of scenes/references to scene instances
-var inventory := []
 
 func setStartingHealth(value):
 	startingMaxHealth = value
@@ -40,7 +45,9 @@ func setStartingHealth(value):
 	self.health = value
 
 func setMaxHealth(value : int):
+	var oldMaxHealth = maxHealth
 	maxHealth = max(value, 1)
+	self.health += maxHealth - oldMaxHealth
 	self.health = min(health, maxHealth)
 	emit_signal("maxHealthChanged", maxHealth)
 	
@@ -78,9 +85,7 @@ func setStr(value):
 	
 func setCon(value):
 	con = value
-	var oldMaxHealth = self.maxHealth
 	self.maxHealth = int(startingMaxHealth * pow(conRatio, con))
-	self.health += self.maxHealth - oldMaxHealth
 	
 func setDex(value):
 	dex = value

@@ -232,3 +232,7 @@ texture = ExtResource( 3 )
 stretch_mode = 1
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+
+[node name="Timer" type="Timer" parent="."]
+
+[node name="HPTween" type="Tween" parent="."]
