@@ -15,6 +15,7 @@ var baseKnockback : float setget setBaseKnockback
 
 onready var collision := $WeaponCollision
 onready var parryCollision := $ParryHitbox/ParryCollision
+onready var parrySfx := $ParrySFX
 
 signal parried(area)
 
@@ -77,4 +78,5 @@ func scaleKnockback(scalar := 1.0):
 
 # Let everyone know that you've been parried
 func parry(area : WeaponHitbox):
+	parrySfx.play()
 	emit_signal("parried", area)
