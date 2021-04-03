@@ -69,10 +69,10 @@ func startMeleeAttack(animLength: float):
 	if weaponStats.weaponType == WeaponStats.WeaponType.MELEE:
 		self.tweenLength = animLength/2
 		swipe.set_deferred("flip_h", not swipe.flip_h)
-		tween.interpolate_property(weapon, "position", Vector2.ZERO, swordAnimDist, tweenLength)
+		tween.interpolate_property(weapon, "position", weapon.position, swordAnimDist, tweenLength)
 		var endRotation = restingRotation + deg2rad(swingDegrees) 
 		
-		tween.interpolate_property(weapon, "rotation", restingRotation, endRotation, tweenLength)
+		tween.interpolate_property(weapon, "rotation", weapon.rotation, endRotation, tweenLength)
 		
 		tween.start()
 		
@@ -121,12 +121,12 @@ func setWeapon(weaponStats : WeaponStats):
 # TODO: Can set tween delay rather than making multiple tweens
 func _on_WeaponTween_tween_completed():
 	self.show_behind_parent = not self.show_behind_parent
-	backTween.interpolate_property(weapon, "position", weapon.position, Vector2(-15, 5), self.tweenLength, Tween.TRANS_LINEAR, Tween.EASE_IN_OUT)
-	backTween.interpolate_property(weapon, "rotation", weapon.rotation, restingRotation - deg2rad(50), self.tweenLength)
-	
+	backTween.interpolate_property(weapon, "position", weapon.position, Vector2(-20, 5), self.tweenLength, Tween.TRANS_LINEAR, Tween.EASE_IN_OUT)
+	backTween.interpolate_property(weapon, "rotation", weapon.rotation, restingRotation - deg2rad(50), self.tweenLength, Tween.TRANS_LINEAR, Tween.EASE_IN)
+
 	# Add the .007 so if player is spam clicking it feels more fluid/no stop on swing
 	backTween.interpolate_property(weapon, "position", Vector2(-20, 5), Vector2.ZERO, attackTimer.time_left + .007, Tween.TRANS_LINEAR, Tween.EASE_IN_OUT, self.tweenLength)
-	backTween.interpolate_property(weapon, "rotation", restingRotation - deg2rad(50), restingRotation, attackTimer.time_left + .007, self.tweenLength)
+	backTween.interpolate_property(weapon, "rotation", restingRotation - deg2rad(50), restingRotation, attackTimer.time_left + .007, Tween.TRANS_LINEAR, Tween.EASE_IN, self.tweenLength)
 	
 	backTween.start()
 

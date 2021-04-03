@@ -83,6 +83,9 @@ func setCon(value):
 func setDex(value):
 	dex = value
 	self.attackSpeed = pow(1/dexRatio, dex)
+	resetMaxSpeed()
+	
+func resetMaxSpeed():
 	self.maxSpeed = self.baseSpeed * pow(dexRatio, dex)
 
 func setPlayerLevel(newLevel):
