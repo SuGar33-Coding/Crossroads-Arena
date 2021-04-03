@@ -9,11 +9,12 @@ var comboCounter : int = 0 setget setComboCounter
 onready var animationPlayer := get_node("../AnimationPlayer")
 onready var parryHitbox := $WeaponHitbox/ParryHitbox
 onready var comboTimer := $ComboTimer
+onready var quickSfx := $QuickSFX
+onready var longSfx := $LongSFX
 
 # TODO: remove this cus it should be through inventory
 onready var rangedWeapon : WeaponStats = preload("res://Weapons/BaseBow.tres")
 onready var meleeWeapon : WeaponStats = weaponStats
-
 
 signal meleeAttack()
 signal stab()
@@ -33,7 +34,6 @@ func _physics_process(_delta):
 	if not animationPlayer.is_playing():
 		if Input.is_action_just_pressed("attack") and attackTimer.is_stopped():
 			var timerAmount
-			
 			if weaponStats.weaponType == WeaponStats.WeaponType.MELEE:
 				if backTween.is_active():
 					backTween.stop_all()
@@ -44,14 +44,17 @@ func _physics_process(_delta):
 					attackTimer.start(max(weaponStats.attackSpeed * .4 * PlayerStats.attackSpeed, .1))
 					emit_signal("meleeAttack")
 					comboTimer.start(comboTime)
+					quickSfx.play()
 				elif comboCounter == 1:
 					attackTimer.start(max(weaponStats.attackSpeed * .75 * PlayerStats.attackSpeed, .1))
 					emit_signal("meleeAttack")
 					comboTimer.start(comboTime)
+					quickSfx.play()
 				else:
 					attackTimer.start(max(weaponStats.attackSpeed * PlayerStats.attackSpeed, .1))
 					emit_signal("stab")
 					comboTimer.stop()
+					longSfx.play()
 					
 				
 				self.comboCounter = (self.comboCounter + 1) % 3
