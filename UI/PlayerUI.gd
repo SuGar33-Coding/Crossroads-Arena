@@ -1,5 +1,9 @@
 extends CanvasLayer
 
+var flashCounter = 0
+# Must be an even number
+var maxFlashes = 6
+var timeBetweenFlashes = .05
 
 onready var healthbar : ProgressBar = $HBoxContainer/VBoxContainer/HealthbarContainer/Healthbar
 onready var xpbar : ProgressBar = $HBoxContainer/VBoxContainer/HBoxContainer/XPbar
@@ -20,12 +24,15 @@ func _ready():
 	stats.connect("playerLevelChanged", self, "_player_level_changed")
 	stats.connect("addedToInventory", self, "_item_added_to_inv")
 	stats.connect("removedFromInventory", self, "_item_removed_from_inv")
+	timer.connect("timeout", self, "_timer_timeout")
 	
 func setHealthbarValue(value : float):
 	if hpTween.is_active():
 		hpTween.remove_all()
-	hpTween.interpolate_property(healthbar, "value", healthbar.value, value, 1, Tween.TRANS_LINEAR, Tween.EASE_IN_OUT)
+	hpTween.interpolate_property(healthbar, "value", healthbar.value, value, maxFlashes * timeBetweenFlashes, Tween.TRANS_LINEAR, Tween.EASE_IN_OUT)
 	hpTween.start()
+	flashCounter = 0
+	timer.start(timeBetweenFlashes)
 
 func setXPbarValue(value : float):
 	xpbar.value = value
@@ -51,3 +58,14 @@ func _item_added_to_inv(newItem):
 func _item_removed_from_inv(removedItem):
 	if removedItem is HealthPotion:
 		potLabel.text = str(PlayerStats.getNumItemsOfType("HealthPotion"))
+
+func _timer_timeout():
+	# If counter is even, go white
+	if flashCounter % 2 == 0:
+		healthbar.modulate = Color(10,10,10,1)
+	else:
+		healthbar.modulate = Color(1,1,1,1)
+		
+	flashCounter += 1
+	if flashCounter < maxFlashes:
+		timer.start(timeBetweenFlashes)
