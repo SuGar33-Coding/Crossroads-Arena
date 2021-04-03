@@ -1,4 +1,4 @@
-[gd_resource type="AudioBusLayout" load_steps=6 format=2]
+[gd_resource type="AudioBusLayout" load_steps=7 format=2]
 
 [sub_resource type="AudioEffectLowPassFilter" id=1]
 resource_name = "LowPassFilter"
@@ -24,6 +24,15 @@ resource_name = "Distortion"
 mode = 3
 drive = 0.25
 
+[sub_resource type="AudioEffectEQ" id=6]
+resource_name = "EQ"
+band_db/32_hz = -8.4
+band_db/100_hz = -5.8
+band_db/320_hz = -1.8
+band_db/1000_hz = -3.1
+band_db/3200_hz = -8.4
+band_db/10000_hz = -22.5
+
 [resource]
 bus/0/volume_db = -12.4611
 bus/1/name = "AttackSFX"
@@ -48,3 +57,11 @@ bus/2/effect/1/effect = SubResource( 4 )
 bus/2/effect/1/enabled = false
 bus/2/effect/2/effect = SubResource( 5 )
 bus/2/effect/2/enabled = false
+bus/3/name = "PlayerWalking"
+bus/3/solo = false
+bus/3/mute = false
+bus/3/bypass_fx = false
+bus/3/volume_db = -5.04538
+bus/3/send = "Master"
+bus/3/effect/0/effect = SubResource( 6 )
+bus/3/effect/0/enabled = true

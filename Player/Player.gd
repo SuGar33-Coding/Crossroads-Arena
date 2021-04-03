@@ -29,6 +29,8 @@ onready var damagedPlayer := $DamagedPlayer
 onready var dashTimer := $DashTimer
 onready var movementAnimation := $MovementAnimation
 onready var animationPlayer := $AnimationPlayer
+onready var footstep1 := $Footstep1
+onready var footstep2 := $Footstep2
 
 func _ready():
 	Engine.set_target_fps(Engine.get_iterations_per_second())
@@ -105,6 +107,13 @@ func spawnDashFx():
 	dashCloudFxInstance.z_index = -1
 	dashCloudFxInstance.emitting = true
 	get_tree().current_scene.add_child(dashCloudFxInstance)
+	
+func playFootstep(foot = 1):
+	match foot:
+		1:
+			footstep1.play()
+		2:
+			footstep2.play()
 	
 func _player_level_changed(_newPlayerLevel):
 	attackPivot.userStr = PlayerStats.strength
