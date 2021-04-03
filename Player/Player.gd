@@ -3,7 +3,6 @@ extends KinematicBody2D
 var dirtFx = preload("res://FX/DirtSpread.tscn")
 var dashCloudFx = preload("res://FX/DashCloud.tscn")
 
-export var startingSpeed : float = 150
 export var Acceleration : float = 2000
 export var startingFriction : float = 2000
 export var dashSpeed := 500

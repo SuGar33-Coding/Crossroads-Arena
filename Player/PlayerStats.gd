@@ -3,9 +3,9 @@ extends Node
 var levelUpMenu = preload("res://UI/LevelUp.tscn")
 
 var maxHealth : int = 1 setget setMaxHealth, getMaxHealth
-var startingMaxHealth : int = 50 setget setStartingHealth
+var startingMaxHealth : int = 75 setget setStartingHealth
 var baseSpeed : int = 150
-var maxSpeed : int = baseSpeed
+var maxSpeed : float = baseSpeed
 var playerLevel : int = 1 setget setPlayerLevel
 var currentXP : int = 0 setget setCurrentXP, getCurrentXP
 var strength : int = 0 setget setStr
@@ -39,7 +39,7 @@ func setStartingHealth(value):
 	self.maxHealth = value
 	self.health = value
 
-func setMaxHealth(value):
+func setMaxHealth(value : int):
 	maxHealth = max(value, 1)
 	self.health = min(health, maxHealth)
 	emit_signal("maxHealthChanged", maxHealth)
@@ -47,7 +47,7 @@ func setMaxHealth(value):
 func getMaxHealth():
 	return maxHealth
 	
-func setHealth(value):
+func setHealth(value : int):
 	health = clamp(value, 0, maxHealth)
 	emit_signal("healthChanged", health)
 	if (health <= 0):
@@ -79,7 +79,7 @@ func setStr(value):
 func setCon(value):
 	con = value
 	var oldMaxHealth = self.maxHealth
-	self.maxHealth = startingMaxHealth * pow(conRatio, con)
+	self.maxHealth = int(startingMaxHealth * pow(conRatio, con))
 	self.health += self.maxHealth - oldMaxHealth
 	
 func setDex(value):

@@ -24,7 +24,7 @@ func _ready():
 	
 	self.attackSpeed = pow(PlayerStats.dexAttackRatio, dex)
 
-func setMaxHealth(value):
+func setMaxHealth(value : int):
 	maxHealth = max(value, 1)
 	self.health = min(health, maxHealth)
 	emit_signal("maxHealthChanged", maxHealth)
@@ -32,7 +32,7 @@ func setMaxHealth(value):
 func getMaxHealth():
 	return maxHealth
 	
-func setHealth(value):
+func setHealth(value : int):
 	health = clamp(value, 0, maxHealth)
 	emit_signal("healthChanged", health)
 	if (health <= 0):
