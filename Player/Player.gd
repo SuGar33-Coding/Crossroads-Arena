@@ -28,6 +28,7 @@ onready var camera := $MainCamera
 onready var damagedPlayer := $DamagedPlayer
 onready var dashTimer := $DashTimer
 onready var movementAnimation := $MovementAnimation
+onready var animationPlayer := $AnimationPlayer
 
 func _ready():
 	Engine.set_target_fps(Engine.get_iterations_per_second())
@@ -45,6 +46,7 @@ func _ready():
 	stats.connect("noHealth", self, "_playerstats_no_health")
 	stats.connect("playerLevelChanged", self, "_player_level_changed")
 	hurtbox.connect("area_entered", self, "_hurtbox_area_entered")
+	$AttackPivot/ComboTimer.connect("timeout", self, "_combo_finished")
 
 func _physics_process(delta):
 	knockback = knockback.move_toward(Vector2.ZERO, Friction * delta)
@@ -61,8 +63,9 @@ func _physics_process(delta):
 	
 	if Input.is_action_just_pressed("dash") and dashTimer.is_stopped():
 		dashVector = inputVector * dashSpeed
-		dashTimer.start(dashDelay)
+		dashTimer.start(dashDelay* pow(PlayerStats.dexDashRatio, PlayerStats.dex))
 		movementAnimation.play("Dashing")
+		PlayerStats.resetMaxSpeed()
 	elif inputVector != Vector2.ZERO:
 		velocity = velocity.move_toward(inputVector * stats.maxSpeed, Acceleration * delta)
 		
@@ -123,3 +126,14 @@ func _playerstats_no_health():
 	# When Player dies, return to main menu TODO: Change this
 	#get_tree().change_scene("res://UI/StartMenu/StartMenu.tscn")
 	self.queue_free()
+	
+func _melee_attack():
+	animationPlayer.play("MeleeAttack")
+	PlayerStats.maxSpeed *= .65
+	
+func _stab():
+	animationPlayer.play("Stab")
+	PlayerStats.resetMaxSpeed()
+	
+func _combo_finished():
+	PlayerStats.resetMaxSpeed()

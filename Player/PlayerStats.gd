@@ -14,7 +14,9 @@ var con : int = 0 setget setCon
 var conRatio : float = 1.15
 var conFrictionRatio : float = 1.05
 var dex : int = 0 setget setDex
-var dexRatio : float = 1.075
+var dexMoveRatio : float = 1.025
+var dexAttackRatio : float = .93
+var dexDashRatio : float = .95
 # AttackSpeed starts at 1 and then will slowly scale down as it's multiplied by weapon attack speed
 var attackSpeed : float = 1
 var invulnTimer : float = .6
@@ -82,8 +84,11 @@ func setCon(value):
 	
 func setDex(value):
 	dex = value
-	self.attackSpeed = pow(1/dexRatio, dex)
-	self.maxSpeed = self.baseSpeed * pow(dexRatio, dex)
+	self.attackSpeed = pow(dexAttackRatio, dex)
+	resetMaxSpeed()
+	
+func resetMaxSpeed():
+	self.maxSpeed = self.baseSpeed * pow(dexMoveRatio, dex)
 
 func setPlayerLevel(newLevel):
 	if playerLevel < newLevel:

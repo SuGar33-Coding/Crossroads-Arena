@@ -96,6 +96,47 @@ tracks/2/keys = {
 "values": [ -90.0 ]
 }
 
+[sub_resource type="Animation" id=8]
+resource_name = "Stab"
+length = 0.1
+step = 0.01
+tracks/0/type = "value"
+tracks/0/path = NodePath("AttackPivot/Swipe:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.07 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 1,
+"values": [ 5, 0 ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("AttackPivot/WeaponHitbox/WeaponCollision:disabled")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0, 0.02, 0.1 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 1,
+"values": [ true, false, true ]
+}
+tracks/2/type = "value"
+tracks/2/path = NodePath("AttackPivot/Swipe:position")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0, 0.07, 0.1 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 0,
+"values": [ Vector2( 0, 0 ), Vector2( 30, 0 ), Vector2( 28.7, 0 ) ]
+}
+
 [sub_resource type="Animation" id=4]
 length = 0.6
 tracks/0/type = "value"
@@ -256,7 +297,7 @@ script = ExtResource( 3 )
 collision_mask = 32
 
 [node name="Swipe" parent="AttackPivot" index="1"]
-frame = 0
+position = Vector2( 0, 0 )
 
 [node name="Weapon" parent="AttackPivot/WeaponRestingPos" index="0"]
 texture = ExtResource( 6 )
@@ -283,6 +324,7 @@ position = Vector2( 0, -4 )
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 anims/MeleeAttack = SubResource( 2 )
 anims/Parry = SubResource( 3 )
+anims/Stab = SubResource( 8 )
 
 [node name="DamagedPlayer" type="AnimationPlayer" parent="."]
 anims/Damaged = SubResource( 4 )
