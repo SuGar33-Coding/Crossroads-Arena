@@ -65,6 +65,7 @@ func _physics_process(delta):
 		dashVector = inputVector * dashSpeed
 		dashTimer.start(dashDelay)
 		movementAnimation.play("Dashing")
+		PlayerStats.resetMaxSpeed()
 	elif inputVector != Vector2.ZERO:
 		velocity = velocity.move_toward(inputVector * stats.maxSpeed, Acceleration * delta)
 		
