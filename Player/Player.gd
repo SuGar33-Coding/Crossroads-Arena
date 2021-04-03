@@ -63,7 +63,7 @@ func _physics_process(delta):
 	
 	if Input.is_action_just_pressed("dash") and dashTimer.is_stopped():
 		dashVector = inputVector * dashSpeed
-		dashTimer.start(dashDelay)
+		dashTimer.start(dashDelay* pow(PlayerStats.dexDashRatio, PlayerStats.dex))
 		movementAnimation.play("Dashing")
 		PlayerStats.resetMaxSpeed()
 	elif inputVector != Vector2.ZERO:

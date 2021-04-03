@@ -42,7 +42,7 @@ func _ready():
 	self.add_to_group(movementGroup)
 	hurtbox.connect("area_entered", self, "_hurtbox_area_entered")
 	stats.connect("noHealth", self, "_stats_no_health")
-	self.MaxSpeed = self.baseSpeed * pow(PlayerStats.dexRatio, stats.dex)
+	self.MaxSpeed = self.baseSpeed * pow(PlayerStats.dexMoveRatio, stats.dex)
 	stats.connect("dexChanged", self, "_dexterity_changed")
 	self.Friction = self.Friction * pow(PlayerStats.conFrictionRatio, stats.con)
 	

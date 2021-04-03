@@ -22,7 +22,7 @@ func _ready():
 	maxHealth = baseHealth * pow(PlayerStats.conRatio, con)
 	health = maxHealth
 	
-	self.attackSpeed = pow(1/PlayerStats.dexRatio, dex)
+	self.attackSpeed = pow(PlayerStats.dexAttackRatio, dex)
 
 func setMaxHealth(value):
 	maxHealth = max(value, 1)
