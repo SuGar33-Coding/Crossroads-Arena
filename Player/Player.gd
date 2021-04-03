@@ -3,12 +3,7 @@ extends KinematicBody2D
 var dirtFx = preload("res://FX/DirtSpread.tscn")
 var dashCloudFx = preload("res://FX/DashCloud.tscn")
 
-export(int) var startingMaxHealth = 5
-export(int) var startingLevel = 1
-export(int) var startingStr = 0
-export(int) var startingCon = 0
-export(int) var startingDex = 0
-export var startingSpeed : float = 200
+export var startingSpeed : float = 150
 export var Acceleration : float = 2000
 export var startingFriction : float = 2000
 export var dashSpeed := 500
@@ -34,15 +29,6 @@ onready var footstep2 := $Footstep2
 
 func _ready():
 	Engine.set_target_fps(Engine.get_iterations_per_second())
-	
-	stats.startingMaxHealth = startingMaxHealth
-	stats.playerLevel = startingLevel
-	stats.currentXP = 0
-	stats.strength = startingStr
-	stats.con = startingCon
-	stats.dex = startingDex
-	stats.baseSpeed = startingSpeed
-	stats.maxSpeed = startingSpeed
 	
 	Friction = startingFriction
 	stats.connect("noHealth", self, "_playerstats_no_health")

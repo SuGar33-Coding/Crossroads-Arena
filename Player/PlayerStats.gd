@@ -3,10 +3,10 @@ extends Node
 var levelUpMenu = preload("res://UI/LevelUp.tscn")
 
 var maxHealth : int = 1 setget setMaxHealth, getMaxHealth
-var startingMaxHealth : int = 5 setget setStartingHealth
-var baseSpeed : int = 200
-var maxSpeed : int = 200
-var playerLevel : int = 0 setget setPlayerLevel
+var startingMaxHealth : int = 50 setget setStartingHealth
+var baseSpeed : int = 150
+var maxSpeed : int = baseSpeed
+var playerLevel : int = 1 setget setPlayerLevel
 var currentXP : int = 0 setget setCurrentXP, getCurrentXP
 var strength : int = 0 setget setStr
 export(float) var strRatio := 1.2
