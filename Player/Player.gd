@@ -134,6 +134,12 @@ func _hurtbox_area_entered(area : Hitbox):
 func _playerstats_no_health():
 	# When Player dies, return to main menu TODO: Change this
 	#get_tree().change_scene("res://UI/StartMenu/StartMenu.tscn")
+	self.remove_child(camera)
+	camera.set_deferred("global_position", self.global_position)
+	camera.add_trauma(2)
+	var world = get_tree().current_scene
+	world.add_child(camera)
+	world.playerDied()
 	self.queue_free()
 	
 func _melee_attack():
