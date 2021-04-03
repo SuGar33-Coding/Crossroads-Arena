@@ -78,6 +78,12 @@ func _physics_process(_delta):
 			else:
 				setWeapon(meleeWeapon)
 
+func setWeapon(weaponStats : WeaponStats):
+	if comboTimer != null:
+		comboTimer.stop()
+		comboTimer.emit_signal("timeout")
+	.setWeapon(weaponStats)
+
 func setComboCounter(value):
 	if comboCounter < 2:
 		weaponHitbox.scaleDamage(1)

@@ -101,6 +101,9 @@ func setWeapon(weaponStats : WeaponStats):
 	self.weaponStats = weaponStats
 	weaponHitbox.setWeapon(weaponStats)
 	weapon.texture = weaponStats.texture
+	tween.remove_all()
+	backTween.remove_all()
+	weapon.position = Vector2.ZERO
 	
 	if weaponStats.weaponType == WeaponStats.WeaponType.MELEE:
 		restingPos.position = meleeRestingCoord
@@ -116,7 +119,6 @@ func setWeapon(weaponStats : WeaponStats):
 	else:
 		restingPos.set_deferred("position", Vector2(15, 0))
 		weapon.set_deferred("rotation", deg2rad(45))
-		weapon.set_deferred("z_index", 0)
 
 # TODO: Can set tween delay rather than making multiple tweens
 func _on_WeaponTween_tween_completed():
