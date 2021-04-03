@@ -285,3 +285,5 @@ position = Vector2( 1072, 1128 )
 [editable path="YSort/Player"]
 
 [editable path="YSort/Player/MainCamera"]
+
+[editable path="YSort/Player/AttackPivot"]

@@ -38,3 +38,11 @@ func set_pause_scene(rootNode : Node, pause : bool):
 	set_pause_node(rootNode, pause)
 	for node in rootNode.get_children():
 			set_pause_scene(node, pause)
+
+func playerDied():
+	var sceneChangerPlayer = $CanvasLayer/AnimationPlayer
+	sceneChangerPlayer.play("SceneChange")
+	sceneChangerPlayer.connect("animation_finished", self, "goToMainMenu")
+	
+func goToMainMenu(_stuff):
+	get_tree().change_scene("res://UI/StartMenu/StartMenu.tscn")
