@@ -105,8 +105,9 @@ func setPlayerLevel(newLevel):
 				var world = get_tree().current_scene
 				world.call_deferred("add_child", newMenu)
 				get_tree().paused = true
-				
-				
+	else:
+		playerLevel = newLevel
+
 func _emit_level_changed():
 	get_tree().paused = false
 	emit_signal("playerLevelChanged", playerLevel)

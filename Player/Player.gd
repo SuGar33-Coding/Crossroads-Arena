@@ -29,6 +29,13 @@ onready var footstep2 := $Footstep2
 func _ready():
 	Engine.set_target_fps(Engine.get_iterations_per_second())
 	
+	PlayerStats.strength = 0
+	PlayerStats.con = 0
+	PlayerStats.dex = 0
+	PlayerStats.health = PlayerStats.maxHealth
+	PlayerStats.playerLevel = 1
+	PlayerStats.currentXP = 0
+	
 	Friction = startingFriction
 	stats.connect("noHealth", self, "_playerstats_no_health")
 	stats.connect("playerLevelChanged", self, "_player_level_changed")

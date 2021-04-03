@@ -48,4 +48,5 @@ func playerDied():
 	sceneChangerPlayer.connect("animation_finished", self, "goToMainMenu")
 	
 func goToMainMenu(_stuff):
+	get_tree().paused = false
 	get_tree().change_scene("res://UI/StartMenu/StartMenu.tscn")
