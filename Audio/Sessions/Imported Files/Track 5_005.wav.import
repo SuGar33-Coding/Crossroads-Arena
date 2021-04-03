@@ -1,0 +1,21 @@
+[remap]
+
+importer="wav"
+type="AudioStreamSample"
+path="res://.import/Track 5_005.wav-06716ef7e137cb5ba4ac6c761d69fbee.sample"
+
+[deps]
+
+source_file="res://Audio/Sessions/Imported Files/Track 5_005.wav"
+dest_files=[ "res://.import/Track 5_005.wav-06716ef7e137cb5ba4ac6c761d69fbee.sample" ]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop=false
+compress/mode=0

@@ -1,0 +1,21 @@
+[remap]
+
+importer="wav"
+type="AudioStreamSample"
+path="res://.import/Track 9_009.wav-ae4340b5bdaa8263071e5881add7403c.sample"
+
+[deps]
+
+source_file="res://Audio/Sessions/Damage1_Recorded/Track 9_009.wav"
+dest_files=[ "res://.import/Track 9_009.wav-ae4340b5bdaa8263071e5881add7403c.sample" ]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop=false
+compress/mode=0
