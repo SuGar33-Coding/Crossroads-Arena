@@ -15,6 +15,9 @@ func _physics_process(_delta):
 		spawnEnemies()
 	elif Input.is_action_just_pressed("addlevel"):
 		PlayerStats.playerLevel += 1
+	elif Input.is_action_just_pressed("toggleFullscreen"):
+		OS.set_window_fullscreen(!OS.window_fullscreen)
+		OS.set_borderless_window(!OS.window_borderless)
 
 func spawnEnemies():
 	for spawn in spawns.get_children():
@@ -45,4 +48,5 @@ func playerDied():
 	sceneChangerPlayer.connect("animation_finished", self, "goToMainMenu")
 	
 func goToMainMenu(_stuff):
+	get_tree().paused = false
 	get_tree().change_scene("res://UI/StartMenu/StartMenu.tscn")

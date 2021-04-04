@@ -76,15 +76,16 @@ func startMeleeAttack(animLength: float):
 		
 		tween.start()
 		
-func playAttackSignal(windUpTime: float):
+func playAttackSignal(windUpTime: float, shading: bool = true):
 	var atkSignal : Particles2D = AttackSignal.instance()
 	atkSignal.position = attackSignalPos.position
 	restingPos.add_child(atkSignal)
 	atkSignal.set_deferred("emitting", true)
 	
 	# Activate the sheen shader
-	weaponMat.set_shader_param("frequency", 1.0 / windUpTime)
-	weaponMat.set_shader_param("active", true)
+	if shading:
+		weaponMat.set_shader_param("frequency", 1.0 / windUpTime)
+		weaponMat.set_shader_param("active", true)
 
 		
 func startRangedAttack(sourceStr := 0):
@@ -101,6 +102,9 @@ func setWeapon(weaponStats : WeaponStats):
 	self.weaponStats = weaponStats
 	weaponHitbox.setWeapon(weaponStats)
 	weapon.texture = weaponStats.texture
+	tween.remove_all()
+	backTween.remove_all()
+	weapon.position = Vector2.ZERO
 	
 	if weaponStats.weaponType == WeaponStats.WeaponType.MELEE:
 		restingPos.position = meleeRestingCoord
@@ -116,7 +120,6 @@ func setWeapon(weaponStats : WeaponStats):
 	else:
 		restingPos.set_deferred("position", Vector2(15, 0))
 		weapon.set_deferred("rotation", deg2rad(45))
-		weapon.set_deferred("z_index", 0)
 
 # TODO: Can set tween delay rather than making multiple tweens
 func _on_WeaponTween_tween_completed():

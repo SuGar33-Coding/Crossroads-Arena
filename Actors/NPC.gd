@@ -18,6 +18,7 @@ enum State {
 	STUN
 }
 
+var HitEffect = preload("res://FX/HitEffect.tscn")
 var floatingText = preload("res://UI/FloatingText.tscn")
 var state = State.IDLE
 var velocity = Vector2.ZERO
@@ -157,6 +158,10 @@ func _hurtbox_area_entered(area : Hitbox):
 	var text = floatingText.instance()
 	text.amount = area.damage
 	add_child(text)
+	
+	var hitEffect = HitEffect.instance()
+	hitEffect.init(area.getSourcePos())
+	add_child(hitEffect)
 	
 	if area.fromPlayer:
 		PlayerStats.currentXP += min(stats.health, area.damage)

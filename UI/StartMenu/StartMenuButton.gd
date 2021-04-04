@@ -14,3 +14,6 @@ func _on_Button_pressed():
 	else:
 		# If there is nowhere to go, this button exits the game
 		get_tree().quit()
+
+func _on_Button_mouse_exited():
+	release_focus()

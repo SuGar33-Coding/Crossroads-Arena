@@ -35,7 +35,7 @@ outline_color = Color( 0, 0, 0, 1 )
 font_data = SubResource( 2 )
 
 [sub_resource type="DynamicFont" id=4]
-size = 15
+size = 13
 outline_size = 1
 outline_color = Color( 0, 0, 0, 1 )
 use_filter = true
@@ -114,10 +114,10 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-margin_left = -240.0
-margin_top = -152.0
-margin_right = 240.0
-margin_bottom = 144.0
+margin_left = -233.794
+margin_top = -100.801
+margin_right = 229.206
+margin_bottom = 121.199
 custom_styles/panel = SubResource( 1 )
 __meta__ = {
 "_edit_use_anchors_": false
@@ -126,19 +126,19 @@ __meta__ = {
 [node name="MarginContainer" type="MarginContainer" parent="PanelContainer"]
 margin_left = 5.0
 margin_top = 5.0
-margin_right = 475.0
-margin_bottom = 291.0
+margin_right = 458.0
+margin_bottom = 217.0
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
 [node name="HBoxContainer" type="HBoxContainer" parent="PanelContainer/MarginContainer"]
-margin_right = 470.0
-margin_bottom = 286.0
+margin_right = 453.0
+margin_bottom = 212.0
 
 [node name="StrButton" type="Button" parent="PanelContainer/MarginContainer/HBoxContainer"]
-margin_right = 131.0
-margin_bottom = 286.0
+margin_right = 125.0
+margin_bottom = 212.0
 size_flags_horizontal = 3
 custom_styles/hover = ExtResource( 1 )
 custom_styles/pressed = ExtResource( 3 )
@@ -174,10 +174,9 @@ align = 1
 [node name="Label2" type="Label" parent="PanelContainer/MarginContainer/HBoxContainer/StrButton/VBoxContainer"]
 margin_top = 95.0
 margin_right = 120.0
-margin_bottom = 225.0
+margin_bottom = 194.0
 custom_fonts/font = SubResource( 4 )
-text = "
-- Increase
+text = "- Increase
 Melee Damage
 
 - Increase
@@ -186,15 +185,15 @@ Slightly"
 align = 1
 
 [node name="Space" type="Control" parent="PanelContainer/MarginContainer/HBoxContainer"]
-margin_left = 135.0
-margin_right = 165.0
-margin_bottom = 286.0
+margin_left = 129.0
+margin_right = 159.0
+margin_bottom = 212.0
 rect_min_size = Vector2( 30, 0 )
 
 [node name="ConButton" type="Button" parent="PanelContainer/MarginContainer/HBoxContainer"]
-margin_left = 169.0
-margin_right = 300.0
-margin_bottom = 286.0
+margin_left = 163.0
+margin_right = 289.0
+margin_bottom = 212.0
 size_flags_horizontal = 3
 custom_styles/hover = ExtResource( 1 )
 custom_styles/pressed = ExtResource( 3 )
@@ -230,10 +229,9 @@ align = 1
 [node name="Label2" type="Label" parent="PanelContainer/MarginContainer/HBoxContainer/ConButton/VBoxContainer"]
 margin_top = 95.0
 margin_right = 120.0
-margin_bottom = 206.0
+margin_bottom = 177.0
 custom_fonts/font = SubResource( 4 )
-text = "
-- Increase
+text = "- Increase
 Health
 
 - Reduce
@@ -241,15 +239,15 @@ Knockback"
 align = 1
 
 [node name="Space2" type="Control" parent="PanelContainer/MarginContainer/HBoxContainer"]
-margin_left = 304.0
-margin_right = 334.0
-margin_bottom = 286.0
+margin_left = 293.0
+margin_right = 323.0
+margin_bottom = 212.0
 rect_min_size = Vector2( 30, 0 )
 
 [node name="DexButton" type="Button" parent="PanelContainer/MarginContainer/HBoxContainer"]
-margin_left = 338.0
-margin_right = 470.0
-margin_bottom = 286.0
+margin_left = 327.0
+margin_right = 453.0
+margin_bottom = 212.0
 size_flags_horizontal = 3
 custom_styles/hover = ExtResource( 1 )
 custom_styles/pressed = ExtResource( 3 )
@@ -285,15 +283,12 @@ align = 1
 [node name="Label2" type="Label" parent="PanelContainer/MarginContainer/HBoxContainer/DexButton/VBoxContainer"]
 margin_top = 95.0
 margin_right = 122.0
-margin_bottom = 263.0
+margin_bottom = 194.0
 custom_fonts/font = SubResource( 4 )
-text = "
-- Increase
+text = "- Increase
 Movement Speed
-
 - Reduce Dodge
 Delay
-
 - Increase
 Attack Speed"
 align = 1
@@ -303,10 +298,10 @@ anchor_left = 0.5
 anchor_top = 0.16
 anchor_right = 0.5
 anchor_bottom = 0.16
-margin_left = -230.47
-margin_top = -0.57299
-margin_right = 232.53
-margin_bottom = 25.427
+margin_left = -229.676
+margin_top = 11.3325
+margin_right = 233.324
+margin_bottom = 37.3325
 grow_horizontal = 2
 grow_vertical = 2
 custom_fonts/font = ExtResource( 5 )

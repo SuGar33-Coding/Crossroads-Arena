@@ -4,11 +4,13 @@ extends AttackPivot
 export var comboTime : float = 1
 
 var comboCounter : int = 0 setget setComboCounter
+var parryPos : Vector2
 
 # TODO: Make this a signal call
 onready var animationPlayer := get_node("../AnimationPlayer")
 onready var parryHitbox := $WeaponHitbox/ParryHitbox
 onready var comboTimer := $ComboTimer
+onready var parryTween := $ParryTween
 
 # TODO: remove this cus it should be through inventory
 onready var rangedWeapon : WeaponStats = preload("res://Weapons/BaseBow.tres")
@@ -16,13 +18,17 @@ onready var meleeWeapon : WeaponStats = weaponStats
 
 signal meleeAttack()
 signal stab()
+signal parry()
 
 
 func _ready():
+	parryPos = swordAnimDist * .75
+	
 	parryHitbox.connect("area_entered", self, "_parried_weapon")
 	comboTimer.connect("timeout", self, "_combo_finished")
 	self.connect("meleeAttack", self.get_parent(), "_melee_attack")
 	self.connect("stab", self.get_parent(), "_stab")
+	self.connect("parry", self.get_parent(), "_parry")
 	
 
 func _physics_process(_delta):
@@ -42,7 +48,7 @@ func _physics_process(_delta):
 					# Minimum time between attacks is the time it takes to play the attack animation
 					attackTimer.start(max(weaponStats.attackSpeed * .4 * PlayerStats.attackSpeed, attackDuration))
 					emit_signal("meleeAttack")
-					comboTimer.start(comboTime)
+					comboTimer.start(comboTime*.65)
 				elif comboCounter == 1:
 					attackTimer.start(max(weaponStats.attackSpeed * .75 * PlayerStats.attackSpeed, attackDuration))
 					emit_signal("meleeAttack")
@@ -51,9 +57,8 @@ func _physics_process(_delta):
 					attackTimer.start(max(weaponStats.attackSpeed * PlayerStats.attackSpeed, attackDuration))
 					emit_signal("stab")
 					comboTimer.stop()
-				
+					
 				self.comboCounter = (self.comboCounter + 1) % 3
-				
 				
 				var animLength = animationPlayer.current_animation_length
 				self.startMeleeAttack(animLength)
@@ -64,19 +69,41 @@ func _physics_process(_delta):
 				self.startRangedAttack(PlayerStats.strength)
 				
 				
-		elif Input.is_action_just_pressed("fire"):
-			animationPlayer.play("Parry")
+		elif Input.is_action_just_pressed("fire") and attackTimer.is_stopped():
+			emit_signal("parry")
+			self.startParry()
+			
 		elif Input.is_action_just_pressed("swap"):
 			self.comboCounter = 0
 			if weaponStats.name == meleeWeapon.name:
 				setWeapon(rangedWeapon)
 			else:
 				setWeapon(meleeWeapon)
+				
+func startParry():
+	weapon.flip_h = not weapon.flip_h
+	weapon.flip_v = not weapon.flip_v
+	var tweenLen = animationPlayer.current_animation_length*.5
+	comboCounter = 0
+	comboTimer.start(comboTime*.5)
+	attackTimer.start(max(weaponStats.attackSpeed * .4 * PlayerStats.attackSpeed, comboTime*.5))
+	weapon.set_deferred("rotation", restingRotation)
+	parryTween.interpolate_property(weapon, "position", Vector2(0, 5), parryPos, tweenLen*.5, Tween.TRANS_LINEAR, Tween.EASE_IN_OUT)
+	parryTween.interpolate_property(attackSignalPos, "position", attackSignalPos.position, parryPos - attackSignalPos.position, tweenLen*.5, Tween.TRANS_LINEAR, Tween.EASE_IN_OUT)
+	parryTween.interpolate_property(weapon, "position", parryPos, Vector2.ZERO, tweenLen, Tween.TRANS_LINEAR, Tween.EASE_IN_OUT, tweenLen)
+	parryTween.interpolate_property(attackSignalPos, "position", parryPos - attackSignalPos.position, attackSignalPos.position, tweenLen, Tween.TRANS_LINEAR, Tween.EASE_IN_OUT, tweenLen)
+	parryTween.start()
+
+func setWeapon(weaponStats : WeaponStats):
+	if comboTimer != null:
+		comboTimer.stop()
+		comboTimer.emit_signal("timeout")
+	.setWeapon(weaponStats)
 
 func setComboCounter(value):
 	if comboCounter < 2:
 		weaponHitbox.scaleDamage(1)
-		weaponHitbox.scaleKnockback(.5)
+		weaponHitbox.scaleKnockback(.25)
 	else:
 		weaponHitbox.scaleDamage(2)
 		weaponHitbox.scaleKnockback(1)
@@ -91,7 +118,6 @@ func _parried_weapon(area):
 
 func _on_WeaponTween_tween_completed():
 	self.show_behind_parent = not self.show_behind_parent
-	
 	
 	if comboCounter < 2:
 		backTween.interpolate_property(weapon, "position", weapon.position, Vector2(-20, 5), self.tweenLength, Tween.TRANS_LINEAR, Tween.EASE_IN_OUT)

@@ -3,20 +3,15 @@ extends KinematicBody2D
 var dirtFx = preload("res://FX/DirtSpread.tscn")
 var dashCloudFx = preload("res://FX/DashCloud.tscn")
 
-export(int) var startingMaxHealth = 5
-export(int) var startingLevel = 1
-export(int) var startingStr = 0
-export(int) var startingCon = 0
-export(int) var startingDex = 0
-export var startingSpeed : float = 200
-export var Acceleration : float = 2000
-export var startingFriction : float = 2000
+export var Acceleration : float = 1500
+export var startingFriction : float = 750
 export var dashSpeed := 500
 export var dashDelay := .75
 
 var velocity := Vector2.ZERO
 var knockback := Vector2.ZERO
 var dashVector := Vector2.ZERO
+var HitEffect = preload("res://FX/HitEffect.tscn")
 var floatingText = preload("res://UI/FloatingText.tscn")
 var Friction : float
 
@@ -37,14 +32,12 @@ onready var longSfx := $LongSFX
 func _ready():
 	Engine.set_target_fps(Engine.get_iterations_per_second())
 	
-	stats.startingMaxHealth = startingMaxHealth
-	stats.playerLevel = startingLevel
-	stats.currentXP = 0
-	stats.strength = startingStr
-	stats.con = startingCon
-	stats.dex = startingDex
-	stats.baseSpeed = startingSpeed
-	stats.maxSpeed = startingSpeed
+	PlayerStats.strength = 0
+	PlayerStats.con = 0
+	PlayerStats.dex = 0
+	PlayerStats.health = PlayerStats.maxHealth
+	PlayerStats.playerLevel = 1
+	PlayerStats.currentXP = 0
 	
 	Friction = startingFriction
 	stats.connect("noHealth", self, "_playerstats_no_health")
@@ -56,7 +49,7 @@ func _physics_process(delta):
 	knockback = knockback.move_toward(Vector2.ZERO, Friction * delta)
 	knockback = move_and_slide(knockback)
 	
-	dashVector = dashVector.move_toward(Vector2.ZERO, Friction * delta)
+	dashVector = dashVector.move_toward(Vector2.ZERO, Acceleration * delta)
 	dashVector = move_and_slide(dashVector)
 	
 	var inputVector = Vector2.ZERO
@@ -126,6 +119,10 @@ func _hurtbox_area_entered(area : Hitbox):
 	text.amount = area.damage
 	add_child(text)
 	
+	var hitEffect = HitEffect.instance()
+	hitEffect.init(area.getSourcePos())
+	add_child(hitEffect)
+	
 	stats.health -= area.damage
 	stats.currentXP += area.damage
 	camera.add_trauma(area.knockbackValue / 1000.0)
@@ -153,6 +150,10 @@ func _stab():
 	animationPlayer.play("Stab")
 	longSfx.play()
 	PlayerStats.resetMaxSpeed()
+	
+func _parry():
+	animationPlayer.play("Parry")
+	PlayerStats.maxSpeed *= .65
 	
 func _combo_finished():
 	PlayerStats.resetMaxSpeed()
