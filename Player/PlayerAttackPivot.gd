@@ -9,8 +9,6 @@ var comboCounter : int = 0 setget setComboCounter
 onready var animationPlayer := get_node("../AnimationPlayer")
 onready var parryHitbox := $WeaponHitbox/ParryHitbox
 onready var comboTimer := $ComboTimer
-onready var quickSfx := $QuickSFX
-onready var longSfx := $LongSFX
 
 # TODO: remove this cus it should be through inventory
 onready var rangedWeapon : WeaponStats = preload("res://Weapons/BaseBow.tres")
@@ -39,23 +37,20 @@ func _physics_process(_delta):
 					backTween.stop_all()
 					backTween.remove_all()
 				
+				var attackDuration = animationPlayer.get_animation("MeleeAttack").length
 				if comboCounter == 0:
 					# Minimum time between attacks is the time it takes to play the attack animation
-					attackTimer.start(max(weaponStats.attackSpeed * .4 * PlayerStats.attackSpeed, .1))
+					attackTimer.start(max(weaponStats.attackSpeed * .4 * PlayerStats.attackSpeed, attackDuration))
 					emit_signal("meleeAttack")
 					comboTimer.start(comboTime)
-					quickSfx.play()
 				elif comboCounter == 1:
-					attackTimer.start(max(weaponStats.attackSpeed * .75 * PlayerStats.attackSpeed, .1))
+					attackTimer.start(max(weaponStats.attackSpeed * .75 * PlayerStats.attackSpeed, attackDuration))
 					emit_signal("meleeAttack")
 					comboTimer.start(comboTime)
-					quickSfx.play()
 				else:
-					attackTimer.start(max(weaponStats.attackSpeed * PlayerStats.attackSpeed, .2))
+					attackTimer.start(max(weaponStats.attackSpeed * PlayerStats.attackSpeed, attackDuration))
 					emit_signal("stab")
 					comboTimer.stop()
-					longSfx.play()
-					
 				
 				self.comboCounter = (self.comboCounter + 1) % 3
 				
