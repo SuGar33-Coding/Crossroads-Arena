@@ -10,8 +10,6 @@ var parryPos : Vector2
 onready var animationPlayer := get_node("../AnimationPlayer")
 onready var parryHitbox := $WeaponHitbox/ParryHitbox
 onready var comboTimer := $ComboTimer
-onready var quickSfx := $QuickSFX
-onready var longSfx := $LongSFX
 onready var parryTween := $ParryTween
 
 # TODO: remove this cus it should be through inventory
@@ -51,7 +49,6 @@ func _physics_process(_delta):
 					attackTimer.start(max(weaponStats.attackSpeed * .4 * PlayerStats.attackSpeed, attackDuration))
 					emit_signal("meleeAttack")
 					comboTimer.start(comboTime*.65)
-					quickSfx.play()
 				elif comboCounter == 1:
 					attackTimer.start(max(weaponStats.attackSpeed * .75 * PlayerStats.attackSpeed, attackDuration))
 					emit_signal("meleeAttack")
@@ -60,7 +57,6 @@ func _physics_process(_delta):
 					attackTimer.start(max(weaponStats.attackSpeed * PlayerStats.attackSpeed, attackDuration))
 					emit_signal("stab")
 					comboTimer.stop()
-					longSfx.play()
 					
 				self.comboCounter = (self.comboCounter + 1) % 3
 				

@@ -356,10 +356,10 @@ position = Vector2( 0, 0 )
 rotation = -1.5708
 frame = 0
 
-[node name="ParryTween" type="Tween" parent="AttackPivot"]
-
 [node name="Weapon" parent="AttackPivot/WeaponRestingPos" index="0"]
 texture = ExtResource( 6 )
+
+[node name="ParryTween" type="Tween" parent="AttackPivot"]
 
 [node name="ComboTimer" type="Timer" parent="AttackPivot"]
 one_shot = true
