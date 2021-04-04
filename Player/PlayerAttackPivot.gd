@@ -5,6 +5,8 @@ export var comboTime : float = 1
 
 var comboCounter : int = 0 setget setComboCounter
 var parryPos : Vector2
+var chargingRanged : bool = false
+var chargingTime := 0.0
 
 # TODO: Make this a signal call
 onready var animationPlayer := get_node("../AnimationPlayer")
@@ -31,9 +33,12 @@ func _ready():
 	self.connect("parry", self.get_parent(), "_parry")
 	
 
-func _physics_process(_delta):
+func _physics_process(delta):
 	
 	self.lookAtTarget(get_global_mouse_position())
+	
+	if chargingRanged:
+		chargingTime += delta
 	
 	if not animationPlayer.is_playing():
 		if Input.is_action_just_pressed("attack") and attackTimer.is_stopped():
@@ -64,11 +69,18 @@ func _physics_process(_delta):
 				self.startMeleeAttack(animLength)
 
 			else:
-				attackTimer.start(weaponStats.attackSpeed * PlayerStats.attackSpeed)
-				# Ranged Weapon
-				self.startRangedAttack(PlayerStats.strength)
+				# Ranged weapon, enter the pull back state
+				PlayerStats.maxSpeed *= .5
+				chargingRanged = true
+				chargingTime = 0.0
 				
-				
+		elif Input.is_action_just_released("attack") and chargingRanged and weaponStats.weaponType == WeaponStats.WeaponType.RANGED:
+			chargingRanged = false
+			PlayerStats.resetMaxSpeed()
+			# To measure accuracy, we find what portion of the attack speed time they were off
+			var atkSpeed = max(weaponStats.attackSpeed * PlayerStats.attackSpeed, .5)
+			self.startRangedAttack(PlayerStats.strength, abs(chargingTime - atkSpeed)/atkSpeed)
+			
 		elif Input.is_action_just_pressed("fire") and weaponStats.weaponType == WeaponStats.WeaponType.MELEE and attackTimer.is_stopped():
 			emit_signal("parry")
 			self.startParry()

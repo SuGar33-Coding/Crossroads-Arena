@@ -87,10 +87,13 @@ func playAttackSignal(windUpTime: float, shading: bool = true):
 		weaponMat.set_shader_param("frequency", 1.0 / windUpTime)
 		weaponMat.set_shader_param("active", true)
 
-		
-func startRangedAttack(sourceStr := 0):
+# Starts a ranged attack, creating a projectile in the given direction
+# Accuracy measures how close the user was to getting a perfectly timed attack
+# By default (for NPCs) this will be the threshold at which you do normal damage
+# Projectile speed also scales with accuracy
+func startRangedAttack(sourceStr := 0, accuracy := 1.0):
 	var rangedProjectile = RangedProjectile.instance()
-	rangedProjectile.init(weaponStats, source, sourceStr)
+	rangedProjectile.init(weaponStats, source, sourceStr, accuracy)
 	
 	var world = get_tree().current_scene
 	# Have to set it before you add it as a child otherwise the room area's think you are exiting them

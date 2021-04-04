@@ -7,14 +7,18 @@ var speed
 var velocity := Vector2.ZERO
 var weaponStats : WeaponStats
 var source
+var accuracy : float
 var userStr : int
+var HitEffect = preload("res://FX/HitEffect.tscn")
 
 onready var weaponHitbox := $WeaponHitbox
 onready var sprite := $Sprite
+onready var collision := $CollisionShape2D
 
-func init(weaponStats: WeaponStats, source, sourceStr := 0):
+func init(weaponStats: WeaponStats, source, sourceStr: int, acc: float):
 	self.weaponStats = weaponStats
 	self.source = source
+	self.accuracy = acc
 	
 	# Ranged stuff scales less with strength
 	self.userStr = sourceStr * 3/4
@@ -24,6 +28,8 @@ func init(weaponStats: WeaponStats, source, sourceStr := 0):
 func _ready():
 	weaponHitbox.setWeapon(weaponStats)
 	weaponHitbox.setSource(source, userStr)
+	
+	weaponHitbox.scaleDamage(1/accuracy)
 	
 	speed = weaponStats.projectileSpeed
 	
@@ -36,7 +42,7 @@ func _physics_process(delta):
 	var move = move_and_collide(velocity * delta)
 	if move != null:
 		# Kills if runs into a wall
-		self.queue_free()
+		self.killSelf()
 
 func fire(startingPosition : Vector2, startingRotation : float):
 	
@@ -47,6 +53,15 @@ func fire(startingPosition : Vector2, startingRotation : float):
 	self.global_position = startingPosition
 	self.global_rotation = startingRotation
 	velocity =  Vector2(1,0).rotated(self.global_rotation) * speed
+	
+func killSelf():
+	var hitEffect = HitEffect.instance()
+	hitEffect.global_position = global_position
+	hitEffect.init(global_position + velocity.normalized() * self.collision.shape.height)
+	
+	var world = get_tree().current_scene
+	world.add_child(hitEffect)
+	queue_free()
 
-func _area_entered(_area):
+func _area_entered(area):
 	queue_free()
