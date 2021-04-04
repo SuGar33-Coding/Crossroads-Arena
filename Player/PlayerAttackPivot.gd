@@ -85,8 +85,8 @@ func startParry():
 	weapon.flip_v = not weapon.flip_v
 	var tweenLen = animationPlayer.current_animation_length*.5
 	comboCounter = 0
-	comboTimer.start(comboTime*.75)
-	attackTimer.start(max(weaponStats.attackSpeed * .4 * PlayerStats.attackSpeed, comboTime*.75))
+	comboTimer.start(comboTime*.5)
+	attackTimer.start(max(weaponStats.attackSpeed * .4 * PlayerStats.attackSpeed, comboTime*.5))
 	weapon.set_deferred("rotation", restingRotation)
 	parryTween.interpolate_property(weapon, "position", Vector2(0, 5), parryPos, tweenLen*.5, Tween.TRANS_LINEAR, Tween.EASE_IN_OUT)
 	parryTween.interpolate_property(attackSignalPos, "position", attackSignalPos.position, parryPos - attackSignalPos.position, tweenLen*.5, Tween.TRANS_LINEAR, Tween.EASE_IN_OUT)

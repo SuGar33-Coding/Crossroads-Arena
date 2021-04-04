@@ -127,6 +127,7 @@ func _weapon_parried(area : WeaponHitbox):
 	
 func _stats_no_health():
 	state = State.STUN
+	animationPlayer.playback_speed = 1
 	animationPlayer.play("Death")
 
 func _change_direction():

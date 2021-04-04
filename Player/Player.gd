@@ -3,14 +3,15 @@ extends KinematicBody2D
 var dirtFx = preload("res://FX/DirtSpread.tscn")
 var dashCloudFx = preload("res://FX/DashCloud.tscn")
 
-export var Acceleration : float = 2000
-export var startingFriction : float = 2000
+export var Acceleration : float = 1500
+export var startingFriction : float = 750
 export var dashSpeed := 500
 export var dashDelay := .75
 
 var velocity := Vector2.ZERO
 var knockback := Vector2.ZERO
 var dashVector := Vector2.ZERO
+var HitEffect = preload("res://FX/HitEffect.tscn")
 var floatingText = preload("res://UI/FloatingText.tscn")
 var Friction : float
 
@@ -48,7 +49,7 @@ func _physics_process(delta):
 	knockback = knockback.move_toward(Vector2.ZERO, Friction * delta)
 	knockback = move_and_slide(knockback)
 	
-	dashVector = dashVector.move_toward(Vector2.ZERO, Friction * delta)
+	dashVector = dashVector.move_toward(Vector2.ZERO, Acceleration * delta)
 	dashVector = move_and_slide(dashVector)
 	
 	var inputVector = Vector2.ZERO
@@ -117,6 +118,10 @@ func _hurtbox_area_entered(area : Hitbox):
 	var text = floatingText.instance()
 	text.amount = area.damage
 	add_child(text)
+	
+	var hitEffect = HitEffect.instance()
+	hitEffect.init(area.getSourcePos())
+	add_child(hitEffect)
 	
 	stats.health -= area.damage
 	stats.currentXP += area.damage
