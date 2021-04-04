@@ -51,7 +51,7 @@ func _physics_process(_delta):
 					comboTimer.start(comboTime)
 					quickSfx.play()
 				else:
-					attackTimer.start(max(weaponStats.attackSpeed * PlayerStats.attackSpeed, .1))
+					attackTimer.start(max(weaponStats.attackSpeed * PlayerStats.attackSpeed, .2))
 					emit_signal("stab")
 					comboTimer.stop()
 					longSfx.play()
