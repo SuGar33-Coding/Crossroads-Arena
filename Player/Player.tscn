@@ -353,10 +353,14 @@ collision_mask = 32
 
 [node name="Swipe" parent="AttackPivot" index="1"]
 position = Vector2( 0, 0 )
+<<<<<<< HEAD
 rotation = -1.5708
 frame = 0
 
 [node name="ParryTween" type="Tween" parent="AttackPivot"]
+=======
+frame = 0
+>>>>>>> 54996443229fd9d5e02e036431716745dcf06b4c
 
 [node name="Weapon" parent="AttackPivot/WeaponRestingPos" index="0"]
 texture = ExtResource( 6 )
@@ -364,12 +368,14 @@ texture = ExtResource( 6 )
 [node name="ComboTimer" type="Timer" parent="AttackPivot"]
 one_shot = true
 
-[node name="QuickSFX" type="AudioStreamPlayer2D" parent="AttackPivot"]
+[node name="QuickSFX" type="AudioStreamPlayer2D" parent="."]
+position = Vector2( 0, -5 )
 stream = ExtResource( 10 )
 volume_db = 7.0
 bus = "AttackSFX"
 
-[node name="LongSFX" type="AudioStreamPlayer2D" parent="AttackPivot"]
+[node name="LongSFX" type="AudioStreamPlayer2D" parent="."]
+position = Vector2( 0, -5 )
 stream = ExtResource( 9 )
 volume_db = -8.577
 attenuation = 0.00276214

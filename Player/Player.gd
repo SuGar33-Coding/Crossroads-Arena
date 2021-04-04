@@ -25,6 +25,8 @@ onready var movementAnimation := $MovementAnimation
 onready var animationPlayer := $AnimationPlayer
 onready var footstep1 := $Footstep1
 onready var footstep2 := $Footstep2
+onready var quickSfx := $QuickSFX
+onready var longSfx := $LongSFX
 
 func _ready():
 	Engine.set_target_fps(Engine.get_iterations_per_second())
@@ -136,10 +138,12 @@ func _playerstats_no_health():
 	
 func _melee_attack():
 	animationPlayer.play("MeleeAttack")
+	quickSfx.play()
 	PlayerStats.maxSpeed *= .65
 	
 func _stab():
 	animationPlayer.play("Stab")
+	longSfx.play()
 	PlayerStats.resetMaxSpeed()
 	
 func _parry():
