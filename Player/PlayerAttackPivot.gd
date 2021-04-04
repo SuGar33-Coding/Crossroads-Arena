@@ -69,7 +69,7 @@ func _physics_process(_delta):
 				self.startRangedAttack(PlayerStats.strength)
 				
 				
-		elif Input.is_action_just_pressed("fire") and attackTimer.is_stopped():
+		elif Input.is_action_just_pressed("fire") and weaponStats.weaponType == WeaponStats.WeaponType.MELEE and attackTimer.is_stopped():
 			emit_signal("parry")
 			self.startParry()
 			
