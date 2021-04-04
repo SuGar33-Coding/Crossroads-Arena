@@ -1,0 +1,21 @@
+[remap]
+
+importer="wav"
+type="AudioStreamSample"
+path="res://.import/Parry1.wav-8d51223171c1f9c6c261b68d07fbc961.sample"
+
+[deps]
+
+source_file="res://Audio/Parry1.wav"
+dest_files=[ "res://.import/Parry1.wav-8d51223171c1f9c6c261b68d07fbc961.sample" ]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop=false
+compress/mode=0
