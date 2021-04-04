@@ -6,6 +6,7 @@ func getMovementVelocity(selfNode: KinematicBody2D, targetPos: Vector2, delta: f
 	
 	var movementDir = getMovementDirection(selfNode, targetPos, delta)
 	
+	# Only move in one burst when the timer is stopped
 	var mvmtTimer : Timer = selfNode.movementTimer
 	if(mvmtTimer.is_stopped()):
 		mvmtTimer.start(selfNode.movementMaxTime)
