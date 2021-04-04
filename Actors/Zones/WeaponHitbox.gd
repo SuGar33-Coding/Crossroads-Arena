@@ -12,6 +12,7 @@ var weaponStats: WeaponStats
 var weaponDamage: int
 var baseDamage : int = 1 setget setBaseDamage
 var baseKnockback : float setget setBaseKnockback
+var weaponKnockback : float
 
 onready var collision := $WeaponCollision
 onready var parryCollision := $ParryHitbox/ParryCollision
@@ -27,7 +28,7 @@ func setSource(newSource, sourceStr := 0):
 func setUserStr(value):
 	userStr = value
 	self.baseDamage = self.weaponDamage *  pow(PlayerStats.strRatio, self.userStr)
-	self.baseKnockback = self.baseKnockback * pow(strKnockbackRatio, self.userStr)
+	self.baseKnockback = self.weaponKnockback * pow(strKnockbackRatio, self.userStr)
 
 # Anytime base values are affected, current damage and knockback are reset
 func setBaseDamage(value):
@@ -47,6 +48,7 @@ func getSourcePos() -> Vector2:
 func setWeapon(weapon : WeaponStats):
 	weaponStats = weapon
 	weaponDamage = weapon.damage
+	weaponKnockback = weapon.knockbackValue
 	self.baseDamage = self.weaponDamage *  pow(PlayerStats.strRatio, self.userStr)
 	self.baseKnockback = weaponStats.knockbackValue * pow(strKnockbackRatio, self.userStr)
 		
@@ -71,10 +73,10 @@ func setWeapon(weapon : WeaponStats):
 # This might cause issues with like forgetting to reset value after combo
 # Should really only be used for a combo scaling
 func scaleDamage(scalar := 1.0):
-	self.damage = float(self.baseDamage) * scalar
+	self.damage = float(baseDamage) * scalar
 	
 func scaleKnockback(scalar := 1.0):
-	self.knockbackValue = self.baseKnockback * scalar
+	self.knockbackValue = baseKnockback * scalar
 
 # Let everyone know that you've been parried
 func parry(area : WeaponHitbox):

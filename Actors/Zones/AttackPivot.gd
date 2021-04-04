@@ -76,15 +76,16 @@ func startMeleeAttack(animLength: float):
 		
 		tween.start()
 		
-func playAttackSignal(windUpTime: float):
+func playAttackSignal(windUpTime: float, shading: bool = true):
 	var atkSignal : Particles2D = AttackSignal.instance()
 	atkSignal.position = attackSignalPos.position
 	restingPos.add_child(atkSignal)
 	atkSignal.set_deferred("emitting", true)
 	
 	# Activate the sheen shader
-	weaponMat.set_shader_param("frequency", 1.0 / windUpTime)
-	weaponMat.set_shader_param("active", true)
+	if shading:
+		weaponMat.set_shader_param("frequency", 1.0 / windUpTime)
+		weaponMat.set_shader_param("active", true)
 
 		
 func startRangedAttack(sourceStr := 0):

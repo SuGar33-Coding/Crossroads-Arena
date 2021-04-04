@@ -142,5 +142,9 @@ func _stab():
 	animationPlayer.play("Stab")
 	PlayerStats.resetMaxSpeed()
 	
+func _parry():
+	animationPlayer.play("Parry")
+	PlayerStats.maxSpeed *= .65
+	
 func _combo_finished():
 	PlayerStats.resetMaxSpeed()
