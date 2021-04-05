@@ -6,6 +6,11 @@ class_name AttackPivot
 const RangedProjectile = preload("res://Weapons/RangedProjectile.tscn")
 const AttackSignal = preload("res://FX/AttackSignal.tscn")
 
+enum MeleeAttackType {
+	QUICK,
+	LONG
+}
+
 export var swingDegrees := 110.0
 export(Array, Resource) var weaponStatsResources : Array
 
@@ -70,13 +75,17 @@ func setUserStr(sourceStr):
 	userStr = sourceStr
 	weaponHitbox.userStr = sourceStr
 
-func startMeleeAttack(animLength: float):
+func startMeleeAttack(animLength: float, type = MeleeAttackType.QUICK):
 	# Start sheen shader
 	weaponMat.set_shader_param("active", false)
 	
 	# Play swoosh
-	# TODO: Have type of swing be handled in here (short vs long)
-	quickSfx.play()
+	match type:
+		MeleeAttackType.QUICK:
+			quickSfx.play()
+		MeleeAttackType.LONG:
+			longSfx.play()
+	
 	
 	if weaponStats.weaponType == WeaponStats.WeaponType.MELEE:
 		self.tweenLength = animLength/2

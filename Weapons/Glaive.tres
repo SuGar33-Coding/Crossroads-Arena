@@ -1,7 +1,9 @@
-[gd_resource type="Resource" load_steps=3 format=2]
+[gd_resource type="Resource" load_steps=5 format=2]
 
 [ext_resource path="res://Weapons/WeaponStats.gd" type="Script" id=1]
 [ext_resource path="res://Assets/WeaponAssets/Item__12.png" type="Texture" id=2]
+[ext_resource path="res://Audio/Swipe2.wav" type="AudioStream" id=3]
+[ext_resource path="res://Audio/mixkit-dagger-woosh-1487.wav" type="AudioStream" id=4]
 
 [resource]
 script = ExtResource( 1 )
@@ -13,5 +15,7 @@ radius = 20.0
 length = 30.0
 attackSpeed = 0.9
 texture = ExtResource( 2 )
+quickAttackSFX = ExtResource( 3 )
+longAttackSFX = ExtResource( 4 )
 projectileSpeed = 1000.0
 projectileRange = 350.0
