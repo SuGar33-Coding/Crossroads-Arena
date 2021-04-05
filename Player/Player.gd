@@ -69,6 +69,7 @@ func _physics_process(delta):
 		if !movementAnimation.is_playing():
 			movementAnimation.play("Walking")
 	else:
+		movementAnimation.play("Idle")
 		velocity = velocity.move_toward(Vector2.ZERO, Friction * delta)
 
 	# Make sprite turn towards mouse
