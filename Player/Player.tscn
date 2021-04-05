@@ -1,4 +1,4 @@
-[gd_scene load_steps=21 format=2]
+[gd_scene load_steps=19 format=2]
 
 [ext_resource path="res://Assets/CharacterAssets/knight 24x24 v2 walk.png" type="Texture" id=1]
 [ext_resource path="res://Player/Player.gd" type="Script" id=2]
@@ -8,8 +8,6 @@
 [ext_resource path="res://Assets/WeaponAssets/Item__12.png" type="Texture" id=6]
 [ext_resource path="res://World/PlayerCamera.tscn" type="PackedScene" id=7]
 [ext_resource path="res://UI/PlayerUI.tscn" type="PackedScene" id=8]
-[ext_resource path="res://Audio/mixkit-dagger-woosh-1487.wav" type="AudioStream" id=9]
-[ext_resource path="res://Audio/Stab.wav" type="AudioStream" id=10]
 [ext_resource path="res://Audio/Footstep2.wav" type="AudioStream" id=11]
 [ext_resource path="res://Audio/Footstep1.wav" type="AudioStream" id=12]
 
@@ -353,7 +351,6 @@ collision_mask = 32
 
 [node name="Swipe" parent="AttackPivot" index="1"]
 position = Vector2( 0, 0 )
-rotation = -1.5708
 frame = 0
 
 [node name="Weapon" parent="AttackPivot/WeaponRestingPos" index="0"]
@@ -363,19 +360,6 @@ texture = ExtResource( 6 )
 
 [node name="ComboTimer" type="Timer" parent="AttackPivot"]
 one_shot = true
-
-[node name="QuickSFX" type="AudioStreamPlayer2D" parent="."]
-position = Vector2( 0, -5 )
-stream = ExtResource( 10 )
-volume_db = 7.0
-bus = "AttackSFX"
-
-[node name="LongSFX" type="AudioStreamPlayer2D" parent="."]
-position = Vector2( 0, -5 )
-stream = ExtResource( 9 )
-volume_db = -8.577
-attenuation = 0.00276214
-bus = "AttackSFX"
 
 [node name="Hurtbox" parent="." instance=ExtResource( 4 )]
 collision_layer = 16

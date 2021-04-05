@@ -5,7 +5,7 @@
 
 [resource]
 script = ExtResource( 1 )
-name = "Base Sword"
+name = "Peen"
 weaponType = 0
 damage = 10
 knockbackValue = 690
