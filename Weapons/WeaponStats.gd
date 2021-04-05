@@ -23,5 +23,5 @@ export var longAttackSFX: AudioStream
 
 # Ranged Weapon stuff
 export var projectileTexture : Texture
-export var projectileSpeed : float = 1000
+export var projectileSpeed : float = 1500
 export var projectileRange : float = 350

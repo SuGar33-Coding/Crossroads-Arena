@@ -17,5 +17,5 @@ attackSpeed = 0.7
 texture = ExtResource( 2 )
 quickAttackSFX = ExtResource( 4 )
 longAttackSFX = ExtResource( 3 )
-projectileSpeed = 1000.0
+projectileSpeed = 1500.0
 projectileRange = 350.0

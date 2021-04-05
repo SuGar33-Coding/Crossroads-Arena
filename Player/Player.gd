@@ -57,10 +57,12 @@ func _physics_process(delta):
 	inputVector = inputVector.normalized()
 	
 	if Input.is_action_just_pressed("dash") and dashTimer.is_stopped():
-		dashVector = inputVector * dashSpeed
-		dashTimer.start(dashDelay* pow(PlayerStats.dexDashRatio, PlayerStats.dex))
-		movementAnimation.play("Dashing")
-		PlayerStats.resetMaxSpeed()
+		# Cannot dash while aiming
+		if not attackPivot.chargingRanged:
+			dashVector = inputVector * dashSpeed
+			dashTimer.start(dashDelay* pow(PlayerStats.dexDashRatio, PlayerStats.dex))
+			movementAnimation.play("Dashing")
+			PlayerStats.resetMaxSpeed()
 	elif inputVector != Vector2.ZERO:
 		velocity = velocity.move_toward(inputVector * stats.maxSpeed, Acceleration * delta)
 		

@@ -39,6 +39,7 @@ onready var nav2d: Navigation2D = get_node("../../../Navigation2D")
 onready var pathfindTimer: Timer = $PathfindTimer
 onready var movementTimer := $MovementTimer
 onready var damagedSfx := $DamagedSFX
+onready var collision := $CollisionShape2D
 
 func _ready():
 	self.add_to_group(movementGroup)
@@ -148,7 +149,8 @@ func findClosestAlly():
 func sightCheck() -> bool:
 	if target != null:
 		var spaceState := get_world_2d().direct_space_state
-		var rayCollision := spaceState.intersect_ray(global_position, target.global_position, [self], collision_mask)
+		# Cast ray from collision box since that is the thing that needs to be routed
+		var rayCollision := spaceState.intersect_ray(collision.global_position, target.global_position, [self], collision_mask)
 		
 		return rayCollision.empty()
 	

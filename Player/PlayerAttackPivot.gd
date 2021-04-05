@@ -74,6 +74,7 @@ func _physics_process(delta):
 
 			else:
 				# Ranged weapon, enter the pull back state
+				attackTimer.start(.5)
 				PlayerStats.maxSpeed *= .5
 				chargingRanged = true
 				chargingTime = 0.0

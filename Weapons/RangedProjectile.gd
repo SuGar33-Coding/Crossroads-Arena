@@ -18,6 +18,7 @@ onready var collision := $CollisionShape2D
 func init(weaponStats: WeaponStats, source, sourceStr: int, acc: float):
 	self.weaponStats = weaponStats
 	self.source = source
+	# Accuracy is on the scale of total attack time
 	self.accuracy = acc
 	
 	# Ranged stuff scales less with strength
@@ -29,7 +30,16 @@ func _ready():
 	weaponHitbox.setWeapon(weaponStats)
 	weaponHitbox.setSource(source, userStr)
 	
-	weaponHitbox.scaleDamage(1/accuracy)
+	if accuracy < .1:
+		weaponHitbox.scaleDamage(2)
+	elif accuracy < .25:
+		weaponHitbox.scaleDamage(1.5)
+	elif accuracy < .5:
+		weaponHitbox.scaleDamage(1)
+	elif accuracy < .75:
+		weaponHitbox.scaleDamage(.5)
+	else:
+		weaponHitbox.scaleDamage(.1)
 	
 	speed = weaponStats.projectileSpeed
 	

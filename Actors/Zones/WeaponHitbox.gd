@@ -73,7 +73,7 @@ func setWeapon(weapon : WeaponStats):
 # This might cause issues with like forgetting to reset value after combo
 # Should really only be used for a combo scaling
 func scaleDamage(scalar := 1.0):
-	self.damage = float(baseDamage) * scalar
+	self.damage = max(float(baseDamage) * scalar, 1)
 	
 func scaleKnockback(scalar := 1.0):
 	self.knockbackValue = baseKnockback * scalar
