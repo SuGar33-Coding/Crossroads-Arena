@@ -6,6 +6,11 @@ class_name AttackPivot
 const RangedProjectile = preload("res://Weapons/RangedProjectile.tscn")
 const AttackSignal = preload("res://FX/AttackSignal.tscn")
 
+enum MeleeAttackType {
+	QUICK,
+	LONG
+}
+
 export var swingDegrees := 110.0
 export(Array, Resource) var weaponStatsResources : Array
 
@@ -20,6 +25,8 @@ onready var restingRotation = weapon.rotation
 onready var weaponStats : WeaponStats
 onready var attackTimer := $AttackTimer
 onready var attackSignalPos := $WeaponRestingPos/AttackSignalPos
+onready var quickSfx: AudioStreamPlayer2D = $QuickSFX
+onready var longSfx: AudioStreamPlayer2D = $LongSFX
 
 # TODO: Probably change these?
 onready var meleeRestingCoord : Vector2 = restingPos.position
@@ -40,11 +47,16 @@ func _ready():
 	weaponStats = weaponStatsResources[randi() % weaponStatsResources.size()]
 	setWeapon(weaponStats)
 	
+	# Set the weapon's SFX
+	quickSfx.stream = weaponStats.quickAttackSFX
+	longSfx.stream = weaponStats.longAttackSFX
+	
 	tween.connect("tween_all_completed", self, "_on_WeaponTween_tween_completed")
 	
 	# Get a local copy of weapon mat
 	weapon.material = weapon.material.duplicate()
 	weaponMat = weapon.material
+	
 
 func _process(delta):
 	# If the sheen shader is active, increment it from the beginning
@@ -63,8 +75,17 @@ func setUserStr(sourceStr):
 	userStr = sourceStr
 	weaponHitbox.userStr = sourceStr
 
-func startMeleeAttack(animLength: float):
+func startMeleeAttack(animLength: float, type = MeleeAttackType.QUICK):
+	# Start sheen shader
 	weaponMat.set_shader_param("active", false)
+	
+	# Play swoosh
+	match type:
+		MeleeAttackType.QUICK:
+			quickSfx.play()
+		MeleeAttackType.LONG:
+			longSfx.play()
+	
 	
 	if weaponStats.weaponType == WeaponStats.WeaponType.MELEE:
 		self.tweenLength = animLength/2

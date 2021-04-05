@@ -1,0 +1,21 @@
+[remap]
+
+importer="wav"
+type="AudioStreamSample"
+path="res://.import/Scratch_003.wav-17f1a3b99a21496317c52bb6489815d2.sample"
+
+[deps]
+
+source_file="res://Audio/Sessions/Swipe2/Swipe2_Recorded/Scratch_003.wav"
+dest_files=[ "res://.import/Scratch_003.wav-17f1a3b99a21496317c52bb6489815d2.sample" ]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop=false
+compress/mode=0
