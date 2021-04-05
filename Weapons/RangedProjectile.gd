@@ -18,7 +18,6 @@ onready var collision := $CollisionShape2D
 func init(weaponStats: WeaponStats, source, sourceStr: int, acc: float):
 	self.weaponStats = weaponStats
 	self.source = source
-	# Accuracy is on the scale of total attack time
 	self.accuracy = acc
 	
 	# Ranged stuff scales less with strength
@@ -30,16 +29,31 @@ func _ready():
 	weaponHitbox.setWeapon(weaponStats)
 	weaponHitbox.setSource(source, userStr)
 	
-	if accuracy < .1:
-		weaponHitbox.scaleDamage(2)
-	elif accuracy < .25:
-		weaponHitbox.scaleDamage(1.5)
-	elif accuracy < .5:
-		weaponHitbox.scaleDamage(1)
-	elif accuracy < .75:
-		weaponHitbox.scaleDamage(.5)
-	else:
-		weaponHitbox.scaleDamage(.1)
+	print(accuracy)
+	
+	if accuracy >= 0:
+		if accuracy <= .1:
+			weaponHitbox.scaleDamage(2)
+		elif accuracy <= .2:
+			weaponHitbox.scaleDamage(1.5)
+		elif accuracy <= .5:
+			weaponHitbox.scaleDamage(1)
+		elif accuracy <= .75:
+			weaponHitbox.scaleDamage(.5)
+		else:
+			weaponHitbox.scaleDamage(.1)
+	else: 
+		# If negative, check portion of attackspeed that we were off
+		accuracy = abs(accuracy)/ (max(weaponStats.attackSpeed * PlayerStats.attackSpeed, .5))
+		if accuracy <= .1:
+			weaponHitbox.scaleDamage(1)
+		elif accuracy <= .25:
+			weaponHitbox.scaleDamage(.5)
+		else:
+			weaponHitbox.scaleDamage(.1)
+			
+	print(weaponHitbox.damage)
+	print()
 	
 	speed = weaponStats.projectileSpeed
 	

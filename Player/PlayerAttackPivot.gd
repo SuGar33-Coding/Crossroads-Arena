@@ -84,7 +84,7 @@ func _physics_process(delta):
 			PlayerStats.resetMaxSpeed()
 			# To measure accuracy, we find what portion of the attack speed time they were off
 			var atkSpeed = max(weaponStats.attackSpeed * PlayerStats.attackSpeed, .5)
-			self.startRangedAttack(PlayerStats.strength, abs(chargingTime - atkSpeed)/atkSpeed)
+			self.startRangedAttack(PlayerStats.strength, chargingTime - atkSpeed)
 			
 		elif Input.is_action_just_pressed("fire") and weaponStats.weaponType == WeaponStats.WeaponType.MELEE and attackTimer.is_stopped():
 			emit_signal("parry")
