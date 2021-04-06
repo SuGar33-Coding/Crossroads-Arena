@@ -2,11 +2,12 @@ extends Node
 
 class_name Stats
 
+export(Resource) var statsResource : Resource
 export(int) var baseHealth = 100
-export(int) var strength = 0 setget setStr
+var strength = 0 setget setStr
 # Can set con to negative in order to lower health of enemies, but 0 is 100hp
-export(int) var con = 0 setget setCon
-export(int) var dex = 0 setget setDex
+var con = 0 setget setCon
+var dex = 0 setget setDex
 
 var health : int = 100 setget setHealth, getHealth
 var maxHealth : int = 100 setget setMaxHealth, getMaxHealth
@@ -19,6 +20,10 @@ signal strChanged(value)
 signal dexChanged(value)
 
 func _ready():
+	if statsResource:
+		con = statsResource.con
+		strength = statsResource.strength
+		dex = statsResource.dex
 	maxHealth = baseHealth * pow(PlayerStats.conRatio, con)
 	health = maxHealth
 	
@@ -53,7 +58,7 @@ func setCon(value):
 	
 func setDex(value):
 	dex = value
-	self.attackSpeed = pow(1/PlayerStats.dexRatio, dex)
+	self.attackSpeed = pow(1/PlayerStats.dexAttackRatio, dex)
 	emit_signal("dexChanged", value)
 
 func _on_hurtbox_area_entered(_area):

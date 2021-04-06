@@ -112,7 +112,12 @@ _global_script_classes=[ {
 "base": "Node",
 "class": "Stats",
 "language": "GDScript",
-"path": "res://Stats.gd"
+"path": "res://Actors/Generic/Stats.gd"
+}, {
+"base": "Resource",
+"class": "StatsResource",
+"language": "GDScript",
+"path": "res://Actors/Generic/StatsResource.gd"
 }, {
 "base": "Movement",
 "class": "TestingSteering",
@@ -151,6 +156,7 @@ _global_script_class_icons={
 "Room": "",
 "RoomArea": "",
 "Stats": "",
+"StatsResource": "",
 "TestingSteering": "",
 "WeaponHitbox": "",
 "WeaponStats": ""
