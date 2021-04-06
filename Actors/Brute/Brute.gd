@@ -50,8 +50,8 @@ func willAttack() -> bool:
 		return false
 
 # TODO: Reimpliment stun shield while ground pounding/leaping
-#func willStun() -> bool:
-	#return not leaping
+func willStun() -> bool:
+	return not leaping
 
 func slowLeapSpeed():
 	LeapSpeed *= .1
