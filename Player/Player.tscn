@@ -315,7 +315,7 @@ tracks/3/keys = {
 }
 
 [sub_resource type="Animation" id=9]
-length = 0.8
+length = 0.6
 step = 0.05
 tracks/0/type = "method"
 tracks/0/path = NodePath(".")
@@ -324,7 +324,7 @@ tracks/0/loop_wrap = true
 tracks/0/imported = false
 tracks/0/enabled = true
 tracks/0/keys = {
-"times": PoolRealArray( 0.2, 0.6 ),
+"times": PoolRealArray( 0.15, 0.45 ),
 "transitions": PoolRealArray( 1, 1 ),
 "values": [ {
 "args": [  ],
@@ -341,7 +341,7 @@ tracks/1/loop_wrap = true
 tracks/1/imported = false
 tracks/1/enabled = true
 tracks/1/keys = {
-"times": PoolRealArray( 0, 0.2, 0.4, 0.6 ),
+"times": PoolRealArray( 0, 0.15, 0.3, 0.45 ),
 "transitions": PoolRealArray( 1, 1, 1, 1 ),
 "update": 1,
 "values": [ 1, 2, 3, 4 ]
@@ -353,7 +353,7 @@ tracks/2/loop_wrap = true
 tracks/2/imported = false
 tracks/2/enabled = true
 tracks/2/keys = {
-"times": PoolRealArray( 0.2, 0.6 ),
+"times": PoolRealArray( 0.15, 0.45 ),
 "transitions": PoolRealArray( 1, 1 ),
 "values": [ {
 "args": [ 1 ],
@@ -364,16 +364,16 @@ tracks/2/keys = {
 } ]
 }
 tracks/3/type = "value"
-tracks/3/path = NodePath("Sprite:rotation_degrees")
+tracks/3/path = NodePath("Sprite:position")
 tracks/3/interp = 1
 tracks/3/loop_wrap = true
 tracks/3/imported = false
 tracks/3/enabled = true
 tracks/3/keys = {
-"times": PoolRealArray( 0, 0.2, 0.6, 0.8 ),
-"transitions": PoolRealArray( 1, 1, 1, 1 ),
-"update": 0,
-"values": [ 0.0, 6.0, -6.0, 0.0 ]
+"times": PoolRealArray( 0, 0.15, 0.45 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 1,
+"values": [ Vector2( 1, -5 ), Vector2( 1, -6 ), Vector2( 1, -5 ) ]
 }
 
 [node name="Player" type="KinematicBody2D"]
@@ -386,9 +386,11 @@ rotation = 1.5708
 shape = SubResource( 1 )
 
 [node name="Sprite" type="Sprite" parent="."]
-position = Vector2( 1, -5 )
+position = Vector2( 1, -10 )
+rotation = 0.10472
 texture = ExtResource( 1 )
 hframes = 5
+frame = 2
 
 [node name="MainCamera" parent="." instance=ExtResource( 7 )]
 position = Vector2( 0, 0 )
@@ -403,7 +405,7 @@ collision_mask = 32
 
 [node name="Swipe" parent="AttackPivot" index="1"]
 position = Vector2( 0, 0 )
-rotation = -1.5708
+frame = 0
 
 [node name="Weapon" parent="AttackPivot/WeaponRestingPos" index="0"]
 texture = ExtResource( 6 )
