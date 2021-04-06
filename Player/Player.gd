@@ -31,7 +31,7 @@ func _ready():
 	Engine.set_target_fps(Engine.get_iterations_per_second())
 	
 	PlayerStats.strength = 0
-	PlayerStats.con = 20
+	PlayerStats.con = 0
 	PlayerStats.dex = 0
 	PlayerStats.health = PlayerStats.maxHealth
 	PlayerStats.playerLevel = 1
