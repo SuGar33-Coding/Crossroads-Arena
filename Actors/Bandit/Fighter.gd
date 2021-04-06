@@ -1,5 +1,7 @@
 extends NPC
 
+class_name Fighter
+
 var weaponStats : WeaponStats
 
 onready var detectionZone := $DetectionZone

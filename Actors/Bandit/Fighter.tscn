@@ -9,11 +9,11 @@
 [ext_resource path="res://Weapons/LongSword.tres" type="Resource" id=8]
 [ext_resource path="res://Weapons/Glaive.tres" type="Resource" id=9]
 
-[sub_resource type="Curve" id=9]
+[sub_resource type="Curve" id=1]
 _data = [ Vector2( 0, 1 ), 0.0, 0.0, 0, 0, Vector2( 1, 0.163636 ), 0.0, 0.0, 0, 0 ]
 
-[sub_resource type="CurveTexture" id=10]
-curve = SubResource( 9 )
+[sub_resource type="CurveTexture" id=2]
+curve = SubResource( 1 )
 
 [sub_resource type="ParticlesMaterial" id=3]
 emission_shape = 1
@@ -30,7 +30,7 @@ linear_accel = 1.0
 angle = 45.0
 angle_random = 1.0
 scale = 3.0
-scale_curve = SubResource( 10 )
+scale_curve = SubResource( 2 )
 color = Color( 0.627451, 0, 0, 1 )
 
 [sub_resource type="Animation" id=4]
