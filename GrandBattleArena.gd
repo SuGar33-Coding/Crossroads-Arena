@@ -24,7 +24,7 @@ func spawnEnemies():
 	for spawn in spawns.get_children():
 		if randi() % 3 != 0:
 			var newFighter
-			if randi() % 10 == 0:
+			if randi() % 5 == 0:
 				newFighter = Brute.instance()
 			else:
 				newFighter = Fighter.instance()
