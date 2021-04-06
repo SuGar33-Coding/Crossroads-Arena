@@ -34,7 +34,10 @@ func _ready():
 	
 	attackPivot.setUserStr(stats.strength)
 	stats.connect("strChanged", self, "_strength_changed")
-	
+
+func _physics_process(_delta):
+	if state == State.CHASE and velocity.length() > 0 and not animationPlayer.is_playing():
+		animationPlayer.play("Walk")
 	
 func lookAtTarget():
 	attackPivot.lookAtTarget(detectionZone.target.position)
@@ -46,15 +49,20 @@ func switchToChase() -> void:
 		target = newTarget
 	
 func switchToAttack():
+	animationPlayer.play("Idle")
 	if attackTimer.is_stopped():
 		.switchToAttack()
 		animationPlayer.playback_speed = 1
 		# TODO: Make this a more well defined ratio
 		attackTimer.start(weaponStats.attackSpeed * stats.attackSpeed * 2)
 		if weaponStats.weaponType == WeaponStats.WeaponType.MELEE:
-			animationPlayer.play("MeleeAttack")
+			animationPlayer.play("MeleeWindup")
 		else:
 			animationPlayer.play("RangedAttack")
+			
+func switchToStun():
+	.switchToStun()
+	animationPlayer.play("Idle")
 
 func willIdle() -> bool:
 	return !detectionZone.hasTarget()
@@ -107,6 +115,9 @@ func findClosestAlly():
 	if minDist >= 1000:
 		closestAlly = null
 
+func playMeleeAttack():
+	animationPlayer.play("MeleeAttack")
+
 func _hurtbox_area_entered(area: Hitbox):
 	._hurtbox_area_entered(area)
 	# Only play damaged if we're not dead
@@ -121,14 +132,14 @@ func _hurtbox_area_entered(area: Hitbox):
 
 # Handle actor's weapon being parried by player
 func _weapon_parried(area : WeaponHitbox):
-	state = State.STUN
+	self.switchToStun()
 	knockback = area.getKnockbackVector(self.global_position)
 	animationPlayer.stop(true)
 	animationPlayer.playback_speed = .3
 	animationPlayer.play("Damaged")
 	
 func _stats_no_health():
-	state = State.STUN
+	self.switchToStun()
 	animationPlayer.playback_speed = 1
 	animationPlayer.play("Death")
 

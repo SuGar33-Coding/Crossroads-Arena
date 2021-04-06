@@ -386,11 +386,11 @@ rotation = 1.5708
 shape = SubResource( 1 )
 
 [node name="Sprite" type="Sprite" parent="."]
-position = Vector2( 1, -10 )
+position = Vector2( 1, -5 )
 rotation = 0.10472
 texture = ExtResource( 1 )
 hframes = 5
-frame = 2
+frame = 1
 
 [node name="MainCamera" parent="." instance=ExtResource( 7 )]
 position = Vector2( 0, 0 )

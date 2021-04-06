@@ -67,7 +67,7 @@ func getAvoidanceDir(selfNode: KinematicBody2D) -> Vector2:
 func getAvoidanceWeight(selfNode: NPC) -> float:
 	var ally : KinematicBody2D = selfNode.closestAlly
 	if ally != null:
-		return clamp((avoidanceRadius) / (ally.global_position - selfNode.global_position).length(), 0, 1)
+		return clamp((avoidanceRadius) / max((ally.global_position - selfNode.global_position).length(), 1), 0, 1)
 	else:
 		return 0.0
 	

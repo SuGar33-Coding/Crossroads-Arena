@@ -72,10 +72,10 @@ func _physics_process(delta):
 				if target != null: # TODO: look into this fix some more
 					isEnemyVisible = sightCheck()
 					if nav2d != null and pathfindTimer.is_stopped(): # Last check is to make it not refresh if it doesn't use it
-						path = nav2d.get_simple_path(global_position, target.global_position, false)
+						path = nav2d.get_simple_path(global_position, self.getTargetPos(), false)
 						pathfindTimer.start(pathfindTime)
 						pathIdx = 0
-					velocity = movement.getMovementVelocity(self, target.global_position, delta)
+					velocity = movement.getMovementVelocity(self, self.getTargetPos(), delta)
 		State.ATTACK:
 			velocity = movement.getIdleVelocity(self, delta)
 		State.STUN:
@@ -121,6 +121,9 @@ func willChase() -> bool:
 func willAttack() -> bool:
 	return false
 	
+func willStun() -> bool:
+	return true
+	
 func switchToIdle():
 	self.state = State.IDLE
 	
@@ -129,6 +132,12 @@ func switchToChase():
 	
 func switchToAttack():
 	self.state = State.ATTACK
+	
+func switchToStun():
+	self.state = State.STUN
+	
+func getTargetPos():
+	return target.global_position
 	
 func willFlipLeft() -> bool:
 	return velocity.x < 0
@@ -167,7 +176,9 @@ func _hurtbox_area_entered(area : Hitbox):
 	
 	if area.fromPlayer:
 		PlayerStats.currentXP += min(stats.health, area.damage)
-	state = State.STUN
+	
+	if willStun():
+		switchToStun()
 	stats.health -= area.damage
 	knockback = area.getKnockbackVector(self.global_position)
 	

@@ -10,7 +10,7 @@ func getDirectToTarget(selfNode: KinematicBody2D, targetPos: Vector2):
 
 func getMovementVelocity(selfNode: KinematicBody2D, targetPos: Vector2, delta: float):
 	
-	if selfNode.leapable:
+	if selfNode.leaping:
 		var toTargetDir = getDirectToTarget(selfNode, targetPos)
 		
 		var desiredVelocity = toTargetDir * selfNode.LeapSpeed
