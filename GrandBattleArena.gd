@@ -6,6 +6,7 @@ var Brute = preload("res://Actors/Brute/Brute.tscn")
 
 onready var people = $YSort/People
 onready var spawns = $Spawns
+onready var camera = $YSort/Player/MainCamera
 
 func _ready():
 	randomize()
@@ -19,12 +20,18 @@ func _physics_process(_delta):
 	elif Input.is_action_just_pressed("toggleFullscreen"):
 		OS.set_window_fullscreen(!OS.window_fullscreen)
 		OS.set_borderless_window(!OS.window_borderless)
+	elif Input.is_action_just_released("wheeldown"):
+		camera.zoom.x += .25
+		camera.zoom.y += .25
+		camera.topLeft.position = Vector2(-1000000000, -1000000000)
+		camera.bottomRight.position = Vector2(100000000, 100000000)
+		camera.setLimitsToPositions()
 
 func spawnEnemies():
 	for spawn in spawns.get_children():
 		if randi() % 3 != 0:
 			var newFighter
-			if randi() % 5 == 0:
+			if randi() % 1 == 0:
 				newFighter = Brute.instance()
 			else:
 				newFighter = Fighter.instance()

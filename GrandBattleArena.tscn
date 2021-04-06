@@ -281,6 +281,7 @@ position = Vector2( 704, 264 )
 position = Vector2( 1072, 1128 )
 
 [node name="CanvasLayer" parent="." instance=ExtResource( 8 )]
+layer = 2
 
 [editable path="YSort/Player"]
 
