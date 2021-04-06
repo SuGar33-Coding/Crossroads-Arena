@@ -1,8 +1,9 @@
 extends Node2D
 
-var Fighter = preload("res://Actors/Bandit/Fighter.tscn")
+var Fighter = preload("res://Actors/Fighters/Bandit/Fighter.tscn")
 var Slime = preload("res://Actors/Slime/Slime.tscn")
 var Brute = preload("res://Actors/Brute/Brute.tscn")
+var ChaosKnight = preload("res://Actors/Fighters/ChaosKnight/ChaosKnight.tscn")
 
 onready var people = $YSort/People
 onready var spawns = $Spawns
@@ -31,8 +32,12 @@ func spawnEnemies():
 	for spawn in spawns.get_children():
 		if randi() % 3 != 0:
 			var newFighter
-			if randi() % 5 == 0:
+			var fighterSelect = randi() % 5
+			if fighterSelect == 0:
 				newFighter = Brute.instance()
+			elif fighterSelect == 1:
+				print("Chaos Knight!")
+				newFighter = ChaosKnight.instance()
 			else:
 				newFighter = Fighter.instance()
 			newFighter.global_position = spawn.global_position + Vector2(rand_range(0, 20), rand_range(0,20))
