@@ -43,41 +43,42 @@ func _physics_process(delta):
 	if not animationPlayer.is_playing():
 		if Input.is_action_just_pressed("attack") and attackTimer.is_stopped():
 			var timerAmount
-			if weaponStats.weaponType == WeaponStats.WeaponType.MELEE:
-				if backTween.is_active():
-					backTween.stop_all()
-					backTween.remove_all()
-				
-				var attackDuration = animationPlayer.get_animation("MeleeAttack").length
-				var attackType: int
-				if comboCounter == 0:
-					# Minimum time between attacks is the time it takes to play the attack animation
-					attackTimer.start(max(weaponStats.attackSpeed * .4 * PlayerStats.attackSpeed, attackDuration))
-					emit_signal("meleeAttack")
-					attackType = MeleeAttackType.QUICK
-					comboTimer.start(comboTime*.65)
-				elif comboCounter == 1:
-					attackTimer.start(max(weaponStats.attackSpeed * .75 * PlayerStats.attackSpeed, attackDuration))
-					emit_signal("meleeAttack")
-					attackType = MeleeAttackType.QUICK
-					comboTimer.start(comboTime)
-				else:
-					attackTimer.start(max(weaponStats.attackSpeed * PlayerStats.attackSpeed, attackDuration))
-					emit_signal("stab")
-					attackType = MeleeAttackType.LONG
-					comboTimer.stop()
+			match weaponStats.weaponType:
+				WeaponStats.WeaponType.MELEE:
+					if backTween.is_active():
+						backTween.stop_all()
+						backTween.remove_all()
 					
-				self.comboCounter = (self.comboCounter + 1) % 3
-				
-				var animLength = animationPlayer.current_animation_length
-				self.startMeleeAttack(animLength, attackType)
+					var attackDuration = animationPlayer.get_animation("MeleeAttack").length
+					var attackType: int
+					if comboCounter == 0:
+						# Minimum time between attacks is the time it takes to play the attack animation
+						attackTimer.start(max(weaponStats.attackSpeed * .4 * PlayerStats.attackSpeed, attackDuration))
+						emit_signal("meleeAttack")
+						attackType = MeleeAttackType.QUICK
+						comboTimer.start(comboTime*.65)
+					elif comboCounter == 1:
+						attackTimer.start(max(weaponStats.attackSpeed * .75 * PlayerStats.attackSpeed, attackDuration))
+						emit_signal("meleeAttack")
+						attackType = MeleeAttackType.QUICK
+						comboTimer.start(comboTime)
+					else:
+						attackTimer.start(max(weaponStats.attackSpeed * PlayerStats.attackSpeed, attackDuration))
+						emit_signal("stab")
+						attackType = MeleeAttackType.LONG
+						comboTimer.stop()
+						
+					self.comboCounter = (self.comboCounter + 1) % 3
+					
+					var animLength = animationPlayer.current_animation_length
+					self.startMeleeAttack(animLength, attackType)
 
-			else:
-				# Ranged weapon, enter the pull back state
-				attackTimer.start(.5)
-				PlayerStats.maxSpeed *= .5
-				chargingRanged = true
-				chargingTime = 0.0
+				WeaponStats.WeaponType.RANGED:
+					# Ranged weapon, enter the pull back state
+					attackTimer.start(.5)
+					PlayerStats.maxSpeed *= .5
+					chargingRanged = true
+					chargingTime = 0.0
 				
 		elif Input.is_action_just_released("attack") and chargingRanged and weaponStats.weaponType == WeaponStats.WeaponType.RANGED:
 			chargingRanged = false
@@ -115,6 +116,7 @@ func setWeapon(weaponStats : WeaponStats):
 	if comboTimer != null:
 		comboTimer.stop()
 		comboTimer.emit_signal("timeout")
+	chargingRanged = false
 	.setWeapon(weaponStats)
 
 func setComboCounter(value):
