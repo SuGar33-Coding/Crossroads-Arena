@@ -36,7 +36,6 @@ func spawnEnemies():
 			if fighterSelect == 0:
 				newFighter = Brute.instance()
 			elif fighterSelect == 1:
-				print("Chaos Knight!")
 				newFighter = ChaosKnight.instance()
 			else:
 				newFighter = Fighter.instance()
