@@ -748,7 +748,7 @@ tracks/9/keys = {
 "times": PoolRealArray( 0, 1 ),
 "transitions": PoolRealArray( 1, 1 ),
 "update": 1,
-"values": [ false, true ]
+"values": [ false, false ]
 }
 
 [sub_resource type="Animation" id=12]
@@ -831,7 +831,7 @@ tracks/5/keys = {
 "values": [ true ]
 }
 
-[sub_resource type="Animation" id=14]
+[sub_resource type="Animation" id=13]
 resource_name = "MeleeWindup"
 length = 0.6
 tracks/0/type = "method"
@@ -923,7 +923,7 @@ tracks/6/keys = {
 "values": [ 0 ]
 }
 
-[sub_resource type="Animation" id=13]
+[sub_resource type="Animation" id=14]
 length = 0.5
 tracks/0/type = "method"
 tracks/0/path = NodePath(".")
@@ -1037,6 +1037,11 @@ tracks/1/keys = {
 ] instance=ExtResource( 1 )]
 script = ExtResource( 3 )
 movementResource = ExtResource( 4 )
+maxLeapRange = 200
+minLeapRange = 100
+leapTimeMax = 3.0
+leapTimeMin = 3.0
+BaseLeapSpeed = 500.0
 
 [node name="Shadow" type="Sprite" parent="." index="0"]
 visible = false
@@ -1056,15 +1061,16 @@ hframes = 9
 [node name="HurtboxCollision" parent="Hurtbox" index="0"]
 position = Vector2( 0, -5 )
 shape = SubResource( 2 )
-disabled = true
 
 [node name="Stats" parent="." index="4"]
 statsResource = ExtResource( 7 )
 
 [node name="DetectionZone" parent="." index="5" instance=ExtResource( 5 )]
-visible = false
-detectionRange = 325
+detectionRange = 200
 leaveRange = 1000
+
+[node name="CollisionShape2D" parent="DetectionZone" index="0"]
+visible = false
 
 [node name="AttackPivot" parent="." index="6" instance=ExtResource( 6 )]
 weaponStatsResources = [ ExtResource( 9 ), ExtResource( 8 ) ]
@@ -1077,6 +1083,7 @@ scale = Vector2( 1.5, 1.5 )
 
 [node name="Particles2D" type="Particles2D" parent="AttackPivot" index="6"]
 position = Vector2( 0, 5 )
+emitting = false
 amount = 50
 lifetime = 0.4
 one_shot = true
@@ -1102,8 +1109,8 @@ anims/GroundPound = SubResource( 9 )
 anims/Idle = SubResource( 10 )
 anims/Leap = SubResource( 11 )
 anims/MeleeAttack = SubResource( 12 )
-anims/MeleeWindup = SubResource( 14 )
-anims/RangedAttack = SubResource( 13 )
+anims/MeleeWindup = SubResource( 13 )
+anims/RangedAttack = SubResource( 14 )
 anims/Walk = SubResource( 15 )
 
 [editable path="Hurtbox"]

@@ -7,6 +7,7 @@ export(float) var leapTimeMin = 7
 export(float) var LeapAcceleration = 12000
 export(float) var BaseLeapSpeed = 600 
 
+var collisionChecker = preload("res://Actors/Zones/CollisionCheck.tscn")
 var groundPoundFx = preload("res://FX/GroundPoundFx.tscn")
 var leaping : bool = false setget setLeaping
 var LeapSpeed : float = 5000
@@ -22,7 +23,7 @@ func _ready():
 # TODO add specific leap target
 func _physics_process(_delta):
 	if leaping and target and state == State.CHASE:
-		if self.global_position.distance_to(target.global_position) < poundRange or self.global_position.distance_to(leapTarget) < poundRange:
+		if self.global_position.distance_to(target.global_position) < poundRange or self.global_position.distance_to(leapTarget) < poundRange or get_slide_count() > 0:
 			playGroundPound()
 
 # When in range I want to stop and charge up :: Use attack state to stop us
@@ -64,6 +65,8 @@ func playGroundPound():
 	
 func setLeapTargetPos():
 	leapTarget = target.global_position
+	if self.global_position.distance_to(leapTarget) > maxLeapRange:
+		leapTarget = self.global_position + self.global_position.direction_to(leapTarget) * maxLeapRange
 	
 func getTargetPos():
 	if leaping:
