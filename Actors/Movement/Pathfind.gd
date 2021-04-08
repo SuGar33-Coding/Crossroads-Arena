@@ -7,7 +7,7 @@ export var pointIncrementThreshold = 10
 # Get direction to next position in path
 func getToTargetDirection(selfNode: KinematicBody2D, targetPos: Vector2):
 	# if line of sight go directly toward, else pathfind
-	if selfNode.isEnemyVisible:
+	if selfNode.isTargetVisible:
 		return .getToTargetDirection(selfNode, targetPos)
 		
 	#if (selfNode.path as PoolVector2Array).size() <= 0:

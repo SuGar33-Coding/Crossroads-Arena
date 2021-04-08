@@ -28,7 +28,7 @@ var closestAlly : NPC = null
 var path: PoolVector2Array
 var pathIdx := 0
 var flag = true
-var isEnemyVisible := false
+var isTargetVisible := false
 var MaxSpeed: float
 
 onready var movement: Movement = movementResource
@@ -70,7 +70,7 @@ func _physics_process(delta):
 				if willAttack():
 					switchToAttack()
 				if target != null: # TODO: look into this fix some more
-					isEnemyVisible = sightCheck()
+					isTargetVisible = sightCheck()
 					if nav2d != null and pathfindTimer.is_stopped(): # Last check is to make it not refresh if it doesn't use it
 						path = nav2d.get_simple_path(global_position, self.getTargetPos(), false)
 						pathfindTimer.start(pathfindTime)

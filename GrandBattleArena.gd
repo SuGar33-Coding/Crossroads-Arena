@@ -32,7 +32,7 @@ func spawnEnemies():
 	for spawn in spawns.get_children():
 		if randi() % 3 != 0:
 			var newFighter
-			var fighterSelect = randi() % 1
+			var fighterSelect = randi() % 5
 			if fighterSelect == 0:
 				newFighter = Brute.instance()
 			elif fighterSelect == 1:

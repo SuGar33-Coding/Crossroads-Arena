@@ -85,8 +85,11 @@ func spawnPoundFx():
 	get_tree().current_scene.add_child(poundFxInstance)
 
 func canLeap():
-	var distanceToTarget = self.global_position.distance_to(target.global_position)
-	return leapTimer.is_stopped() and distanceToTarget <= maxLeapRange and distanceToTarget >= minLeapRange
+	if self.isTargetVisible:
+		var distanceToTarget = self.global_position.distance_to(target.global_position)
+		return leapTimer.is_stopped() and distanceToTarget <= maxLeapRange and distanceToTarget >= minLeapRange
+	else:
+		return false
 
 func _hurtbox_area_entered(area: Hitbox):
 	._hurtbox_area_entered(area)

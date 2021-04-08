@@ -1039,8 +1039,8 @@ script = ExtResource( 3 )
 movementResource = ExtResource( 4 )
 maxLeapRange = 200
 minLeapRange = 100
-leapTimeMax = 3.0
-leapTimeMin = 3.0
+leapTimeMax = 15.0
+leapTimeMin = 7.0
 BaseLeapSpeed = 500.0
 
 [node name="Shadow" type="Sprite" parent="." index="0"]
