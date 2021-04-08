@@ -13,6 +13,8 @@ onready var animationPlayer := get_node("../AnimationPlayer")
 onready var parryHitbox := $WeaponHitbox/ParryHitbox
 onready var comboTimer := $ComboTimer
 onready var parryTween := $ParryTween
+onready var rangedFx := $RangedWeaponFX
+onready var weaponFxTween := $WeaponEffects
 
 # TODO: remove this cus it should be through inventory
 onready var rangedWeapon : WeaponStats = preload("res://Weapons/BaseBow.tres")
@@ -38,6 +40,7 @@ func _physics_process(delta):
 	self.lookAtTarget(get_global_mouse_position())
 	
 	if chargingRanged:
+		rangedFx.global_position = get_global_mouse_position()
 		chargingTime += delta
 	
 	if not animationPlayer.is_playing():
@@ -75,6 +78,10 @@ func _physics_process(delta):
 
 				WeaponStats.WeaponType.RANGED:
 					# Ranged weapon, enter the pull back state
+					weaponFxTween.interpolate_property(rangedFx, "scale", Vector2.ONE, Vector2.ZERO, getRangedAttackSpeed())
+					weaponFxTween.interpolate_property(rangedFx, "scale", Vector2.ZERO, Vector2.ONE, RangedProjectile.REDUCED, Tween.TRANS_LINEAR, Tween.EASE_IN_OUT, getRangedAttackSpeed())
+					weaponFxTween.start()
+					rangedFx.visible = true
 					attackTimer.start(.5)
 					PlayerStats.maxSpeed *= .5
 					chargingRanged = true
@@ -82,6 +89,7 @@ func _physics_process(delta):
 				
 		elif Input.is_action_just_released("attack") and chargingRanged and weaponStats.weaponType == WeaponStats.WeaponType.RANGED:
 			chargingRanged = false
+			rangedFx.visible = false
 			PlayerStats.resetMaxSpeed()
 			# To measure accuracy, we find what portion of the attack speed time they were off
 			var atkSpeed = max(weaponStats.attackSpeed * PlayerStats.attackSpeed, .5)
@@ -97,7 +105,10 @@ func _physics_process(delta):
 				setWeapon(rangedWeapon)
 			else:
 				setWeapon(meleeWeapon)
-				
+
+func getRangedAttackSpeed() -> float:
+	return max(weaponStats.attackSpeed * PlayerStats.attackSpeed, .5)
+
 func startParry():
 	weapon.flip_h = not weapon.flip_h
 	weapon.flip_v = not weapon.flip_v

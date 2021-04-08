@@ -3,8 +3,8 @@ extends Position2D
 class_name AttackPivot
 
 # TODO: make it so you can load different projectiles
-const RangedProjectile = preload("res://Weapons/RangedProjectile.tscn")
-const AttackSignal = preload("res://FX/AttackSignal.tscn")
+const RangedProjectileScene = preload("res://Weapons/RangedProjectile.tscn")
+const AttackSignalScene = preload("res://FX/AttackSignal.tscn")
 
 enum MeleeAttackType {
 	QUICK,
@@ -98,7 +98,7 @@ func startMeleeAttack(animLength: float, type = MeleeAttackType.QUICK):
 		tween.start()
 		
 func playAttackSignal(windUpTime: float, shading: bool = true):
-	var atkSignal : Particles2D = AttackSignal.instance()
+	var atkSignal : Particles2D = AttackSignalScene.instance()
 	atkSignal.position = attackSignalPos.position
 	restingPos.add_child(atkSignal)
 	atkSignal.set_deferred("emitting", true)
@@ -113,7 +113,7 @@ func playAttackSignal(windUpTime: float, shading: bool = true):
 # By default (for NPCs) this will be the threshold at which you do normal damage
 # Projectile speed also scales with accuracy
 func startRangedAttack(sourceStr := 0, accuracy := 1.0):
-	var rangedProjectile = RangedProjectile.instance()
+	var rangedProjectile = RangedProjectileScene.instance()
 	rangedProjectile.init(weaponStats, source, sourceStr, accuracy)
 	
 	var world = get_tree().current_scene

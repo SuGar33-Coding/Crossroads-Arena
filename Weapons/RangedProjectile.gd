@@ -2,6 +2,12 @@ extends KinematicBody2D
 
 class_name RangedProjectile
 
+# Accuracy timing thresholds
+const CRIT = 0.1
+const HALF_CRIT = 0.2
+const NORMAL = 0.5
+const REDUCED = 0.75
+
 var fromPlayer : bool = false
 var speed
 var velocity := Vector2.ZERO
@@ -32,13 +38,13 @@ func _ready():
 	print(accuracy)
 	
 	if accuracy >= 0:
-		if accuracy <= .1:
+		if accuracy <= CRIT:
 			weaponHitbox.scaleDamage(2)
-		elif accuracy <= .2:
+		elif accuracy <= HALF_CRIT:
 			weaponHitbox.scaleDamage(1.5)
-		elif accuracy <= .5:
+		elif accuracy <= NORMAL:
 			weaponHitbox.scaleDamage(1)
-		elif accuracy <= .75:
+		elif accuracy <= REDUCED:
 			weaponHitbox.scaleDamage(.5)
 		else:
 			weaponHitbox.scaleDamage(.1)
