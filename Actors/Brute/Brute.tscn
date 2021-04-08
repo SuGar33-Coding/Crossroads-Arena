@@ -1006,7 +1006,7 @@ tracks/5/keys = {
 resource_name = "Walk"
 length = 0.9
 loop = true
-step = 0.05
+step = 0.01
 tracks/0/type = "value"
 tracks/0/path = NodePath("Sprite:frame")
 tracks/0/interp = 1
@@ -1031,12 +1031,26 @@ tracks/1/keys = {
 "update": 1,
 "values": [ Vector2( -1, -7 ), Vector2( -1, -8.5 ), Vector2( -1, -7 ) ]
 }
+tracks/2/type = "value"
+tracks/2/path = NodePath("Shadow:scale")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0, 0.23, 0.68 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 0,
+"values": [ Vector2( 1, 1 ), Vector2( 0.9, 0.9 ), Vector2( 1, 1 ) ]
+}
 
 [node name="Brute" groups=[
 "Enemies",
 ] instance=ExtResource( 1 )]
 script = ExtResource( 3 )
 movementResource = ExtResource( 4 )
+rightShadowX = 0.0
+leftShadowX = -2.0
 maxLeapRange = 200
 minLeapRange = 100
 leapTimeMax = 15.0
@@ -1044,8 +1058,7 @@ leapTimeMin = 7.0
 BaseLeapSpeed = 500.0
 
 [node name="Shadow" type="Sprite" parent="." index="0"]
-visible = false
-position = Vector2( 0, 5 )
+position = Vector2( 0, 6 )
 texture = ExtResource( 12 )
 
 [node name="CollisionShape2D" parent="." index="1"]
@@ -1057,6 +1070,7 @@ position = Vector2( -1, -7 )
 scale = Vector2( 0.75, 0.75 )
 texture = ExtResource( 2 )
 hframes = 9
+frame = 1
 
 [node name="HurtboxCollision" parent="Hurtbox" index="0"]
 position = Vector2( 0, -5 )
@@ -1066,7 +1080,7 @@ shape = SubResource( 2 )
 statsResource = ExtResource( 7 )
 
 [node name="DetectionZone" parent="." index="5" instance=ExtResource( 5 )]
-detectionRange = 200
+detectionRange = 325
 leaveRange = 1000
 
 [node name="CollisionShape2D" parent="DetectionZone" index="0"]

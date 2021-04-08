@@ -656,13 +656,8 @@ tracks/0/keys = {
 ] instance=ExtResource( 4 )]
 script = ExtResource( 5 )
 movementResource = ExtResource( 3 )
-baseSpeed = 125.0
-Acceleration = 1000.0
-Friction = 1000.0
-debug = false
-movementGroup = "NPC"
-pathfindTime = 0.5
 movementMaxTime = 10.0
+leftShadowX = 0.5
 
 [node name="Shadow" type="Sprite" parent="." index="0"]
 texture = ExtResource( 6 )

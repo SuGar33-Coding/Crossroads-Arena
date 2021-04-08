@@ -4,11 +4,15 @@ class_name Fighter
 
 var weaponStats : WeaponStats
 
+export var rightShadowX = .5
+export var leftShadowX = .5
+
 onready var detectionZone := $DetectionZone
 onready var attackPivot := $AttackPivot
 onready var weaponHitbox := $AttackPivot/WeaponHitbox
 onready var animationPlayer := $AnimationPlayer
 onready var attackTimer := $AttackPivot/AttackTimer
+onready var shadowSprite := $Shadow
 
 var sinX = rand_range(0, TAU)
 var noise := OpenSimplexNoise.new()
@@ -92,10 +96,12 @@ func willFlipRight():
 func flipLeft():
 	sprite.flip_h = true
 	attackPivot.scale.y = -1
+	shadowSprite.position.x = leftShadowX
 	
 func flipRight():
 	sprite.flip_h = false
 	attackPivot.scale.y = 1
+	shadowSprite.position.x = rightShadowX
 	
 func findClosestAlly():
 	var otherActors = get_parent().get_children()

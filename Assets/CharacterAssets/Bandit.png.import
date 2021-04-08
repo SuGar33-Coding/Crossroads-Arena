@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/bandit v1.png-e396e950effa2ee4c2898f06e27164c9.stex"
+path="res://.import/Bandit.png-e6dd4afa6a277c31aa1f7d0fb28a21ef.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Assets/CharacterAssets/bandit v1.png"
-dest_files=[ "res://.import/bandit v1.png-e396e950effa2ee4c2898f06e27164c9.stex" ]
+source_file="res://Assets/CharacterAssets/Bandit.png"
+dest_files=[ "res://.import/Bandit.png-e6dd4afa6a277c31aa1f7d0fb28a21ef.stex" ]
 
 [params]
 
@@ -30,5 +30,5 @@ process/HDR_as_SRGB=false
 process/invert_color=false
 stream=false
 size_limit=0
-detect_3d=true
+detect_3d=false
 svg/scale=1.0

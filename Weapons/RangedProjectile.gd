@@ -35,8 +35,6 @@ func _ready():
 	weaponHitbox.setWeapon(weaponStats)
 	weaponHitbox.setSource(source, userStr)
 	
-	print(accuracy)
-	
 	if accuracy >= 0:
 		if accuracy <= CRIT:
 			weaponHitbox.scaleDamage(2)
@@ -57,9 +55,6 @@ func _ready():
 			weaponHitbox.scaleDamage(.5)
 		else:
 			weaponHitbox.scaleDamage(.1)
-			
-	print(weaponHitbox.damage)
-	print()
 	
 	speed = weaponStats.projectileSpeed
 	
