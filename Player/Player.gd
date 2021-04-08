@@ -17,6 +17,7 @@ var Friction : float
 
 onready var stats = get_node("/root/PlayerStats")
 onready var sprite := $Sprite
+onready var shadowSprite := $ShadowSprite
 onready var attackPivot := $AttackPivot
 onready var hurtbox := $Hurtbox
 onready var camera := $MainCamera
@@ -26,6 +27,7 @@ onready var movementAnimation := $MovementAnimation
 onready var animationPlayer := $AnimationPlayer
 onready var footstep1 := $Footstep1
 onready var footstep2 := $Footstep2
+
 
 func _ready():
 	Engine.set_target_fps(Engine.get_iterations_per_second())
@@ -76,9 +78,11 @@ func _physics_process(delta):
 	var mousePos = self.get_global_mouse_position()
 	if mousePos.x < global_position.x:
 		sprite.flip_h = true
+		shadowSprite.position.x = 1.5
 		attackPivot.scale.y = -1
 	else:
 		sprite.flip_h = false
+		shadowSprite.position.x = .5
 		attackPivot.scale.y = 1
 		
 	attackPivot.look_at(mousePos)
