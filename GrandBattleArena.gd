@@ -4,6 +4,7 @@ var Fighter = preload("res://Actors/Fighters/Bandit/Fighter.tscn")
 var Slime = preload("res://Actors/Slime/Slime.tscn")
 var Brute = preload("res://Actors/Brute/Brute.tscn")
 var ChaosKnight = preload("res://Actors/Fighters/ChaosKnight/ChaosKnight.tscn")
+var Rogue = preload("res://Actors/Fighters/Rogue/Rogue.tscn")
 
 onready var people = $YSort/People
 onready var spawns = $Spawns
@@ -39,6 +40,7 @@ func spawnEnemies():
 				newFighter = ChaosKnight.instance()
 			else:
 				newFighter = Fighter.instance()
+			newFighter = Rogue.instance()
 			newFighter.global_position = spawn.global_position + Vector2(rand_range(0, 20), rand_range(0,20))
 			people.add_child(newFighter)
 

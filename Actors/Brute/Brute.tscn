@@ -1054,7 +1054,6 @@ leftShadowX = -2.0
 maxLeapRange = 200
 minLeapRange = 100
 leapTimeMax = 15.0
-leapTimeMin = 7.0
 BaseLeapSpeed = 500.0
 
 [node name="Shadow" type="Sprite" parent="." index="0"]
@@ -1070,7 +1069,6 @@ position = Vector2( -1, -7 )
 scale = Vector2( 0.75, 0.75 )
 texture = ExtResource( 2 )
 hframes = 9
-frame = 1
 
 [node name="HurtboxCollision" parent="Hurtbox" index="0"]
 position = Vector2( 0, -5 )

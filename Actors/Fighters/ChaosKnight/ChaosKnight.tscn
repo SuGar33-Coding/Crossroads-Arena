@@ -657,7 +657,6 @@ tracks/0/keys = {
 script = ExtResource( 5 )
 movementResource = ExtResource( 3 )
 movementMaxTime = 10.0
-leftShadowX = 0.5
 
 [node name="Shadow" type="Sprite" parent="." index="0"]
 texture = ExtResource( 6 )
