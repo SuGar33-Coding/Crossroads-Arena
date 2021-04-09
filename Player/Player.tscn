@@ -419,7 +419,6 @@ shape = SubResource( 1 )
 position = Vector2( 1, -5 )
 texture = ExtResource( 1 )
 hframes = 5
-frame = 1
 
 [node name="MainCamera" parent="." instance=ExtResource( 7 )]
 position = Vector2( 0, 0 )

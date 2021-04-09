@@ -1,7 +1,9 @@
 extends Fighter
 
-export(int) var maxLeapRange = 200
-export(int) var minLeapRange = 50
+var dashCloudFx = preload("res://FX/DashCloud.tscn")
+
+export(int) var maxLeapRange = 125
+export(int) var minLeapRange = 40
 export(float) var leapTimeMax = 9
 export(float) var leapTimeMin = 5
 export(float) var LeapAcceleration = 10000
@@ -83,12 +85,12 @@ func getTargetPos():
 func setLeaping(value : bool):
 	leaping = value
 	
-func spawnPoundFx():
-	var poundFxInstance: Particles2D = groundPoundFx.instance()
-	poundFxInstance.global_position = self.global_position #Vector2(self.global_position.x, self.global_position.y + 12)
-	poundFxInstance.z_index = -1
-	poundFxInstance.emitting = true
-	get_tree().current_scene.add_child(poundFxInstance)
+func spawnDashFx():
+	var dashCloudFxInstance: Particles2D = dashCloudFx.instance()
+	dashCloudFxInstance.global_position = Vector2(self.global_position.x, self.global_position.y + 12)
+	dashCloudFxInstance.z_index = -1
+	dashCloudFxInstance.emitting = true
+	get_tree().current_scene.add_child(dashCloudFxInstance)
 
 func canLeap():
 	if self.isTargetVisible:

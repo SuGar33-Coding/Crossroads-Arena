@@ -1,6 +1,6 @@
 extends FlankAndPoke
 
-class_name FlankAndLeap
+class_name FlankAndBurst
 
 # Smooth force used in steering while leaping
 export var leapSmoothForce := 1.0

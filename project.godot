@@ -30,9 +30,9 @@ _global_script_classes=[ {
 "path": "res://Actors/Fighters/Bandit/Fighter.gd"
 }, {
 "base": "FlankAndPoke",
-"class": "FlankAndLeap",
+"class": "FlankAndBurst",
 "language": "GDScript",
-"path": "res://Actors/Movement/FlankAndLeap.gd"
+"path": "res://Actors/Movement/FlankAndBurst.gd"
 }, {
 "base": "MoveAndAvoid",
 "class": "FlankAndPoke",
@@ -149,7 +149,7 @@ _global_script_class_icons={
 "Boundary": "",
 "BurstMoveAA": "",
 "Fighter": "",
-"FlankAndLeap": "",
+"FlankAndBurst": "",
 "FlankAndPoke": "",
 "FloatingText": "",
 "GitAPI": "",
