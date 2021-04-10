@@ -34,6 +34,7 @@ func _ready():
 	movementTimer.connect("timeout", self, "_change_direction")
 	
 	# Set everything to default values
+	animationPlayer.connect("animation_finished", self, "_anim_finished")
 	animationPlayer.play("Idle")
 	
 	attackPivot.setUserStr(stats.strength)
@@ -155,3 +156,6 @@ func _change_direction():
 
 func _strength_changed(value):
 	attackPivot.setUserStr(value)
+
+func _anim_finished(_animName):
+	animationPlayer.playback_speed = 1

@@ -156,6 +156,7 @@ func setWeapon(weaponStats : WeaponStats):
 	else:
 		restingPos.set_deferred("position", Vector2(15, 0))
 		weapon.set_deferred("rotation", deg2rad(45))
+		print(weapon.rotation)
 
 # TODO: Can set tween delay rather than making multiple tweens
 func _on_WeaponTween_tween_completed():

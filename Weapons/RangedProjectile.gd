@@ -88,5 +88,5 @@ func killSelf():
 	world.add_child(hitEffect)
 	queue_free()
 
-func _area_entered(area):
+func _area_entered(_area):
 	queue_free()

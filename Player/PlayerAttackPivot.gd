@@ -45,7 +45,6 @@ func _physics_process(delta):
 	
 	if not animationPlayer.is_playing():
 		if Input.is_action_just_pressed("attack") and attackTimer.is_stopped():
-			var timerAmount
 			match weaponStats.weaponType:
 				WeaponStats.WeaponType.MELEE:
 					if backTween.is_active():
@@ -143,6 +142,8 @@ func setWeapon(weaponStats : WeaponStats):
 		comboTimer.stop()
 		comboTimer.emit_signal("timeout")
 	chargingRanged = false
+	if rangedFx:
+		rangedFx.visible = false
 	.setWeapon(weaponStats)
 
 func setComboCounter(value):
