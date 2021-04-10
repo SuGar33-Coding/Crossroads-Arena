@@ -697,7 +697,6 @@ rightShadowX = -0.5
 leftShadowX = -0.5
 
 [node name="Shadow" type="Sprite" parent="." index="0"]
-scale = Vector2( 0.940268, 0.940268 )
 texture = ExtResource( 6 )
 offset = Vector2( 0.5, 5 )
 
