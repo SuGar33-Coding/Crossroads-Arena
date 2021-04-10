@@ -38,9 +38,11 @@ func spawnEnemies():
 				newFighter = Brute.instance()
 			elif fighterSelect == 1:
 				newFighter = ChaosKnight.instance()
+			elif fighterSelect == 2:
+				newFighter = Rogue.instance()
 			else:
 				newFighter = Fighter.instance()
-			newFighter = Rogue.instance()
+			
 			newFighter.global_position = spawn.global_position + Vector2(rand_range(0, 20), rand_range(0,20))
 			people.add_child(newFighter)
 

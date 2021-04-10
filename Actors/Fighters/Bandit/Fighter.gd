@@ -59,10 +59,10 @@ func switchToAttack():
 		animationPlayer.playback_speed = 1
 		# TODO: Make this a more well defined ratio
 		attackTimer.start(weaponStats.attackSpeed * stats.attackSpeed * 2)
-		if weaponStats.weaponType == WeaponStats.WeaponType.MELEE:
-			animationPlayer.play("MeleeWindup")
-		else:
+		if weaponStats.weaponType == WeaponStats.WeaponType.RANGED:
 			animationPlayer.play("RangedAttack")
+		else:
+			animationPlayer.play("MeleeWindup")
 			
 func switchToStun():
 	.switchToStun()
@@ -76,10 +76,10 @@ func willChase() -> bool:
 
 func willAttack() -> bool:
 	var distanceToTarget = self.position.distance_to(detectionZone.target.position)
-	if weaponStats.weaponType == WeaponStats.WeaponType.MELEE:
-		return distanceToTarget <= (weaponStats.length + weaponStats.radius*2)
-	else:
+	if weaponStats.weaponType == WeaponStats.WeaponType.RANGED:
 		return distanceToTarget <= weaponStats.projectileRange
+	else:
+		return distanceToTarget <= (weaponStats.length + weaponStats.radius*2)
 	
 func willFlipLeft():
 	if state == State.CHASE:

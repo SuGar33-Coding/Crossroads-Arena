@@ -10,4 +10,4 @@ radius = 125.0
 avoidanceRadius = 25.0
 amplitude = 0.5
 frequency = 1.0
-leapSmoothForce = 1.0
+burstSmoothForce = 1.0

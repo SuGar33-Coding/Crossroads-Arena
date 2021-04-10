@@ -52,15 +52,14 @@ func setWeapon(weapon : WeaponStats):
 	self.baseDamage = self.weaponDamage *  pow(PlayerStats.strRatio, self.userStr)
 	self.baseKnockback = weaponStats.knockbackValue * pow(strKnockbackRatio, self.userStr)
 		
-	if weaponStats.weaponType == WeaponStats.WeaponType.MELEE:
-		# Position the collision boxes to the right side of the player
-		collision.position.x = weaponStats.length/2 + weaponStats.radius + hitboxOffset
-		parryCollision.position.x = weaponStats.length/2 + weaponStats.radius + hitboxOffset
-		
-	else:
+	if weaponStats.weaponType == WeaponStats.WeaponType.RANGED:
 		#is ranged, no local weapon collision
 		collision.position.x = 0
 		parryCollision.position.x = 0
+	else:
+		# Position the collision boxes to the right side of the player
+		collision.position.x = weaponStats.length/2 + weaponStats.radius + hitboxOffset
+		parryCollision.position.x = weaponStats.length/2 + weaponStats.radius + hitboxOffset
 		
 	# Create a new shape of the proper size for the loaded weapon
 	var shape : CapsuleShape2D = CapsuleShape2D.new()

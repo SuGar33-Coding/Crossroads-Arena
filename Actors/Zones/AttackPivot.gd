@@ -38,6 +38,7 @@ var source : KinematicBody2D
 var userStr: int = 0 setget setUserStr
 var weaponMat: ShaderMaterial
 var shaderTime: = 0.0
+var returnRot := 0.0
 
 func _ready():
 	# Choose random weapon
@@ -87,7 +88,7 @@ func startMeleeAttack(animLength: float, type = MeleeAttackType.QUICK):
 			longSfx.play()
 	
 	
-	if weaponStats.weaponType == WeaponStats.WeaponType.MELEE:
+	if weaponStats.weaponType == WeaponStats.WeaponType.MELEE or weaponStats.weaponType == WeaponStats.WeaponType.HEAVY:
 		self.tweenLength = animLength/2
 		swipe.set_deferred("flip_h", not swipe.flip_h)
 		tween.interpolate_property(weapon, "position", weapon.position, swordAnimDist, tweenLength)
@@ -133,6 +134,7 @@ func setWeapon(weaponStats : WeaponStats):
 	if weaponStats.weaponType == WeaponStats.WeaponType.MELEE:
 		restingPos.position = meleeRestingCoord
 		weapon.rotation = restingRotation
+		returnRot = weapon.rotation
 		swordAnimDist = collision.position - restingPos.position
 		swipe.frame = 0
 		
@@ -140,20 +142,31 @@ func setWeapon(weaponStats : WeaponStats):
 		# Ratios I found from doing testing with OG sprite
 		swipe.scale.x = .6 * (weaponStats.radius)/10
 		swipe.scale.y = 1.5 * (weaponStats.length/2 + weaponStats.radius)/10
+	elif weaponStats.weaponType == WeaponStats.WeaponType.HEAVY:
+		restingPos.position = meleeRestingCoord + Vector2(-15, 15)
+		weapon.rotation = deg2rad(-165)
+		returnRot = deg2rad(-165)
+		swordAnimDist = collision.position - restingPos.position
+		swipe.frame = 0
 		
+		swipe.position = collision.position
+		# Ratios I found from doing testing with OG sprite
+		swipe.scale.x = .6 * (weaponStats.radius)/10
+		swipe.scale.y = 1.5 * (weaponStats.length/2 + weaponStats.radius)/10
 	else:
 		restingPos.set_deferred("position", Vector2(15, 0))
 		weapon.set_deferred("rotation", deg2rad(45))
 
 # TODO: Can set tween delay rather than making multiple tweens
 func _on_WeaponTween_tween_completed():
+		
 	self.show_behind_parent = not self.show_behind_parent
 	backTween.interpolate_property(weapon, "position", weapon.position, Vector2(-20, 5), self.tweenLength, Tween.TRANS_LINEAR, Tween.EASE_IN_OUT)
 	backTween.interpolate_property(weapon, "rotation", weapon.rotation, restingRotation - deg2rad(50), self.tweenLength, Tween.TRANS_LINEAR, Tween.EASE_IN)
 
 	# Add the .007 so if player is spam clicking it feels more fluid/no stop on swing
 	backTween.interpolate_property(weapon, "position", Vector2(-20, 5), Vector2.ZERO, attackTimer.time_left + .007, Tween.TRANS_LINEAR, Tween.EASE_IN_OUT, self.tweenLength)
-	backTween.interpolate_property(weapon, "rotation", restingRotation - deg2rad(50), restingRotation, attackTimer.time_left + .007, Tween.TRANS_LINEAR, Tween.EASE_IN, self.tweenLength)
+	backTween.interpolate_property(weapon, "rotation", restingRotation - deg2rad(50), returnRot, attackTimer.time_left + .007, Tween.TRANS_LINEAR, Tween.EASE_IN, self.tweenLength)
 	
 	backTween.start()
 

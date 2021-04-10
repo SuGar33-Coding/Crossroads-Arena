@@ -4,6 +4,7 @@ class_name WeaponStats
 
 enum WeaponType {
 	MELEE,
+	HEAVY,
 	RANGED
 }
 

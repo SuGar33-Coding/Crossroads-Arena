@@ -1,7 +1,7 @@
 [gd_scene load_steps=22 format=2]
 
-[ext_resource path="res://Weapons/LongSword.tres" type="Resource" id=1]
-[ext_resource path="res://Weapons/Glaive.tres" type="Resource" id=2]
+[ext_resource path="res://Weapons/Dagger.tres" type="Resource" id=1]
+[ext_resource path="res://Weapons/BaseSword.tres" type="Resource" id=2]
 [ext_resource path="res://Actors/Movement/FlankAndBurst.tres" type="Resource" id=3]
 [ext_resource path="res://Actors/NPC.tscn" type="PackedScene" id=4]
 [ext_resource path="res://Actors/Fighters/Rogue/Rogue.gd" type="Script" id=5]
@@ -127,7 +127,7 @@ tracks/0/keys = {
 "transitions": PoolRealArray( 1, 1, 1 ),
 "values": [ {
 "args": [  ],
-"method": "setLeapTargetPos"
+"method": "setBurstTargetPos"
 }, {
 "args": [  ],
 "method": "switchToChase"
@@ -156,10 +156,10 @@ tracks/1/keys = {
 "method": "spawnDashFx"
 }, {
 "args": [  ],
-"method": "stopLeapSpeed"
+"method": "stopBurstSpeed"
 }, {
 "args": [ false ],
-"method": "setLeaping"
+"method": "setBursting"
 } ]
 }
 tracks/2/type = "value"
@@ -549,7 +549,7 @@ tracks/6/keys = {
 "transitions": PoolRealArray( 1 ),
 "values": [ {
 "args": [ false ],
-"method": "setLeaping"
+"method": "setBursting"
 } ]
 }
 
@@ -787,7 +787,7 @@ detectionRange = 325
 leaveRange = 1000
 
 [node name="AttackPivot" parent="." index="6" instance=ExtResource( 8 )]
-weaponStatsResources = [ ExtResource( 2 ), ExtResource( 1 ) ]
+weaponStatsResources = [ ExtResource( 1 ), ExtResource( 1 ), ExtResource( 1 ), ExtResource( 2 ) ]
 
 [node name="Swipe" parent="AttackPivot" index="1"]
 frame = 0
@@ -812,7 +812,7 @@ anims/MeleeWindup = SubResource( 9 )
 anims/RangedAttack = SubResource( 10 )
 anims/Walk = SubResource( 11 )
 
-[node name="LeapTimer" type="Timer" parent="." index="11"]
+[node name="BurstTimer" type="Timer" parent="." index="11"]
 one_shot = true
 
 [editable path="Hurtbox"]

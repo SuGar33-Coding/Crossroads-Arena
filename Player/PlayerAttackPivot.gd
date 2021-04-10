@@ -74,8 +74,23 @@ func _physics_process(delta):
 					self.comboCounter = (self.comboCounter + 1) % 3
 					
 					var animLength = animationPlayer.current_animation_length
+					self.startMeleeAttack(animLength, attackType)					
+				WeaponStats.WeaponType.HEAVY:
+					if backTween.is_active():
+						backTween.stop_all()
+						backTween.remove_all()
+					
+					var attackDuration = animationPlayer.get_animation("MeleeAttack").length
+					var attackType: int
+					
+					# Minimum time between attacks is the time it takes to play the attack animation
+					attackTimer.start(max(weaponStats.attackSpeed * PlayerStats.attackSpeed, attackDuration))
+					emit_signal("meleeAttack")
+					attackType = MeleeAttackType.QUICK
+					comboTimer.start(comboTime*.65)
+				
+					var animLength = animationPlayer.current_animation_length
 					self.startMeleeAttack(animLength, attackType)
-
 				WeaponStats.WeaponType.RANGED:
 					# Ranged weapon, enter the pull back state
 					weaponFxTween.interpolate_property(rangedFx, "scale", Vector2.ONE, Vector2.ZERO, getRangedAttackSpeed())
@@ -147,22 +162,16 @@ func _parried_weapon(area):
 	PlayerStats.currentXP += parriedWeapon.damage
 
 func _on_WeaponTween_tween_completed():
-	self.show_behind_parent = not self.show_behind_parent
 	
 	if comboCounter < 2:
-		backTween.interpolate_property(weapon, "position", weapon.position, Vector2(-20, 5), self.tweenLength, Tween.TRANS_LINEAR, Tween.EASE_IN_OUT)
-		backTween.interpolate_property(weapon, "rotation", weapon.rotation, restingRotation - deg2rad(50), self.tweenLength, Tween.TRANS_LINEAR, Tween.EASE_IN)
-
-		# Add the .007 so if player is spam clicking it feels more fluid/no stop on swing
-		backTween.interpolate_property(weapon, "position", Vector2(-20, 5), Vector2.ZERO, attackTimer.time_left + .007, Tween.TRANS_LINEAR, Tween.EASE_IN_OUT, self.tweenLength)
-		backTween.interpolate_property(weapon, "rotation", restingRotation - deg2rad(50), restingRotation, attackTimer.time_left + .007, Tween.TRANS_LINEAR, Tween.EASE_IN, self.tweenLength)
-
+		._on_WeaponTween_tween_completed()
 	else:
+		self.show_behind_parent = not self.show_behind_parent
 		backTween.interpolate_property(weapon, "position", weapon.position, Vector2(-10, 5), self.tweenLength, Tween.TRANS_LINEAR, Tween.EASE_IN_OUT)
 		backTween.interpolate_property(weapon, "rotation", weapon.rotation, restingRotation + deg2rad(70), self.tweenLength)
 
 		# Add the .007 so if player is spam clicking it feels more fluid/no stop on swing
-		backTween.interpolate_property(weapon, "position", Vector2(-10, 5), Vector2(5, 7), attackTimer.time_left + .007, Tween.TRANS_LINEAR, Tween.EASE_IN_OUT, self.tweenLength)
+		backTween.interpolate_property(weapon, "position", Vector2(-10, 5), meleeRestingCoord + Vector2(5, 17), attackTimer.time_left + .007, Tween.TRANS_LINEAR, Tween.EASE_IN_OUT, self.tweenLength)
 		backTween.interpolate_property(weapon, "rotation", restingRotation + deg2rad(70), restingRotation + deg2rad(110), attackTimer.time_left + .007, self.tweenLength)
 
 	backTween.start()
@@ -171,7 +180,8 @@ func _on_WeaponTween_tween_completed():
 func _combo_finished():
 	self.comboCounter = 0
 	
-	backTween.interpolate_property(weapon, "position", weapon.position, Vector2.ZERO, .4, Tween.TRANS_LINEAR, Tween.EASE_IN_OUT)
-	backTween.interpolate_property(weapon, "rotation", weapon.rotation, restingRotation, .4, Tween.TRANS_LINEAR, Tween.EASE_IN_OUT)
+	if not backTween.is_active():
+		backTween.interpolate_property(weapon, "position", weapon.position, Vector2.ZERO, .4, Tween.TRANS_LINEAR, Tween.EASE_IN_OUT)
+		backTween.interpolate_property(weapon, "rotation", weapon.rotation, returnRot, .4, Tween.TRANS_LINEAR, Tween.EASE_IN_OUT)
 
-	backTween.start()
+		backTween.start()

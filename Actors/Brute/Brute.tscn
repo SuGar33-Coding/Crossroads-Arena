@@ -1,4 +1,4 @@
-[gd_scene load_steps=28 format=2]
+[gd_scene load_steps=27 format=2]
 
 [ext_resource path="res://Actors/NPC.tscn" type="PackedScene" id=1]
 [ext_resource path="res://Assets/CharacterAssets/Brute.png" type="Texture" id=2]
@@ -7,12 +7,10 @@
 [ext_resource path="res://Actors/Zones/DetectionZone.tscn" type="PackedScene" id=5]
 [ext_resource path="res://Actors/Zones/AttackPivot.tscn" type="PackedScene" id=6]
 [ext_resource path="res://Actors/Brute/BruteStats.tres" type="Resource" id=7]
-[ext_resource path="res://Weapons/LongSword.tres" type="Resource" id=8]
-[ext_resource path="res://Weapons/Glaive.tres" type="Resource" id=9]
+[ext_resource path="res://Weapons/GreatHammer.tres" type="Resource" id=8]
 [ext_resource path="res://Actors/Zones/Hitbox.tscn" type="PackedScene" id=10]
 [ext_resource path="res://Actors/Zones/GroundPoundHitbox.gd" type="Script" id=11]
 [ext_resource path="res://Assets/CharacterAssets/Shadows/LargeShadow.png" type="Texture" id=12]
-
 
 [sub_resource type="CapsuleShape2D" id=1]
 radius = 5.94471
@@ -302,16 +300,16 @@ tracks/0/keys = {
 "transitions": PoolRealArray( 1, 1, 1, 1 ),
 "values": [ {
 "args": [  ],
-"method": "slowLeapSpeed"
+"method": "slowBurstSpeed"
 }, {
 "args": [  ],
-"method": "stopLeapSpeed"
+"method": "stopBurstSpeed"
 }, {
 "args": [  ],
 "method": "spawnPoundFx"
 }, {
 "args": [ false ],
-"method": "setLeaping"
+"method": "setBursting"
 } ]
 }
 tracks/1/type = "value"
@@ -381,7 +379,7 @@ tracks/6/loop_wrap = true
 tracks/6/imported = false
 tracks/6/enabled = true
 tracks/6/keys = {
-"times": PoolRealArray( 0, 0.15, 0.75, 0.8, 1 ),
+"times": PoolRealArray( 0, 0.15, 0.75, 0.85, 1 ),
 "transitions": PoolRealArray( 1.10957, 1, 1, 1, 1 ),
 "update": 0,
 "values": [ Vector2( 0.75, 0.75 ), Vector2( 0.75, 0.5 ), Vector2( 0.75, 0.5 ), Vector2( 1, 0.75 ), Vector2( 0.75, 0.75 ) ]
@@ -421,6 +419,30 @@ tracks/9/keys = {
 "transitions": PoolRealArray( 1 ),
 "update": 1,
 "values": [ false ]
+}
+tracks/10/type = "value"
+tracks/10/path = NodePath("AttackPivot/WeaponRestingPos/Weapon:rotation_degrees")
+tracks/10/interp = 1
+tracks/10/loop_wrap = true
+tracks/10/imported = false
+tracks/10/enabled = true
+tracks/10/keys = {
+"times": PoolRealArray( 0.6, 0.85, 1.2 ),
+"transitions": PoolRealArray( 6.49802, 1, 1 ),
+"update": 0,
+"values": [ -165.0, 65.0, -165.0 ]
+}
+tracks/11/type = "value"
+tracks/11/path = NodePath("AttackPivot/WeaponRestingPos:position")
+tracks/11/interp = 1
+tracks/11/loop_wrap = true
+tracks/11/imported = false
+tracks/11/enabled = true
+tracks/11/keys = {
+"times": PoolRealArray( 0.6, 0.85, 1.2 ),
+"transitions": PoolRealArray( 6.49801, 1, 1 ),
+"update": 0,
+"values": [ Vector2( -16, 7 ), Vector2( 30, 4 ), Vector2( -16, 7 ) ]
 }
 
 [sub_resource type="Animation" id=10]
@@ -604,7 +626,7 @@ tracks/14/keys = {
 "transitions": PoolRealArray( 1 ),
 "values": [ {
 "args": [ false ],
-"method": "setLeaping"
+"method": "setBursting"
 } ]
 }
 tracks/15/type = "value"
@@ -618,6 +640,18 @@ tracks/15/keys = {
 "transitions": PoolRealArray( 1 ),
 "update": 1,
 "values": [ true ]
+}
+tracks/16/type = "value"
+tracks/16/path = NodePath("Shadow:position")
+tracks/16/interp = 1
+tracks/16/loop_wrap = true
+tracks/16/imported = false
+tracks/16/enabled = true
+tracks/16/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Vector2( 0, 6 ) ]
 }
 
 [sub_resource type="Animation" id=11]
@@ -634,7 +668,7 @@ tracks/0/keys = {
 "transitions": PoolRealArray( 1, 1, 1 ),
 "values": [ {
 "args": [  ],
-"method": "setLeapTargetPos"
+"method": "setBurstTargetPos"
 }, {
 "args": [  ],
 "method": "switchToChase"
@@ -830,6 +864,20 @@ tracks/5/keys = {
 "transitions": PoolRealArray( 1 ),
 "update": 1,
 "values": [ true ]
+}
+tracks/6/type = "method"
+tracks/6/path = NodePath(".")
+tracks/6/interp = 1
+tracks/6/loop_wrap = true
+tracks/6/imported = false
+tracks/6/enabled = true
+tracks/6/keys = {
+"times": PoolRealArray( 0.1 ),
+"transitions": PoolRealArray( 1 ),
+"values": [ {
+"args": [ false ],
+"method": "setBursting"
+} ]
 }
 
 [sub_resource type="Animation" id=13]
@@ -1052,10 +1100,6 @@ script = ExtResource( 3 )
 movementResource = ExtResource( 4 )
 rightShadowX = 0.0
 leftShadowX = -2.0
-maxLeapRange = 200
-minLeapRange = 100
-leapTimeMax = 15.0
-BaseLeapSpeed = 500.0
 
 [node name="Shadow" type="Sprite" parent="." index="0"]
 position = Vector2( 0, 6 )
@@ -1086,13 +1130,10 @@ leaveRange = 1000
 visible = false
 
 [node name="AttackPivot" parent="." index="6" instance=ExtResource( 6 )]
-weaponStatsResources = [ ExtResource( 9 ), ExtResource( 8 ) ]
+weaponStatsResources = [ ExtResource( 8 ) ]
 
 [node name="Swipe" parent="AttackPivot" index="1"]
 frame = 0
-
-[node name="Weapon" parent="AttackPivot/WeaponRestingPos" index="0"]
-scale = Vector2( 1.5, 1.5 )
 
 [node name="Particles2D" type="Particles2D" parent="AttackPivot" index="6"]
 position = Vector2( 0, 5 )
@@ -1103,14 +1144,14 @@ one_shot = true
 explosiveness = 0.65
 process_material = SubResource( 5 )
 
-[node name="LeapTimer" type="Timer" parent="." index="7"]
+[node name="BurstTimer" type="Timer" parent="." index="7"]
 one_shot = true
 
 [node name="GroundPoundHitbox" parent="." index="8" instance=ExtResource( 10 )]
 script = ExtResource( 11 )
 
 [node name="hitboxCollision" parent="GroundPoundHitbox" index="0"]
-position = Vector2( 0, 3 )
+position = Vector2( 5, 3 )
 shape = SubResource( 6 )
 disabled = true
 
