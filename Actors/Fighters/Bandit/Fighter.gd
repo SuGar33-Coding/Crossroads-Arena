@@ -126,6 +126,9 @@ func playMeleeAttack():
 	animationPlayer.play("MeleeAttack")
 
 func _hurtbox_area_entered(area: Hitbox):
+	# Stop any sheen
+	attackPivot.weaponMat.set_shader_param("active", false)
+	
 	._hurtbox_area_entered(area)
 	# Only play damaged if we're not dead
 	if(stats.health >= 1):
