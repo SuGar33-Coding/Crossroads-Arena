@@ -95,6 +95,7 @@ func _physics_process(delta):
 					weaponFxTween.interpolate_property(rangedFx, "scale", Vector2.ONE, Vector2.ZERO, getRangedAttackSpeed())
 					weaponFxTween.interpolate_property(rangedFx, "scale", Vector2.ZERO, Vector2.ONE, RangedProjectile.REDUCED, Tween.TRANS_LINEAR, Tween.EASE_IN_OUT, getRangedAttackSpeed())
 					weaponFxTween.start()
+					rangedFx.global_position = get_global_mouse_position()
 					rangedFx.visible = true
 					attackTimer.start(.5)
 					PlayerStats.maxSpeed *= .5
