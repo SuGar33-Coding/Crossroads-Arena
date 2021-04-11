@@ -20,8 +20,8 @@ onready var weaponFxTween := $WeaponEffects
 onready var rangedWeapon : WeaponStats = preload("res://Weapons/BaseBow.tres")
 onready var meleeWeapon : WeaponStats = weaponStats
 
-signal meleeAttack()
-signal stab()
+signal meleeQuick()
+signal meleeLong()
 signal parry()
 
 
@@ -30,8 +30,8 @@ func _ready():
 	
 	parryHitbox.connect("area_entered", self, "_parried_weapon")
 	comboTimer.connect("timeout", self, "_combo_finished")
-	self.connect("meleeAttack", self.get_parent(), "_melee_attack")
-	self.connect("stab", self.get_parent(), "_stab")
+	self.connect("meleeQuick", self.get_parent(), "_melee_quick")
+	self.connect("meleeLong", self.get_parent(), "_meleeLong")
 	self.connect("parry", self.get_parent(), "_parry")
 	
 
@@ -45,28 +45,26 @@ func _physics_process(delta):
 	
 	if not animationPlayer.is_playing():
 		if Input.is_action_just_pressed("attack") and attackTimer.is_stopped():
+			if backTween.is_active():
+				backTween.stop_all()
+				backTween.remove_all()
 			match weaponStats.weaponType:
-				WeaponStats.WeaponType.MELEE:
-					if backTween.is_active():
-						backTween.stop_all()
-						backTween.remove_all()
-					
-					var attackDuration = animationPlayer.get_animation("MeleeAttack").length
+				WeaponStats.WeaponType.MELEE:	
 					var attackType: int
 					if comboCounter == 0:
 						# Minimum time between attacks is the time it takes to play the attack animation
-						attackTimer.start(max(weaponStats.attackSpeed * .4 * PlayerStats.attackSpeed, attackDuration))
-						emit_signal("meleeAttack")
+						attackTimer.start(getMeleeAttackTime(0.4))
+						emit_signal("meleeQuick")
 						attackType = MeleeAttackType.QUICK
 						comboTimer.start(comboTime*.65)
 					elif comboCounter == 1:
-						attackTimer.start(max(weaponStats.attackSpeed * .75 * PlayerStats.attackSpeed, attackDuration))
-						emit_signal("meleeAttack")
+						attackTimer.start(getMeleeAttackTime(0.75))
+						emit_signal("meleeQuick")
 						attackType = MeleeAttackType.QUICK
 						comboTimer.start(comboTime)
 					else:
-						attackTimer.start(max(weaponStats.attackSpeed * PlayerStats.attackSpeed, attackDuration))
-						emit_signal("stab")
+						attackTimer.start(getMeleeAttackTime())
+						emit_signal("meleeLong")
 						attackType = MeleeAttackType.LONG
 						comboTimer.stop()
 						
@@ -75,16 +73,12 @@ func _physics_process(delta):
 					var animLength = animationPlayer.current_animation_length
 					self.startMeleeAttack(animLength, attackType)					
 				WeaponStats.WeaponType.HEAVY:
-					if backTween.is_active():
-						backTween.stop_all()
-						backTween.remove_all()
-					
 					var attackDuration = animationPlayer.get_animation("MeleeAttack").length
 					var attackType: int
 					
 					# Minimum time between attacks is the time it takes to play the attack animation
 					attackTimer.start(max(weaponStats.attackSpeed * PlayerStats.attackSpeed, attackDuration))
-					emit_signal("meleeAttack")
+					emit_signal("meleeQuick")
 					attackType = MeleeAttackType.QUICK
 					comboTimer.start(comboTime*.65)
 				
@@ -92,8 +86,8 @@ func _physics_process(delta):
 					self.startMeleeAttack(animLength, attackType)
 				WeaponStats.WeaponType.RANGED:
 					# Ranged weapon, enter the pull back state
-					weaponFxTween.interpolate_property(rangedFx, "scale", Vector2.ONE, Vector2.ZERO, getRangedAttackSpeed())
-					weaponFxTween.interpolate_property(rangedFx, "scale", Vector2.ZERO, Vector2.ONE, RangedProjectile.REDUCED, Tween.TRANS_LINEAR, Tween.EASE_IN_OUT, getRangedAttackSpeed())
+					weaponFxTween.interpolate_property(rangedFx, "scale", Vector2.ONE, Vector2.ZERO, getRangedAttackTime())
+					weaponFxTween.interpolate_property(rangedFx, "scale", Vector2.ZERO, Vector2.ONE, RangedProjectile.REDUCED, Tween.TRANS_LINEAR, Tween.EASE_IN_OUT, getRangedAttackTime())
 					weaponFxTween.start()
 					rangedFx.global_position = get_global_mouse_position()
 					rangedFx.visible = true
@@ -107,7 +101,7 @@ func _physics_process(delta):
 			rangedFx.visible = false
 			PlayerStats.resetMaxSpeed()
 			# To measure accuracy, we find what portion of the attack speed time they were off
-			var atkSpeed = max(weaponStats.attackSpeed * PlayerStats.attackSpeed, .5)
+			var atkSpeed = getRangedAttackTime()
 			self.startRangedAttack(PlayerStats.strength, chargingTime - atkSpeed)
 			
 		elif Input.is_action_just_pressed("fire") and weaponStats.weaponType == WeaponStats.WeaponType.MELEE and attackTimer.is_stopped():
@@ -115,13 +109,16 @@ func _physics_process(delta):
 			self.startParry()
 			
 		elif Input.is_action_just_pressed("swap"):
-			self.comboCounter = 0
 			if weaponStats.name == meleeWeapon.name:
 				setWeapon(rangedWeapon)
 			else:
 				setWeapon(meleeWeapon)
 
-func getRangedAttackSpeed() -> float:
+func getMeleeAttackTime(modifier = 1.0) -> float:
+	var attackDuration = animationPlayer.get_animation("MeleeAttack").length
+	return max(weaponStats.attackSpeed * modifier * PlayerStats.attackSpeed, attackDuration)
+
+func getRangedAttackTime() -> float:
 	return max(weaponStats.attackSpeed * PlayerStats.attackSpeed, .5)
 
 func startParry():
@@ -139,6 +136,7 @@ func startParry():
 	parryTween.start()
 
 func setWeapon(weaponStats : WeaponStats):
+	self.comboCounter = 0
 	if comboTimer != null:
 		comboTimer.stop()
 		comboTimer.emit_signal("timeout")

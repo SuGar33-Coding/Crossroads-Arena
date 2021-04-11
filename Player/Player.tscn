@@ -1,4 +1,4 @@
-[gd_scene load_steps=22 format=2]
+[gd_scene load_steps=23 format=2]
 
 [ext_resource path="res://Assets/CharacterAssets/knight 24x24 walk v2.png" type="Texture" id=1]
 [ext_resource path="res://Player/Player.gd" type="Script" id=2]
@@ -12,6 +12,7 @@
 [ext_resource path="res://Assets/CharacterAssets/Shadows/MediumShadow.png" type="Texture" id=10]
 [ext_resource path="res://Audio/Footstep2.wav" type="AudioStream" id=11]
 [ext_resource path="res://Audio/Footstep1.wav" type="AudioStream" id=12]
+[ext_resource path="res://Weapons/LongSword.tres" type="Resource" id=13]
 
 [sub_resource type="CapsuleShape2D" id=1]
 radius = 4.5
@@ -427,6 +428,7 @@ smoothing_speed = 8.0
 
 [node name="AttackPivot" parent="." instance=ExtResource( 5 )]
 script = ExtResource( 3 )
+weaponStatsResources = [ ExtResource( 13 ) ]
 
 [node name="WeaponHitbox" parent="AttackPivot" index="0"]
 collision_mask = 32

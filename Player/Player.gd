@@ -146,13 +146,13 @@ func _playerstats_no_health():
 	world.playerDied()
 	self.queue_free()
 	
-func _melee_attack():
+func _melee_quick():
 	animationPlayer.play("MeleeAttack")
 	PlayerStats.maxSpeed *= .65
 	
-func _stab():
+func _meleeLong():
 	animationPlayer.play("Stab")
-	PlayerStats.resetMaxSpeed()
+	_combo_finished()
 	
 func _parry():
 	animationPlayer.play("Parry")
