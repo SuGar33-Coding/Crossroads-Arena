@@ -45,7 +45,7 @@ scale_curve = SubResource( 4 )
 color = Color( 0.627451, 0, 0, 1 )
 
 [sub_resource type="CapsuleShape2D" id=6]
-radius = 17.5
+radius = 20.0
 
 [sub_resource type="Animation" id=7]
 length = 0.3
@@ -397,7 +397,7 @@ tracks/7/keys = {
 "values": [ Vector2( 0.5, 0.5 ), Vector2( 0.5, 0.5 ), Vector2( 1.25, 1.25 ), Vector2( 1, 1 ) ]
 }
 tracks/8/type = "value"
-tracks/8/path = NodePath("GroundPoundHitbox/hitboxCollision:disabled")
+tracks/8/path = NodePath("AttackPivot/GroundPoundHitbox/hitboxCollision:disabled")
 tracks/8/interp = 1
 tracks/8/loop_wrap = true
 tracks/8/imported = false
@@ -427,10 +427,10 @@ tracks/10/loop_wrap = true
 tracks/10/imported = false
 tracks/10/enabled = true
 tracks/10/keys = {
-"times": PoolRealArray( 0.6, 0.85, 1.2 ),
-"transitions": PoolRealArray( 6.49802, 1, 1 ),
+"times": PoolRealArray( 0.6, 0.85, 1.1, 1.3 ),
+"transitions": PoolRealArray( 6.49802, 1, 1, 1 ),
 "update": 0,
-"values": [ -165.0, 65.0, -165.0 ]
+"values": [ -165.0, 65.0, 65.0, -165.0 ]
 }
 tracks/11/type = "value"
 tracks/11/path = NodePath("AttackPivot/WeaponRestingPos:position")
@@ -439,10 +439,10 @@ tracks/11/loop_wrap = true
 tracks/11/imported = false
 tracks/11/enabled = true
 tracks/11/keys = {
-"times": PoolRealArray( 0.6, 0.85, 1.2 ),
-"transitions": PoolRealArray( 6.49801, 1, 1 ),
+"times": PoolRealArray( 0.6, 0.85, 1.1, 1.3 ),
+"transitions": PoolRealArray( 6.49801, 1, 1, 1 ),
 "update": 0,
-"values": [ Vector2( -16, 7 ), Vector2( 30, 4 ), Vector2( -16, 7 ) ]
+"values": [ Vector2( -16, 7 ), Vector2( 30, 4 ), Vector2( 30, 4 ), Vector2( -16, 7 ) ]
 }
 
 [sub_resource type="Animation" id=10]
@@ -604,7 +604,7 @@ tracks/12/keys = {
 "values": [ Vector2( 1, 1 ) ]
 }
 tracks/13/type = "value"
-tracks/13/path = NodePath("GroundPoundHitbox/hitboxCollision:disabled")
+tracks/13/path = NodePath("AttackPivot/GroundPoundHitbox/hitboxCollision:disabled")
 tracks/13/interp = 1
 tracks/13/loop_wrap = true
 tracks/13/imported = false
@@ -762,7 +762,7 @@ tracks/7/keys = {
 "values": [ Vector2( 1, 1 ), Vector2( 0.5, 0.5 ) ]
 }
 tracks/8/type = "value"
-tracks/8/path = NodePath("GroundPoundHitbox/hitboxCollision:disabled")
+tracks/8/path = NodePath("AttackPivot/GroundPoundHitbox/hitboxCollision:disabled")
 tracks/8/interp = 1
 tracks/8/loop_wrap = true
 tracks/8/imported = false
@@ -1135,6 +1135,9 @@ weaponStatsResources = [ ExtResource( 8 ) ]
 [node name="Swipe" parent="AttackPivot" index="1"]
 frame = 0
 
+[node name="Weapon" parent="AttackPivot/WeaponRestingPos" index="0"]
+rotation = -1.13446
+
 [node name="Particles2D" type="Particles2D" parent="AttackPivot" index="6"]
 position = Vector2( 0, 5 )
 emitting = false
@@ -1144,18 +1147,20 @@ one_shot = true
 explosiveness = 0.65
 process_material = SubResource( 5 )
 
-[node name="BurstTimer" type="Timer" parent="." index="7"]
-one_shot = true
-
-[node name="GroundPoundHitbox" parent="." index="8" instance=ExtResource( 10 )]
+[node name="GroundPoundHitbox" parent="AttackPivot" index="9" instance=ExtResource( 10 )]
+position = Vector2( 0, 5 )
 script = ExtResource( 11 )
+hitboxRadius = 20.0
 
-[node name="hitboxCollision" parent="GroundPoundHitbox" index="0"]
-position = Vector2( 5, 3 )
+[node name="hitboxCollision" parent="AttackPivot/GroundPoundHitbox" index="0"]
+position = Vector2( 0, 5 )
 shape = SubResource( 6 )
 disabled = true
 
-[node name="AnimationPlayer" type="AnimationPlayer" parent="." index="9"]
+[node name="BurstTimer" type="Timer" parent="." index="7"]
+one_shot = true
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="." index="8"]
 autoplay = "Idle"
 anims/Damaged = SubResource( 7 )
 anims/Death = SubResource( 8 )
@@ -1175,4 +1180,4 @@ anims/Walk = SubResource( 15 )
 
 [editable path="AttackPivot/WeaponHitbox"]
 
-[editable path="GroundPoundHitbox"]
+[editable path="AttackPivot/GroundPoundHitbox"]

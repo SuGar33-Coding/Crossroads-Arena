@@ -15,7 +15,7 @@ var poundRange : float
 var burstTarget : Vector2 = Vector2.ZERO
 
 onready var burstTimer := $BurstTimer
-onready var poundHitbox := $GroundPoundHitbox
+onready var poundHitbox := $AttackPivot/GroundPoundHitbox
 
 func _ready():
 	poundRange = poundHitbox.hitboxRadius + poundHitbox.hitboxHeight
@@ -54,6 +54,12 @@ func willAttack() -> bool:
 func willStun() -> bool:
 	return not bursting
 
+func lookAtTarget():
+	#if bursting:
+	#	attackPivot.rotation = 0
+	#else:
+	attackPivot.lookAtTarget(detectionZone.target.position)
+
 func slowBurstSpeed():
 	BurstSpeed *= .1
 	
@@ -83,6 +89,11 @@ func spawnPoundFx():
 	poundFxInstance.z_index = -1
 	poundFxInstance.emitting = true
 	get_tree().current_scene.add_child(poundFxInstance)
+	"""poundFxInstance = groundPoundFx.instance()
+	poundFxInstance.position = Vector2(50, 0)
+	poundFxInstance.z_index = -1
+	poundFxInstance.emitting = true
+	attackPivot.add_child(poundFxInstance)"""
 
 func canBurst():
 	if self.isTargetVisible:
