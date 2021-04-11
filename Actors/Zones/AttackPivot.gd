@@ -14,14 +14,14 @@ enum MeleeAttackType {
 export var swingDegrees := 110.0
 export(Array, Resource) var weaponStatsResources : Array
 
-onready var weapon : Sprite = $WeaponRestingPos/Weapon
+onready var weaponSprite : Sprite = $WeaponRestingPos/Weapon
 onready var restingPos := $WeaponRestingPos
 onready var swipe := $Swipe
 onready var tween := $WeaponTween
 onready var backTween := $BackTween
 onready var collision := $WeaponHitbox/WeaponCollision
 onready var weaponHitbox = $WeaponHitbox
-onready var restingRotation = weapon.rotation
+onready var restingRotation = weaponSprite.rotation
 onready var weaponStats : WeaponStats
 onready var attackTimer := $AttackTimer
 onready var attackSignalPos := $WeaponRestingPos/AttackSignalPos
@@ -30,7 +30,7 @@ onready var longSfx: AudioStreamPlayer2D = $LongSFX
 
 # TODO: Probably change these?
 onready var meleeRestingCoord : Vector2 = restingPos.position
-onready var meleeRestingRotation = weapon.rotation
+onready var meleeRestingRotation = weaponSprite.rotation
 
 var swordAnimDist
 var tweenLength
@@ -55,8 +55,8 @@ func _ready():
 	tween.connect("tween_all_completed", self, "_on_WeaponTween_tween_completed")
 	
 	# Get a local copy of weapon mat
-	weapon.material = weapon.material.duplicate()
-	weaponMat = weapon.material
+	weaponSprite.material = weaponSprite.material.duplicate()
+	weaponMat = weaponSprite.material
 	
 
 func _process(delta):
@@ -91,10 +91,10 @@ func startMeleeAttack(animLength: float, type = MeleeAttackType.QUICK):
 	if weaponStats.weaponType == WeaponStats.WeaponType.MELEE or weaponStats.weaponType == WeaponStats.WeaponType.HEAVY:
 		self.tweenLength = animLength/2
 		swipe.set_deferred("flip_h", not swipe.flip_h)
-		tween.interpolate_property(weapon, "position", weapon.position, swordAnimDist, tweenLength)
+		tween.interpolate_property(weaponSprite, "position", weaponSprite.position, swordAnimDist, tweenLength)
 		var endRotation = restingRotation + deg2rad(swingDegrees) 
 		
-		tween.interpolate_property(weapon, "rotation", weapon.rotation, endRotation, tweenLength)
+		tween.interpolate_property(weaponSprite, "rotation", weaponSprite.rotation, endRotation, tweenLength)
 		
 		tween.start()
 		
@@ -126,15 +126,15 @@ func startRangedAttack(sourceStr := 0, accuracy := 1.0):
 func setWeapon(weaponStats : WeaponStats):
 	self.weaponStats = weaponStats
 	weaponHitbox.setWeapon(weaponStats)
-	weapon.texture = weaponStats.texture
+	weaponSprite.texture = weaponStats.texture
 	tween.remove_all()
 	backTween.remove_all()
-	weapon.position = Vector2.ZERO
+	weaponSprite.position = Vector2.ZERO
 	
 	if weaponStats.weaponType == WeaponStats.WeaponType.MELEE:
 		restingPos.position = meleeRestingCoord
-		weapon.rotation = restingRotation
-		returnRot = weapon.rotation
+		weaponSprite.rotation = restingRotation
+		returnRot = weaponSprite.rotation
 		swordAnimDist = collision.position - restingPos.position
 		swipe.frame = 0
 		
@@ -144,7 +144,7 @@ func setWeapon(weaponStats : WeaponStats):
 		swipe.scale.y = 1.5 * (weaponStats.length/2 + weaponStats.radius)/10
 	elif weaponStats.weaponType == WeaponStats.WeaponType.HEAVY:
 		restingPos.position = meleeRestingCoord + Vector2(-15, 15)
-		weapon.rotation = deg2rad(-165)
+		weaponSprite.rotation = deg2rad(-165)
 		returnRot = deg2rad(-165)
 		swordAnimDist = collision.position - restingPos.position
 		swipe.frame = 0
@@ -155,19 +155,19 @@ func setWeapon(weaponStats : WeaponStats):
 		swipe.scale.y = 1.5 * (weaponStats.length/2 + weaponStats.radius)/10
 	else:
 		restingPos.set_deferred("position", Vector2(15, 0))
-		weapon.set_deferred("rotation", deg2rad(45))
-		print(weapon.rotation)
+		weaponSprite.set_deferred("rotation", deg2rad(45))
+		print(weaponSprite.rotation)
 
 # TODO: Can set tween delay rather than making multiple tweens
 func _on_WeaponTween_tween_completed():
 		
 	self.show_behind_parent = not self.show_behind_parent
-	backTween.interpolate_property(weapon, "position", weapon.position, Vector2(-20, 5), self.tweenLength, Tween.TRANS_LINEAR, Tween.EASE_IN_OUT)
-	backTween.interpolate_property(weapon, "rotation", weapon.rotation, restingRotation - deg2rad(50), self.tweenLength, Tween.TRANS_LINEAR, Tween.EASE_IN)
+	backTween.interpolate_property(weaponSprite, "position", weaponSprite.position, Vector2(-20, 5), self.tweenLength, Tween.TRANS_LINEAR, Tween.EASE_IN_OUT)
+	backTween.interpolate_property(weaponSprite, "rotation", weaponSprite.rotation, restingRotation - deg2rad(50), self.tweenLength, Tween.TRANS_LINEAR, Tween.EASE_IN)
 
 	# Add the .007 so if player is spam clicking it feels more fluid/no stop on swing
-	backTween.interpolate_property(weapon, "position", Vector2(-20, 5), Vector2.ZERO, attackTimer.time_left + .007, Tween.TRANS_LINEAR, Tween.EASE_IN_OUT, self.tweenLength)
-	backTween.interpolate_property(weapon, "rotation", restingRotation - deg2rad(50), returnRot, attackTimer.time_left + .007, Tween.TRANS_LINEAR, Tween.EASE_IN, self.tweenLength)
+	backTween.interpolate_property(weaponSprite, "position", Vector2(-20, 5), Vector2.ZERO, attackTimer.time_left + .007, Tween.TRANS_LINEAR, Tween.EASE_IN_OUT, self.tweenLength)
+	backTween.interpolate_property(weaponSprite, "rotation", restingRotation - deg2rad(50), returnRot, attackTimer.time_left + .007, Tween.TRANS_LINEAR, Tween.EASE_IN, self.tweenLength)
 	
 	backTween.start()
 
