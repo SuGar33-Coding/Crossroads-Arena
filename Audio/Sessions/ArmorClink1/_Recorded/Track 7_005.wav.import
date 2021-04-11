@@ -1,0 +1,21 @@
+[remap]
+
+importer="wav"
+type="AudioStreamSample"
+path="res://.import/Track 7_005.wav-4930bdbe633d089ae0eaa8e60f177aef.sample"
+
+[deps]
+
+source_file="res://Audio/Sessions/ArmorClink1/_Recorded/Track 7_005.wav"
+dest_files=[ "res://.import/Track 7_005.wav-4930bdbe633d089ae0eaa8e60f177aef.sample" ]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop=false
+compress/mode=0
