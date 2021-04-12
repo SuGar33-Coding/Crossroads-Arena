@@ -96,9 +96,6 @@ position = Vector2( 0.078743, -0.0787449 )
 position = Vector2( -0.157494, 0.386038 )
 rotation = -1.5708
 
-[node name="Stats" parent="." index="3"]
-con = -10
-
 [node name="Hitbox" parent="." index="4" instance=ExtResource( 3 )]
 damage = 25
 knockbackValue = 550.0

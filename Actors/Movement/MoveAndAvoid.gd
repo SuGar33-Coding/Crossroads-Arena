@@ -18,7 +18,7 @@ func getMovementDirection(selfNode: KinematicBody2D, targetPos: Vector2, delta: 
 	# Move away from allies with strength proportional to how close you are to closest ally
 	var avoidanceDir: Vector2
 	var avoidanceWeight: float
-	if selfNode.isEnemyVisible:
+	if selfNode.isTargetVisible:
 		avoidanceDir = getAvoidanceDir(selfNode)
 		avoidanceWeight = getAvoidanceWeight(selfNode)
 	else:
