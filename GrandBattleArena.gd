@@ -5,6 +5,7 @@ var Slime = preload("res://Actors/Slime/Slime.tscn")
 var Brute = preload("res://Actors/Brute/Brute.tscn")
 var ChaosKnight = preload("res://Actors/Fighters/ChaosKnight/ChaosKnight.tscn")
 var Rogue = preload("res://Actors/Fighters/Rogue/Rogue.tscn")
+var Charger = preload("res://Actors/Chargers/Charger/Charger.tscn")
 
 onready var people = $YSort/People
 onready var spawns = $Spawns
@@ -33,16 +34,19 @@ func spawnEnemies():
 	for spawn in spawns.get_children():
 		if randi() % 3 != 0:
 			var newFighter
-			var fighterSelect = randi() % 5
+			var fighterSelect = randi() % 6
 			if fighterSelect == 0:
 				newFighter = Brute.instance()
 			elif fighterSelect == 1:
 				newFighter = ChaosKnight.instance()
 			elif fighterSelect == 2:
 				newFighter = Rogue.instance()
+			elif fighterSelect == 3:
+				newFighter = Charger.instance()
 			else:
 				newFighter = Fighter.instance()
 			
+			newFighter = Charger.instance()
 			newFighter.global_position = spawn.global_position + Vector2(rand_range(0, 20), rand_range(0,20))
 			people.add_child(newFighter)
 
