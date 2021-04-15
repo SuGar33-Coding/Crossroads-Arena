@@ -1,4 +1,4 @@
-extends FlankAndPoke
+class_name MaintainAndFlank extends FlankAndPoke
 
 func getMovementDirection(selfNode: KinematicBody2D, targetPos: Vector2, delta: float):
 	var movementDir: Vector2 = .getMovementDirection(selfNode, targetPos, delta)
