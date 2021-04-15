@@ -433,16 +433,16 @@ tracks/10/keys = {
 "values": [ -165.0, 65.0, 65.0, -165.0 ]
 }
 tracks/11/type = "value"
-tracks/11/path = NodePath("AttackPivot/WeaponRestingPos:position")
+tracks/11/path = NodePath("AttackPivot/WeaponRestingPos/Weapon:position")
 tracks/11/interp = 1
 tracks/11/loop_wrap = true
 tracks/11/imported = false
 tracks/11/enabled = true
 tracks/11/keys = {
 "times": PoolRealArray( 0.6, 0.85, 1.1, 1.3 ),
-"transitions": PoolRealArray( 6.49801, 1, 1, 1 ),
+"transitions": PoolRealArray( 1, 1, 1, 1 ),
 "update": 0,
-"values": [ Vector2( -16, 7 ), Vector2( 30, 4 ), Vector2( 30, 4 ), Vector2( -16, 7 ) ]
+"values": [ Vector2( 0, 0 ), Vector2( 46, -3 ), Vector2( 46, -3 ), Vector2( 0, 0 ) ]
 }
 
 [sub_resource type="Animation" id=10]
@@ -1136,7 +1136,7 @@ weaponStatsResources = [ ExtResource( 8 ) ]
 frame = 0
 
 [node name="Weapon" parent="AttackPivot/WeaponRestingPos" index="0"]
-rotation = -1.13446
+rotation = -2.87979
 
 [node name="Particles2D" type="Particles2D" parent="AttackPivot" index="6"]
 position = Vector2( 0, 5 )
