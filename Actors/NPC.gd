@@ -21,10 +21,10 @@ enum State {
 var HitEffect = preload("res://FX/HitEffect.tscn")
 var floatingText = preload("res://UI/FloatingText.tscn")
 var state = State.IDLE
-var velocity = Vector2.ZERO
-var knockback = Vector2.ZERO
+var velocity := Vector2.ZERO
+var knockback := Vector2.ZERO
 var target: Node2D = null
-var closestAlly : NPC = null
+var closestAlly: NPC = null
 var path: PoolVector2Array
 var pathIdx := 0
 var flag = true

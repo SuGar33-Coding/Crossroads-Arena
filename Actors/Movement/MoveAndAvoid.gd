@@ -3,7 +3,7 @@ extends Pathfind
 class_name MoveAndAvoid
 
 export var SmoothForce : float = .1
-export var radius : float = 1.0
+export var radius : float = 125.0
 export var avoidanceRadius : float = 25
 
 # Calculate direction from three weighted unit vectors:

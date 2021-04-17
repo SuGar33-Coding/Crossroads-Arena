@@ -1,6 +1,4 @@
-extends MoveAndAvoid
-
-class_name FlankAndPoke
+class_name FlankAndPoke extends MoveAndAvoid
 
 export var amplitude : float = .5
 
