@@ -8,7 +8,7 @@ export var rightShadowX = .5
 export var leftShadowX = .5
 
 onready var detectionZone := $DetectionZone
-onready var attackPivot := $AttackPivot
+onready var attackPivot: AttackPivot = $AttackPivot
 onready var weaponHitbox := $AttackPivot/WeaponHitbox
 onready var animationPlayer: AnimationPlayer = $AnimationPlayer
 onready var attackTimer := $AttackPivot/AttackTimer
@@ -66,8 +66,9 @@ func switchToAttack():
 			animationPlayer.play("MeleeWindup")
 			
 func switchToStun():
-	.switchToStun()
 	animationPlayer.play("Idle")
+	attackPivot.weaponCollision.disabled = true
+	.switchToStun()
 
 func willIdle() -> bool:
 	return !detectionZone.hasTarget()

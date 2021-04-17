@@ -1,6 +1,4 @@
-extends Position2D
-
-class_name AttackPivot
+class_name AttackPivot extends Position2D
 
 # TODO: make it so you can load different projectiles
 const RangedProjectileScene = preload("res://Weapons/RangedProjectile.tscn")
@@ -19,7 +17,7 @@ onready var restingPos := $WeaponRestingPos
 onready var swipe := $Swipe
 onready var tween := $WeaponTween
 onready var backTween := $BackTween
-onready var collision := $WeaponHitbox/WeaponCollision
+onready var weaponCollision := $WeaponHitbox/WeaponCollision
 onready var weaponHitbox = $WeaponHitbox
 onready var restingRotation = weaponSprite.rotation
 onready var weaponStats : WeaponStats
@@ -135,10 +133,10 @@ func setWeapon(weaponStats : WeaponStats):
 		restingPos.position = meleeRestingCoord
 		weaponSprite.rotation = restingRotation
 		returnRot = weaponSprite.rotation
-		swordAnimDist = collision.position - restingPos.position
+		swordAnimDist = weaponCollision.position - restingPos.position
 		swipe.frame = 0
 		
-		swipe.position = collision.position
+		swipe.position = weaponCollision.position
 		# Ratios I found from doing testing with OG sprite
 		swipe.scale.x = .6 * (weaponStats.radius)/10
 		swipe.scale.y = 1.5 * (weaponStats.length/2 + weaponStats.radius)/10
@@ -146,17 +144,16 @@ func setWeapon(weaponStats : WeaponStats):
 		restingPos.position = meleeRestingCoord + Vector2(-15, 15)
 		weaponSprite.rotation = deg2rad(-165)
 		returnRot = deg2rad(-165)
-		swordAnimDist = collision.position - restingPos.position
+		swordAnimDist = weaponCollision.position - restingPos.position
 		swipe.frame = 0
 		
-		swipe.position = collision.position
+		swipe.position = weaponCollision.position
 		# Ratios I found from doing testing with OG sprite
 		swipe.scale.x = .6 * (weaponStats.radius)/10
 		swipe.scale.y = 1.5 * (weaponStats.length/2 + weaponStats.radius)/10
 	else:
 		restingPos.set_deferred("position", Vector2(15, 0))
 		weaponSprite.set_deferred("rotation", deg2rad(45))
-		print(weaponSprite.rotation)
 
 # TODO: Can set tween delay rather than making multiple tweens
 func _on_WeaponTween_tween_completed():
