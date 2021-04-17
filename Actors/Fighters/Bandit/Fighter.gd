@@ -10,7 +10,7 @@ export var leftShadowX = .5
 onready var detectionZone := $DetectionZone
 onready var attackPivot := $AttackPivot
 onready var weaponHitbox := $AttackPivot/WeaponHitbox
-onready var animationPlayer := $AnimationPlayer
+onready var animationPlayer: AnimationPlayer = $AnimationPlayer
 onready var attackTimer := $AttackPivot/AttackTimer
 onready var shadowSprite := $Shadow
 
@@ -42,7 +42,7 @@ func _ready():
 
 func _physics_process(_delta):
 	if state == State.CHASE and velocity.length() > 0 and not animationPlayer.is_playing():
-		animationPlayer.play("Walk")
+		playMovement()
 	
 func lookAtTarget():
 	attackPivot.lookAtTarget(detectionZone.target.position)
@@ -121,6 +121,9 @@ func findClosestAlly():
 		
 	if minDist >= 1000:
 		closestAlly = null
+
+func playMovement():
+	animationPlayer.play("Walk")
 
 func playMeleeAttack():
 	animationPlayer.play("MeleeAttack")
