@@ -5,7 +5,7 @@ on:
       - working
 
 env:
-  GODOT_VERSION: 3.2.3
+  GODOT_VERSION: mono-3.2.3
   EXPORT_NAME: CrossroadsArena
 
 jobs:
