@@ -38,7 +38,7 @@ func _ready():
 	PlayerStats.health = PlayerStats.maxHealth
 	PlayerStats.playerLevel = 1
 	PlayerStats.currentXP = 0
-	
+
 	Friction = startingFriction
 	stats.connect("noHealth", self, "_playerstats_no_health")
 	stats.connect("playerLevelChanged", self, "_player_level_changed")
