@@ -46,7 +46,6 @@ func spawnEnemies():
 			else:
 				newFighter = Fighter.instance()
 			
-			newFighter = Charger.instance()
 			newFighter.global_position = spawn.global_position + Vector2(rand_range(0, 20), rand_range(0,20))
 			people.add_child(newFighter)
 
