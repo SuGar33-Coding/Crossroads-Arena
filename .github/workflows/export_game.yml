@@ -8,7 +8,7 @@ jobs:
   # job id, can be anything
   export_game:
     # Always use ubuntu-latest for this action
-    runs-on: ubuntu-18.04
+    runs-on: ubuntu-latest
     # Job name, can be anything
     name: Export Game Job
     steps:
