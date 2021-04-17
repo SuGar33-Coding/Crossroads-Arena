@@ -1,0 +1,35 @@
+# Whenever a push is made to the branch then run the job
+on: 
+  push:
+    branches:
+      - working
+
+env:
+  GODOT_VERSION: mono-3.2.3
+  EXPORT_NAME: CrossroadsArena
+
+jobs:
+  export-windows:
+    name: Windows
+    runs-on: ubuntu-latest
+    container:
+      image: barichello/godot-ci:mono-3.2.3
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+        with:
+          lfs: true
+      - name: Setup
+        run: |
+          mkdir -v -p ~/.local/share/godot/templates
+          mv /root/.local/share/godot/templates/${GODOT_VERSION}.stable ~/.local/share/godot/templates/${GODOT_VERSION}.stable
+      - name: Windows Build
+        run: |
+          mkdir -v -p build/windows
+          cd $EXPORT_NAME
+          godot -v --export "Windows Desktop" ../build/windows/$EXPORT_NAME.exe
+      - name: Upload Artifact
+        uses: actions/upload-artifact@v1
+        with:
+          name: windows
+          path: build/windows
