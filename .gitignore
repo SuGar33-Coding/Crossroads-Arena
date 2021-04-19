@@ -2,7 +2,7 @@
 .import/
 
 # Binaries
-bin/
+# bin/
 build/
 lib/
 
