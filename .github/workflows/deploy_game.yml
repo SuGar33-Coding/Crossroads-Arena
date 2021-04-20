@@ -49,14 +49,16 @@ jobs:
         run: |
           mkdir -v -p ~/.local/share/godot/templates
           mv /root/.local/share/godot/templates/${GODOT_VERSION}.stable.mono ~/.local/share/godot/templates/${GODOT_VERSION}.stable.mono
-      - name: Windows Build
+      - name: HTML5 Build
         run: |
           mkdir -v -p build/html5
           
-          godot -v --export "HTML5" ./build/html5/$EXPORT_NAME.exe
+          godot -v --export "HTML5" ./build/html5/index.html
         # cd $EXPORT_NAME
       - name: Upload Artifact
         uses: actions/upload-artifact@v1
         with:
           name: html5
           path: build/html5
+#       - name: Upload to Itch.io
+#         uses: josephbmanley/butler-publish-itchio-action@master
