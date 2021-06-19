@@ -56,7 +56,6 @@ func willStun() -> bool:
 		return .willStun()
 
 func switchToStun():
-	print("got here")
 	.switchToStun()
 	animationPlayer.play('Stunned')
 
