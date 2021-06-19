@@ -23,9 +23,10 @@ func _ready():
 	chargeTimeoutTimer.one_shot = true
 	add_child(chargeTimeoutTimer)
 
-func _physics_process(delta):
+func _physics_process(_delta):
 	if charging and (get_slide_count() > 0 or chargeTimeoutTimer.is_stopped()):
 		self.charging = false
+		self.switchToStun()
 
 func willAttack() -> bool:
 	if not charging:
@@ -53,6 +54,10 @@ func willStun() -> bool:
 		return false
 	else:
 		return .willStun()
+
+func switchToStun():
+	.switchToStun()
+	animationPlayer.play('Stunned')
 
 func willFlipLeft():
 	if charging:
