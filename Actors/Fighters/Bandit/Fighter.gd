@@ -67,7 +67,7 @@ func switchToAttack():
 			
 func switchToStun():
 	animationPlayer.play("Idle")
-	attackPivot.weaponCollision.disabled = true
+	attackPivot.weaponCollision.set_deferred("disabled", true)
 	.switchToStun()
 
 func willIdle() -> bool:
