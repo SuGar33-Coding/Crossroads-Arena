@@ -1,4 +1,4 @@
-[gd_scene load_steps=22 format=2]
+[gd_scene load_steps=23 format=2]
 
 [ext_resource path="res://Actors/Chargers/Charger/ChargerAttackPivot.gd" type="Script" id=1]
 [ext_resource path="res://Actors/Chargers/Charger/Charger.gd" type="Script" id=3]
@@ -34,7 +34,7 @@ scale = 3.0
 scale_curve = SubResource( 2 )
 color = Color( 0.627451, 0, 0, 1 )
 
-[sub_resource type="Animation" id=12]
+[sub_resource type="Animation" id=4]
 resource_name = "Charge"
 length = 0.4
 tracks/0/type = "value"
@@ -50,8 +50,7 @@ tracks/0/keys = {
 "values": [ Vector2( 0, -5 ), Vector2( 0, -6 ), Vector2( 0, -5 ) ]
 }
 
-[sub_resource type="Animation" id=4]
-resource_name = "ChargeWindup"
+[sub_resource type="Animation" id=5]
 length = 0.6
 step = 0.05
 tracks/0/type = "method"
@@ -81,7 +80,7 @@ tracks/1/keys = {
 "values": [ 0, 1, 1 ]
 }
 
-[sub_resource type="Animation" id=5]
+[sub_resource type="Animation" id=6]
 length = 0.3
 tracks/0/type = "method"
 tracks/0/path = NodePath(".")
@@ -146,7 +145,7 @@ tracks/4/keys = {
 "values": [ true ]
 }
 
-[sub_resource type="Animation" id=6]
+[sub_resource type="Animation" id=7]
 length = 2.2
 tracks/0/type = "value"
 tracks/0/path = NodePath("Hurtbox/HurtboxCollision:disabled")
@@ -283,7 +282,7 @@ tracks/10/keys = {
 "values": [ 0 ]
 }
 
-[sub_resource type="Animation" id=7]
+[sub_resource type="Animation" id=8]
 length = 0.01
 tracks/0/type = "value"
 tracks/0/path = NodePath("CollisionShape2D:disabled")
@@ -430,7 +429,7 @@ tracks/11/keys = {
 "values": [ 0 ]
 }
 
-[sub_resource type="Animation" id=8]
+[sub_resource type="Animation" id=9]
 length = 0.1
 step = 0.01
 tracks/0/type = "method"
@@ -524,7 +523,7 @@ tracks/6/keys = {
 } ]
 }
 
-[sub_resource type="Animation" id=9]
+[sub_resource type="Animation" id=10]
 length = 0.4
 tracks/0/type = "method"
 tracks/0/path = NodePath(".")
@@ -615,7 +614,7 @@ tracks/6/keys = {
 "values": [ 0 ]
 }
 
-[sub_resource type="Animation" id=10]
+[sub_resource type="Animation" id=11]
 length = 0.5
 tracks/0/type = "method"
 tracks/0/path = NodePath(".")
@@ -694,7 +693,73 @@ tracks/5/keys = {
 "values": [ true ]
 }
 
-[sub_resource type="Animation" id=11]
+[sub_resource type="Animation" id=12]
+resource_name = "Stunned"
+length = 2.0
+tracks/0/type = "method"
+tracks/0/path = NodePath(".")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 2 ),
+"transitions": PoolRealArray( 1 ),
+"values": [ {
+"args": [  ],
+"method": "switchToChase"
+} ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("Sprite:modulate")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0, 0.5, 1, 1.5, 2 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1 ),
+"update": 0,
+"values": [ Color( 1, 1, 1, 1 ), Color( 0.968627, 1, 0, 1 ), Color( 1, 1, 1, 1 ), Color( 0.968627, 1, 0, 1 ), Color( 1, 1, 1, 1 ) ]
+}
+tracks/2/type = "value"
+tracks/2/path = NodePath("Sprite:scale")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Vector2( 1, 1 ) ]
+}
+tracks/3/type = "value"
+tracks/3/path = NodePath("AttackPivot/Swipe:frame")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ 0 ]
+}
+tracks/4/type = "value"
+tracks/4/path = NodePath("AttackPivot/WeaponHitbox/ParryHitbox/ParryCollision:disabled")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ true ]
+}
+
+[sub_resource type="Animation" id=13]
 length = 0.6
 loop = true
 tracks/0/type = "value"
@@ -775,20 +840,18 @@ process_material = SubResource( 3 )
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="." index="7"]
 autoplay = "Idle"
-anims/Charge = SubResource( 12 )
-anims/ChargeWindup = SubResource( 4 )
-anims/Damaged = SubResource( 5 )
-anims/Death = SubResource( 6 )
-anims/Idle = SubResource( 7 )
-anims/MeleeAttack = SubResource( 8 )
-anims/MeleeWindup = SubResource( 9 )
-anims/RangedAttack = SubResource( 10 )
-anims/Walk = SubResource( 11 )
+anims/Charge = SubResource( 4 )
+anims/ChargeWindup = SubResource( 5 )
+anims/Damaged = SubResource( 6 )
+anims/Death = SubResource( 7 )
+anims/Idle = SubResource( 8 )
+anims/MeleeAttack = SubResource( 9 )
+anims/MeleeWindup = SubResource( 10 )
+anims/RangedAttack = SubResource( 11 )
+anims/Stunned = SubResource( 12 )
+anims/Walk = SubResource( 13 )
 
 [editable path="Hurtbox"]
-
 [editable path="DetectionZone"]
-
 [editable path="AttackPivot"]
-
 [editable path="AttackPivot/WeaponHitbox"]
