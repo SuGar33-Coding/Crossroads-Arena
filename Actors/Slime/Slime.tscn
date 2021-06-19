@@ -1,0 +1,120 @@
+[gd_scene load_steps=10 format=2]
+
+[ext_resource path="res://Actors/NPC.tscn" type="PackedScene" id=1]
+[ext_resource path="res://Assets/CharacterAssets/Slime.png" type="Texture" id=2]
+[ext_resource path="res://Actors/Zones/Hitbox.tscn" type="PackedScene" id=3]
+[ext_resource path="res://Actors/Zones/DetectionZone.tscn" type="PackedScene" id=4]
+[ext_resource path="res://Actors/Slime/Slime.gd" type="Script" id=5]
+[ext_resource path="res://Actors/Movement/BurstMoveAA.tres" type="Resource" id=6]
+
+[sub_resource type="CapsuleShape2D" id=1]
+radius = 2.75343
+height = 5.29347
+
+[sub_resource type="Animation" id=2]
+resource_name = "Damaged"
+length = 0.3
+tracks/0/type = "method"
+tracks/0/path = NodePath(".")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0.3 ),
+"transitions": PoolRealArray( 1 ),
+"values": [ {
+"args": [  ],
+"method": "switchToChase"
+} ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("Sprite:modulate")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0, 0.075, 0.15, 0.225, 0.3 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1 ),
+"update": 0,
+"values": [ Color( 1, 1, 1, 1 ), Color( 0.682353, 0, 0, 1 ), Color( 1, 1, 1, 1 ), Color( 0.682353, 0, 0, 1 ), Color( 1, 1, 1, 1 ) ]
+}
+
+[sub_resource type="Animation" id=3]
+length = 0.6
+loop = true
+step = 0.15
+tracks/0/type = "value"
+tracks/0/path = NodePath("Sprite:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.15, 0.3, 0.45 ),
+"transitions": PoolRealArray( 1, 1, 1, 1 ),
+"update": 1,
+"values": [ 0, 1, 2, 3 ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("Sprite:scale")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Vector2( 0.5, 0.5 ) ]
+}
+
+[node name="Slime" instance=ExtResource( 1 )]
+script = ExtResource( 5 )
+movementResource = ExtResource( 6 )
+baseSpeed = 300.0
+Acceleration = 350.0
+Friction = 800.0
+pathfindTime = 1.0
+movementMaxTime = 1.5
+
+[node name="CollisionShape2D" parent="." index="0"]
+position = Vector2( -0.0873377, 1.71341 )
+
+[node name="Sprite" parent="." index="1"]
+position = Vector2( 0.0993537, -4.40469 )
+scale = Vector2( 0.5, 0.5 )
+texture = ExtResource( 2 )
+vframes = 2
+hframes = 2
+
+[node name="Hurtbox" parent="." index="2"]
+position = Vector2( 0.078743, -0.0787449 )
+
+[node name="HurtboxCollision" parent="Hurtbox" index="0"]
+position = Vector2( -0.157494, 0.386038 )
+rotation = -1.5708
+
+[node name="Hitbox" parent="." index="4" instance=ExtResource( 3 )]
+damage = 25
+knockbackValue = 550.0
+
+[node name="hitboxCollision" parent="Hitbox" index="0"]
+position = Vector2( 0.0701599, 0.420925 )
+shape = SubResource( 1 )
+
+[node name="DetectionZone" parent="." index="5" instance=ExtResource( 4 )]
+detectionRange = 200
+leaveRange = 450
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="." index="6"]
+autoplay = "Idle"
+anims/Damaged = SubResource( 2 )
+anims/Idle = SubResource( 3 )
+
+[editable path="Hurtbox"]
+
+[editable path="Hitbox"]
+
+[editable path="DetectionZone"]

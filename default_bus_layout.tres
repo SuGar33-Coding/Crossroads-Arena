@@ -1,21 +1,40 @@
-[gd_resource type="AudioBusLayout" load_steps=4 format=2]
+[gd_resource type="AudioBusLayout" load_steps=7 format=2]
 
 [sub_resource type="AudioEffectLowPassFilter" id=1]
 resource_name = "LowPassFilter"
 cutoff_hz = 10000.0
 
-[sub_resource type="AudioEffectLowPassFilter" id=2]
-resource_name = "LowPassFilter"
+[sub_resource type="AudioEffectHighPassFilter" id=2]
+resource_name = "HighPassFilter"
+cutoff_hz = 1000.0
 
-[sub_resource type="AudioEffectReverb" id=3]
+[sub_resource type="AudioEffectLowPassFilter" id=3]
+resource_name = "LowPassFilter"
+cutoff_hz = 10000.0
+
+[sub_resource type="AudioEffectReverb" id=4]
 resource_name = "Reverb"
-room_size = 0.22
-damping = 0.81
-spread = 0.56
-wet = 0.18
+room_size = 0.11
+damping = 0.83
+spread = 0.16
+wet = 0.07
+
+[sub_resource type="AudioEffectDistortion" id=5]
+resource_name = "Distortion"
+mode = 3
+drive = 0.25
+
+[sub_resource type="AudioEffectEQ" id=6]
+resource_name = "EQ"
+band_db/32_hz = -8.4
+band_db/100_hz = -5.8
+band_db/320_hz = -1.8
+band_db/1000_hz = -3.1
+band_db/3200_hz = -8.4
+band_db/10000_hz = -22.5
 
 [resource]
-bus/0/volume_db = -12.4611
+bus/0/volume_db = -0.130497
 bus/1/name = "AttackSFX"
 bus/1/solo = false
 bus/1/mute = false
@@ -23,14 +42,26 @@ bus/1/bypass_fx = false
 bus/1/volume_db = 0.0
 bus/1/send = "Master"
 bus/1/effect/0/effect = SubResource( 1 )
-bus/1/effect/0/enabled = true
+bus/1/effect/0/enabled = false
+bus/1/effect/1/effect = SubResource( 2 )
+bus/1/effect/1/enabled = true
 bus/2/name = "DmgSFX"
 bus/2/solo = false
 bus/2/mute = false
 bus/2/bypass_fx = false
-bus/2/volume_db = 0.0
+bus/2/volume_db = -0.130497
 bus/2/send = "Master"
-bus/2/effect/0/effect = SubResource( 2 )
-bus/2/effect/0/enabled = true
-bus/2/effect/1/effect = SubResource( 3 )
-bus/2/effect/1/enabled = true
+bus/2/effect/0/effect = SubResource( 3 )
+bus/2/effect/0/enabled = false
+bus/2/effect/1/effect = SubResource( 4 )
+bus/2/effect/1/enabled = false
+bus/2/effect/2/effect = SubResource( 5 )
+bus/2/effect/2/enabled = false
+bus/3/name = "PlayerWalking"
+bus/3/solo = false
+bus/3/mute = false
+bus/3/bypass_fx = false
+bus/3/volume_db = -5.04538
+bus/3/send = "Master"
+bus/3/effect/0/effect = SubResource( 6 )
+bus/3/effect/0/enabled = true

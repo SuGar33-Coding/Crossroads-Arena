@@ -1,9 +1,30 @@
 extends Node
 
-export(int) var maxHealth = 1 setget setMaxHealth, getMaxHealth
-export(int) var playerLevel = 1 setget setPlayerLevel
-export(int) var currentXP = 0 setget setCurrentXP, getCurrentXP
-export(float) var attackSpeed = .5
+var levelUpMenu = preload("res://UI/LevelUp.tscn")
+
+
+var startingMaxHealth : int = 75 setget setStartingHealth
+var maxHealth : int = startingMaxHealth setget setMaxHealth, getMaxHealth
+var health = startingMaxHealth setget setHealth, getHealth
+var baseSpeed : int = 150
+var maxSpeed : float = baseSpeed
+var playerLevel : int = 1 setget setPlayerLevel
+var currentXP : int = 0 setget setCurrentXP, getCurrentXP
+var strength : int = 0 setget setStr
+export(float) var strRatio := 1.2
+var con : int = 0 setget setCon
+var conRatio : float = 1.2
+var conFrictionRatio : float = 1.1
+var dex : int = 0 setget setDex
+var dexMoveRatio : float = 1.025
+var dexAttackRatio : float = .93
+var dexDashRatio : float = .95
+# AttackSpeed starts at 1 and then will slowly scale down as it's multiplied by weapon attack speed
+var attackSpeed : float = 1
+var invulnTimer : float = .6
+
+# Will be an array of scenes/references to scene instances
+var inventory := []
 
 signal noHealth
 signal healthChanged(value)
@@ -13,24 +34,27 @@ signal playerLevelChanged(newLevel)
 signal addedToInventory(newItem)
 signal removedFromInventory(removedItem)
 
-# How much health increases on every level
-var healthIncrease = maxHealth
-var health = 0 setget setHealth, getHealth
-# Will be an array of scenes/references to scene instances
-var inventory := []
-
 func _ready():
-	health = maxHealth
+	self.maxHealth = startingMaxHealth
+	self.health = maxHealth
 
-func setMaxHealth(value):
+
+func setStartingHealth(value):
+	startingMaxHealth = value
+	self.maxHealth = value
+	self.health = value
+
+func setMaxHealth(value : int):
+	var oldMaxHealth = maxHealth
 	maxHealth = max(value, 1)
+	self.health += maxHealth - oldMaxHealth
 	self.health = min(health, maxHealth)
 	emit_signal("maxHealthChanged", maxHealth)
 	
 func getMaxHealth():
 	return maxHealth
 	
-func setHealth(value):
+func setHealth(value : int):
 	health = clamp(value, 0, maxHealth)
 	emit_signal("healthChanged", health)
 	if (health <= 0):
@@ -42,8 +66,8 @@ func getHealth():
 func addXP(amount):
 	self.setCurrentXP(currentXP + amount)
 	
-func xpToNextLevel() -> float:
-	return 10 * playerLevel
+func xpToNextLevel() -> int:
+	return 100 * playerLevel
 	
 func setCurrentXP(value):
 	currentXP = value
@@ -56,15 +80,36 @@ func setCurrentXP(value):
 func getCurrentXP() -> int:
 	return currentXP
 
+func setStr(value):
+	strength = value
+	
+func setCon(value):
+	con = value
+	self.maxHealth = int(startingMaxHealth * pow(conRatio, con))
+	
+func setDex(value):
+	dex = value
+	self.attackSpeed = pow(dexAttackRatio, dex)
+	resetMaxSpeed()
+	
+func resetMaxSpeed():
+	self.maxSpeed = self.baseSpeed * pow(dexMoveRatio, dex)
+
 func setPlayerLevel(newLevel):
 	if playerLevel < newLevel:
 		while playerLevel != newLevel:
 			playerLevel += 1
-			# Increase player's stats here
-			self.maxHealth += healthIncrease
-			self.health += healthIncrease
-			self.attackSpeed = self.attackSpeed * .925
-	
+			if playerLevel != 1:
+				var newMenu = levelUpMenu.instance()
+				newMenu.connect("upgradeChosen", self, "_emit_level_changed")
+				var world = get_tree().current_scene
+				world.call_deferred("add_child", newMenu)
+				get_tree().paused = true
+	else:
+		playerLevel = newLevel
+
+func _emit_level_changed():
+	get_tree().paused = false
 	emit_signal("playerLevelChanged", playerLevel)
 
 func addItemToInventory(item : Item):
@@ -97,7 +142,7 @@ func getItemOfType(name : String) -> Item:
 			
 	return null
 
-func _on_hurtbox_area_entered(area):
+func _on_hurtbox_area_entered(_area):
 	self.health -= 1
 
 func connectHealthChanged(node):

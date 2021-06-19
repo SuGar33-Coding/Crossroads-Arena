@@ -2,8 +2,6 @@ extends Area2D
 
 var target = null
 
-onready var myBody = self.get_parent()
-
 func can_see_target():
 	return target != null
 	
@@ -20,7 +18,6 @@ func _on_DetectionZone_body_exited(body):
 		if targetPos >= 0:
 			possibleTargets.remove(possibleTargets.find(target))
 			if not possibleTargets.empty():
-				print(possibleTargets[0])
 				target = possibleTargets[0]
 			else:
 				target = null

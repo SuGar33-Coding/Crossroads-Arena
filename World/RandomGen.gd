@@ -13,7 +13,7 @@ export(bool) var scrollCamera = true
 var roomTypes = []
 # rooms will store the actual room objects
 var rooms = []
-onready var camera = $Camera2D
+onready var camera = $MainCamera
 onready var player = $Player
 onready var mapGridContainer = $MapOverlay/GridContainer
 onready var mapOverlay = $MapOverlay
@@ -30,6 +30,7 @@ var roomHeight = 704
 var currentRoom : Room
 var startingRow : int = worldHeight/2
 var startingCol : int = worldWidth/2
+var setCamera = false
 
 func _init():
 	randomize()
@@ -186,9 +187,13 @@ func setCameraLimitsForRoom(room : Room):
 			direction = camera.UP
 		else:
 			direction = camera.DOWN
-	
-	camera.transitionToRoom(room.global_position, room.global_position + Vector2(roomWidtth, roomHeight), direction)
-	
+			
+	if setCamera:
+		camera.transitionToRoom(room.global_position, room.global_position + Vector2(roomWidtth, roomHeight), direction)
+	else:
+		setCamera = true
+		camera.setLimitsToPositions()
+		
 # Body should be player body and room is the room they entered
 func _player_entered_room(body, room : Room):
 	if not body.is_in_group("RangedWeapons"):

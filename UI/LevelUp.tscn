@@ -1,0 +1,315 @@
+[gd_scene load_steps=14 format=2]
+
+[ext_resource path="res://Themes/SelectedButtonTheme.tres" type="StyleBox" id=1]
+[ext_resource path="res://Themes/UnselectedButtonTheme.tres" type="StyleBox" id=2]
+[ext_resource path="res://Themes/PressedButtonTheme.tres" type="StyleBox" id=3]
+[ext_resource path="res://Assets/WeaponAssets/Item__00.png" type="Texture" id=4]
+[ext_resource path="res://Themes/MainButtonFont.tres" type="DynamicFont" id=5]
+[ext_resource path="res://Assets/ItemAssets/Item__48.png" type="Texture" id=6]
+[ext_resource path="res://Assets/WeaponAssets/Item_34.png" type="Texture" id=7]
+[ext_resource path="res://UI/LevelUpButton.gd" type="Script" id=8]
+
+[sub_resource type="StyleBoxFlat" id=1]
+bg_color = Color( 0.435294, 0.392157, 0.345098, 1 )
+border_width_left = 5
+border_width_top = 5
+border_width_right = 5
+border_width_bottom = 5
+border_color = Color( 1, 0.886275, 0, 1 )
+corner_radius_top_left = 20
+corner_radius_top_right = 20
+corner_radius_bottom_right = 20
+corner_radius_bottom_left = 20
+expand_margin_left = 50.0
+expand_margin_right = 50.0
+expand_margin_top = 50.0
+expand_margin_bottom = 50.0
+
+[sub_resource type="DynamicFontData" id=2]
+font_path = "res://Assets/Adventurer.ttf"
+
+[sub_resource type="DynamicFont" id=3]
+size = 22
+outline_size = 3
+outline_color = Color( 0, 0, 0, 1 )
+font_data = SubResource( 2 )
+
+[sub_resource type="DynamicFont" id=4]
+size = 13
+outline_size = 1
+outline_color = Color( 0, 0, 0, 1 )
+use_filter = true
+font_data = SubResource( 2 )
+
+[sub_resource type="Animation" id=5]
+resource_name = "FadeIn"
+length = 0.4
+tracks/0/type = "value"
+tracks/0/path = NodePath("Label:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.4 ),
+"transitions": PoolRealArray( 2.14355, 1 ),
+"update": 0,
+"values": [ Color( 1, 1, 1, 0 ), Color( 1, 1, 1, 1 ) ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("PanelContainer:modulate")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0, 0.4 ),
+"transitions": PoolRealArray( 2.14355, 1 ),
+"update": 0,
+"values": [ Color( 1, 1, 1, 0 ), Color( 1, 1, 1, 1 ) ]
+}
+tracks/2/type = "value"
+tracks/2/path = NodePath("PanelContainer/MarginContainer/HBoxContainer/DexButton:disabled")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0, 0.4 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 1,
+"values": [ true, false ]
+}
+tracks/3/type = "value"
+tracks/3/path = NodePath("PanelContainer/MarginContainer/HBoxContainer/ConButton:disabled")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/keys = {
+"times": PoolRealArray( 0, 0.4 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 1,
+"values": [ true, false ]
+}
+tracks/4/type = "value"
+tracks/4/path = NodePath("PanelContainer/MarginContainer/HBoxContainer/StrButton:disabled")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/keys = {
+"times": PoolRealArray( 0, 0.4 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 1,
+"values": [ true, false ]
+}
+
+[node name="Control" type="CanvasLayer"]
+pause_mode = 2
+script = ExtResource( 8 )
+
+[node name="PanelContainer" type="PanelContainer" parent="."]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -233.794
+margin_top = -100.801
+margin_right = 229.206
+margin_bottom = 121.199
+custom_styles/panel = SubResource( 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="MarginContainer" type="MarginContainer" parent="PanelContainer"]
+margin_left = 5.0
+margin_top = 5.0
+margin_right = 458.0
+margin_bottom = 217.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="HBoxContainer" type="HBoxContainer" parent="PanelContainer/MarginContainer"]
+margin_right = 453.0
+margin_bottom = 212.0
+
+[node name="StrButton" type="Button" parent="PanelContainer/MarginContainer/HBoxContainer"]
+margin_right = 125.0
+margin_bottom = 212.0
+size_flags_horizontal = 3
+custom_styles/hover = ExtResource( 1 )
+custom_styles/pressed = ExtResource( 3 )
+custom_styles/disabled = ExtResource( 2 )
+custom_styles/normal = ExtResource( 2 )
+
+[node name="VBoxContainer" type="VBoxContainer" parent="PanelContainer/MarginContainer/HBoxContainer/StrButton"]
+margin_left = 5.0
+margin_top = 13.0
+margin_right = 125.0
+margin_bottom = 253.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="TextureRect" type="TextureRect" parent="PanelContainer/MarginContainer/HBoxContainer/StrButton/VBoxContainer"]
+margin_left = 28.0
+margin_right = 92.0
+margin_bottom = 64.0
+rect_min_size = Vector2( 64, 64 )
+size_flags_horizontal = 4
+texture = ExtResource( 4 )
+stretch_mode = 1
+
+[node name="Label" type="Label" parent="PanelContainer/MarginContainer/HBoxContainer/StrButton/VBoxContainer"]
+margin_top = 68.0
+margin_right = 120.0
+margin_bottom = 91.0
+custom_fonts/font = SubResource( 3 )
+text = "Strength"
+align = 1
+
+[node name="Label2" type="Label" parent="PanelContainer/MarginContainer/HBoxContainer/StrButton/VBoxContainer"]
+margin_top = 95.0
+margin_right = 120.0
+margin_bottom = 194.0
+custom_fonts/font = SubResource( 4 )
+text = "- Increase
+Melee Damage
+
+- Increase
+Ranged Damage
+Slightly"
+align = 1
+
+[node name="Space" type="Control" parent="PanelContainer/MarginContainer/HBoxContainer"]
+margin_left = 129.0
+margin_right = 159.0
+margin_bottom = 212.0
+rect_min_size = Vector2( 30, 0 )
+
+[node name="ConButton" type="Button" parent="PanelContainer/MarginContainer/HBoxContainer"]
+margin_left = 163.0
+margin_right = 289.0
+margin_bottom = 212.0
+size_flags_horizontal = 3
+custom_styles/hover = ExtResource( 1 )
+custom_styles/pressed = ExtResource( 3 )
+custom_styles/disabled = ExtResource( 2 )
+custom_styles/normal = ExtResource( 2 )
+
+[node name="VBoxContainer" type="VBoxContainer" parent="PanelContainer/MarginContainer/HBoxContainer/ConButton"]
+margin_left = 5.0
+margin_top = 13.0
+margin_right = 125.0
+margin_bottom = 253.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="TextureRect" type="TextureRect" parent="PanelContainer/MarginContainer/HBoxContainer/ConButton/VBoxContainer"]
+margin_left = 28.0
+margin_right = 92.0
+margin_bottom = 64.0
+rect_min_size = Vector2( 64, 64 )
+size_flags_horizontal = 4
+texture = ExtResource( 7 )
+stretch_mode = 1
+
+[node name="Label" type="Label" parent="PanelContainer/MarginContainer/HBoxContainer/ConButton/VBoxContainer"]
+margin_top = 68.0
+margin_right = 120.0
+margin_bottom = 91.0
+custom_fonts/font = SubResource( 3 )
+text = "Constitution"
+align = 1
+
+[node name="Label2" type="Label" parent="PanelContainer/MarginContainer/HBoxContainer/ConButton/VBoxContainer"]
+margin_top = 95.0
+margin_right = 120.0
+margin_bottom = 177.0
+custom_fonts/font = SubResource( 4 )
+text = "- Increase
+Health
+
+- Reduce
+Knockback"
+align = 1
+
+[node name="Space2" type="Control" parent="PanelContainer/MarginContainer/HBoxContainer"]
+margin_left = 293.0
+margin_right = 323.0
+margin_bottom = 212.0
+rect_min_size = Vector2( 30, 0 )
+
+[node name="DexButton" type="Button" parent="PanelContainer/MarginContainer/HBoxContainer"]
+margin_left = 327.0
+margin_right = 453.0
+margin_bottom = 212.0
+size_flags_horizontal = 3
+custom_styles/hover = ExtResource( 1 )
+custom_styles/pressed = ExtResource( 3 )
+custom_styles/disabled = ExtResource( 2 )
+custom_styles/normal = ExtResource( 2 )
+
+[node name="VBoxContainer" type="VBoxContainer" parent="PanelContainer/MarginContainer/HBoxContainer/DexButton"]
+margin_left = 5.0
+margin_top = 13.0
+margin_right = 127.0
+margin_bottom = 253.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="TextureRect" type="TextureRect" parent="PanelContainer/MarginContainer/HBoxContainer/DexButton/VBoxContainer"]
+margin_left = 29.0
+margin_right = 93.0
+margin_bottom = 64.0
+rect_min_size = Vector2( 64, 64 )
+size_flags_horizontal = 4
+texture = ExtResource( 6 )
+stretch_mode = 1
+
+[node name="Label" type="Label" parent="PanelContainer/MarginContainer/HBoxContainer/DexButton/VBoxContainer"]
+margin_top = 68.0
+margin_right = 122.0
+margin_bottom = 91.0
+custom_fonts/font = SubResource( 3 )
+text = "Dexterity"
+align = 1
+
+[node name="Label2" type="Label" parent="PanelContainer/MarginContainer/HBoxContainer/DexButton/VBoxContainer"]
+margin_top = 95.0
+margin_right = 122.0
+margin_bottom = 194.0
+custom_fonts/font = SubResource( 4 )
+text = "- Increase
+Movement Speed
+- Reduce Dodge
+Delay
+- Increase
+Attack Speed"
+align = 1
+
+[node name="Label" type="Label" parent="."]
+anchor_left = 0.5
+anchor_top = 0.16
+anchor_right = 0.5
+anchor_bottom = 0.16
+margin_left = -229.676
+margin_top = 11.3325
+margin_right = 233.324
+margin_bottom = 37.3325
+grow_horizontal = 2
+grow_vertical = 2
+custom_fonts/font = ExtResource( 5 )
+text = "Level Up! Choose a stat to upgrade"
+align = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+anims/FadeIn = SubResource( 5 )

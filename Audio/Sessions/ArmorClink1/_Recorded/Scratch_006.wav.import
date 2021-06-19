@@ -1,0 +1,21 @@
+[remap]
+
+importer="wav"
+type="AudioStreamSample"
+path="res://.import/Scratch_006.wav-a1acbd51313e6ae48b6b316192a0cdb9.sample"
+
+[deps]
+
+source_file="res://Audio/Sessions/ArmorClink1/_Recorded/Scratch_006.wav"
+dest_files=[ "res://.import/Scratch_006.wav-a1acbd51313e6ae48b6b316192a0cdb9.sample" ]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop=false
+compress/mode=0

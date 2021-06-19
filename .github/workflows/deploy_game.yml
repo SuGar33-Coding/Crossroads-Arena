@@ -22,14 +22,55 @@ jobs:
       - name: Setup
         run: |
           mkdir -v -p ~/.local/share/godot/templates
-          mv /root/.local/share/godot/templates/${GODOT_VERSION}.stable ~/.local/share/godot/templates/${GODOT_VERSION}.stable
+          mv /root/.local/share/godot/templates/${GODOT_VERSION}.stable.mono ~/.local/share/godot/templates/${GODOT_VERSION}.stable.mono
       - name: Windows Build
         run: |
           mkdir -v -p build/windows
-          cd $EXPORT_NAME
-          godot -v --export "Windows Desktop" ../build/windows/$EXPORT_NAME.exe
+          godot -v --export "Windows" ./build/windows/$EXPORT_NAME.exe
       - name: Upload Artifact
         uses: actions/upload-artifact@v1
         with:
           name: windows
           path: build/windows
+      - name: Upload to Itch.io
+        uses: josephbmanley/butler-publish-itchio-action@master
+        env:
+          BUTLER_CREDENTIALS: ${{ secrets.BUTLER_CREDENTIALS }}
+          CHANNEL: windows
+          ITCH_GAME: crossroads-arena
+          ITCH_USER: sugaree-coding
+          PACKAGE: build/windows
+          
+  export-html5:
+    name: HTML5
+    runs-on: ubuntu-latest
+    container:
+      image: barichello/godot-ci:mono-3.2.3
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+        with:
+          lfs: true
+      - name: Setup
+        run: |
+          mkdir -v -p ~/.local/share/godot/templates
+          mv /root/.local/share/godot/templates/${GODOT_VERSION}.stable.mono ~/.local/share/godot/templates/${GODOT_VERSION}.stable.mono
+      - name: HTML5 Build
+        run: |
+          mkdir -v -p build/html5
+          
+          godot -v --export "HTML5" ./build/html5/index.html
+        # cd $EXPORT_NAME
+      - name: Upload Artifact
+        uses: actions/upload-artifact@v1
+        with:
+          name: html5
+          path: build/html5
+      - name: Upload to Itch.io
+        uses: josephbmanley/butler-publish-itchio-action@master
+        env:
+          BUTLER_CREDENTIALS: ${{ secrets.BUTLER_CREDENTIALS }}
+          CHANNEL: html5
+          ITCH_GAME: crossroads-arena
+          ITCH_USER: sugaree-coding
+          PACKAGE: build/html5

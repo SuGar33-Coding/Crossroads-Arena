@@ -8,8 +8,9 @@ onready var collider : CollisionShape2D = $Area2D/CollisionShape2D
 func usePot():
 	PlayerStats.health += effectAmount
 	PlayerStats.removeItemFromInventory(self)
+	queue_free()
 
-func _on_Area2D_body_entered(body):
+func _on_Area2D_body_entered(_body):
 	"""if(PlayerStats.health < PlayerStats.maxHealth):
 		PlayerStats.health += self.effectAmount
 		self.queue_free()"""

@@ -1,93 +1,162 @@
 extends KinematicBody2D
 
-export(int) var maxPlayerHealth = 1
-export(int) var startingLevel = 1
-export var MAX_SPEED = 200
-export var ACCELERATION = 800
-export var FRICTION = 750
+var dirtFx = preload("res://FX/DirtSpread.tscn")
+var dashCloudFx = preload("res://FX/DashCloud.tscn")
 
-const Arrow = preload("res://Weapons/Arrow.tscn")
+export var Acceleration : float = 1500
+export var startingFriction : float = 750
+export var dashSpeed := 500
+export var dashDelay := .75
 
 var velocity := Vector2.ZERO
 var knockback := Vector2.ZERO
-var recentlyAttacked := false
+var dashVector := Vector2.ZERO
+var HitEffect = preload("res://FX/HitEffect.tscn")
+var floatingText = preload("res://UI/FloatingText.tscn")
+var Friction : float
 
-
-onready var sprite = $Sprite
-onready var hitboxCollision = $Hitbox/hitboxCollision
-onready var animationPlayer = $AnimationPlayer
-onready var swipe = $Swipe
 onready var stats = get_node("/root/PlayerStats")
-onready var attackTimer = $AttackTimer
-onready var meleeEffect = $MeleeEffect
-onready var rangedEffect = $RangedEffect
-onready var dmgEffect = $DmgEffect
+onready var sprite := $Sprite
+onready var shadowSprite := $ShadowSprite
+onready var attackPivot := $AttackPivot
+onready var hurtbox := $Hurtbox
+onready var camera := $MainCamera
+onready var damagedPlayer := $DamagedPlayer
+onready var dashTimer := $DashTimer
+onready var movementAnimation := $MovementAnimation
+onready var animationPlayer := $AnimationPlayer
+onready var footstep1 := $Footstep1
+onready var footstep2 := $Footstep2
+
 
 func _ready():
-	stats.maxHealth = maxPlayerHealth
-	stats.health = maxPlayerHealth
-	stats.playerLevel = startingLevel
-	stats.currentXP = 0
-	stats.healthIncrease = maxPlayerHealth
-	swipe.frame = 0
-	stats.connectNoHealth(self)
+	Engine.set_target_fps(Engine.get_iterations_per_second())
+	
+	PlayerStats.strength = 0
+	PlayerStats.con = 0
+	PlayerStats.dex = 0
+	PlayerStats.health = PlayerStats.maxHealth
+	PlayerStats.playerLevel = 1
+	PlayerStats.currentXP = 0
 
-func _physics_process(delta):	
-	knockback = knockback.move_toward(Vector2.ZERO, FRICTION * delta)
+	Friction = startingFriction
+	stats.connect("noHealth", self, "_playerstats_no_health")
+	stats.connect("playerLevelChanged", self, "_player_level_changed")
+	hurtbox.connect("area_entered", self, "_hurtbox_area_entered")
+	$AttackPivot/ComboTimer.connect("timeout", self, "_combo_finished")
+
+func _physics_process(delta):
+	knockback = knockback.move_toward(Vector2.ZERO, Friction * delta)
 	knockback = move_and_slide(knockback)
 	
-	var input_vector = Vector2.ZERO
+	dashVector = dashVector.move_toward(Vector2.ZERO, Acceleration * delta)
+	dashVector = move_and_slide(dashVector)
 	
-	input_vector.x = Input.get_action_strength("right") - Input.get_action_strength("left")
-	input_vector.y = Input.get_action_strength("down") - Input.get_action_strength("up")
-	input_vector = input_vector.normalized()
+	var inputVector = Vector2.ZERO
+
+	inputVector.x = Input.get_action_strength("right") - Input.get_action_strength("left")
+	inputVector.y = Input.get_action_strength("down") - Input.get_action_strength("up")
+	inputVector = inputVector.normalized()
 	
-	if input_vector != Vector2.ZERO:
-		velocity = velocity.move_toward(input_vector * MAX_SPEED, ACCELERATION * delta)
+	if Input.is_action_just_pressed("dash") and dashTimer.is_stopped():
+		# Cannot dash while aiming
+		if not attackPivot.chargingRanged:
+			dashVector = inputVector * dashSpeed
+			dashTimer.start(dashDelay* pow(PlayerStats.dexDashRatio, PlayerStats.dex))
+			movementAnimation.play("Dashing")
+			PlayerStats.resetMaxSpeed()
+	elif inputVector != Vector2.ZERO:
+		velocity = velocity.move_toward(inputVector * stats.maxSpeed, Acceleration * delta)
+		
+		if !movementAnimation.is_playing():
+			movementAnimation.play("Walking")
 	else:
-		velocity = velocity.move_toward(Vector2.ZERO, FRICTION * delta)
-	self.look_at(self.get_global_mouse_position())
-	self.rotate(deg2rad(90))
+		movementAnimation.play("Idle")
+		velocity = velocity.move_toward(Vector2.ZERO, Friction * delta)
+
+	# Make sprite turn towards mouse
+	var mousePos = self.get_global_mouse_position()
+	if mousePos.x < global_position.x:
+		sprite.flip_h = true
+		shadowSprite.position.x = 1.5
+		attackPivot.scale.y = -1
+	else:
+		sprite.flip_h = false
+		shadowSprite.position.x = .5
+		attackPivot.scale.y = 1
+		
+	attackPivot.look_at(mousePos)
+		
 	velocity = move_and_slide(velocity)
+
+func spawnDirtFx(initVelocity = 50, lifetime = 0.4):
+	var dirtFxInstance: Particles2D = dirtFx.instance()
+	var newMat: ParticlesMaterial = dirtFxInstance.process_material
+	newMat.initial_velocity = initVelocity
+	dirtFxInstance.material = newMat
+	dirtFxInstance.lifetime = lifetime
+	dirtFxInstance.global_position = Vector2(self.global_position.x, self.global_position.y + 12)
+	# TODO: Probably want to avoid using negative z values, maybe scale everything up?
+	dirtFxInstance.z_index = -2
+	dirtFxInstance.emitting = true
+	get_tree().current_scene.add_child(dirtFxInstance)
+
+func spawnDashFx():
+	var dashCloudFxInstance: Particles2D = dashCloudFx.instance()
+	dashCloudFxInstance.global_position = Vector2(self.global_position.x, self.global_position.y + 12)
+	dashCloudFxInstance.z_index = -1
+	dashCloudFxInstance.emitting = true
+	get_tree().current_scene.add_child(dashCloudFxInstance)
 	
-	if Input.is_action_just_pressed("attack"):
-		if not recentlyAttacked:
-			recentlyAttacked = true
-			attackTimer.start(PlayerStats.attackSpeed)
-			animationPlayer.play("MeleeAttack")
-			meleeEffect.play()
-			swipe.set_deferred("flip_h", not swipe.flip_h)
-	elif Input.is_action_just_pressed("fire"):
-		if not recentlyAttacked:
-			recentlyAttacked = true
-			rangedEffect.play()
-			attackTimer.start(PlayerStats.attackSpeed)
-			fireArrow()
-	elif Input.is_action_just_pressed("use_pot"):
-		if stats.getNumItemsOfType("HealthPotion") > 0 and stats.health < stats.maxHealth:
-			var healthPot = stats.getItemOfType("HealthPotion")
-			healthPot.usePot()
+func playFootstep(foot = 1):
+	match foot:
+		1:
+			footstep1.play()
+		2:
+			footstep2.play()
+	
+func _player_level_changed(_newPlayerLevel):
+	attackPivot.userStr = PlayerStats.strength
+	self.Friction = self.startingFriction * pow(PlayerStats.conFrictionRatio, PlayerStats.con)
 
-
-func _on_hurtbox_area_entered(area):
-	dmgEffect.play() 
+func _hurtbox_area_entered(area : Hitbox):
+	var text = floatingText.instance()
+	text.amount = area.damage
+	add_child(text)
+	
+	var hitEffect = HitEffect.instance()
+	hitEffect.init(area.getSourcePos())
+	add_child(hitEffect)
+	
 	stats.health -= area.damage
 	stats.currentXP += area.damage
+	camera.add_trauma(area.knockbackValue / 1000.0)
 	knockback = area.getKnockbackVector(self.global_position)
-	#TODO: handle invuln
-
-func fireArrow() -> void:
-	var arrow = Arrow.instance()
-	var world = get_tree().current_scene
-	# Have to set it before you add it as a child otherwise the room area's think you are exiting them
-	arrow.global_position = hitboxCollision.global_position
-	arrow.fire(hitboxCollision.global_position, self.global_rotation + deg2rad(-90), true)
-	world.add_child(arrow)
+	damagedPlayer.play("Damaged")
+	hurtbox.startInvincibility(PlayerStats.invulnTimer)
 
 func _playerstats_no_health():
 	# When Player dies, return to main menu TODO: Change this
-	get_tree().change_scene("res://UI/StartMenu/StartMenu.tscn")
+	#get_tree().change_scene("res://UI/StartMenu/StartMenu.tscn")
+	self.remove_child(camera)
+	camera.set_deferred("global_position", self.global_position)
+	camera.add_trauma(2)
+	var world = get_tree().current_scene
+	world.add_child(camera)
+	world.playerDied()
 	self.queue_free()
-
-func _on_AttackTimer_timeout():
-	recentlyAttacked = false
+	
+func _melee_quick():
+	animationPlayer.play("MeleeAttack")
+	PlayerStats.maxSpeed *= .65
+	
+func _meleeLong():
+	animationPlayer.play("Stab")
+	_combo_finished()
+	
+func _parry():
+	animationPlayer.play("Parry")
+	PlayerStats.maxSpeed *= .65
+	
+func _combo_finished():
+	PlayerStats.resetMaxSpeed()

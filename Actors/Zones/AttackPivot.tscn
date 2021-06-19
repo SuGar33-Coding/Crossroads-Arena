@@ -1,0 +1,99 @@
+[gd_scene load_steps=10 format=2]
+
+[ext_resource path="res://Actors/Zones/AttackPivot.gd" type="Script" id=1]
+[ext_resource path="res://Weapons/BaseSword.tres" type="Resource" id=3]
+[ext_resource path="res://Assets/TGBA swipe.png" type="Texture" id=4]
+[ext_resource path="res://Actors/Zones/WeaponHitbox.tscn" type="PackedScene" id=6]
+
+[sub_resource type="Shader" id=1]
+resource_local_to_scene = true
+resource_name = "Sheen"
+code = "shader_type canvas_item;
+
+const float PI = 3.14159265358979323846;
+
+uniform bool active = false;
+uniform float time = 0.0;
+uniform float frequency = 1.0;
+uniform sampler2D sheen_texure;
+
+void vertex() {
+	//VERTEX += vec2(cos(TIME)*2.0, sin(TIME)*2.0);
+}
+
+void fragment() {
+	vec2 uv_offset = vec2(0.0);
+
+	if (active) {
+		uv_offset = vec2(mod(time * frequency, 1.0) * 2.0 - 1.0);
+		COLOR.rgb = texture(TEXTURE, UV).rgb * pow((texture(sheen_texure, UV + uv_offset) + 1.0).rgb, vec3(4.0));
+		COLOR.a = texture(TEXTURE, UV).a;
+	} else {
+		COLOR = texture(TEXTURE, UV);
+	}
+
+	//COLOR = texture(sheen_texure, UV + uv_offset);
+	//COLOR = texture(TEXTURE, UV + uv_offset);
+}"
+
+[sub_resource type="Gradient" id=2]
+offsets = PoolRealArray( 0.367123, 0.509589, 0.660274 )
+colors = PoolColorArray( 0, 0, 0, 1, 1, 1, 1, 1, 0, 0, 0, 1 )
+
+[sub_resource type="GradientTexture" id=3]
+gradient = SubResource( 2 )
+
+[sub_resource type="ShaderMaterial" id=4]
+shader = SubResource( 1 )
+shader_param/active = false
+shader_param/time = 0.0
+shader_param/frequency = 0.8
+shader_param/sheen_texure = SubResource( 3 )
+
+[sub_resource type="StreamTexture" id=5]
+load_path = "res://.import/Item__01.png-25300138ce0bf7e2dfe3713d23a746d3.stex"
+
+[node name="AttackPivot" type="Position2D"]
+show_behind_parent = true
+position = Vector2( 0, -5 )
+script = ExtResource( 1 )
+swingDegrees = 125.0
+weaponStatsResources = [ ExtResource( 3 ) ]
+
+[node name="WeaponHitbox" parent="." instance=ExtResource( 6 )]
+
+[node name="Swipe" type="Sprite" parent="."]
+position = Vector2( 28.731, 0 )
+rotation = 1.5708
+scale = Vector2( 0.6, 1.5 )
+texture = ExtResource( 4 )
+flip_h = true
+hframes = 10
+frame = 5
+
+[node name="WeaponTween" type="Tween" parent="."]
+
+[node name="BackTween" type="Tween" parent="."]
+
+[node name="WeaponRestingPos" type="Position2D" parent="."]
+position = Vector2( -1, -8 )
+
+[node name="Weapon" type="Sprite" parent="WeaponRestingPos"]
+material = SubResource( 4 )
+rotation = -1.309
+texture = SubResource( 5 )
+flip_h = true
+
+[node name="AttackSignalPos" type="Position2D" parent="WeaponRestingPos"]
+position = Vector2( -4.13908, -8.41847 )
+
+[node name="AttackTimer" type="Timer" parent="."]
+one_shot = true
+
+[node name="QuickSFX" type="AudioStreamPlayer2D" parent="."]
+bus = "AttackSFX"
+
+[node name="LongSFX" type="AudioStreamPlayer2D" parent="."]
+bus = "AttackSFX"
+
+[editable path="WeaponHitbox"]

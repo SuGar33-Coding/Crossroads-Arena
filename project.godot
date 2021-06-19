@@ -9,10 +9,50 @@
 config_version=4
 
 _global_script_classes=[ {
+"base": "Position2D",
+"class": "AttackPivot",
+"language": "GDScript",
+"path": "res://Actors/Zones/AttackPivot.gd"
+}, {
 "base": "StaticBody2D",
 "class": "Boundary",
 "language": "GDScript",
 "path": "res://World/Rooms/Boundary.gd"
+}, {
+"base": "MoveAndAvoid",
+"class": "BurstMoveAA",
+"language": "GDScript",
+"path": "res://Actors/Movement/BurstMoveAA.gd"
+}, {
+"base": "Fighter",
+"class": "Charger",
+"language": "GDScript",
+"path": "res://Actors/Chargers/Charger/Charger.gd"
+}, {
+"base": "AttackPivot",
+"class": "ChargerAttackPivot",
+"language": "GDScript",
+"path": "res://Actors/Chargers/Charger/ChargerAttackPivot.gd"
+}, {
+"base": "NPC",
+"class": "Fighter",
+"language": "GDScript",
+"path": "res://Actors/Fighters/Bandit/Fighter.gd"
+}, {
+"base": "FlankAndPoke",
+"class": "FlankAndBurst",
+"language": "GDScript",
+"path": "res://Actors/Movement/FlankAndBurst.gd"
+}, {
+"base": "MoveAndAvoid",
+"class": "FlankAndPoke",
+"language": "GDScript",
+"path": "res://Actors/Movement/FlankAndPoke.gd"
+}, {
+"base": "Position2D",
+"class": "FloatingText",
+"language": "GDScript",
+"path": "res://UI/FloatingText.gd"
 }, {
 "base": "",
 "class": "GitAPI",
@@ -24,15 +64,70 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://Items/HealthPotion.gd"
 }, {
+"base": "AnimatedSprite",
+"class": "HitEffect",
+"language": "GDScript",
+"path": "res://FX/HitEffect.gd"
+}, {
 "base": "Area2D",
 "class": "Hitbox",
 "language": "GDScript",
-"path": "res://Actors/Generic/hitbox.gd"
+"path": "res://Actors/Zones/hitbox.gd"
+}, {
+"base": "Area2D",
+"class": "Hurtbox",
+"language": "GDScript",
+"path": "res://Actors/Zones/Hurtbox.gd"
 }, {
 "base": "Node2D",
 "class": "Item",
 "language": "GDScript",
 "path": "res://Items/Item.gd"
+}, {
+"base": "Camera2D",
+"class": "MainCamera",
+"language": "GDScript",
+"path": "res://World/PlayerCamera.gd"
+}, {
+"base": "MaintainAndFlank",
+"class": "MaintainAndCharge",
+"language": "GDScript",
+"path": "res://Actors/Movement/MaintainAndCharge.gd"
+}, {
+"base": "FlankAndPoke",
+"class": "MaintainAndFlank",
+"language": "GDScript",
+"path": "res://Actors/Movement/MaintainAndFlank.gd"
+}, {
+"base": "Movement",
+"class": "MaintainDistance",
+"language": "GDScript",
+"path": "res://Actors/Movement/MaintainDistance.gd"
+}, {
+"base": "Pathfind",
+"class": "MoveAndAvoid",
+"language": "GDScript",
+"path": "res://Actors/Movement/MoveAndAvoid.gd"
+}, {
+"base": "Resource",
+"class": "Movement",
+"language": "GDScript",
+"path": "res://Actors/Movement/Movement.gd"
+}, {
+"base": "KinematicBody2D",
+"class": "NPC",
+"language": "GDScript",
+"path": "res://Actors/NPC.gd"
+}, {
+"base": "Movement",
+"class": "Pathfind",
+"language": "GDScript",
+"path": "res://Actors/Movement/Pathfind.gd"
+}, {
+"base": "KinematicBody2D",
+"class": "RangedProjectile",
+"language": "GDScript",
+"path": "res://Weapons/RangedProjectile.gd"
 }, {
 "base": "Node2D",
 "class": "Room",
@@ -47,17 +142,60 @@ _global_script_classes=[ {
 "base": "Node",
 "class": "Stats",
 "language": "GDScript",
-"path": "res://Stats.gd"
+"path": "res://Actors/Generic/Stats.gd"
+}, {
+"base": "Resource",
+"class": "StatsResource",
+"language": "GDScript",
+"path": "res://Actors/Generic/StatsResource.gd"
+}, {
+"base": "Movement",
+"class": "TestingSteering",
+"language": "GDScript",
+"path": "res://Actors/Movement/TestingSteering.gd"
+}, {
+"base": "Hitbox",
+"class": "WeaponHitbox",
+"language": "GDScript",
+"path": "res://Actors/Zones/WeaponHitbox.gd"
+}, {
+"base": "Resource",
+"class": "WeaponStats",
+"language": "GDScript",
+"path": "res://Weapons/WeaponStats.gd"
 } ]
 _global_script_class_icons={
+"AttackPivot": "",
 "Boundary": "",
+"BurstMoveAA": "",
+"Charger": "",
+"ChargerAttackPivot": "",
+"Fighter": "",
+"FlankAndBurst": "",
+"FlankAndPoke": "",
+"FloatingText": "",
 "GitAPI": "",
 "HealthPotion": "",
+"HitEffect": "",
 "Hitbox": "",
+"Hurtbox": "",
 "Item": "",
+"MainCamera": "",
+"MaintainAndCharge": "",
+"MaintainAndFlank": "",
+"MaintainDistance": "",
+"MoveAndAvoid": "",
+"Movement": "",
+"NPC": "",
+"Pathfind": "",
+"RangedProjectile": "",
 "Room": "",
 "RoomArea": "",
-"Stats": ""
+"Stats": "",
+"StatsResource": "",
+"TestingSteering": "",
+"WeaponHitbox": "",
+"WeaponStats": ""
 }
 
 [application]
@@ -72,8 +210,8 @@ PlayerStats="*res://Player/PlayerStats.gd"
 
 [display]
 
-window/size/width=960
-window/size/height=540
+window/size/width=752
+window/size/height=423
 window/size/test_width=1280
 window/size/test_height=720
 window/stretch/mode="2d"
@@ -91,7 +229,7 @@ texture={
 "compress/lossy_quality": 0.7,
 "compress/mode": 0,
 "compress/normal_map": 0,
-"detect_3d": true,
+"detect_3d": false,
 "flags/anisotropic": false,
 "flags/filter": false,
 "flags/mipmaps": false,
@@ -161,6 +299,26 @@ addlevel={
 use_pot={
 "deadzone": 0.5,
 "events": [ Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":0,"alt":false,"shift":false,"control":false,"meta":false,"command":false,"pressed":false,"scancode":69,"unicode":0,"echo":false,"script":null)
+ ]
+}
+dash={
+"deadzone": 0.5,
+"events": [ Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":0,"alt":false,"shift":false,"control":false,"meta":false,"command":false,"pressed":false,"scancode":32,"unicode":0,"echo":false,"script":null)
+ ]
+}
+swap={
+"deadzone": 0.5,
+"events": [ Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":0,"alt":false,"shift":false,"control":false,"meta":false,"command":false,"pressed":false,"scancode":81,"unicode":0,"echo":false,"script":null)
+ ]
+}
+pause={
+"deadzone": 0.5,
+"events": [ Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":0,"alt":false,"shift":false,"control":false,"meta":false,"command":false,"pressed":false,"scancode":16777217,"unicode":0,"echo":false,"script":null)
+ ]
+}
+toggleFullscreen={
+"deadzone": 0.5,
+"events": [ Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":0,"alt":false,"shift":false,"control":false,"meta":false,"command":false,"pressed":false,"scancode":66,"unicode":0,"echo":false,"script":null)
  ]
 }
 
