@@ -200,7 +200,7 @@ _global_script_class_icons={
 
 [application]
 
-config/name="The Grand Battle Arena"
+config/name="Crossroads: Arena"
 run/main_scene="res://UI/StartMenu/StartMenu.tscn"
 config/icon="res://icon.png"
 
