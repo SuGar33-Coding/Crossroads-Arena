@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=2]
+[gd_scene load_steps=11 format=2]
 
 [ext_resource path="res://GrandBattleArena.gd" type="Script" id=1]
 [ext_resource path="res://Assets/TileSets/RockBase.tres" type="TileSet" id=2]
@@ -6,6 +6,7 @@
 [ext_resource path="res://World/Scenery/Bush.tscn" type="PackedScene" id=4]
 [ext_resource path="res://World/Scenery/FlatBush.tscn" type="PackedScene" id=5]
 [ext_resource path="res://World/Scenery/Tree.tscn" type="PackedScene" id=6]
+[ext_resource path="res://Audio/BGM/Wave of Darkness II.mp3" type="AudioStream" id=7]
 [ext_resource path="res://UI/PauseMenu.tscn" type="PackedScene" id=8]
 [ext_resource path="res://Assets/WorldAssets/grassTileMap.png" type="Texture" id=9]
 
@@ -287,8 +288,14 @@ position = Vector2( 1072, 1128 )
 [node name="CanvasLayer" parent="." instance=ExtResource( 8 )]
 layer = 2
 
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 7 )
+autoplay = true
+mix_target = 1
+bus = "BGM"
+
 [editable path="YSort/Player"]
-
 [editable path="YSort/Player/MainCamera"]
-
 [editable path="YSort/Player/AttackPivot"]
+[editable path="YSort/Player/AttackPivot/WeaponHitbox"]
+[editable path="YSort/Player/Hurtbox"]

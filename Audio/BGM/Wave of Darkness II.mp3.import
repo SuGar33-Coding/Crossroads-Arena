@@ -1,0 +1,15 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+path="res://.import/Wave of Darkness II.mp3-38cfdf71c32213a428c36800e368288a.mp3str"
+
+[deps]
+
+source_file="res://Audio/BGM/Wave of Darkness II.mp3"
+dest_files=[ "res://.import/Wave of Darkness II.mp3-38cfdf71c32213a428c36800e368288a.mp3str" ]
+
+[params]
+
+loop=true
+loop_offset=0
