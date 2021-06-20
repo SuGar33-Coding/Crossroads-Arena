@@ -737,9 +737,6 @@ anims/RangedAttack = SubResource( 9 )
 anims/Walk = SubResource( 10 )
 
 [editable path="Hurtbox"]
-
 [editable path="DetectionZone"]
-
 [editable path="AttackPivot"]
-
 [editable path="AttackPivot/WeaponHitbox"]

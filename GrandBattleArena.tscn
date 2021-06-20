@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=2]
+[gd_scene load_steps=15 format=2]
 
 [ext_resource path="res://GrandBattleArena.gd" type="Script" id=1]
 [ext_resource path="res://Assets/TileSets/RockBase.tres" type="TileSet" id=2]
@@ -10,7 +10,23 @@
 [ext_resource path="res://UI/PauseMenu.tscn" type="PackedScene" id=8]
 [ext_resource path="res://Assets/WorldAssets/grassTileMap.png" type="Texture" id=9]
 
-[sub_resource type="TileSet" id=1]
+[sub_resource type="NavigationPolygon" id=1]
+vertices = PoolVector2Array( 0, 0, 24, 0, 24, 24, 0, 24 )
+polygons = [ PoolIntArray( 0, 1, 2, 3 ) ]
+
+[sub_resource type="NavigationPolygon" id=2]
+vertices = PoolVector2Array( 0, 0, 24, 0, 24, 24, 0, 24 )
+polygons = [ PoolIntArray( 0, 1, 2, 3 ) ]
+
+[sub_resource type="NavigationPolygon" id=3]
+vertices = PoolVector2Array( 0, 0, 24, 0, 24, 24, 0, 24 )
+polygons = [ PoolIntArray( 0, 1, 2, 3 ) ]
+
+[sub_resource type="NavigationPolygon" id=4]
+vertices = PoolVector2Array( 0, 0, 24, 0, 24, 24, 0, 24 )
+polygons = [ PoolIntArray( 0, 1, 2, 3 ) ]
+
+[sub_resource type="TileSet" id=5]
 0/name = "grassTileMap.png 0"
 0/texture = ExtResource( 9 )
 0/tex_offset = Vector2( 0, 0 )
@@ -23,7 +39,7 @@
 0/autotile/tile_size = Vector2( 24, 24 )
 0/autotile/spacing = 0
 0/autotile/occluder_map = [  ]
-0/autotile/navpoly_map = [  ]
+0/autotile/navpoly_map = [ Vector2( 0, 0 ), SubResource( 1 ), Vector2( 0, 1 ), SubResource( 2 ), Vector2( 1, 0 ), SubResource( 3 ), Vector2( 1, 1 ), SubResource( 4 ) ]
 0/autotile/priority_map = [  ]
 0/autotile/z_index_map = [  ]
 0/occluder_offset = Vector2( 0, 0 )
@@ -43,7 +59,7 @@ script = ExtResource( 1 )
 [node name="BackgroundTiles" type="TileMap" parent="Navigation2D"]
 modulate = Color( 0.686275, 0.686275, 0.686275, 1 )
 z_index = -5
-tile_set = SubResource( 1 )
+tile_set = SubResource( 5 )
 cell_size = Vector2( 24, 24 )
 collision_layer = 0
 collision_mask = 0
