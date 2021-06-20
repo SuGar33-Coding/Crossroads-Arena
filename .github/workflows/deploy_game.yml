@@ -3,9 +3,6 @@ on:
   push:
     branches:
       - ultimate
-  pull_request:
-    branches:
-      - ultimate
 
 env:
   GODOT_VERSION: 3.3.2
