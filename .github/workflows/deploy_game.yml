@@ -2,10 +2,13 @@
 on: 
   push:
     branches:
-      - working
+      - ultimate
+  pull_request:
+    branches:
+      - ultimate
 
 env:
-  GODOT_VERSION: 3.2.3
+  GODOT_VERSION: 3.3.2
   EXPORT_NAME: CrossroadsArena
 
 jobs:
@@ -13,7 +16,7 @@ jobs:
     name: Windows
     runs-on: ubuntu-latest
     container:
-      image: barichello/godot-ci:mono-3.2.3
+      image: barichello/godot-ci:mono-3.3.2
     steps:
       - name: Checkout
         uses: actions/checkout@v2
@@ -45,7 +48,7 @@ jobs:
     name: HTML5
     runs-on: ubuntu-latest
     container:
-      image: barichello/godot-ci:mono-3.2.3
+      image: barichello/godot-ci:mono-3.3.2
     steps:
       - name: Checkout
         uses: actions/checkout@v2
