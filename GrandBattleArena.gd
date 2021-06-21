@@ -1,11 +1,12 @@
 extends Node2D
 
-var Fighter = preload("res://Actors/Fighters/Bandit/Fighter.tscn")
+var Fighter = preload("res://Actors/Fighters/Bandit/Bandit.tscn")
 var Slime = preload("res://Actors/Slime/Slime.tscn")
 var Brute = preload("res://Actors/Brute/Brute.tscn")
 var ChaosKnight = preload("res://Actors/Fighters/ChaosKnight/ChaosKnight.tscn")
-var Rogue = preload("res://Actors/Fighters/Rogue/Rogue.tscn")
+var Rogue = preload("res://Actors/Dashers/Rogue/Rogue.tscn")
 var Charger = preload("res://Actors/Chargers/Charger/Charger.tscn")
+var Ranger = preload("res://Actors/Fighters/Ranger/Ranger.tscn")
 
 onready var people = $YSort/People
 onready var spawns = $Spawns
@@ -34,7 +35,7 @@ func spawnEnemies():
 	for spawn in spawns.get_children():
 		if randi() % 3 != 0:
 			var newFighter
-			var fighterSelect = randi() % 6
+			var fighterSelect = randi() % 7
 			if fighterSelect == 0:
 				newFighter = Brute.instance()
 			elif fighterSelect == 1:
@@ -43,6 +44,8 @@ func spawnEnemies():
 				newFighter = Rogue.instance()
 			elif fighterSelect == 3:
 				newFighter = Charger.instance()
+			elif fighterSelect == 4:
+				newFighter = Ranger.instance()
 			else:
 				newFighter = Fighter.instance()
 			

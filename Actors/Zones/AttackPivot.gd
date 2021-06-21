@@ -111,7 +111,7 @@ func playAttackSignal(windUpTime: float, shading: bool = true):
 # Accuracy measures how close the user was to getting a perfectly timed attack
 # By default (for NPCs) this will be the threshold at which you do normal damage
 # Projectile speed also scales with accuracy
-func startRangedAttack(sourceStr := 0, accuracy := 1.0):
+func startRangedAttack(sourceStr := 0, accuracy := RangedProjectile.NORMAL):
 	var rangedProjectile = RangedProjectileScene.instance()
 	rangedProjectile.init(weaponStats, source, sourceStr, accuracy)
 	

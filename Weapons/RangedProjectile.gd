@@ -21,7 +21,7 @@ onready var weaponHitbox := $WeaponHitbox
 onready var sprite := $Sprite
 onready var collision := $CollisionShape2D
 
-func init(weaponStats: WeaponStats, source, sourceStr: int, acc: float):
+func init(weaponStats: WeaponStats, source, sourceStr: int, acc := NORMAL):
 	self.weaponStats = weaponStats
 	self.source = source
 	self.accuracy = acc

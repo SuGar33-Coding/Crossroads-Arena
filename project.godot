@@ -37,7 +37,7 @@ _global_script_classes=[ {
 "base": "NPC",
 "class": "Fighter",
 "language": "GDScript",
-"path": "res://Actors/Fighters/Bandit/Fighter.gd"
+"path": "res://Actors/Fighters/Fighter.gd"
 }, {
 "base": "FlankAndPoke",
 "class": "FlankAndBurst",

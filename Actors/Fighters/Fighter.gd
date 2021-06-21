@@ -55,15 +55,14 @@ func switchToChase() -> void:
 	
 func switchToAttack():
 	animationPlayer.play("Idle")
-	if attackTimer.is_stopped():
-		.switchToAttack()
-		animationPlayer.playback_speed = 1
-		# TODO: Make this a more well defined ratio
-		attackTimer.start(weaponStats.attackSpeed * stats.attackSpeed * 2)
-		if weaponStats.weaponType == WeaponStats.WeaponType.RANGED:
-			animationPlayer.play("RangedAttack")
-		else:
-			animationPlayer.play("MeleeWindup")
+	.switchToAttack()
+	animationPlayer.playback_speed = 1
+	# TODO: Make this a more well defined ratio
+	attackTimer.start(weaponStats.attackSpeed * stats.attackSpeed * 2)
+	if weaponStats.weaponType == WeaponStats.WeaponType.RANGED:
+		animationPlayer.play("RangedAttack")
+	else:
+		animationPlayer.play("MeleeWindup")
 			
 func switchToStun():
 	animationPlayer.play("Idle")
@@ -78,10 +77,13 @@ func willChase() -> bool:
 
 func willAttack() -> bool:
 	var distanceToTarget = self.position.distance_to(detectionZone.target.position)
-	if weaponStats.weaponType == WeaponStats.WeaponType.RANGED:
-		return distanceToTarget <= weaponStats.projectileRange
+	if attackTimer.is_stopped():
+		if weaponStats.weaponType == WeaponStats.WeaponType.RANGED:
+			return distanceToTarget <= weaponStats.projectileRange
+		else:
+			return distanceToTarget <= (weaponStats.length + weaponStats.radius*2)
 	else:
-		return distanceToTarget <= (weaponStats.length + weaponStats.radius*2)
+		return false
 	
 func willFlipLeft():
 	if state == State.CHASE:
@@ -123,7 +125,10 @@ func findClosestAlly():
 	if minDist >= 1000:
 		closestAlly = null
 
+var count = 0
 func playMovement():
+	count = count + 1
+	print("walking", count)
 	animationPlayer.play("Walk")
 
 func playMeleeAttack():
