@@ -9,7 +9,7 @@
 [ext_resource path="res://Weapons/GreatSpear.tres" type="Resource" id=7]
 [ext_resource path="res://Actors/Zones/AttackPivot.tscn" type="PackedScene" id=8]
 [ext_resource path="res://Actors/Zones/DetectionZone.tscn" type="PackedScene" id=9]
-[ext_resource path="res://Actors/Dashers/Rogue/Rogue.tres" type="Resource" id=10]
+[ext_resource path="res://Actors/Fighters/ChaosKnight/ChaosKnight.tres" type="Resource" id=10]
 
 [sub_resource type="Curve" id=1]
 _data = [ Vector2( 0, 1 ), 0.0, 0.0, 0, 0, Vector2( 1, 0.163636 ), 0.0, 0.0, 0, 0 ]
