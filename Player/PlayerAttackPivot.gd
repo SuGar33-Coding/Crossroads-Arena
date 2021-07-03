@@ -174,7 +174,6 @@ func _on_WeaponTween_tween_completed():
 		backTween.interpolate_property(weaponSprite, "position", Vector2(-10, 5), meleeRestingCoord + Vector2(5, 17), attackTimer.time_left + .007, Tween.TRANS_LINEAR, Tween.EASE_IN_OUT, self.tweenLength)
 		backTween.interpolate_property(weaponSprite, "rotation", restingRotation + deg2rad(70), restingRotation + deg2rad(110), attackTimer.time_left + .007, self.tweenLength)
 	elif weaponStats.weaponType == WeaponStats.WeaponType.SPEAR:
-		print("Spear combo")
 		self.show_behind_parent = not self.show_behind_parent
 		backTween.interpolate_property(weaponSprite, "position", weaponSprite.position, Vector2(-10, 0), self.tweenLength, Tween.TRANS_LINEAR, Tween.EASE_IN_OUT)
 		backTween.interpolate_property(weaponSprite, "rotation", weaponSprite.rotation, restingRotation + deg2rad(120), self.tweenLength)
