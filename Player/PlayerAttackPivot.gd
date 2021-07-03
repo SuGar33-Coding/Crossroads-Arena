@@ -17,7 +17,7 @@ onready var rangedFx := $RangedWeaponFX
 onready var weaponFxTween := $WeaponEffects
 
 # TODO: remove this cus it should be through inventory
-onready var rangedWeapon : WeaponStats = preload("res://Weapons/BaseBow.tres")
+onready var rangedWeapon : WeaponStats = preload("res://Weapons/FireStaff.tres")
 onready var meleeWeapon : WeaponStats = weaponStats
 
 signal meleeQuick()

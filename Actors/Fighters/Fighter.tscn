@@ -1,4 +1,4 @@
-[gd_scene load_steps=19 format=2]
+[gd_scene load_steps=20 format=2]
 
 [ext_resource path="res://Weapons/LongSword.tres" type="Resource" id=1]
 [ext_resource path="res://Actors/Fighters/Fighter.gd" type="Script" id=2]
@@ -8,6 +8,7 @@
 [ext_resource path="res://Actors/NPC.tscn" type="PackedScene" id=6]
 [ext_resource path="res://Assets/CharacterAssets/Shadows/MediumShadow.png" type="Texture" id=7]
 [ext_resource path="res://Assets/CharacterAssets/Bandit.png" type="Texture" id=8]
+[ext_resource path="res://Weapons/BaseSpear.tres" type="Resource" id=9]
 
 [sub_resource type="Curve" id=1]
 _data = [ Vector2( 0, 1 ), 0.0, 0.0, 0, 0, Vector2( 1, 0.163636 ), 0.0, 0.0, 0, 0 ]
@@ -706,7 +707,7 @@ detectionRange = 325
 leaveRange = 1000
 
 [node name="AttackPivot" parent="." index="6" instance=ExtResource( 4 )]
-weaponStatsResources = [ ExtResource( 3 ), ExtResource( 1 ) ]
+weaponStatsResources = [ ExtResource( 3 ), ExtResource( 1 ), ExtResource( 9 ) ]
 
 [node name="Swipe" parent="AttackPivot" index="1"]
 frame = 0

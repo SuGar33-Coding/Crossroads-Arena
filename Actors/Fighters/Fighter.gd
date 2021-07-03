@@ -45,7 +45,8 @@ func _physics_process(_delta):
 		playMovement()
 	
 func lookAtTarget():
-	attackPivot.lookAtTarget(detectionZone.target.position)
+	if(detectionZone.hasTarget()):
+		attackPivot.lookAtTarget(detectionZone.target.position)
 
 func switchToChase() -> void:
 	.switchToChase()

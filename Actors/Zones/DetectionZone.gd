@@ -20,10 +20,10 @@ func _physics_process(_delta):
 			target = getNewTarget()
 
 func hasTarget() -> bool:
-	return target != null
+	return is_instance_valid(target)
 
 func _on_body_entered(body: KinematicBody2D):
-	if target == null:
+	if not hasTarget():
 		target = body
 
 # Will find if there is a new valid target
