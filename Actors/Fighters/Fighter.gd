@@ -54,9 +54,9 @@ func switchToChase() -> void:
 		target = newTarget
 	
 func switchToAttack():
+	animationPlayer.playback_speed = 1
 	animationPlayer.play("Idle")
 	.switchToAttack()
-	animationPlayer.playback_speed = 1
 	# TODO: Make this a more well defined ratio
 	attackTimer.start(weaponStats.attackSpeed * stats.attackSpeed * 2)
 	if weaponStats.weaponType == WeaponStats.WeaponType.RANGED:
@@ -65,6 +65,7 @@ func switchToAttack():
 		animationPlayer.play("MeleeWindup")
 			
 func switchToStun():
+	animationPlayer.playback_speed = 1
 	animationPlayer.play("Idle")
 	attackPivot.weaponCollision.set_deferred("disabled", true)
 	.switchToStun()
@@ -126,9 +127,11 @@ func findClosestAlly():
 		closestAlly = null
 
 func playMovement():
+	animationPlayer.playback_speed = 1
 	animationPlayer.play("Walk")
 
 func playMeleeAttack():
+	animationPlayer.playback_speed = 1
 	animationPlayer.play("MeleeAttack")
 
 func _hurtbox_area_entered(area: Hitbox):
@@ -139,6 +142,7 @@ func _hurtbox_area_entered(area: Hitbox):
 	# Only play damaged if we're not dead
 	if(stats.health >= 1):
 		animationPlayer.stop(true)
+		# Stun duration is scaled by knockback value
 		animationPlayer.playback_speed = 350 / area.knockbackValue
 		animationPlayer.play("Damaged")
 	else:

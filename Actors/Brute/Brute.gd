@@ -32,6 +32,7 @@ func _physics_process(_delta):
 func switchToAttack():
 	if bursting:
 		state = State.ATTACK
+		animationPlayer.playback_speed = 1
 		animationPlayer.play("Leap")
 		var animLength = animationPlayer.current_animation_length
 		BurstSpeed = BaseBurstSpeed
@@ -67,6 +68,7 @@ func stopBurstSpeed():
 	BurstSpeed = 0
 	
 func playGroundPound():
+	animationPlayer.playback_speed = 1
 	animationPlayer.play("GroundPound")
 	
 func setBurstTargetPos():
