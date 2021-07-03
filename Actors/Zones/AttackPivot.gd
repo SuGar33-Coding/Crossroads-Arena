@@ -2,6 +2,7 @@ class_name AttackPivot extends Position2D
 
 # TODO: make it so you can load different projectiles
 const RangedProjectileScene = preload("res://Weapons/RangedProjectile.tscn")
+const AreaOfEffectScene = preload("res://Weapons/AreaOfEffect.tscn")
 const AttackSignalScene = preload("res://FX/AttackSignal.tscn")
 
 enum MeleeAttackType {
@@ -120,6 +121,17 @@ func startRangedAttack(sourceStr := 0, accuracy := RangedProjectile.NORMAL):
 	rangedProjectile.global_position = restingPos.global_position
 	world.add_child(rangedProjectile)
 	rangedProjectile.fire(restingPos.global_position, self.global_rotation)
+	
+func startAOEAttack(targetGlobalPos : Vector2, sourceStr := 0):
+	var areaOfEffect = AreaOfEffectScene.instance()
+	areaOfEffect.init(weaponStats, source, sourceStr, weaponStats.aoeLifetime, weaponStats.aoeNumberOfTicks)
+	
+	var world = get_tree().current_scene
+	# Have to set it before you add it as a child otherwise the room area's think you are exiting them
+	areaOfEffect.global_position = targetGlobalPos
+	world.add_child(areaOfEffect)
+	# TODO: Possibly pass in a rotation if it is a directional aoe (like a cone)
+	areaOfEffect.fire(targetGlobalPos, 0)
 
 func setWeapon(weaponStats : WeaponStats):
 	self.weaponStats = weaponStats
@@ -166,6 +178,8 @@ func setWeapon(weaponStats : WeaponStats):
 	elif weaponStats.weaponType == WeaponStats.WeaponType.RANGED:
 		restingPos.set_deferred("position", Vector2(15, 0))
 		weaponSprite.set_deferred("rotation", deg2rad(45))
+	else:
+		swordAnimDist = weaponCollision.position - restingPos.position
 
 # TODO: Can set tween delay rather than making multiple tweens
 func _on_WeaponTween_tween_completed():

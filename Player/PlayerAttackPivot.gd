@@ -95,6 +95,9 @@ func _physics_process(delta):
 				PlayerStats.maxSpeed *= .5
 				chargingRanged = true
 				chargingTime = 0.0
+			elif weaponStats.weaponType == WeaponStats.WeaponType.AOE:
+				attackTimer.start(getMeleeAttackTime())
+				self.startAOEAttack(get_global_mouse_position(), PlayerStats.strength)
 				
 		elif Input.is_action_just_released("attack") and chargingRanged and weaponStats.weaponType == WeaponStats.WeaponType.RANGED:
 			chargingRanged = false

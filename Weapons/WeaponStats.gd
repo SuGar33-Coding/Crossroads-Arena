@@ -28,3 +28,7 @@ export var longAttackSFX: AudioStream
 export var projectileTexture : Texture
 export var projectileSpeed : float = 1500
 export var projectileRange : float = 350
+
+# AOE Stuff
+export var aoeNumberOfTicks : int = 3
+export var aoeLifetime : float = 3.0

@@ -139,7 +139,7 @@ func _hurtbox_area_entered(area: Hitbox):
 	# Only play damaged if we're not dead
 	if(stats.health >= 1):
 		animationPlayer.stop(true)
-		animationPlayer.playback_speed = 1
+		animationPlayer.playback_speed = 350 / area.knockbackValue
 		animationPlayer.play("Damaged")
 	else:
 		# If you die add some extra knockback
