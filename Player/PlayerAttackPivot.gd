@@ -48,53 +48,53 @@ func _physics_process(delta):
 			if backTween.is_active():
 				backTween.stop_all()
 				backTween.remove_all()
-			match weaponStats.weaponType:
-				WeaponStats.WeaponType.MELEE:	
-					var attackType: int
-					if comboCounter == 0:
-						# Minimum time between attacks is the time it takes to play the attack animation
-						attackTimer.start(getMeleeAttackTime(0.4))
-						emit_signal("meleeQuick")
-						attackType = MeleeAttackType.QUICK
-						comboTimer.start(comboTime*.65)
-					elif comboCounter == 1:
-						attackTimer.start(getMeleeAttackTime(0.75))
-						emit_signal("meleeQuick")
-						attackType = MeleeAttackType.QUICK
-						comboTimer.start(comboTime)
-					else:
-						attackTimer.start(getMeleeAttackTime())
-						emit_signal("meleeLong")
-						attackType = MeleeAttackType.LONG
-						comboTimer.stop()
-						
-					self.comboCounter = (self.comboCounter + 1) % 3
-					
-					var animLength = animationPlayer.current_animation_length
-					self.startMeleeAttack(animLength, attackType)					
-				WeaponStats.WeaponType.HEAVY:
-					var attackDuration = animationPlayer.get_animation("MeleeAttack").length
-					var attackType: int
-					
+			
+			if weaponStats.weaponType == WeaponStats.WeaponType.MELEE or weaponStats.weaponType == WeaponStats.WeaponType.SPEAR:
+				var attackType: int
+				if comboCounter == 0:
 					# Minimum time between attacks is the time it takes to play the attack animation
-					attackTimer.start(max(weaponStats.attackSpeed * PlayerStats.attackSpeed, attackDuration))
+					attackTimer.start(getMeleeAttackTime(0.4))
 					emit_signal("meleeQuick")
 					attackType = MeleeAttackType.QUICK
 					comboTimer.start(comboTime*.65)
+				elif comboCounter == 1:
+					attackTimer.start(getMeleeAttackTime(0.75))
+					emit_signal("meleeQuick")
+					attackType = MeleeAttackType.QUICK
+					comboTimer.start(comboTime)
+				else:
+					attackTimer.start(getMeleeAttackTime())
+					emit_signal("meleeLong")
+					attackType = MeleeAttackType.LONG
+					comboTimer.stop()
+					
+				self.comboCounter = (self.comboCounter + 1) % 3
 				
-					var animLength = animationPlayer.current_animation_length
-					self.startMeleeAttack(animLength, attackType)
-				WeaponStats.WeaponType.RANGED:
-					# Ranged weapon, enter the pull back state
-					weaponFxTween.interpolate_property(rangedFx, "scale", Vector2.ONE, Vector2.ZERO, getRangedAttackTime())
-					weaponFxTween.interpolate_property(rangedFx, "scale", Vector2.ZERO, Vector2.ONE, RangedProjectile.REDUCED, Tween.TRANS_LINEAR, Tween.EASE_IN_OUT, getRangedAttackTime())
-					weaponFxTween.start()
-					rangedFx.global_position = get_global_mouse_position()
-					rangedFx.visible = true
-					attackTimer.start(.5)
-					PlayerStats.maxSpeed *= .5
-					chargingRanged = true
-					chargingTime = 0.0
+				var animLength = animationPlayer.current_animation_length
+				self.startMeleeAttack(animLength, attackType)
+			elif weaponStats.weaponType == WeaponStats.WeaponType.HEAVY:
+				var attackDuration = animationPlayer.get_animation("MeleeAttack").length
+				var attackType: int
+				
+				# Minimum time between attacks is the time it takes to play the attack animation
+				attackTimer.start(max(weaponStats.attackSpeed * PlayerStats.attackSpeed, attackDuration))
+				emit_signal("meleeQuick")
+				attackType = MeleeAttackType.QUICK
+				comboTimer.start(comboTime*.65)
+			
+				var animLength = animationPlayer.current_animation_length
+				self.startMeleeAttack(animLength, attackType)
+			elif weaponStats.weaponType == WeaponStats.WeaponType.RANGED:
+				# Ranged weapon, enter the pull back state
+				weaponFxTween.interpolate_property(rangedFx, "scale", Vector2.ONE, Vector2.ZERO, getRangedAttackTime())
+				weaponFxTween.interpolate_property(rangedFx, "scale", Vector2.ZERO, Vector2.ONE, RangedProjectile.REDUCED, Tween.TRANS_LINEAR, Tween.EASE_IN_OUT, getRangedAttackTime())
+				weaponFxTween.start()
+				rangedFx.global_position = get_global_mouse_position()
+				rangedFx.visible = true
+				attackTimer.start(.5)
+				PlayerStats.maxSpeed *= .5
+				chargingRanged = true
+				chargingTime = 0.0
 				
 		elif Input.is_action_just_released("attack") and chargingRanged and weaponStats.weaponType == WeaponStats.WeaponType.RANGED:
 			chargingRanged = false
@@ -165,7 +165,7 @@ func _on_WeaponTween_tween_completed():
 	
 	if comboCounter < 2:
 		._on_WeaponTween_tween_completed()
-	else:
+	elif weaponStats.weaponType == WeaponStats.WeaponType.MELEE:
 		self.show_behind_parent = not self.show_behind_parent
 		backTween.interpolate_property(weaponSprite, "position", weaponSprite.position, Vector2(-10, 5), self.tweenLength, Tween.TRANS_LINEAR, Tween.EASE_IN_OUT)
 		backTween.interpolate_property(weaponSprite, "rotation", weaponSprite.rotation, restingRotation + deg2rad(70), self.tweenLength)
@@ -173,7 +173,15 @@ func _on_WeaponTween_tween_completed():
 		# Add the .007 so if player is spam clicking it feels more fluid/no stop on swing
 		backTween.interpolate_property(weaponSprite, "position", Vector2(-10, 5), meleeRestingCoord + Vector2(5, 17), attackTimer.time_left + .007, Tween.TRANS_LINEAR, Tween.EASE_IN_OUT, self.tweenLength)
 		backTween.interpolate_property(weaponSprite, "rotation", restingRotation + deg2rad(70), restingRotation + deg2rad(110), attackTimer.time_left + .007, self.tweenLength)
+	elif weaponStats.weaponType == WeaponStats.WeaponType.SPEAR:
+		print("Spear combo")
+		self.show_behind_parent = not self.show_behind_parent
+		backTween.interpolate_property(weaponSprite, "position", weaponSprite.position, Vector2(-10, 0), self.tweenLength, Tween.TRANS_LINEAR, Tween.EASE_IN_OUT)
+		backTween.interpolate_property(weaponSprite, "rotation", weaponSprite.rotation, restingRotation + deg2rad(120), self.tweenLength)
 
+		# Add the .007 so if player is spam clicking it feels more fluid/no stop on swing
+		backTween.interpolate_property(weaponSprite, "position", Vector2(-10, 0), meleeRestingCoord + Vector2(5, 0), attackTimer.time_left + .007, Tween.TRANS_LINEAR, Tween.EASE_IN_OUT, self.tweenLength)
+		backTween.interpolate_property(weaponSprite, "rotation", restingRotation + deg2rad(120), restingRotation + deg2rad(140), attackTimer.time_left + .007, self.tweenLength)
 	backTween.start()
 
 # Reset weapon back to its original position

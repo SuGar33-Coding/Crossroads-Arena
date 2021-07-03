@@ -125,10 +125,7 @@ func findClosestAlly():
 	if minDist >= 1000:
 		closestAlly = null
 
-var count = 0
 func playMovement():
-	count = count + 1
-	print("walking", count)
 	animationPlayer.play("Walk")
 
 func playMeleeAttack():

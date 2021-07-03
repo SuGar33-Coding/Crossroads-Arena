@@ -6,7 +6,8 @@ enum WeaponType {
 	MELEE,
 	HEAVY,
 	SPEAR,
-	RANGED
+	RANGED,
+	AOE
 }
 
 export(String) var name = "Base Sword"
