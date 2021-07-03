@@ -22,7 +22,7 @@ func _ready():
 
 # TODO add specific burst target
 func _physics_process(_delta):
-	if bursting and target and state == State.CHASE:
+	if bursting and is_instance_valid(target) and state == State.CHASE:
 		if self.global_position.distance_to(target.global_position) < poundRange or self.global_position.distance_to(burstTarget) < poundRange or get_slide_count() > 0:
 			playGroundPound()
 
