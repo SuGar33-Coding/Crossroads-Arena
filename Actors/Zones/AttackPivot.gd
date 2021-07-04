@@ -131,7 +131,7 @@ func startAOEAttack(targetGlobalPos : Vector2, sourceStr := 0):
 	areaOfEffect.global_position = targetGlobalPos
 	world.add_child(areaOfEffect)
 	# TODO: Possibly pass in a rotation if it is a directional aoe (like a cone)
-	areaOfEffect.fire(targetGlobalPos, 0)
+	areaOfEffect.fire(targetGlobalPos, self.global_rotation)
 
 func setWeapon(weaponStats : WeaponStats):
 	self.weaponStats = weaponStats

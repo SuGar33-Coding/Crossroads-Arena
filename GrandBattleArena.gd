@@ -7,6 +7,7 @@ var ChaosKnight = preload("res://Actors/Fighters/ChaosKnight/ChaosKnight.tscn")
 var Rogue = preload("res://Actors/Dashers/Rogue/Rogue.tscn")
 var Charger = preload("res://Actors/Chargers/Charger/Charger.tscn")
 var Ranger = preload("res://Actors/Fighters/Ranger/Ranger.tscn")
+var Mage = preload("res://Actors/Fighters/Mage/Mage.tscn")
 
 onready var people = $YSort/People
 onready var spawns = $Spawns
@@ -35,7 +36,7 @@ func spawnEnemies():
 	for spawn in spawns.get_children():
 		if randi() % 3 != 0:
 			var newFighter
-			var fighterSelect = randi() % 7
+			var fighterSelect = randi() % 8
 			if fighterSelect == 0:
 				newFighter = Brute.instance()
 			elif fighterSelect == 1:
@@ -46,6 +47,8 @@ func spawnEnemies():
 				newFighter = Charger.instance()
 			elif fighterSelect == 4:
 				newFighter = Ranger.instance()
+			elif fighterSelect == 5:
+				newFighter = Mage.instance()
 			else:
 				newFighter = Fighter.instance()
 			

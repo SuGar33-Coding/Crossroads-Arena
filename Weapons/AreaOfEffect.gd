@@ -55,7 +55,7 @@ func _ready():
 func _physics_process(delta):
 	move_and_slide(velocity)
 
-func fire(startingPosition : Vector2, startingRotation : float):
+func fire(startingPosition : Vector2, startingRotation := 0.0):
 	
 	weaponHitbox.collision.set_deferred("disabled", true)
 	# TODO: Temporarily if it is from player then change its layer mask, will eventually do this with groups instead
@@ -63,7 +63,10 @@ func fire(startingPosition : Vector2, startingRotation : float):
 		self.weaponHitbox.set_collision_mask_bit(4, false)
 		self.weaponHitbox.set_collision_mask_bit(5, true)
 	self.global_position = startingPosition
-	self.global_rotation = startingRotation
+	if(weaponStats.aoeAngle >= 0):
+		self.global_rotation = startingRotation + weaponStats.aoeAngle
+	else:
+		self.global_rotation = 0
 	velocity =  Vector2(1,0).rotated(self.global_rotation) * speed
 	
 	tickTimer.start(lifetime / totalTicks)

@@ -1,22 +1,22 @@
 [gd_resource type="Resource" load_steps=4 format=2]
 
 [ext_resource path="res://Weapons/WeaponStats.gd" type="Script" id=1]
-[ext_resource path="res://Assets/WeaponAssets/Flame.png" type="Texture" id=2]
-[ext_resource path="res://Assets/WeaponAssets/Item__22.png" type="Texture" id=3]
+[ext_resource path="res://Assets/WeaponAssets/WallOfFire.png" type="Texture" id=2]
+[ext_resource path="res://Assets/WeaponAssets/FireStaff.png" type="Texture" id=3]
 
 [resource]
 script = ExtResource( 1 )
 name = "Fire Staff"
 weaponType = 4
-damage = 10
+damage = 5
 knockbackValue = 10
-radius = 20.0
-length = 0.0
-attackSpeed = 1.2
+radius = 5.0
+length = 30.0
+attackSpeed = 2.1
 texture = ExtResource( 3 )
 projectileTexture = ExtResource( 2 )
 projectileSpeed = 0.0
 projectileRange = 350.0
 aoeNumberOfTicks = 4
-aoeLifetime = 2.0
-aoeAngle = -1.0
+aoeLifetime = 3.0
+aoeAngle = 0.0

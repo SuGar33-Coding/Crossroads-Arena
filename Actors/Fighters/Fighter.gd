@@ -18,6 +18,8 @@ var sinX = rand_range(0, TAU)
 var noise := OpenSimplexNoise.new()
 var noiseY = 1
 
+var aoeAttackPos := Vector2.ZERO
+
 # TODO: Possibly not necessary for the generic fighter class
 var moveDir = 1
 
@@ -62,9 +64,19 @@ func switchToAttack():
 	attackTimer.start(weaponStats.attackSpeed * stats.attackSpeed * 2)
 	if weaponStats.weaponType == WeaponStats.WeaponType.RANGED:
 		animationPlayer.play("RangedAttack")
+	elif weaponStats.weaponType == WeaponStats.WeaponType.AOE:
+		# TODO: As soon as they aim, whatever starting aoe animation we have should start playing
+		aoeAttackPos = detectionZone.target.global_position
+		animationPlayer.play("AOEAttack")
 	else:
 		animationPlayer.play("MeleeWindup")
-			
+		
+func startRangedAttack():
+	attackPivot.startRangedAttack(stats.strength)
+	
+func startAOEAttack():
+	attackPivot.startAOEAttack(aoeAttackPos, stats.strength)
+	
 func switchToStun():
 	animationPlayer.playback_speed = 1
 	animationPlayer.play("Idle")
@@ -80,7 +92,7 @@ func willChase() -> bool:
 func willAttack() -> bool:
 	var distanceToTarget = self.position.distance_to(detectionZone.target.position)
 	if attackTimer.is_stopped():
-		if weaponStats.weaponType == WeaponStats.WeaponType.RANGED:
+		if weaponStats.weaponType == WeaponStats.WeaponType.RANGED or weaponStats.weaponType == WeaponStats.WeaponType.AOE:
 			return distanceToTarget <= weaponStats.projectileRange
 		else:
 			return distanceToTarget <= (weaponStats.length + weaponStats.radius*2)

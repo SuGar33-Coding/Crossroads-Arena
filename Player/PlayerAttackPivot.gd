@@ -17,7 +17,7 @@ onready var rangedFx := $RangedWeaponFX
 onready var weaponFxTween := $WeaponEffects
 
 # TODO: remove this cus it should be through inventory
-onready var rangedWeapon : WeaponStats = preload("res://Weapons/FireStaff.tres")
+onready var rangedWeapon : WeaponStats = preload("res://Weapons/FireWallStaff.tres")
 onready var meleeWeapon : WeaponStats = weaponStats
 
 signal meleeQuick()
@@ -107,7 +107,7 @@ func _physics_process(delta):
 			var atkSpeed = getRangedAttackTime()
 			self.startRangedAttack(PlayerStats.strength, chargingTime - atkSpeed)
 			
-		elif Input.is_action_just_pressed("fire") and weaponStats.weaponType == WeaponStats.WeaponType.MELEE and attackTimer.is_stopped():
+		elif Input.is_action_just_pressed("fire") and (weaponStats.weaponType == WeaponStats.WeaponType.MELEE or weaponStats.weaponType == WeaponStats.WeaponType.SPEAR) and attackTimer.is_stopped():
 			emit_signal("parry")
 			self.startParry()
 			
@@ -131,7 +131,7 @@ func startParry():
 	comboCounter = 0
 	comboTimer.start(comboTime*.5)
 	attackTimer.start(max(weaponStats.attackSpeed * .4 * PlayerStats.attackSpeed, comboTime*.5))
-	weaponSprite.set_deferred("rotation", restingRotation)
+	weaponSprite.set_deferred("rotation", returnRot)
 	parryTween.interpolate_property(weaponSprite, "position", Vector2(0, 5), parryPos, tweenLen*.5, Tween.TRANS_LINEAR, Tween.EASE_IN_OUT)
 	parryTween.interpolate_property(attackSignalPos, "position", attackSignalPos.position, parryPos - attackSignalPos.position, tweenLen*.5, Tween.TRANS_LINEAR, Tween.EASE_IN_OUT)
 	parryTween.interpolate_property(weaponSprite, "position", parryPos, Vector2.ZERO, tweenLen, Tween.TRANS_LINEAR, Tween.EASE_IN_OUT, tweenLen)
