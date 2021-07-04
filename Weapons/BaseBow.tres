@@ -1,7 +1,7 @@
 [gd_resource type="Resource" load_steps=4 format=2]
 
 [ext_resource path="res://Weapons/WeaponStats.gd" type="Script" id=1]
-[ext_resource path="res://Assets/WeaponAssets/Item__18.png" type="Texture" id=2]
+[ext_resource path="res://Assets/WeaponAssets/BasicBow.png" type="Texture" id=2]
 [ext_resource path="res://Assets/WeaponAssets/arrow.png" type="Texture" id=3]
 
 [resource]

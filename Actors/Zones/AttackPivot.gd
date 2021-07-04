@@ -178,6 +178,7 @@ func setWeapon(weaponStats : WeaponStats):
 	elif weaponStats.weaponType == WeaponStats.WeaponType.RANGED:
 		restingPos.set_deferred("position", Vector2(15, 0))
 		weaponSprite.set_deferred("rotation", deg2rad(45))
+		weaponSprite.hframes = 6
 	else:
 		swordAnimDist = weaponCollision.position - restingPos.position
 
