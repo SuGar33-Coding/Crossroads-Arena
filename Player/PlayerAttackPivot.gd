@@ -17,7 +17,7 @@ onready var rangedFx := $RangedWeaponFX
 onready var weaponFxTween := $WeaponEffects
 
 # TODO: remove this cus it should be through inventory
-onready var rangedWeapon : WeaponStats = preload("res://Weapons/FireWallStaff.tres")
+onready var rangedWeapon : WeaponStats = preload("res://Weapons/BaseBow.tres")
 onready var meleeWeapon : WeaponStats = weaponStats
 
 signal meleeQuick()
@@ -92,6 +92,7 @@ func _physics_process(delta):
 				rangedFx.global_position = get_global_mouse_position()
 				rangedFx.visible = true
 				attackTimer.start(.5)
+				animationPlayer.play("Ranged Draw")
 				PlayerStats.maxSpeed *= .5
 				chargingRanged = true
 				chargingTime = 0.0
@@ -99,12 +100,13 @@ func _physics_process(delta):
 				attackTimer.start(getMeleeAttackTime())
 				self.startAOEAttack(get_global_mouse_position(), PlayerStats.strength)
 				
-		elif Input.is_action_just_released("attack") and chargingRanged and weaponStats.weaponType == WeaponStats.WeaponType.RANGED:
+		elif chargingRanged and (not Input.is_action_pressed("attack")) and chargingRanged and weaponStats.weaponType == WeaponStats.WeaponType.RANGED:
 			chargingRanged = false
 			rangedFx.visible = false
 			PlayerStats.resetMaxSpeed()
 			# To measure accuracy, we find what portion of the attack speed time they were off
 			var atkSpeed = getRangedAttackTime()
+			animationPlayer.play("RangedRelease")
 			self.startRangedAttack(PlayerStats.strength, chargingTime - atkSpeed)
 			
 		elif Input.is_action_just_pressed("fire") and (weaponStats.weaponType == WeaponStats.WeaponType.MELEE or weaponStats.weaponType == WeaponStats.WeaponType.SPEAR) and attackTimer.is_stopped():
@@ -139,6 +141,10 @@ func startParry():
 	parryTween.start()
 
 func setWeapon(weaponStats : WeaponStats):
+	"""if weaponStats.weaponType == WeaponStats.WeaponType.RANGED:
+		Input.set_custom_mouse_cursor(weaponStats.projectileTexture)
+	else:
+		Input.set_custom_mouse_cursor(weaponStats.texture)"""
 	self.comboCounter = 0
 	if comboTimer != null:
 		comboTimer.stop()

@@ -181,6 +181,9 @@ func setWeapon(weaponStats : WeaponStats):
 		weaponSprite.hframes = 6
 	else:
 		swordAnimDist = weaponCollision.position - restingPos.position
+		
+	if not weaponStats.weaponType == WeaponStats.WeaponType.RANGED:
+		weaponSprite.hframes = 1
 
 # TODO: Can set tween delay rather than making multiple tweens
 func _on_WeaponTween_tween_completed():
