@@ -197,6 +197,7 @@ margin_top = 76.0
 margin_right = 70.0
 margin_bottom = 100.0
 texture = ExtResource( 4 )
+script = ExtResource( 3 )
 
 [node name="Feet" type="CenterContainer" parent="Equipment/Background/MarginContainer/VBoxContainer/ScrollContainer/GridContainer"]
 margin_top = 180.0

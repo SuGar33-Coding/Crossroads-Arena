@@ -8,7 +8,7 @@ func get_drag_data(_position):
 		var data = {}
 		data.originNode = self
 		data.originPanel = "Bag"
-		data.originItemName = inventory.bag[bagSlot].name
+		data.originItemResource =  inventory.bag[bagSlot]
 		data.originEquipmentType = inventory.bag[bagSlot].equipmentType if inventory.bag[bagSlot] is Equipment else null
 		data.originTexture = texture
 		
@@ -28,11 +28,11 @@ func can_drop_data(_position, data):
 	# make sure we can drop item in this slot
 	var targetBagSlot = get_parent().name
 	if inventory.bag[targetBagSlot] == null: # move an item
-		data.targetItemId = null
+		data.targetItemResource = null
 		data.targetTexture = null
 		return true
 	else: # swap an item
-		data.targetItemName = inventory.bag[targetBagSlot].name
+		data.targetItemResource = inventory.bag[targetBagSlot]
 		data.targetTexture = texture
 		if data.originPanel == "Equipment":
 			if inventory.bag[targetBagSlot] is Equipment:
@@ -43,3 +43,24 @@ func can_drop_data(_position, data):
 				return false
 		else: # origin panel is Bag
 			return true
+
+func drop_data(_position, data):
+	var targetEquipmentSlot = get_parent().name
+	var originSlot = data.originNode.get_parent().name
+	
+	# Update inventory data of origin
+	if data.originPanel == "Bag":
+		inventory.bag[originSlot] = data.targetItemResource
+	elif data.originPanel == "Equipment":
+		inventory.equipment[Equipment.EquipmentType[originSlot]] = data.targetItemResource
+	
+	# Update texture of origin
+	if data.targetItemResource == null:
+		var defaultTexture = load("res://Assets/SmokePuff.png")
+		data.originNode.texture = defaultTexture
+	else:
+		data.originNode.texture = data.targetTexture
+	
+	# Update texture and inventory data of target
+	inventory.bag[targetEquipmentSlot] = data.originItemResource
+	texture = data.originTexture
