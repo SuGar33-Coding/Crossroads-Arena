@@ -9,7 +9,7 @@ func get_drag_data(_position):
 		data.originNode = self
 		data.originPanel = "Bag"
 		data.originItemName = inventory.bag[bagSlot].name
-		data.originEquipmentType = inventory.bag[bagSlot].equipmentType if "equipmentType" in inventory.bag[bagSlot] else null
+		data.originEquipmentType = inventory.bag[bagSlot].equipmentType if inventory.bag[bagSlot] is Equipment else null
 		data.originTexture = texture
 		
 		var dragTexture = TextureRect.new()
@@ -35,7 +35,11 @@ func can_drop_data(_position, data):
 		data.targetItemName = inventory.bag[targetBagSlot].name
 		data.targetTexture = texture
 		if data.originPanel == "Equipment":
-			var targetEquipmentType = inventory.bag[targetBagSlot].equipmentType
-			return targetEquipmentType == data.originEquipmentType # don't let us make an illegal swap
+			if inventory.bag[targetBagSlot] is Equipment:
+				# if the item is an equipment
+				var targetEquipmentType = inventory.bag[targetBagSlot].equipmentType
+				return targetEquipmentType == data.originEquipmentType # don't let us make an illegal swap
+			else:
+				return false
 		else: # origin panel is Bag
 			return true

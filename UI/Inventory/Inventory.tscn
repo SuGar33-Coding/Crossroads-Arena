@@ -1,6 +1,7 @@
-[gd_scene load_steps=5 format=2]
+[gd_scene load_steps=6 format=2]
 
 [ext_resource path="res://Themes/MainFont.tres" type="DynamicFont" id=1]
+[ext_resource path="res://UI/Inventory/Equipment.gd" type="Script" id=2]
 [ext_resource path="res://UI/Inventory/EquipmentSlot.gd" type="Script" id=3]
 [ext_resource path="res://Assets/SmokePuff.png" type="Texture" id=4]
 [ext_resource path="res://UI/Inventory/Bag.gd" type="Script" id=5]
@@ -95,6 +96,7 @@ anchor_left = 0.632
 anchor_right = 1.0
 anchor_bottom = 1.0
 margin_left = -0.264008
+script = ExtResource( 2 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -174,7 +176,7 @@ margin_bottom = 176.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 
-[node name="TextureRect" type="TextureRect" parent="Equipment/Background/MarginContainer/VBoxContainer/ScrollContainer/GridContainer/Head"]
+[node name="Icon" type="TextureRect" parent="Equipment/Background/MarginContainer/VBoxContainer/ScrollContainer/GridContainer/Head"]
 margin_left = 46.0
 margin_top = 76.0
 margin_right = 70.0
@@ -189,7 +191,7 @@ margin_bottom = 176.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 
-[node name="TextureRect" type="TextureRect" parent="Equipment/Background/MarginContainer/VBoxContainer/ScrollContainer/GridContainer/Chest"]
+[node name="Icon" type="TextureRect" parent="Equipment/Background/MarginContainer/VBoxContainer/ScrollContainer/GridContainer/Chest"]
 margin_left = 46.0
 margin_top = 76.0
 margin_right = 70.0
@@ -203,7 +205,7 @@ margin_bottom = 356.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 
-[node name="TextureRect" type="TextureRect" parent="Equipment/Background/MarginContainer/VBoxContainer/ScrollContainer/GridContainer/Feet"]
+[node name="Icon" type="TextureRect" parent="Equipment/Background/MarginContainer/VBoxContainer/ScrollContainer/GridContainer/Feet"]
 margin_left = 46.0
 margin_top = 76.0
 margin_right = 70.0

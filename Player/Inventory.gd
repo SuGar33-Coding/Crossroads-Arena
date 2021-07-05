@@ -14,11 +14,9 @@ var bag:= {
 }
 
 var equipment:= {
-	Equipment.EquipmentType.Head: {
-		"item": "HealthPotion",
-	},
+	Equipment.EquipmentType.Head: null,
 	Equipment.EquipmentType.Chest: null,
-	Equipment.EquipmentType.Feet: null
+	Equipment.EquipmentType.Feet: load("res://Items/Shoes.tres")
 }
 
 func setItem(itemIndex, item):

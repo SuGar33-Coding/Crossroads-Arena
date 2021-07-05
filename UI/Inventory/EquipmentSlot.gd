@@ -3,13 +3,13 @@ extends TextureRect
 var inventory: Inventory = preload("res://Player/Inventory.tres")
 
 func get_drag_data(_position):
-	var equipmentType = get_parent().name
+	var equipmentType = Equipment.EquipmentType[get_parent().name]
 	if inventory.equipment[equipmentType] != null:
 		var data = {}
 		data.originNode = self
 		data.originPanel = "Equipment"
 		data.originItemid = inventory.equipment[equipmentType]
-		data.originEquipmentType = Equipment.EquipmentType[equipmentType]
+		data.originEquipmentType = equipmentType
 		data.originTexture = texture
 		
 		var dragTexture = TextureRect.new()
