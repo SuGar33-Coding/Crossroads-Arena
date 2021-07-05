@@ -8,6 +8,9 @@ margin_right = 114.0
 margin_bottom = 176.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
+__meta__ = {
+"_edit_use_anchors_": false
+}
 
 [node name="Icon" type="TextureRect" parent="."]
 margin_left = 45.0
