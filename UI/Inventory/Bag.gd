@@ -9,7 +9,6 @@ func _ready():
 	for slot in inventory.bag.keys():
 		var newBagSlot = tempalteBagSlot.instance()
 		if inventory.bag[slot] != null:
-			var itemName = inventory.bag[slot].name
-			var iconTexture = load("res://Assets/ItemAssets/" + itemName + ".png")
+			var iconTexture = (inventory.bag[slot] as Item).texture
 			(newBagSlot.get_node("Icon") as TextureRect).texture = iconTexture
 		gridContainer.add_child(newBagSlot, true)

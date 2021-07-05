@@ -10,7 +10,6 @@ func _ready():
 		var slotType = Equipment.EquipmentType[slotName]
 		if inventory.equipment[slotType] != null:
 			# grab item icon and replace the default icon with it
-			var itemName = inventory.equipment[slotType].name
-			var iconTexture = load("res://Assets/ItemAssets/" + itemName + ".png")
+			var iconTexture = (inventory.equipment[slotType] as Item).texture
 			var icon: TextureRect = slot.get_node("Icon")
 			icon.texture = iconTexture
