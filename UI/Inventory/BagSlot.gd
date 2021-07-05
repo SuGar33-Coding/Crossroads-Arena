@@ -1,15 +1,13 @@
 extends TextureRect
 
-var inventory: Inventory = preload("res://Player/Inventory.tres")
-
 func get_drag_data(_position):
 	var bagSlot = get_parent().name
-	if inventory.bag[bagSlot] != null:
+	if Inventory.bag[bagSlot] != null:
 		var data = {}
 		data.originNode = self
 		data.originPanel = "Bag"
-		data.originItemResource =  inventory.bag[bagSlot]
-		data.originEquipmentType = inventory.bag[bagSlot].equipmentType if inventory.bag[bagSlot] is Equipment else null
+		data.originItemResource =  Inventory.bag[bagSlot]
+		data.originEquipmentType = Inventory.bag[bagSlot].equipmentType if Inventory.bag[bagSlot] is Equipment else null
 		data.originTexture = texture
 		
 		var dragTexture = TextureRect.new()
@@ -27,17 +25,17 @@ func get_drag_data(_position):
 func can_drop_data(_position, data):
 	# make sure we can drop item in this slot
 	var targetBagSlot = get_parent().name
-	if inventory.bag[targetBagSlot] == null: # move an item
+	if Inventory.bag[targetBagSlot] == null: # move an item
 		data.targetItemResource = null
 		data.targetTexture = null
 		return true
 	else: # swap an item
-		data.targetItemResource = inventory.bag[targetBagSlot]
+		data.targetItemResource = Inventory.bag[targetBagSlot]
 		data.targetTexture = texture
 		if data.originPanel == "Equipment":
-			if inventory.bag[targetBagSlot] is Equipment:
+			if Inventory.bag[targetBagSlot] is Equipment:
 				# if the item is an equipment
-				var targetEquipmentType = inventory.bag[targetBagSlot].equipmentType
+				var targetEquipmentType = Inventory.bag[targetBagSlot].equipmentType
 				return targetEquipmentType == data.originEquipmentType # don't let us make an illegal swap
 			else:
 				return false
@@ -50,9 +48,9 @@ func drop_data(_position, data):
 	
 	# Update inventory data of origin
 	if data.originPanel == "Bag":
-		inventory.bag[originSlot] = data.targetItemResource
+		Inventory.bag[originSlot] = data.targetItemResource
 	elif data.originPanel == "Equipment":
-		inventory.equipment[Equipment.EquipmentType[originSlot]] = data.targetItemResource
+		Inventory.equipment[Equipment.EquipmentType[originSlot]] = data.targetItemResource
 	
 	# Update texture of origin
 	if data.targetItemResource == null:
@@ -62,5 +60,5 @@ func drop_data(_position, data):
 		data.originNode.texture = data.targetTexture
 	
 	# Update texture and inventory data of target
-	inventory.bag[targetEquipmentSlot] = data.originItemResource
+	Inventory.bag[targetEquipmentSlot] = data.originItemResource
 	texture = data.originTexture

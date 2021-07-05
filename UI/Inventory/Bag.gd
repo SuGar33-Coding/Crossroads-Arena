@@ -1,14 +1,13 @@
 extends Control
 
 var tempalteBagSlot = preload("res://UI/Inventory/BagSlot.tscn")
-var inventory: Inventory = preload("res://Player/Inventory.tres")
 
 onready var gridContainer = $Background/MarginContainer/VBoxContainer/ScrollContainer/GridContainer
 
 func _ready():
-	for slot in inventory.bag.keys():
+	for slot in Inventory.bag.keys():
 		var newBagSlot = tempalteBagSlot.instance()
-		if inventory.bag[slot] != null:
-			var iconTexture = (inventory.bag[slot] as Item).texture
+		if Inventory.bag[slot] != null:
+			var iconTexture = (Inventory.bag[slot] as Item).texture
 			(newBagSlot.get_node("Icon") as TextureRect).texture = iconTexture
 		gridContainer.add_child(newBagSlot, true)

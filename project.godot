@@ -80,11 +80,6 @@ _global_script_classes=[ {
 "path": "res://Actors/Zones/Hurtbox.gd"
 }, {
 "base": "Resource",
-"class": "Inventory",
-"language": "GDScript",
-"path": "res://Player/Inventory.gd"
-}, {
-"base": "Resource",
 "class": "Item",
 "language": "GDScript",
 "path": "res://Items/Item.gd"
@@ -189,7 +184,6 @@ _global_script_class_icons={
 "HitEffect": "",
 "Hitbox": "",
 "Hurtbox": "",
-"Inventory": "",
 "Item": "",
 "MainCamera": "",
 "MaintainAndCharge": "",
@@ -219,6 +213,7 @@ config/icon="res://icon.png"
 [autoload]
 
 PlayerStats="*res://Player/PlayerStats.gd"
+Inventory="*res://Player/Inventory.gd"
 
 [display]
 
