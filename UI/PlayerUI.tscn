@@ -1,7 +1,8 @@
 [gd_scene load_steps=12 format=2]
 
 [ext_resource path="res://UI/PlayerUI.gd" type="Script" id=1]
-[ext_resource path="res://Assets/ItemAssets/HealthPotion.png" type="Texture" id=3]
+[ext_resource path="res://Assets/ItemAssets/Potion.png" type="Texture" id=3]
+
 
 [sub_resource type="DynamicFontData" id=1]
 font_path = "res://Assets/Adventurer.ttf"

@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/HealthPotion.png-6feea137cb6a7a1c8e5ed49d296c466e.stex"
+path="res://.import/Shoes.png-b209054aac0040fe2ab6fb62016f9107.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Assets/ItemAssets/HealthPotion.png"
-dest_files=[ "res://.import/HealthPotion.png-6feea137cb6a7a1c8e5ed49d296c466e.stex" ]
+source_file="res://Assets/ItemAssets/Shoes.png"
+dest_files=[ "res://.import/Shoes.png-b209054aac0040fe2ab6fb62016f9107.stex" ]
 
 [params]
 
@@ -30,5 +30,5 @@ process/HDR_as_SRGB=false
 process/invert_color=false
 stream=false
 size_limit=0
-detect_3d=true
+detect_3d=false
 svg/scale=1.0

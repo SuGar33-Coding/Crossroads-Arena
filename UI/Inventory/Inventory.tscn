@@ -168,30 +168,45 @@ size_flags_horizontal = 3
 size_flags_vertical = 3
 columns = 2
 
-[node name="Helmet" type="CenterContainer" parent="Equipment/Background/MarginContainer/VBoxContainer/ScrollContainer/GridContainer"]
+[node name="Head" type="CenterContainer" parent="Equipment/Background/MarginContainer/VBoxContainer/ScrollContainer/GridContainer"]
 margin_right = 117.0
-margin_bottom = 357.0
+margin_bottom = 176.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 
-[node name="TextureRect" type="TextureRect" parent="Equipment/Background/MarginContainer/VBoxContainer/ScrollContainer/GridContainer/Helmet"]
+[node name="TextureRect" type="TextureRect" parent="Equipment/Background/MarginContainer/VBoxContainer/ScrollContainer/GridContainer/Head"]
 margin_left = 46.0
-margin_top = 166.0
+margin_top = 76.0
 margin_right = 70.0
-margin_bottom = 190.0
+margin_bottom = 100.0
 texture = ExtResource( 4 )
 script = ExtResource( 3 )
 
 [node name="Chest" type="CenterContainer" parent="Equipment/Background/MarginContainer/VBoxContainer/ScrollContainer/GridContainer"]
 margin_left = 121.0
 margin_right = 238.0
-margin_bottom = 357.0
+margin_bottom = 176.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 
 [node name="TextureRect" type="TextureRect" parent="Equipment/Background/MarginContainer/VBoxContainer/ScrollContainer/GridContainer/Chest"]
 margin_left = 46.0
-margin_top = 166.0
+margin_top = 76.0
 margin_right = 70.0
-margin_bottom = 190.0
+margin_bottom = 100.0
 texture = ExtResource( 4 )
+
+[node name="Feet" type="CenterContainer" parent="Equipment/Background/MarginContainer/VBoxContainer/ScrollContainer/GridContainer"]
+margin_top = 180.0
+margin_right = 117.0
+margin_bottom = 356.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="TextureRect" type="TextureRect" parent="Equipment/Background/MarginContainer/VBoxContainer/ScrollContainer/GridContainer/Feet"]
+margin_left = 46.0
+margin_top = 76.0
+margin_right = 70.0
+margin_bottom = 100.0
+texture = ExtResource( 4 )
+script = ExtResource( 3 )

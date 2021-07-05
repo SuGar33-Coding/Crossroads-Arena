@@ -1,7 +1,7 @@
 class_name Equipment extends Item
 
 enum EquipmentType {
-	HEAD, CHEST, FEET
+	Head, Chest, Feet
 }
 
 export (EquipmentType) var equipmentType

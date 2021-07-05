@@ -3,13 +3,13 @@ extends TextureRect
 var inventory: Inventory = preload("res://Player/Inventory.tres")
 
 func get_drag_data(_position):
-	var equipmentSlot = get_parent().name
-	if inventory.equipment[equipmentSlot] != null:
+	var equipmentType = get_parent().name
+	if inventory.equipment[equipmentType] != null:
 		var data = {}
 		data.originNode = self
 		data.originPanel = "Equipment"
-		data.originItemid = inventory.equipment[equipmentSlot]
-		data.originEquipmentSlot = equipmentSlot
+		data.originItemid = inventory.equipment[equipmentType]
+		data.originEquipmentType = Equipment.EquipmentType[equipmentType]
 		data.originTexture = texture
 		
 		var dragTexture = TextureRect.new()
@@ -26,8 +26,8 @@ func get_drag_data(_position):
 
 func can_drop_data(_position, data):
 	# make sure we can drop item of this type into this slot
-	var targetEquipmentSlot = get_parent().name
-	if targetEquipmentSlot == data.originEquipmentSlot:
+	var targetEquipmentSlot = Equipment.EquipmentType[get_parent().name]
+	if targetEquipmentSlot == data.originEquipmentType:
 		# get the target data as we hover
 		if inventory.equipment[targetEquipmentSlot] == null:
 			data.targetItemId = null

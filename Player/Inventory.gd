@@ -4,30 +4,21 @@ signal items_changed(indexes)
 
 export (Array, Resource) var items = []
 
+var potion = preload("res://Items/Potion.tres")
+
 var bag:= {
-	"Slot1": {
-		"item": null,
-	},
-	"Slot2": {
-		"item": null,
-	},
-	"Slot3": {
-		"item": null,
-	},
-	"Slot4": {
-		"name": "Potion",
-		"item": "HealthPotion",
-		"equipmentSlot": "Helmet"
-	}
+	"Slot1": null,
+	"Slot2": null,
+	"Slot3": load("res://Items/Shoes.tres"),
+	"Slot4": potion
 }
 
 var equipment:= {
-	"Helmet": {
+	Equipment.EquipmentType.Head: {
 		"item": "HealthPotion",
 	},
-	"Chest": {
-		"item": null,
-	}
+	Equipment.EquipmentType.Chest: null,
+	Equipment.EquipmentType.Feet: null
 }
 
 func setItem(itemIndex, item):
