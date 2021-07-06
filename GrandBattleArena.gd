@@ -10,10 +10,11 @@ var Ranger = preload("res://Actors/Fighters/Ranger/Ranger.tscn")
 var Mage = preload("res://Actors/Fighters/Mage/Mage.tscn")
 var Encounter = preload("res://World/Encounters/Encounter.tscn")
 var numEncounters := 0
+var playerNearButton := false
 
 onready var people = $YSort/People
-#onready var spawns = $Spawns
 onready var camera = $YSort/Player/MainCamera
+onready var newWaveButtonSprite = $YSort/NewWaveButton/AnimatedSprite
 var largeSpawns : Array
 var medSpawns : Array
 var smallSpawns : Array
@@ -27,9 +28,7 @@ func _ready():
 	spawnEnemies()
 
 func _physics_process(_delta):
-	if Input.is_action_just_pressed("openmap"):
-		spawnEnemies()
-	elif Input.is_action_just_pressed("addlevel"):
+	if Input.is_action_just_pressed("addlevel"):
 		PlayerStats.playerLevel += 1
 	elif Input.is_action_just_pressed("toggleFullscreen"):
 		OS.set_window_fullscreen(!OS.window_fullscreen)
@@ -42,12 +41,17 @@ func _physics_process(_delta):
 		camera.setLimitsToPositions()
 		
 	if numEncounters <= 0:
-		numEncounters = 1
-		var newEncounter = Encounter.instance()
-		newEncounter.connect("encounter_finished", self, "encounter_finished")
-		var spawnLocation = smallSpawns[randi() % smallSpawns.size()]
-		newEncounter.global_position = spawnLocation.global_position
-		self.add_child(newEncounter)
+		newWaveButtonSprite.play("Ready")
+		if playerNearButton:
+			if Input.is_action_just_pressed("openmap"):
+				numEncounters = 1
+				var newEncounter = Encounter.instance()
+				newEncounter.connect("encounter_finished", self, "encounter_finished")
+				var spawnLocation = smallSpawns[randi() % smallSpawns.size()]
+				newEncounter.global_position = spawnLocation.global_position
+				self.add_child(newEncounter)
+				
+				newWaveButtonSprite.play("Pressed") 
 
 func spawnEnemies():
 	"""for spawn in spawns.get_children():
@@ -100,3 +104,9 @@ func goToMainMenu(_stuff):
 
 func encounter_finished():
 	numEncounters -= 1
+
+func _on_NewWaveButton_body_entered(body):
+	playerNearButton = true
+
+func _on_NewWaveButton_body_exited(body):
+	playerNearButton = false

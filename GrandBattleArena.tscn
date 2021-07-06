@@ -1,4 +1,4 @@
-[gd_scene load_steps=16 format=2]
+[gd_scene load_steps=23 format=2]
 
 [ext_resource path="res://GrandBattleArena.gd" type="Script" id=1]
 [ext_resource path="res://Assets/TileSets/RockBase.tres" type="TileSet" id=2]
@@ -10,6 +10,7 @@
 [ext_resource path="res://UI/PauseMenu.tscn" type="PackedScene" id=8]
 [ext_resource path="res://Assets/WorldAssets/grassTileMap.png" type="Texture" id=9]
 [ext_resource path="res://World/Gate.tscn" type="PackedScene" id=10]
+[ext_resource path="res://Assets/WaveButton.png" type="Texture" id=11]
 
 [sub_resource type="NavigationPolygon" id=1]
 vertices = PoolVector2Array( 0, 0, 24, 0, 24, 24, 0, 24 )
@@ -51,6 +52,38 @@ polygons = [ PoolIntArray( 0, 1, 2, 3 ) ]
 0/shape_one_way_margin = 0.0
 0/shapes = [  ]
 0/z_index = 0
+
+[sub_resource type="RectangleShape2D" id=9]
+extents = Vector2( 16.1287, 19.299 )
+
+[sub_resource type="AtlasTexture" id=6]
+atlas = ExtResource( 11 )
+region = Rect2( 0, 0, 16, 16 )
+
+[sub_resource type="AtlasTexture" id=7]
+atlas = ExtResource( 11 )
+region = Rect2( 16, 0, 16, 16 )
+
+[sub_resource type="AtlasTexture" id=10]
+atlas = ExtResource( 11 )
+region = Rect2( 32, 0, 16, 16 )
+
+[sub_resource type="SpriteFrames" id=8]
+animations = [ {
+"frames": [ SubResource( 6 ), SubResource( 7 ) ],
+"loop": true,
+"name": "Ready",
+"speed": 2.0
+}, {
+"frames": [ SubResource( 10 ) ],
+"loop": true,
+"name": "Pressed",
+"speed": 5.0
+} ]
+
+[sub_resource type="CapsuleShape2D" id=11]
+radius = 2.80725
+height = 7.98486
 
 [node name="World" type="Node2D"]
 script = ExtResource( 1 )
@@ -107,8 +140,32 @@ position = Vector2( 473.305, 1786.19 )
 
 [node name="YSort" type="YSort" parent="."]
 
+[node name="NewWaveButton" type="Area2D" parent="YSort"]
+position = Vector2( 1008.24, 849.464 )
+collision_layer = 0
+collision_mask = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="YSort/NewWaveButton"]
+position = Vector2( 0, 9.95966 )
+shape = SubResource( 9 )
+
+[node name="AnimatedSprite" type="AnimatedSprite" parent="YSort/NewWaveButton"]
+position = Vector2( 0.125, -2.25 )
+frames = SubResource( 8 )
+animation = "Ready"
+frame = 1
+playing = true
+
+[node name="StaticBody2D" type="StaticBody2D" parent="YSort/NewWaveButton"]
+collision_mask = 0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="YSort/NewWaveButton/StaticBody2D"]
+position = Vector2( 0.83429, 3.17004 )
+rotation = 1.5708
+shape = SubResource( 11 )
+
 [node name="Player" parent="YSort" instance=ExtResource( 3 )]
-position = Vector2( 2096, 1408 )
+position = Vector2( 1008.69, 917.891 )
 
 [node name="TopLeft" parent="YSort/Player/MainCamera/Limits" index="0"]
 position = Vector2( 0, 0 )
@@ -334,6 +391,9 @@ stream = ExtResource( 7 )
 autoplay = true
 mix_target = 1
 bus = "BGM"
+
+[connection signal="body_entered" from="YSort/NewWaveButton" to="." method="_on_NewWaveButton_body_entered"]
+[connection signal="body_exited" from="YSort/NewWaveButton" to="." method="_on_NewWaveButton_body_exited"]
 
 [editable path="YSort/Player"]
 [editable path="YSort/Player/MainCamera"]
