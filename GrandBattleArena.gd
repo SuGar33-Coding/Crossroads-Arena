@@ -8,13 +8,22 @@ var Rogue = preload("res://Actors/Dashers/Rogue/Rogue.tscn")
 var Charger = preload("res://Actors/Chargers/Charger/Charger.tscn")
 var Ranger = preload("res://Actors/Fighters/Ranger/Ranger.tscn")
 var Mage = preload("res://Actors/Fighters/Mage/Mage.tscn")
+var Encounter = preload("res://World/Encounters/Encounter.tscn")
+var numEncounters := 0
 
 onready var people = $YSort/People
-onready var spawns = $Spawns
+#onready var spawns = $Spawns
 onready var camera = $YSort/Player/MainCamera
+var largeSpawns : Array
+var medSpawns : Array
+var smallSpawns : Array
 
 func _ready():
 	randomize()
+	largeSpawns = $LargeSpawns.get_children()
+	medSpawns = $MediumSpawns.get_children()
+	smallSpawns = $SmallSpawns.get_children()
+	
 	spawnEnemies()
 
 func _physics_process(_delta):
@@ -31,9 +40,17 @@ func _physics_process(_delta):
 		camera.topLeft.position = Vector2(-1000000000, -1000000000)
 		camera.bottomRight.position = Vector2(100000000, 100000000)
 		camera.setLimitsToPositions()
+		
+	if numEncounters <= 0:
+		numEncounters = 1
+		var newEncounter = Encounter.instance()
+		newEncounter.connect("encounter_finished", self, "encounter_finished")
+		var spawnLocation = smallSpawns[randi() % smallSpawns.size()]
+		newEncounter.global_position = spawnLocation.global_position
+		self.add_child(newEncounter)
 
 func spawnEnemies():
-	for spawn in spawns.get_children():
+	"""for spawn in spawns.get_children():
 		if randi() % 3 != 0:
 			var newFighter
 			var fighterSelect = randi() % 8
@@ -53,7 +70,8 @@ func spawnEnemies():
 				newFighter = Fighter.instance()
 			
 			newFighter.global_position = spawn.global_position + Vector2(rand_range(0, 20), rand_range(0,20))
-			people.add_child(newFighter)
+			people.add_child(newFighter)"""
+	return 0
 
 #(Un)pauses a single node
 func set_pause_node(node : Node, pause : bool) -> void:
@@ -79,3 +97,6 @@ func playerDied():
 func goToMainMenu(_stuff):
 	get_tree().paused = false
 	get_tree().change_scene("res://UI/StartMenu/StartMenu.tscn")
+
+func encounter_finished():
+	numEncounters -= 1

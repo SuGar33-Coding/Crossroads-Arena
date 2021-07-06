@@ -28,7 +28,6 @@ disabled = false
 
 [node name="ParryCollision" parent="WeaponHitbox/ParryHitbox" index="0"]
 rotation = 0.0
-disabled = false
 
 [node name="TickTimer" type="Timer" parent="."]
 

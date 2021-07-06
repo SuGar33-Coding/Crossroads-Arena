@@ -8,7 +8,7 @@
 [resource]
 script = ExtResource( 1 )
 name = "Great Hammer"
-weaponType = 1
+weaponType = 2
 damage = 25
 knockbackValue = 700
 radius = 30.0

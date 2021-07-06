@@ -87,15 +87,15 @@ func startMeleeAttack(animLength: float, type = MeleeAttackType.QUICK):
 			longSfx.play()
 	
 	
-	if weaponStats.weaponType == WeaponStats.WeaponType.MELEE or weaponStats.weaponType == WeaponStats.WeaponType.HEAVY or weaponStats.weaponType == WeaponStats.WeaponType.SPEAR:
-		self.tweenLength = animLength/2
-		swipe.set_deferred("flip_h", not swipe.flip_h)
-		tween.interpolate_property(weaponSprite, "position", weaponSprite.position, swordAnimDist, tweenLength)
-		var endRotation = restingRotation + deg2rad(swingDegrees) 
-		
-		tween.interpolate_property(weaponSprite, "rotation", weaponSprite.rotation, endRotation, tweenLength)
-		
-		tween.start()
+	#if weaponStats.weaponType == WeaponStats.WeaponType.MELEE or weaponStats.weaponType == WeaponStats.WeaponType.HEAVY or weaponStats.weaponType == WeaponStats.WeaponType.SPEAR:
+	self.tweenLength = animLength/2
+	swipe.set_deferred("flip_h", not swipe.flip_h)
+	tween.interpolate_property(weaponSprite, "position", weaponSprite.position, swordAnimDist, tweenLength)
+	var endRotation = restingRotation + deg2rad(swingDegrees) 
+	
+	tween.interpolate_property(weaponSprite, "rotation", weaponSprite.rotation, endRotation, tweenLength)
+	
+	tween.start()
 		
 func playAttackSignal(windUpTime: float, shading: bool = true):
 	var atkSignal : Particles2D = AttackSignalScene.instance()
@@ -141,7 +141,7 @@ func setWeapon(weaponStats : WeaponStats):
 	backTween.remove_all()
 	weaponSprite.position = Vector2.ZERO
 	
-	if weaponStats.weaponType == WeaponStats.WeaponType.MELEE:
+	if weaponStats.weaponType == WeaponStats.WeaponType.MELEE or weaponStats.weaponType == WeaponStats.WeaponType.SWORD:
 		restingPos.position = meleeRestingCoord
 		weaponSprite.rotation = restingRotation
 		returnRot = weaponSprite.rotation

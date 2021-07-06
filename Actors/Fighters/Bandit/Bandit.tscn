@@ -1,4 +1,4 @@
-[gd_scene load_steps=21 format=2]
+[gd_scene load_steps=22 format=2]
 
 [ext_resource path="res://Weapons/LongSword.tres" type="Resource" id=1]
 [ext_resource path="res://Weapons/Glaive.tres" type="Resource" id=2]
@@ -10,6 +10,7 @@
 [ext_resource path="res://Actors/Zones/AttackPivot.tscn" type="PackedScene" id=8]
 [ext_resource path="res://Actors/Zones/DetectionZone.tscn" type="PackedScene" id=9]
 [ext_resource path="res://Weapons/BaseSpear.tres" type="Resource" id=10]
+[ext_resource path="res://Actors/Fighters/Bandit/Bandit.tres" type="Resource" id=11]
 
 [sub_resource type="Curve" id=1]
 _data = [ Vector2( 0, 1 ), 0.0, 0.0, 0, 0, Vector2( 1, 0.163636 ), 0.0, 0.0, 0, 0 ]
@@ -706,6 +707,9 @@ position = Vector2( 0, -5 )
 texture = ExtResource( 7 )
 hframes = 5
 frame = 1
+
+[node name="Stats" parent="." index="4"]
+statsResource = ExtResource( 11 )
 
 [node name="DetectionZone" parent="." index="5" instance=ExtResource( 9 )]
 visible = false

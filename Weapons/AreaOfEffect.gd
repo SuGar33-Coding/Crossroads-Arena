@@ -52,7 +52,7 @@ func _ready():
 	
 	sprite.texture = weaponStats.projectileTexture
 	
-func _physics_process(delta):
+func _physics_process(_delta):
 	move_and_slide(velocity)
 
 func fire(startingPosition : Vector2, startingRotation := 0.0):

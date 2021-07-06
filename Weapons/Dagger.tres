@@ -8,7 +8,7 @@
 [resource]
 script = ExtResource( 1 )
 name = "Dagger"
-weaponType = 0
+weaponType = 1
 damage = 7
 knockbackValue = 175
 radius = 10.0

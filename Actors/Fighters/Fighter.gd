@@ -100,7 +100,7 @@ func willAttack() -> bool:
 		return false
 	
 func willFlipLeft():
-	if state == State.CHASE:
+	if state == State.CHASE and detectionZone.hasTarget():
 		return global_position.x > target.global_position.x
 	else:
 		return false
@@ -175,6 +175,7 @@ func _stats_no_health():
 	self.switchToStun()
 	animationPlayer.playback_speed = 1
 	animationPlayer.play("Death")
+	emit_signal("no_health")
 
 func _change_direction():
 	moveDir *= -1

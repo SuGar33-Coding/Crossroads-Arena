@@ -7,7 +7,7 @@
 [resource]
 script = ExtResource( 1 )
 name = "Fire Staff"
-weaponType = 4
+weaponType = 5
 damage = 5
 knockbackValue = 10
 radius = 5.0

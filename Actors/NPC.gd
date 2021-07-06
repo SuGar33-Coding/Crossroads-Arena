@@ -11,6 +11,8 @@ export var movementGroup: String = "NPC"
 export var pathfindTime = .5
 export var movementMaxTime : float = 5.0
 
+signal no_health()
+
 enum State {
 	IDLE,
 	CHASE,
@@ -188,4 +190,5 @@ func _dexterity_changed(value):
 	self.MaxSpeed = self.baseSpeed * pow(PlayerStats.dexRatio, value)
 
 func _stats_no_health():
+	emit_signal("no_health")
 	queue_free()
