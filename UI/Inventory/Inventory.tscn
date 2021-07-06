@@ -1,31 +1,33 @@
-[gd_scene load_steps=6 format=2]
+[gd_scene load_steps=7 format=2]
 
 [ext_resource path="res://Themes/MainFont.tres" type="DynamicFont" id=1]
 [ext_resource path="res://UI/Inventory/Equipment.gd" type="Script" id=2]
 [ext_resource path="res://UI/Inventory/EquipmentSlot.gd" type="Script" id=3]
 [ext_resource path="res://Assets/SmokePuff.png" type="Texture" id=4]
 [ext_resource path="res://UI/Inventory/Bag.gd" type="Script" id=5]
+[ext_resource path="res://UI/Inventory/Inventory.gd" type="Script" id=6]
 
-[node name="Inventory" type="Control"]
-anchor_right = 1.0
-anchor_bottom = 1.0
-__meta__ = {
-"_edit_use_anchors_": false
-}
+[node name="Inventory" type="CanvasLayer"]
+script = ExtResource( 6 )
 
 [node name="Bag" type="Control" parent="."]
-anchor_right = 0.36
-anchor_bottom = 1.0
+anchor_left = 0.104779
+anchor_top = 0.165336
+anchor_right = 0.339779
+anchor_bottom = 0.884012
 margin_right = 0.279999
 script = ExtResource( 5 )
 __meta__ = {
-"_edit_use_anchors_": false
+"_edit_use_anchors_": true
 }
 
 [node name="Background" type="ColorRect" parent="Bag"]
 anchor_right = 1.0
 anchor_bottom = 1.0
 color = Color( 0.129412, 0.0313726, 0, 1 )
+__meta__ = {
+"_edit_use_anchors_": true
+}
 
 [node name="MarginContainer" type="MarginContainer" parent="Bag/Background"]
 anchor_right = 1.0
@@ -41,22 +43,22 @@ __meta__ = {
 [node name="VBoxContainer" type="VBoxContainer" parent="Bag/Background/MarginContainer"]
 margin_left = 19.0
 margin_top = 11.0
-margin_right = 252.0
-margin_bottom = 412.0
+margin_right = 157.0
+margin_bottom = 293.0
 
 [node name="Header" type="HBoxContainer" parent="Bag/Background/MarginContainer/VBoxContainer"]
-margin_right = 233.0
+margin_right = 138.0
 margin_bottom = 40.0
 rect_min_size = Vector2( 0, 40 )
 
 [node name="Padding1" type="Control" parent="Bag/Background/MarginContainer/VBoxContainer/Header"]
-margin_right = 62.0
+margin_right = 15.0
 margin_bottom = 40.0
 size_flags_horizontal = 3
 
 [node name="TitleBG" type="TextureRect" parent="Bag/Background/MarginContainer/VBoxContainer/Header"]
-margin_left = 66.0
-margin_right = 166.0
+margin_left = 19.0
+margin_right = 119.0
 margin_bottom = 40.0
 rect_min_size = Vector2( 100, 0 )
 expand = true
@@ -73,32 +75,33 @@ __meta__ = {
 }
 
 [node name="Padding2" type="Control" parent="Bag/Background/MarginContainer/VBoxContainer/Header"]
-margin_left = 170.0
-margin_right = 233.0
+margin_left = 123.0
+margin_right = 138.0
 margin_bottom = 40.0
 size_flags_horizontal = 3
 
 [node name="ScrollContainer" type="ScrollContainer" parent="Bag/Background/MarginContainer/VBoxContainer"]
 margin_top = 44.0
-margin_right = 233.0
-margin_bottom = 401.0
+margin_right = 138.0
+margin_bottom = 282.0
 size_flags_vertical = 3
 
 [node name="GridContainer" type="GridContainer" parent="Bag/Background/MarginContainer/VBoxContainer/ScrollContainer"]
-margin_right = 233.0
-margin_bottom = 357.0
+margin_right = 138.0
+margin_bottom = 238.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 columns = 2
 
 [node name="Equipment" type="Control" parent="."]
-anchor_left = 0.632
-anchor_right = 1.0
-anchor_bottom = 1.0
+anchor_left = 0.526208
+anchor_top = 0.170477
+anchor_right = 0.924793
+anchor_bottom = 0.775678
 margin_left = -0.264008
 script = ExtResource( 2 )
 __meta__ = {
-"_edit_use_anchors_": false
+"_edit_use_anchors_": true
 }
 
 [node name="Background" type="ColorRect" parent="Equipment"]
@@ -120,22 +123,22 @@ __meta__ = {
 [node name="VBoxContainer" type="VBoxContainer" parent="Equipment/Background/MarginContainer"]
 margin_left = 19.0
 margin_top = 11.0
-margin_right = 258.0
-margin_bottom = 412.0
+margin_right = 281.0
+margin_bottom = 245.0
 
 [node name="Header" type="HBoxContainer" parent="Equipment/Background/MarginContainer/VBoxContainer"]
-margin_right = 239.0
+margin_right = 262.0
 margin_bottom = 40.0
 rect_min_size = Vector2( 0, 40 )
 
 [node name="Padding1" type="Control" parent="Equipment/Background/MarginContainer/VBoxContainer/Header"]
-margin_right = 65.0
+margin_right = 77.0
 margin_bottom = 40.0
 size_flags_horizontal = 3
 
 [node name="TitleBG" type="TextureRect" parent="Equipment/Background/MarginContainer/VBoxContainer/Header"]
-margin_left = 69.0
-margin_right = 169.0
+margin_left = 81.0
+margin_right = 181.0
 margin_bottom = 40.0
 rect_min_size = Vector2( 100, 0 )
 expand = true
@@ -152,64 +155,64 @@ __meta__ = {
 }
 
 [node name="Padding2" type="Control" parent="Equipment/Background/MarginContainer/VBoxContainer/Header"]
-margin_left = 173.0
-margin_right = 239.0
+margin_left = 185.0
+margin_right = 262.0
 margin_bottom = 40.0
 size_flags_horizontal = 3
 
 [node name="ScrollContainer" type="ScrollContainer" parent="Equipment/Background/MarginContainer/VBoxContainer"]
 margin_top = 44.0
-margin_right = 239.0
-margin_bottom = 401.0
+margin_right = 262.0
+margin_bottom = 234.0
 size_flags_vertical = 3
 
 [node name="GridContainer" type="GridContainer" parent="Equipment/Background/MarginContainer/VBoxContainer/ScrollContainer"]
-margin_right = 239.0
-margin_bottom = 357.0
+margin_right = 262.0
+margin_bottom = 190.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 columns = 2
 
 [node name="Head" type="CenterContainer" parent="Equipment/Background/MarginContainer/VBoxContainer/ScrollContainer/GridContainer"]
-margin_right = 117.0
-margin_bottom = 176.0
+margin_right = 129.0
+margin_bottom = 93.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 
 [node name="Icon" type="TextureRect" parent="Equipment/Background/MarginContainer/VBoxContainer/ScrollContainer/GridContainer/Head"]
-margin_left = 46.0
-margin_top = 76.0
-margin_right = 70.0
-margin_bottom = 100.0
+margin_left = 52.0
+margin_top = 34.0
+margin_right = 76.0
+margin_bottom = 58.0
 texture = ExtResource( 4 )
 script = ExtResource( 3 )
 
 [node name="Chest" type="CenterContainer" parent="Equipment/Background/MarginContainer/VBoxContainer/ScrollContainer/GridContainer"]
-margin_left = 121.0
-margin_right = 238.0
-margin_bottom = 176.0
+margin_left = 133.0
+margin_right = 262.0
+margin_bottom = 93.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 
 [node name="Icon" type="TextureRect" parent="Equipment/Background/MarginContainer/VBoxContainer/ScrollContainer/GridContainer/Chest"]
-margin_left = 46.0
-margin_top = 76.0
-margin_right = 70.0
-margin_bottom = 100.0
+margin_left = 52.0
+margin_top = 34.0
+margin_right = 76.0
+margin_bottom = 58.0
 texture = ExtResource( 4 )
 script = ExtResource( 3 )
 
 [node name="Feet" type="CenterContainer" parent="Equipment/Background/MarginContainer/VBoxContainer/ScrollContainer/GridContainer"]
-margin_top = 180.0
-margin_right = 117.0
-margin_bottom = 356.0
+margin_top = 97.0
+margin_right = 129.0
+margin_bottom = 190.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 
 [node name="Icon" type="TextureRect" parent="Equipment/Background/MarginContainer/VBoxContainer/ScrollContainer/GridContainer/Feet"]
-margin_left = 46.0
-margin_top = 76.0
-margin_right = 70.0
-margin_bottom = 100.0
+margin_left = 52.0
+margin_top = 34.0
+margin_right = 76.0
+margin_bottom = 58.0
 texture = ExtResource( 4 )
 script = ExtResource( 3 )

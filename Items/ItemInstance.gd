@@ -1,8 +1,14 @@
-extends Node2D
+class_name ItemInstance extends Node2D
 
-export (Resource) var item
-
-onready var sprite := $Sprite
+var resource: Item setget setResource
+var sprite := Sprite.new()
+var itemName: String
 
 func _ready():
-	sprite.texture = item.texture
+	add_child(sprite)
+
+# update this instance whenever the resource gets changed
+func setResource(newResource):
+	resource = newResource
+	itemName = resource.name
+	sprite.texture = resource.texture
