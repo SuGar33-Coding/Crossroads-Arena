@@ -2,11 +2,11 @@ extends TextureRect
 
 func get_drag_data(_position):
 	var equipmentType = Equipment.EquipmentType[get_parent().name]
-	if Inventory.equipment[equipmentType] != null:
+	if Inventory._inventory.equipment[equipmentType] != null:
 		var data = {}
 		data.originNode = self
 		data.originPanel = "Equipment"
-		data.originItemResource = Inventory.equipment[equipmentType]
+		data.originItemSlot = Inventory._inventory.equipment[equipmentType]
 		data.originEquipmentType = equipmentType
 		data.originTexture = texture
 		
@@ -27,11 +27,11 @@ func can_drop_data(_position, data):
 	var targetEquipmentSlot = Equipment.EquipmentType[get_parent().name]
 	if targetEquipmentSlot == data.originEquipmentType:
 		# get the target data as we hover
-		if Inventory.equipment[targetEquipmentSlot] == null:
-			data.targetItemResource = null
+		if Inventory._inventory.equipment[targetEquipmentSlot] == null:
+			data.targetItemSlot = null
 			data.targetTexture = null
 		else:
-			data.targetItemResource = Inventory.equipment[targetEquipmentSlot]
+			data.targetItemSlot = Inventory._inventory.equipment[targetEquipmentSlot]
 			data.targetTexture = texture
 		return true
 	else:
@@ -41,19 +41,19 @@ func drop_data(_position, data):
 	var targetEquipmentSlot = Equipment.EquipmentType[get_parent().name]
 	var originSlot = data.originNode.get_parent().name
 	
-	# Update inventory data of origin
+	# Update Inventory data of origin
 	if data.originPanel == "Bag":
-		Inventory.bag[originSlot] = data.targetItemResource
+		Inventory._inventory.bag[originSlot] = data.targetItemSlot
 	elif data.originPanel == "Equipment":
-		Inventory.equipment[Equipment.EquipmentType[originSlot]] = data.targetItemResource
+		Inventory._inventory.equipment[Equipment.EquipmentType[originSlot]] = data.targetItemSlot
 	
 	# Update texture of origin
-	if data.targetItemResource == null:
+	if data.targetItemSlot == null:
 		var defaultTexture = load("res://Assets/SmokePuff.png")
 		data.originNode.texture = defaultTexture
 	else:
 		data.originNode.texture = data.targetTexture
 	
-	# Update texture and inventory data of target
-	Inventory.equipment[targetEquipmentSlot] = data.originItemResource
+	# Update texture and Inventory data of target
+	Inventory._inventory.equipment[targetEquipmentSlot] = data.originItemSlot
 	texture = data.originTexture
