@@ -7,10 +7,7 @@ extends KinematicBody2D
 class_name AreaOfEffect
 
 # Accuracy timing thresholds
-const CRIT = 0.1
-const HALF_CRIT = 0.2
-const NORMAL = 0.5
-const REDUCED = 0.75
+const THRESHOLD = 5
 
 # number of damage ticks
 var totalTicks := 2
@@ -23,12 +20,18 @@ var weaponStats : WeaponStats
 var source
 var userStr : int
 var HitEffect = preload("res://FX/HitEffect.tscn")
+var aoeEffect : AoeFX
+var targetPosition := Vector2.ZERO
+# Whether you need to check the logic in physics process
+var checkPosition := false
 
 onready var weaponHitbox := $WeaponHitbox
-onready var sprite := $Sprite
 onready var collision := $CollisionShape2D
 onready var tickTimer := $TickTimer
 onready var hurtTimer := $HurtTimer
+onready var particles := $Particles2D
+onready var sprite := $Sprite
+onready var animationPlayer := $AnimationPlayer
 
 func init(weaponStats: WeaponStats, source, sourceStr: int, lifetime: float, numberOfTicks: int):
 	self.weaponStats = weaponStats
@@ -40,6 +43,8 @@ func init(weaponStats: WeaponStats, source, sourceStr: int, lifetime: float, num
 	self.userStr = sourceStr * 1/3
 	
 	self.fromPlayer = (source.name == "Player")
+	
+	
 
 func _ready():
 	weaponHitbox.setWeapon(weaponStats)
@@ -50,28 +55,93 @@ func _ready():
 	
 	speed = weaponStats.projectileSpeed
 	
-	sprite.texture = weaponStats.projectileTexture
+	# TODO: Reposition so that YSORT position is much lower
+	aoeEffect = weaponStats.aoeEffect
+	
+	particles.emitting = false
+	
+	particles.process_material = aoeEffect.effectMaterial
+	
+	particles.lifetime = aoeEffect.particleLifetime
+	
+	particles.amount = aoeEffect.numParticles
+	
+	particles.speed_scale = aoeEffect.speedScale
 	
 func _physics_process(_delta):
+	if(checkPosition and targetPosition.distance_to(self.global_position) < THRESHOLD):
+		checkPosition = false
+		self.enableAoe()
+		velocity = Vector2.ZERO
 	move_and_slide(velocity)
 
-func fire(startingPosition : Vector2, startingRotation := 0.0):
+func fire(userPosition : Vector2, targetPosition : Vector2, startingRotation := 0.0):
 	
 	weaponHitbox.collision.set_deferred("disabled", true)
+	
+	weaponHitbox.global_rotation = startingRotation
+	
+	self.targetPosition = targetPosition
 	# TODO: Temporarily if it is from player then change its layer mask, will eventually do this with groups instead
 	if fromPlayer:
 		self.weaponHitbox.set_collision_mask_bit(4, false)
 		self.weaponHitbox.set_collision_mask_bit(5, true)
-	self.global_position = startingPosition
-	if(weaponStats.aoeAngle >= 0):
+	match aoeEffect.aoeType:
+		AoeFX.AoeType.PLACE:
+			# Aoe spawns on given point
+			self.global_position = targetPosition
+			particles.emitting = true
+			
+			self.enableAoe()
+			
+		AoeFX.AoeType.RANGED:
+			# Projectile originating from the user that bursts into an aoe
+			self.global_position = userPosition
+			velocity =  Vector2(1,0).rotated(startingRotation) * speed
+			
+			checkPosition = true
+			sprite.texture = weaponStats.projectileTexture
+			sprite.global_rotation = startingRotation
+			sprite.set_deferred("visible", true)
+		AoeFX.AoeType.LOBBED:
+			# Has an arched projectile originating from the user that bursts into an aoe
+			self.global_position = userPosition
+			velocity =  Vector2(1,0).rotated(startingRotation) * (userPosition.distance_to(targetPosition)/aoeEffect.chargeupTime)
+			
+			sprite.texture = weaponStats.projectileTexture
+			sprite.global_rotation = startingRotation
+			sprite.set_deferred("visible", true)
+			
+			# Use animation player to have the projectile make an arch
+			animationPlayer.playback_speed = 1/aoeEffect.chargeupTime
+			animationPlayer.play("Lob")
+			
+		AoeFX.AoeType.MOVING:
+			# Aoe spawns on given point and continues moving forward damagin in its path
+			self.global_position = targetPosition
+			velocity =  Vector2(1,0).rotated(startingRotation) * speed
+			
+			self.enableAoe()
+			
+	# May need to use this if we want aoe to be able to move (like a tornado
+	"""if(weaponStats.aoeAngle >= 0):
 		self.global_rotation = startingRotation + weaponStats.aoeAngle
 	else:
-		self.global_rotation = 0
-	velocity =  Vector2(1,0).rotated(self.global_rotation) * speed
+		self.global_rotation = 0"""
+	
+# Starts the particle and damaging affects of the aoe
+func enableAoe():
+	sprite.set_deferred("visible", false)
+	
+	particles.set_deferred("emitting", true)
 	
 	tickTimer.start(lifetime / totalTicks)
 	
+func stopMovement():
+	velocity = Vector2.ZERO
+	
 func killSelf():
+	# TODO: Instead have a stop emitting function that stops emitting and kills itself after full lifetime
 	queue_free()
 
 # Tick Timer loops automatically, turn off and on collision box every tick
@@ -86,4 +156,4 @@ func _hurt_timeout():
 	weaponHitbox.collision.set_deferred("disabled", true)
 	numTicks += 1
 	if numTicks >= totalTicks:
-		queue_free()
+		killSelf()

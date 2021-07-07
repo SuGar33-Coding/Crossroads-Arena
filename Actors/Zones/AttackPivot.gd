@@ -129,9 +129,10 @@ func startAOEAttack(targetGlobalPos : Vector2, sourceStr := 0):
 	var world = get_tree().current_scene
 	# Have to set it before you add it as a child otherwise the room area's think you are exiting them
 	areaOfEffect.global_position = targetGlobalPos
-	world.add_child(areaOfEffect)
+	world.get_node("YSort").add_child(areaOfEffect)
+	
 	# TODO: Possibly pass in a rotation if it is a directional aoe (like a cone)
-	areaOfEffect.fire(targetGlobalPos, self.global_rotation)
+	areaOfEffect.fire(self.global_position, targetGlobalPos, self.global_rotation)
 
 func setWeapon(weaponStats : WeaponStats):
 	self.weaponStats = weaponStats
@@ -180,6 +181,8 @@ func setWeapon(weaponStats : WeaponStats):
 		weaponSprite.set_deferred("rotation", deg2rad(45))
 		weaponSprite.hframes = 6
 	else:
+		restingPos.set_deferred("position", Vector2(10, 0))
+		weaponSprite.set_deferred("rotation", deg2rad(-45))
 		swordAnimDist = weaponCollision.position - restingPos.position
 		
 	if not weaponStats.weaponType == WeaponStats.WeaponType.RANGED:

@@ -1,8 +1,9 @@
-[gd_resource type="Resource" load_steps=4 format=2]
+[gd_resource type="Resource" load_steps=5 format=2]
 
 [ext_resource path="res://Weapons/WeaponStats.gd" type="Script" id=1]
-[ext_resource path="res://Assets/WeaponAssets/WallOfFire.png" type="Texture" id=2]
+[ext_resource path="res://Assets/WeaponAssets/Flame.png" type="Texture" id=2]
 [ext_resource path="res://Assets/WeaponAssets/FireStaff.png" type="Texture" id=3]
+[ext_resource path="res://FX/AOE/FireWallFX.tres" type="Resource" id=4]
 
 [resource]
 script = ExtResource( 1 )
@@ -15,8 +16,8 @@ length = 30.0
 attackSpeed = 2.1
 texture = ExtResource( 3 )
 projectileTexture = ExtResource( 2 )
-projectileSpeed = 0.0
+projectileSpeed = 500.0
 projectileRange = 200.0
+aoeEffect = ExtResource( 4 )
 aoeNumberOfTicks = 4
 aoeLifetime = 3.0
-aoeAngle = 0.0

@@ -9,6 +9,11 @@
 config_version=4
 
 _global_script_classes=[ {
+"base": "Resource",
+"class": "AoeFX",
+"language": "GDScript",
+"path": "res://FX/AOE/AoeFX.gd"
+}, {
 "base": "KinematicBody2D",
 "class": "AreaOfEffect",
 "language": "GDScript",
@@ -190,6 +195,7 @@ _global_script_classes=[ {
 "path": "res://Weapons/WeaponStats.gd"
 } ]
 _global_script_class_icons={
+"AoeFX": "",
 "AreaOfEffect": "",
 "AttackPivot": "",
 "Boundary": "",

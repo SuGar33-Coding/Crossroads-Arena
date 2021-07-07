@@ -13,6 +13,8 @@ export var movementMaxTime : float = 5.0
 
 signal no_health()
 
+const PERF_THRESHOLD = 800
+
 enum State {
 	IDLE,
 	CHASE,
@@ -37,6 +39,7 @@ onready var movement: Movement = movementResource
 onready var sprite := $Sprite
 onready var stats : Stats = $Stats
 onready var hurtbox := $Hurtbox
+onready var simpleNav2d: Navigation2D = get_node("../../../SimpleNavigation2D")
 onready var nav2d: Navigation2D = get_node("../../../Navigation2D")
 onready var pathfindTimer: Timer = $PathfindTimer
 onready var movementTimer := $MovementTimer
@@ -74,7 +77,10 @@ func _physics_process(delta):
 				if target != null: # TODO: look into this fix some more
 					isTargetVisible = sightCheck()
 					if nav2d != null and pathfindTimer.is_stopped(): # Last check is to make it not refresh if it doesn't use it
-						path = nav2d.get_simple_path(global_position, self.getTargetPos(), false)
+						if self.global_position.distance_to(self.getTargetPos()) > PERF_THRESHOLD:
+							path = simpleNav2d.get_simple_path(simpleNav2d.get_closest_point(global_position), simpleNav2d.get_closest_point(self.getTargetPos()), false)
+						else:
+							path = nav2d.get_simple_path(nav2d.get_closest_point(global_position), nav2d.get_closest_point(self.getTargetPos()), false)
 						pathfindTimer.start(pathfindTime)
 						pathIdx = 0
 					velocity = movement.getMovementVelocity(self, self.getTargetPos(), delta)

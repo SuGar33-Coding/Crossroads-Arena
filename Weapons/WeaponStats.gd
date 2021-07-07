@@ -31,10 +31,11 @@ export var projectileSpeed : float = 1500
 export var projectileRange : float = 350
 
 # AOE Stuff
+export var aoeEffect : Resource
 export var aoeNumberOfTicks : int = 3
 export var aoeLifetime : float = 3.0
 # aoe angle should be < 0 if you don't want it to rotate
-export var aoeAngle : float = -1.0
+#export var aoeAngle : float = -1.0
 
 """"# Secondary stats
 export(String) var secondaryName = "Base Sword"

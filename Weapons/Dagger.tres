@@ -21,4 +21,3 @@ projectileSpeed = 1500.0
 projectileRange = 350.0
 aoeNumberOfTicks = 3
 aoeLifetime = 3.0
-aoeAngle = -1.0

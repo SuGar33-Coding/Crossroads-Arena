@@ -34,7 +34,7 @@ func _ready():
 	self.connect("meleeLong", self.get_parent(), "_meleeLong")
 	self.connect("parry", self.get_parent(), "_parry")
 	
-	rangedWeapon = weaponStatsResources[randi() % weaponStatsResources.size()]
+	rangedWeapon = weaponStatsResources[10]#weaponStatsResources[randi() % weaponStatsResources.size()]
 	
 
 func _physics_process(delta):
