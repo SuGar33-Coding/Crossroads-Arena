@@ -8,7 +8,7 @@
 [resource]
 script = ExtResource( 1 )
 name = "Dagger"
-weaponType = 0
+weaponType = 1
 damage = 7
 knockbackValue = 175
 radius = 10.0
@@ -19,3 +19,6 @@ quickAttackSFX = ExtResource( 4 )
 longAttackSFX = ExtResource( 3 )
 projectileSpeed = 1500.0
 projectileRange = 350.0
+aoeNumberOfTicks = 3
+aoeLifetime = 3.0
+instantTick = false

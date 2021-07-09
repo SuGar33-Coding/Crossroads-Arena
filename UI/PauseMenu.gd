@@ -13,7 +13,7 @@ func _ready():
 	resumeButton.connect("pressed", self, "togglePause")
 	menuButton.connect("pressed", self, "togglePause")
 	
-func _process(delta):
+func _process(_delta):
 	if Input.is_action_just_pressed("pause"):
 		togglePause()
 

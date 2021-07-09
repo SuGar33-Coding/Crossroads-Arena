@@ -8,14 +8,17 @@
 [resource]
 script = ExtResource( 1 )
 name = "Great Hammer"
-weaponType = 1
+weaponType = 2
 damage = 25
-knockbackValue = 500
-radius = 23.0
-length = 32.0
+knockbackValue = 700
+radius = 30.0
+length = 5.0
 attackSpeed = 1.5
 texture = ExtResource( 2 )
 quickAttackSFX = ExtResource( 3 )
 longAttackSFX = ExtResource( 4 )
 projectileSpeed = 1500.0
 projectileRange = 350.0
+aoeNumberOfTicks = 3
+aoeLifetime = 3.0
+instantTick = false

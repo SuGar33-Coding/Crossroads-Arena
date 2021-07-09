@@ -18,6 +18,8 @@ var sinX = rand_range(0, TAU)
 var noise := OpenSimplexNoise.new()
 var noiseY = 1
 
+var aoeAttackPos := Vector2.ZERO
+
 # TODO: Possibly not necessary for the generic fighter class
 var moveDir = 1
 
@@ -45,7 +47,8 @@ func _physics_process(_delta):
 		playMovement()
 	
 func lookAtTarget():
-	attackPivot.lookAtTarget(detectionZone.target.position)
+	if(detectionZone.hasTarget()):
+		attackPivot.lookAtTarget(detectionZone.target.position)
 
 func switchToChase() -> void:
 	.switchToChase()
@@ -54,17 +57,28 @@ func switchToChase() -> void:
 		target = newTarget
 	
 func switchToAttack():
+	animationPlayer.playback_speed = 1
 	animationPlayer.play("Idle")
 	.switchToAttack()
-	animationPlayer.playback_speed = 1
 	# TODO: Make this a more well defined ratio
 	attackTimer.start(weaponStats.attackSpeed * stats.attackSpeed * 2)
 	if weaponStats.weaponType == WeaponStats.WeaponType.RANGED:
 		animationPlayer.play("RangedAttack")
+	elif weaponStats.weaponType == WeaponStats.WeaponType.AOE:
+		# TODO: As soon as they aim, whatever starting aoe animation we have should start playing
+		aoeAttackPos = detectionZone.target.global_position
+		animationPlayer.play("AOEAttack")
 	else:
 		animationPlayer.play("MeleeWindup")
-			
+		
+func startRangedAttack():
+	attackPivot.startRangedAttack(stats.strength)
+	
+func startAOEAttack():
+	attackPivot.startAOEAttack(aoeAttackPos, stats.strength)
+	
 func switchToStun():
+	animationPlayer.playback_speed = 1
 	animationPlayer.play("Idle")
 	attackPivot.weaponCollision.set_deferred("disabled", true)
 	.switchToStun()
@@ -78,7 +92,7 @@ func willChase() -> bool:
 func willAttack() -> bool:
 	var distanceToTarget = self.position.distance_to(detectionZone.target.position)
 	if attackTimer.is_stopped():
-		if weaponStats.weaponType == WeaponStats.WeaponType.RANGED:
+		if weaponStats.weaponType == WeaponStats.WeaponType.RANGED or weaponStats.weaponType == WeaponStats.WeaponType.AOE:
 			return distanceToTarget <= weaponStats.projectileRange
 		else:
 			return distanceToTarget <= (weaponStats.length + weaponStats.radius*2)
@@ -86,7 +100,7 @@ func willAttack() -> bool:
 		return false
 	
 func willFlipLeft():
-	if state == State.CHASE:
+	if state == State.CHASE and detectionZone.hasTarget():
 		return global_position.x > target.global_position.x
 	else:
 		return false
@@ -125,13 +139,12 @@ func findClosestAlly():
 	if minDist >= 1000:
 		closestAlly = null
 
-var count = 0
 func playMovement():
-	count = count + 1
-	print("walking", count)
+	animationPlayer.playback_speed = 1
 	animationPlayer.play("Walk")
 
 func playMeleeAttack():
+	animationPlayer.playback_speed = 1
 	animationPlayer.play("MeleeAttack")
 
 func _hurtbox_area_entered(area: Hitbox):
@@ -142,7 +155,8 @@ func _hurtbox_area_entered(area: Hitbox):
 	# Only play damaged if we're not dead
 	if(stats.health >= 1):
 		animationPlayer.stop(true)
-		animationPlayer.playback_speed = 1
+		# Stun duration is scaled by knockback value
+		animationPlayer.playback_speed = 350 / area.knockbackValue
 		animationPlayer.play("Damaged")
 	else:
 		# If you die add some extra knockback
@@ -161,6 +175,7 @@ func _stats_no_health():
 	self.switchToStun()
 	animationPlayer.playback_speed = 1
 	animationPlayer.play("Death")
+	emit_signal("no_health")
 
 func _change_direction():
 	moveDir *= -1

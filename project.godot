@@ -9,6 +9,16 @@
 config_version=4
 
 _global_script_classes=[ {
+"base": "Resource",
+"class": "AoeFX",
+"language": "GDScript",
+"path": "res://FX/AOE/AoeFX.gd"
+}, {
+"base": "KinematicBody2D",
+"class": "AreaOfEffect",
+"language": "GDScript",
+"path": "res://Weapons/AreaOfEffect.gd"
+}, {
 "base": "Position2D",
 "class": "AttackPivot",
 "language": "GDScript",
@@ -33,6 +43,21 @@ _global_script_classes=[ {
 "class": "ChargerAttackPivot",
 "language": "GDScript",
 "path": "res://Actors/Chargers/Charger/ChargerAttackPivot.gd"
+}, {
+"base": "Area2D",
+"class": "DetectionZone",
+"language": "GDScript",
+"path": "res://Actors/Zones/DetectionZone.gd"
+}, {
+"base": "Node2D",
+"class": "Encounter",
+"language": "GDScript",
+"path": "res://World/Encounters/Encounter.gd"
+}, {
+"base": "Resource",
+"class": "EncounterStats",
+"language": "GDScript",
+"path": "res://World/Encounters/EncounterStats.gd"
 }, {
 "base": "Item",
 "class": "Equipment",
@@ -88,6 +113,11 @@ _global_script_classes=[ {
 "class": "ItemInstance",
 "language": "GDScript",
 "path": "res://Items/ItemInstance.gd"
+}, {
+"base": "Fighter",
+"class": "Lobber",
+"language": "GDScript",
+"path": "res://Actors/Lobber/Lobber.gd"
 }, {
 "base": "Camera2D",
 "class": "MainCamera",
@@ -175,11 +205,16 @@ _global_script_classes=[ {
 "path": "res://Weapons/WeaponStats.gd"
 } ]
 _global_script_class_icons={
+"AoeFX": "",
+"AreaOfEffect": "",
 "AttackPivot": "",
 "Boundary": "",
 "BurstMoveAA": "",
 "Charger": "",
 "ChargerAttackPivot": "",
+"DetectionZone": "",
+"Encounter": "",
+"EncounterStats": "",
 "Equipment": "",
 "Fighter": "",
 "FlankAndBurst": "",
@@ -191,6 +226,7 @@ _global_script_class_icons={
 "Hurtbox": "",
 "Item": "",
 "ItemInstance": "",
+"Lobber": "",
 "MainCamera": "",
 "MaintainAndCharge": "",
 "MaintainAndFlank": "",

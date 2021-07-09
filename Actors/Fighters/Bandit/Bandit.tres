@@ -7,3 +7,5 @@ script = ExtResource( 1 )
 strength = 0
 con = 0
 dex = 0
+detectionRange = 2000.0
+leaveRange = 2500.0

@@ -12,6 +12,8 @@ var dex = 0 setget setDex
 var health : int = 100 setget setHealth, getHealth
 var maxHealth : int = 100 setget setMaxHealth, getMaxHealth
 var attackSpeed : float = 1
+var detectionRange : float = 1000
+var leaveRange : float = 100
 
 signal noHealth
 signal healthChanged(value)
@@ -24,10 +26,16 @@ func _ready():
 		con = statsResource.con
 		strength = statsResource.strength
 		dex = statsResource.dex
+		# TODO: be better
+		var detectionZone : DetectionZone = get_node("../DetectionZone")
+		detectionZone.leaveRange = statsResource.leaveRange
+		detectionZone.setDetectionRange(statsResource.detectionRange)
 	maxHealth = baseHealth * pow(PlayerStats.conRatio, con)
 	health = maxHealth
 	
 	self.attackSpeed = pow(PlayerStats.dexAttackRatio, dex)
+	
+	
 
 func setMaxHealth(value : int):
 	maxHealth = max(value, 1)

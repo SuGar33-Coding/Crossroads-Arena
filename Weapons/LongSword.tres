@@ -8,14 +8,17 @@
 [resource]
 script = ExtResource( 1 )
 name = "Long Sword"
-weaponType = 0
+weaponType = 1
 damage = 20
 knockbackValue = 400
 radius = 15.5
-length = 20.0
+length = 11.5
 attackSpeed = 0.7
 texture = ExtResource( 2 )
 quickAttackSFX = ExtResource( 4 )
 longAttackSFX = ExtResource( 3 )
 projectileSpeed = 1500.0
 projectileRange = 350.0
+aoeNumberOfTicks = 3
+aoeLifetime = 3.0
+instantTick = false

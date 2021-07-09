@@ -2,7 +2,11 @@ class_name AttackPivot extends Position2D
 
 # TODO: make it so you can load different projectiles
 const RangedProjectileScene = preload("res://Weapons/RangedProjectile.tscn")
+const AreaOfEffectScene = preload("res://Weapons/AreaOfEffect.tscn")
 const AttackSignalScene = preload("res://FX/AttackSignal.tscn")
+
+const AOE_ROTATION = -45
+const RANGED_ROTATION = 45
 
 enum MeleeAttackType {
 	QUICK,
@@ -69,6 +73,12 @@ func _process(delta):
 # Rotate pivot to look at target position
 func lookAtTarget(targetPos: Vector2):
 	self.look_at(targetPos)
+	if(weaponStats.weaponType == WeaponStats.WeaponType.AOE):
+		if(self.scale.y > 0):
+			weaponSprite.rotation =  deg2rad(AOE_ROTATION) - self.global_rotation
+		else:
+			weaponSprite.rotation =  deg2rad(AOE_ROTATION) + self.global_rotation + deg2rad(180)
+	
 	
 func setUserStr(sourceStr):
 	userStr = sourceStr
@@ -86,15 +96,15 @@ func startMeleeAttack(animLength: float, type = MeleeAttackType.QUICK):
 			longSfx.play()
 	
 	
-	if weaponStats.weaponType == WeaponStats.WeaponType.MELEE or weaponStats.weaponType == WeaponStats.WeaponType.HEAVY or weaponStats.weaponType == WeaponStats.WeaponType.SPEAR:
-		self.tweenLength = animLength/2
-		swipe.set_deferred("flip_h", not swipe.flip_h)
-		tween.interpolate_property(weaponSprite, "position", weaponSprite.position, swordAnimDist, tweenLength)
-		var endRotation = restingRotation + deg2rad(swingDegrees) 
-		
-		tween.interpolate_property(weaponSprite, "rotation", weaponSprite.rotation, endRotation, tweenLength)
-		
-		tween.start()
+	#if weaponStats.weaponType == WeaponStats.WeaponType.MELEE or weaponStats.weaponType == WeaponStats.WeaponType.HEAVY or weaponStats.weaponType == WeaponStats.WeaponType.SPEAR:
+	self.tweenLength = animLength/2
+	swipe.set_deferred("flip_h", not swipe.flip_h)
+	tween.interpolate_property(weaponSprite, "position", weaponSprite.position, swordAnimDist, tweenLength)
+	var endRotation = restingRotation + deg2rad(swingDegrees) 
+	
+	tween.interpolate_property(weaponSprite, "rotation", weaponSprite.rotation, endRotation, tweenLength)
+	
+	tween.start()
 		
 func playAttackSignal(windUpTime: float, shading: bool = true):
 	var atkSignal : Particles2D = AttackSignalScene.instance()
@@ -120,6 +130,18 @@ func startRangedAttack(sourceStr := 0, accuracy := RangedProjectile.NORMAL):
 	rangedProjectile.global_position = restingPos.global_position
 	world.add_child(rangedProjectile)
 	rangedProjectile.fire(restingPos.global_position, self.global_rotation)
+	
+func startAOEAttack(targetGlobalPos : Vector2, sourceStr := 0):
+	var areaOfEffect = AreaOfEffectScene.instance()
+	areaOfEffect.init(weaponStats, source, sourceStr, weaponStats.aoeLifetime, weaponStats.aoeNumberOfTicks)
+	
+	var world = get_tree().current_scene
+	# Have to set it before you add it as a child otherwise the room area's think you are exiting them
+	areaOfEffect.global_position = targetGlobalPos
+	world.get_node("YSort").add_child(areaOfEffect)
+	
+	# TODO: Possibly pass in a rotation if it is a directional aoe (like a cone)
+	areaOfEffect.fire(self.global_position, targetGlobalPos, self.global_rotation)
 
 func setWeapon(weaponStats : WeaponStats):
 	self.weaponStats = weaponStats
@@ -129,7 +151,7 @@ func setWeapon(weaponStats : WeaponStats):
 	backTween.remove_all()
 	weaponSprite.position = Vector2.ZERO
 	
-	if weaponStats.weaponType == WeaponStats.WeaponType.MELEE:
+	if weaponStats.weaponType == WeaponStats.WeaponType.MELEE or weaponStats.weaponType == WeaponStats.WeaponType.SWORD:
 		restingPos.position = meleeRestingCoord
 		weaponSprite.rotation = restingRotation
 		returnRot = weaponSprite.rotation
@@ -163,9 +185,17 @@ func setWeapon(weaponStats : WeaponStats):
 		# Ratios I found from doing testing with OG sprite
 		swipe.scale.x = .6 * (weaponStats.radius)/10
 		swipe.scale.y = 1.5 * (weaponStats.length/2 + weaponStats.radius)/10
-	else:
+	elif weaponStats.weaponType == WeaponStats.WeaponType.RANGED:
 		restingPos.set_deferred("position", Vector2(15, 0))
-		weaponSprite.set_deferred("rotation", deg2rad(45))
+		weaponSprite.set_deferred("rotation", deg2rad(RANGED_ROTATION))
+		weaponSprite.hframes = 6
+	else:
+		restingPos.set_deferred("position", Vector2(10, 0))
+		weaponSprite.set_deferred("rotation", deg2rad(AOE_ROTATION))
+		swordAnimDist = weaponCollision.position - restingPos.position
+		
+	if not weaponStats.weaponType == WeaponStats.WeaponType.RANGED:
+		weaponSprite.hframes = 1
 
 # TODO: Can set tween delay rather than making multiple tweens
 func _on_WeaponTween_tween_completed():
