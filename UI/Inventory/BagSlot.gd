@@ -3,17 +3,16 @@ extends TextureRect
 
 func get_drag_data(_position):
 	var bagSlot = get_parent().name
-	if Inventory._inventory.bag[bagSlot] != null:
+	if Inventory.getBag()[bagSlot] != null:
 		var data = {}
 		data.originNode = self
 		data.originPanel = "Bag"
 		data.originItemSlot = bagSlot 
 		data.originEquipmentType = (
-			Inventory._inventory.bag[bagSlot].equipmentType
-			if Inventory._inventory.bag[bagSlot] is Equipment
+			((Inventory.getBag()[bagSlot] as ItemInstance).resource as Equipment).equipmentType
+			if (Inventory.getBag()[bagSlot] as ItemInstance).resource is Equipment
 			else null
 		)
-		data.originTexture = texture
 
 		var dragTexture = TextureRect.new()
 		dragTexture.expand = true
@@ -29,34 +28,25 @@ func get_drag_data(_position):
 
 
 func can_drop_data(_position, data):
-	# make sure we can drop item in this slot
 	var targetBagSlot = get_parent().name
 	data.targetItemSlot = targetBagSlot
-	if Inventory._inventory.bag[targetBagSlot] == null:  # move an item
-		var defaultTexture = load("res://Assets/SmokePuff.png")
-		data.targetTexture = defaultTexture
+	if Inventory.getBag()[targetBagSlot] == null:
+		# move an item
 		return true
-	else:  # swap an item
-		data.targetTexture = texture
+	else:
+		# swap an item
 		if data.originPanel == "Equipment":
-			if Inventory._inventory.bag[targetBagSlot] is Equipment:
-				# if the item is an equipment
-				var targetEquipmentType = Inventory._inventory.bag[targetBagSlot].equipmentType
-				return targetEquipmentType == data.originEquipmentType  # don't let us make an illegal swap
+			# if the item is an equipped equipment
+			if Inventory.getBag()[targetBagSlot] is Equipment:
+				var targetEquipmentType = Inventory.getBag()[targetBagSlot].equipmentType
+				# don't let us make an illegal swap
+				return targetEquipmentType == data.originEquipmentType
 			else:
 				return false
-		else:  # origin panel is Bag
+		else:
+			# origin panel is Bag
 			return true
 
 
 func drop_data(_position, data):
-	var targetEquipmentSlot = get_parent().name
-	var originSlot = data.originNode.get_parent().name
-
 	Inventory.swapItems(data.originItemSlot, data.targetItemSlot)
-
-	# Update texture of origin
-	data.originNode.texture = data.targetTexture
-
-	# Update texture of target
-	texture = data.originTexture

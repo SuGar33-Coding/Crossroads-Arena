@@ -19,6 +19,14 @@ var _inventory := {
 }
 
 
+func getBag() -> Dictionary:
+	return _inventory.bag
+
+
+func getEquipment() -> Dictionary:
+	return _inventory.equipment
+
+
 func isBagFull():
 	for slot in _inventory.bag.keys():
 		if _inventory.bag[slot] == null:

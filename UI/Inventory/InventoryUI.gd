@@ -2,7 +2,6 @@ extends CanvasLayer
 
 onready var controlNode := $Control
 
-
 func _ready():
 	controlNode.visible = false
 
