@@ -34,6 +34,8 @@ export var projectileRange : float = 350
 export var aoeEffect : Resource
 export var aoeNumberOfTicks : int = 3
 export var aoeLifetime : float = 3.0
+# whether or not to instantly do one of the ticks on aoe start
+export var instantTick := false
 # aoe angle should be < 0 if you don't want it to rotate
 #export var aoeAngle : float = -1.0
 

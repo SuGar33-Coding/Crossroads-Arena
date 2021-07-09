@@ -1,12 +1,13 @@
-[gd_scene load_steps=6 format=2]
+[gd_scene load_steps=7 format=2]
 
 [ext_resource path="res://Actors/Zones/WeaponHitbox.tscn" type="PackedScene" id=1]
 [ext_resource path="res://FX/AOE/PosonLobFXMat.tres" type="Material" id=2]
 [ext_resource path="res://Weapons/AreaOfEffect.gd" type="Script" id=3]
+[ext_resource path="res://Assets/Crosshair.png" type="Texture" id=4]
 
 [sub_resource type="CapsuleShape2D" id=1]
 radius = 5.0
-height = 40.0
+height = 0.0
 
 [sub_resource type="Animation" id=2]
 resource_name = "Lob"
@@ -83,5 +84,13 @@ process_material = ExtResource( 2 )
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 anims/Lob = SubResource( 2 )
+
+[node name="Node2D" type="Node2D" parent="."]
+
+[node name="CrosshairSprite" type="Sprite" parent="."]
+modulate = Color( 1, 1, 1, 0.745098 )
+scale = Vector2( 0.5, 0.5 )
+z_index = -1
+texture = ExtResource( 4 )
 
 [editable path="WeaponHitbox"]

@@ -11,3 +11,4 @@ effectMaterial = ExtResource( 2 )
 particleLifetime = 5
 numParticles = 250
 speedScale = 1.0
+ysortOffset = 38

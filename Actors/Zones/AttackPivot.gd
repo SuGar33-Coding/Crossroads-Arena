@@ -5,6 +5,9 @@ const RangedProjectileScene = preload("res://Weapons/RangedProjectile.tscn")
 const AreaOfEffectScene = preload("res://Weapons/AreaOfEffect.tscn")
 const AttackSignalScene = preload("res://FX/AttackSignal.tscn")
 
+const AOE_ROTATION = -45
+const RANGED_ROTATION = 45
+
 enum MeleeAttackType {
 	QUICK,
 	LONG
@@ -70,6 +73,12 @@ func _process(delta):
 # Rotate pivot to look at target position
 func lookAtTarget(targetPos: Vector2):
 	self.look_at(targetPos)
+	if(weaponStats.weaponType == WeaponStats.WeaponType.AOE):
+		if(self.scale.y > 0):
+			weaponSprite.rotation =  deg2rad(AOE_ROTATION) - self.global_rotation
+		else:
+			weaponSprite.rotation =  deg2rad(AOE_ROTATION) + self.global_rotation + deg2rad(180)
+	
 	
 func setUserStr(sourceStr):
 	userStr = sourceStr
@@ -178,11 +187,11 @@ func setWeapon(weaponStats : WeaponStats):
 		swipe.scale.y = 1.5 * (weaponStats.length/2 + weaponStats.radius)/10
 	elif weaponStats.weaponType == WeaponStats.WeaponType.RANGED:
 		restingPos.set_deferred("position", Vector2(15, 0))
-		weaponSprite.set_deferred("rotation", deg2rad(45))
+		weaponSprite.set_deferred("rotation", deg2rad(RANGED_ROTATION))
 		weaponSprite.hframes = 6
 	else:
 		restingPos.set_deferred("position", Vector2(10, 0))
-		weaponSprite.set_deferred("rotation", deg2rad(-45))
+		weaponSprite.set_deferred("rotation", deg2rad(AOE_ROTATION))
 		swordAnimDist = weaponCollision.position - restingPos.position
 		
 	if not weaponStats.weaponType == WeaponStats.WeaponType.RANGED:

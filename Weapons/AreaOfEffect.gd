@@ -7,7 +7,7 @@ extends KinematicBody2D
 class_name AreaOfEffect
 
 # Accuracy timing thresholds
-const THRESHOLD = 5
+const THRESHOLD = 10
 
 # number of damage ticks
 var totalTicks := 2
@@ -24,6 +24,7 @@ var aoeEffect : AoeFX
 var targetPosition := Vector2.ZERO
 # Whether you need to check the logic in physics process
 var checkPosition := false
+var fired := false
 
 onready var weaponHitbox := $WeaponHitbox
 onready var collision := $CollisionShape2D
@@ -32,6 +33,7 @@ onready var hurtTimer := $HurtTimer
 onready var particles := $Particles2D
 onready var sprite := $Sprite
 onready var animationPlayer := $AnimationPlayer
+onready var crosshair := $CrosshairSprite
 
 func init(weaponStats: WeaponStats, source, sourceStr: int, lifetime: float, numberOfTicks: int):
 	self.weaponStats = weaponStats
@@ -49,6 +51,11 @@ func init(weaponStats: WeaponStats, source, sourceStr: int, lifetime: float, num
 func _ready():
 	weaponHitbox.setWeapon(weaponStats)
 	weaponHitbox.setSource(source, userStr)
+	
+	# Crosshair radius is 20, so scale that to aoe
+	crosshair.scale.x = .33333
+	crosshair.scale.y = .33333
+	crosshair.visible = false
 	
 	tickTimer.connect("timeout", self, "_tick_timeout")
 	hurtTimer.connect("timeout", self, "_hurt_timeout")
@@ -74,12 +81,21 @@ func _physics_process(_delta):
 		self.enableAoe()
 		velocity = Vector2.ZERO
 	move_and_slide(velocity)
+	
+	if(fired):
+		crosshair.global_position = targetPosition
 
+# TODO: Change crosshair to be its own scene rather than a child of aoe
 func fire(userPosition : Vector2, targetPosition : Vector2, startingRotation := 0.0):
 	
 	weaponHitbox.collision.set_deferred("disabled", true)
 	
 	weaponHitbox.global_rotation = startingRotation
+	
+	crosshair.global_position = targetPosition
+	crosshair.visible = true
+	
+	fired = true
 	
 	self.targetPosition = targetPosition
 	# TODO: Temporarily if it is from player then change its layer mask, will eventually do this with groups instead
@@ -133,9 +149,21 @@ func fire(userPosition : Vector2, targetPosition : Vector2, startingRotation := 
 func enableAoe():
 	sprite.set_deferred("visible", false)
 	
+	# We want ysort to be better so move all of the visuals up but the root node down
+	self.global_position.y += aoeEffect.ysortOffset
+	particles.global_position.y -= aoeEffect.ysortOffset
+	weaponHitbox.global_position.y -= aoeEffect.ysortOffset
+	
+	crosshair.visible = false
+	
 	particles.set_deferred("emitting", true)
 	
-	tickTimer.start(lifetime / totalTicks)
+	if(weaponStats.instantTick):
+		_tick_timeout()
+		tickTimer.start(lifetime / totalTicks-1)
+	else:
+		tickTimer.start(lifetime / totalTicks)
+
 	
 func stopMovement():
 	velocity = Vector2.ZERO

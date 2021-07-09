@@ -21,3 +21,4 @@ projectileRange = 200.0
 aoeEffect = ExtResource( 4 )
 aoeNumberOfTicks = 4
 aoeLifetime = 3.0
+instantTick = false

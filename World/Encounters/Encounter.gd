@@ -2,7 +2,7 @@ extends Node2D
 
 class_name Encounter
 
-export var StatsForEncounter : Resource
+# BIG TODO: when 2 enemies die at the same time I don't think signal is called twice so button is not reset
 
 signal encounter_finished()
 
@@ -31,10 +31,11 @@ onready var people = get_node("../YSort/People")
 
 # TODO: Will get level and size it should be, and should pick from large list of encounters which one to spawn
 #func init(encounterLevel := 1, encounterSize : EncounterStats.EncounterSize)
+func init(StatsForEncounter : EncounterStats):
+	encounterStats = StatsForEncounter
 
 # Called when the node enters the scene tree for the first time.
-func _ready():
-	encounterStats = StatsForEncounter
+func _ready():	
 	
 	encounterSize = encounterStats.encounterSize
 	var numGrunts : int = randi() % GSPAWN_VAR[encounterSize] + GSPAWN_MINS[encounterSize]
