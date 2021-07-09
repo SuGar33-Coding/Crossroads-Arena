@@ -1,4 +1,4 @@
-[gd_scene load_steps=16 format=2]
+[gd_scene load_steps=15 format=2]
 
 [ext_resource path="res://GrandBattleArena.gd" type="Script" id=1]
 [ext_resource path="res://Assets/TileSets/RockBase.tres" type="TileSet" id=2]
@@ -9,7 +9,6 @@
 [ext_resource path="res://Audio/BGM/Wave of Darkness II.mp3" type="AudioStream" id=7]
 [ext_resource path="res://UI/PauseMenu.tscn" type="PackedScene" id=8]
 [ext_resource path="res://Assets/WorldAssets/grassTileMap.png" type="Texture" id=9]
-[ext_resource path="res://UI/Inventory/Inventory.tscn" type="PackedScene" id=10]
 
 [sub_resource type="NavigationPolygon" id=1]
 vertices = PoolVector2Array( 0, 0, 24, 0, 24, 24, 0, 24 )
@@ -310,8 +309,6 @@ stream = ExtResource( 7 )
 autoplay = true
 mix_target = 1
 bus = "BGM"
-
-[node name="Inventory" parent="." instance=ExtResource( 10 )]
 
 [editable path="YSort/Player"]
 [editable path="YSort/Player/MainCamera"]
