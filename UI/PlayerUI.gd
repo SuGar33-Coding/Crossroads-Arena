@@ -22,8 +22,6 @@ func _ready():
 	stats.connectHealthChanged(self)
 	stats.connect("currentXPChanged", self, "_player_xp_changed")
 	stats.connect("playerLevelChanged", self, "_player_level_changed")
-	stats.connect("addedToInventory", self, "_item_added_to_inv")
-	stats.connect("removedFromInventory", self, "_item_removed_from_inv")
 	timer.connect("timeout", self, "_timer_timeout")
 	
 func setHealthbarValue(value : float):
@@ -50,14 +48,6 @@ func _player_xp_changed(newXP):
 	
 func _player_level_changed(_newLevel):
 	lvllabel.text = "Lvl: " + str(stats.playerLevel)
-	
-func _item_added_to_inv(newItem):
-	if newItem is HealthPotion:
-		potLabel.text = str(PlayerStats.getNumItemsOfType("HealthPotion"))
-
-func _item_removed_from_inv(removedItem):
-	if removedItem is HealthPotion:
-		potLabel.text = str(PlayerStats.getNumItemsOfType("HealthPotion"))
 
 func _timer_timeout():
 	# If counter is even, go white

@@ -3,8 +3,8 @@ extends KinematicBody2D
 var dirtFx = preload("res://FX/DirtSpread.tscn")
 var dashCloudFx = preload("res://FX/DashCloud.tscn")
 
-export var Acceleration : float = 1500
-export var startingFriction : float = 750
+export var Acceleration: float = 1500
+export var startingFriction: float = 750
 export var dashSpeed := 500
 export var dashDelay := .75
 
@@ -13,7 +13,7 @@ var knockback := Vector2.ZERO
 var dashVector := Vector2.ZERO
 var HitEffect = preload("res://FX/HitEffect.tscn")
 var floatingText = preload("res://UI/FloatingText.tscn")
-var Friction : float
+var Friction: float
 
 onready var stats = get_node("/root/PlayerStats")
 onready var sprite := $Sprite
@@ -31,7 +31,7 @@ onready var footstep2 := $Footstep2
 
 func _ready():
 	Engine.set_target_fps(Engine.get_iterations_per_second())
-	
+
 	PlayerStats.strength = 0
 	PlayerStats.con = 0
 	PlayerStats.dex = 0
@@ -45,30 +45,31 @@ func _ready():
 	hurtbox.connect("area_entered", self, "_hurtbox_area_entered")
 	$AttackPivot/ComboTimer.connect("timeout", self, "_combo_finished")
 
+
 func _physics_process(delta):
 	knockback = knockback.move_toward(Vector2.ZERO, Friction * delta)
 	knockback = move_and_slide(knockback)
-	
+
 	dashVector = dashVector.move_toward(Vector2.ZERO, Acceleration * delta)
 	dashVector = move_and_slide(dashVector)
-	
+
 	var inputVector = Vector2.ZERO
 
 	inputVector.x = Input.get_action_strength("right") - Input.get_action_strength("left")
 	inputVector.y = Input.get_action_strength("down") - Input.get_action_strength("up")
 	inputVector = inputVector.normalized()
-	
+
 	if Input.is_action_just_pressed("dash") and dashTimer.is_stopped():
 		# Cannot dash while aiming
 		if not attackPivot.chargingRanged:
 			dashVector = inputVector * dashSpeed
-			dashTimer.start(dashDelay* pow(PlayerStats.dexDashRatio, PlayerStats.dex))
+			dashTimer.start(dashDelay * pow(PlayerStats.dexDashRatio, PlayerStats.dex))
 			movementAnimation.play("Dashing")
 			PlayerStats.resetMaxSpeed()
 	elif inputVector != Vector2.ZERO:
 		velocity = velocity.move_toward(inputVector * stats.maxSpeed, Acceleration * delta)
-		
-		if !movementAnimation.is_playing():
+
+		if ! movementAnimation.is_playing():
 			movementAnimation.play("Walking")
 	else:
 		movementAnimation.play("Idle")
@@ -84,10 +85,11 @@ func _physics_process(delta):
 		sprite.flip_h = false
 		shadowSprite.position.x = .5
 		attackPivot.scale.y = 1
-		
+
 	attackPivot.look_at(mousePos)
-		
+
 	velocity = move_and_slide(velocity)
+
 
 func spawnDirtFx(initVelocity = 50, lifetime = 0.4):
 	var dirtFxInstance: Particles2D = dirtFx.instance()
@@ -101,39 +103,46 @@ func spawnDirtFx(initVelocity = 50, lifetime = 0.4):
 	dirtFxInstance.emitting = true
 	get_tree().current_scene.add_child(dirtFxInstance)
 
+
 func spawnDashFx():
 	var dashCloudFxInstance: Particles2D = dashCloudFx.instance()
-	dashCloudFxInstance.global_position = Vector2(self.global_position.x, self.global_position.y + 12)
+	dashCloudFxInstance.global_position = Vector2(
+		self.global_position.x, self.global_position.y + 12
+	)
 	dashCloudFxInstance.z_index = -1
 	dashCloudFxInstance.emitting = true
 	get_tree().current_scene.add_child(dashCloudFxInstance)
-	
+
+
 func playFootstep(foot = 1):
 	match foot:
 		1:
 			footstep1.play()
 		2:
 			footstep2.play()
-	
+
+
 func _player_level_changed(_newPlayerLevel):
 	attackPivot.userStr = PlayerStats.strength
 	self.Friction = self.startingFriction * pow(PlayerStats.conFrictionRatio, PlayerStats.con)
 
-func _hurtbox_area_entered(area : Hitbox):
+
+func _hurtbox_area_entered(area: Hitbox):
 	var text = floatingText.instance()
 	text.amount = area.damage
 	add_child(text)
-	
+
 	var hitEffect = HitEffect.instance()
 	hitEffect.init(area.getSourcePos())
 	add_child(hitEffect)
-	
+
 	stats.health -= area.damage
 	stats.currentXP += area.damage
 	camera.add_trauma(area.knockbackValue / 1000.0)
 	knockback = area.getKnockbackVector(self.global_position)
 	damagedPlayer.play("Damaged")
 	hurtbox.startInvincibility(PlayerStats.invulnTimer)
+
 
 func _playerstats_no_health():
 	# When Player dies, return to main menu TODO: Change this
@@ -145,18 +154,22 @@ func _playerstats_no_health():
 	world.add_child(camera)
 	world.playerDied()
 	self.queue_free()
-	
+
+
 func _melee_quick():
 	animationPlayer.play("MeleeAttack")
 	PlayerStats.maxSpeed *= .65
-	
+
+
 func _meleeLong():
 	animationPlayer.play("Stab")
 	_combo_finished()
-	
+
+
 func _parry():
 	animationPlayer.play("Parry")
 	PlayerStats.maxSpeed *= .65
-	
+
+
 func _combo_finished():
 	PlayerStats.resetMaxSpeed()

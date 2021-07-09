@@ -1,11 +1,11 @@
 extends AttackPivot
 
 # Amount of time between last attack and end of combo in seconds
-export var comboTime : float = 1
+export var comboTime: float = 1
 
-var comboCounter : int = 0 setget setComboCounter
-var parryPos : Vector2
-var chargingRanged : bool = false
+var comboCounter: int = 0 setget setComboCounter
+var parryPos: Vector2
+var chargingRanged: bool = false
 var chargingTime := 0.0
 
 # TODO: Make this a signal call
@@ -20,9 +20,9 @@ onready var weaponFxTween := $WeaponEffects
 onready var rangedWeapon : WeaponStats
 onready var meleeWeapon : WeaponStats = weaponStats
 
-signal meleeQuick()
-signal meleeLong()
-signal parry()
+signal meleeQuick
+signal meleeLong
+signal parry
 
 
 func _ready():
@@ -38,13 +38,12 @@ func _ready():
 	
 
 func _physics_process(delta):
-	
 	self.lookAtTarget(get_global_mouse_position())
-	
+
 	if chargingRanged:
 		rangedFx.global_position = get_global_mouse_position()
 		chargingTime += delta
-	
+
 	if not animationPlayer.is_playing():
 		if Input.is_action_just_pressed("attack") and attackTimer.is_stopped():
 			if backTween.is_active():
@@ -114,24 +113,27 @@ func _physics_process(delta):
 		elif Input.is_action_just_pressed("fire") and (weaponStats.weaponType == WeaponStats.WeaponType.SWORD) and attackTimer.is_stopped():
 			emit_signal("parry")
 			self.startParry()
-			
+
 		elif Input.is_action_just_pressed("swap"):
 			if weaponStats.name == meleeWeapon.name:
 				setWeapon(rangedWeapon)
 			else:
 				setWeapon(meleeWeapon)
 
+
 func getMeleeAttackTime(modifier = 1.0) -> float:
 	var attackDuration = animationPlayer.get_animation("MeleeAttack").length
 	return max(weaponStats.attackSpeed * modifier * PlayerStats.attackSpeed, attackDuration)
 
+
 func getRangedAttackTime() -> float:
 	return max(weaponStats.attackSpeed * PlayerStats.attackSpeed, .5)
+
 
 func startParry():
 	weaponSprite.flip_h = not weaponSprite.flip_h
 	weaponSprite.flip_v = not weaponSprite.flip_v
-	var tweenLen = animationPlayer.current_animation_length*.5
+	var tweenLen = animationPlayer.current_animation_length * .5
 	comboCounter = 0
 	comboTimer.start(comboTime*.5)
 	attackTimer.start(max(weaponStats.attackSpeed * .4 * PlayerStats.attackSpeed, comboTime*.5))
@@ -159,6 +161,7 @@ func setWeapon(weaponStats : WeaponStats):
 	if weaponStats.weaponType == WeaponStats.WeaponType.SWORD:
 		parryPos = swordAnimDist * .75
 
+
 func setComboCounter(value):
 	if comboCounter < 2:
 		weaponHitbox.scaleDamage(1)
@@ -168,15 +171,16 @@ func setComboCounter(value):
 		weaponHitbox.scaleKnockback(1)
 	comboCounter = value
 
+
 # Called when another parry hitbox hit's player's during parry action
 func _parried_weapon(area):
 	# area should be a parry hitbox
-	var parriedWeapon : WeaponHitbox = area.get_parent()
+	var parriedWeapon: WeaponHitbox = area.get_parent()
 	parriedWeapon.parry(weaponHitbox)
 	PlayerStats.currentXP += parriedWeapon.damage
 
+
 func _on_WeaponTween_tween_completed():
-	
 	if comboCounter < 2:
 		._on_WeaponTween_tween_completed()
 	elif weaponStats.weaponType == WeaponStats.WeaponType.MELEE:
@@ -189,8 +193,22 @@ func _on_WeaponTween_tween_completed():
 		backTween.interpolate_property(weaponSprite, "rotation", restingRotation - deg2rad(50), restingRotation - deg2rad(25), attackTimer.time_left + .007, self.tweenLength)
 	elif weaponStats.weaponType == WeaponStats.WeaponType.SWORD:
 		self.show_behind_parent = not self.show_behind_parent
-		backTween.interpolate_property(weaponSprite, "position", weaponSprite.position, Vector2(-10, 5), self.tweenLength, Tween.TRANS_LINEAR, Tween.EASE_IN_OUT)
-		backTween.interpolate_property(weaponSprite, "rotation", weaponSprite.rotation, restingRotation + deg2rad(70), self.tweenLength)
+		backTween.interpolate_property(
+			weaponSprite,
+			"position",
+			weaponSprite.position,
+			Vector2(-10, 5),
+			self.tweenLength,
+			Tween.TRANS_LINEAR,
+			Tween.EASE_IN_OUT
+		)
+		backTween.interpolate_property(
+			weaponSprite,
+			"rotation",
+			weaponSprite.rotation,
+			restingRotation + deg2rad(70),
+			self.tweenLength
+		)
 
 		# Add the .007 so if player is spam clicking it feels more fluid/no stop on swing
 		backTween.interpolate_property(weaponSprite, "position", Vector2(-10, 5), meleeRestingCoord + Vector2(5, 17), attackTimer.time_left + .007, Tween.TRANS_LINEAR, Tween.EASE_IN_OUT, self.tweenLength)
@@ -205,12 +223,29 @@ func _on_WeaponTween_tween_completed():
 		backTween.interpolate_property(weaponSprite, "rotation", restingRotation + deg2rad(120), restingRotation + deg2rad(140), attackTimer.time_left + .007, self.tweenLength)
 	backTween.start()
 
+
 # Reset weapon back to its original position
 func _combo_finished():
 	self.comboCounter = 0
-	
+
 	if not backTween.is_active():
-		backTween.interpolate_property(weaponSprite, "position", weaponSprite.position, Vector2.ZERO, .4, Tween.TRANS_LINEAR, Tween.EASE_IN_OUT)
-		backTween.interpolate_property(weaponSprite, "rotation", weaponSprite.rotation, returnRot, .4, Tween.TRANS_LINEAR, Tween.EASE_IN_OUT)
+		backTween.interpolate_property(
+			weaponSprite,
+			"position",
+			weaponSprite.position,
+			Vector2.ZERO,
+			.4,
+			Tween.TRANS_LINEAR,
+			Tween.EASE_IN_OUT
+		)
+		backTween.interpolate_property(
+			weaponSprite,
+			"rotation",
+			weaponSprite.rotation,
+			returnRot,
+			.4,
+			Tween.TRANS_LINEAR,
+			Tween.EASE_IN_OUT
+		)
 
 		backTween.start()
