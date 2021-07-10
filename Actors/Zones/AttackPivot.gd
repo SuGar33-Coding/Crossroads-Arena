@@ -6,6 +6,7 @@ const AreaOfEffectScene = preload("res://Weapons/AreaOfEffect.tscn")
 const AttackSignalScene = preload("res://FX/AttackSignal.tscn")
 
 const AOE_ROTATION = -45
+const STAFF_RAISE = 18
 const RANGED_ROTATION = 45
 
 enum MeleeAttackType {
@@ -131,6 +132,13 @@ func startRangedAttack(sourceStr := 0, accuracy := RangedProjectile.NORMAL):
 	world.add_child(rangedProjectile)
 	rangedProjectile.fire(restingPos.global_position, self.global_rotation)
 	
+func startAOEAnimation(animLength: float):
+	"""self.tweenLength = animLength * 4/5
+	tween.interpolate_property(weaponSprite, "position", weaponSprite.position, restingPos.position - Vector2(0,STAFF_RAISE), tweenLength)
+	
+	tween.start()"""
+	pass
+	
 func startAOEAttack(targetGlobalPos : Vector2, sourceStr := 0):
 	var areaOfEffect = AreaOfEffectScene.instance()
 	areaOfEffect.init(weaponStats, source, sourceStr, weaponStats.aoeLifetime, weaponStats.aoeNumberOfTicks)
@@ -190,7 +198,7 @@ func setWeapon(weaponStats : WeaponStats):
 		weaponSprite.set_deferred("rotation", deg2rad(RANGED_ROTATION))
 		weaponSprite.hframes = 6
 	else:
-		restingPos.set_deferred("position", Vector2(10, 0))
+		restingPos.position = Vector2(10, 0)
 		weaponSprite.set_deferred("rotation", deg2rad(AOE_ROTATION))
 		swordAnimDist = weaponCollision.position - restingPos.position
 		
@@ -206,7 +214,8 @@ func _on_WeaponTween_tween_completed():
 
 		# Add the .007 so if player is spam clicking it feels more fluid/no stop on swing
 		backTween.interpolate_property(weaponSprite, "position", Vector2(weaponStats.length/2, 0), Vector2.ZERO, attackTimer.time_left + .007, Tween.TRANS_LINEAR, Tween.EASE_IN_OUT, self.tweenLength)
-	
+	elif weaponStats.weaponType == WeaponStats.WeaponType.AOE:
+		backTween.interpolate_property(weaponSprite, "position", restingPos.position - Vector2(0,STAFF_RAISE), restingPos.position, tweenLength/4)
 	else:
 		backTween.interpolate_property(weaponSprite, "position", weaponSprite.position, Vector2(-20, 5), self.tweenLength, Tween.TRANS_LINEAR, Tween.EASE_IN_OUT)
 		backTween.interpolate_property(weaponSprite, "rotation", weaponSprite.rotation, restingRotation - deg2rad(50), self.tweenLength, Tween.TRANS_LINEAR, Tween.EASE_IN)

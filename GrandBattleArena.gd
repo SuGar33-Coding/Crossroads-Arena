@@ -66,7 +66,9 @@ func spawnEnemies():
 	# TODO: Set up multi-encounters and different sizes
 	
 	var selectedEncounter : EncounterStats
-	if sortedEncounters.has(waveNumber):
+	if sortedEncounters.has(0):
+		selectedEncounter = sortedEncounters[0][0][randi() % sortedEncounters[waveNumber][1].size()]
+	elif sortedEncounters.has(waveNumber):
 		selectedEncounter = sortedEncounters[waveNumber][1][randi() % sortedEncounters[waveNumber][1].size()]
 	else:
 		selectedEncounter = sortedEncounters[1][1][randi() % sortedEncounters[1][1].size()]

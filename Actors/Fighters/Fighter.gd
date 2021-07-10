@@ -74,6 +74,9 @@ func switchToAttack():
 func startRangedAttack():
 	attackPivot.startRangedAttack(stats.strength)
 	
+func startAOEAnimation(animLength: float):
+	attackPivot.startAOEAnimation(animLength)
+	
 func startAOEAttack():
 	attackPivot.startAOEAttack(aoeAttackPos, stats.strength)
 	
