@@ -39,6 +39,7 @@ func addItemToBag(item: ItemInstance):
 		if _inventory.bag[slot] == null:
 			_inventory.bag[slot] = item
 			emit_signal("inventory_changed")
+			break
 
 
 func swapItems(slot1, slot2):

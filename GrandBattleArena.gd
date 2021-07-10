@@ -11,14 +11,16 @@ var Charger = preload("res://Actors/Chargers/Charger/Charger.tscn")
 var Ranger = preload("res://Actors/Fighters/Ranger/Ranger.tscn")
 var Mage = preload("res://Actors/Fighters/Mage/Mage.tscn")
 var Encounter = preload("res://World/Encounters/Encounter.tscn")
+var WorldItem = preload("res://Items/WorldItem.tscn")
 var numEncounters := 0
 var playerNearButton := false
 var waveNumber := 0
 var sortedEncounters := {}
 
-onready var people = $YSort/People
-onready var camera = $YSort/Player/MainCamera
-onready var newWaveButtonSprite = $YSort/NewWaveButton/AnimatedSprite
+onready var people := $YSort/People
+onready var camera := $YSort/Player/MainCamera
+onready var itemSort := $YSort/Items
+onready var newWaveButtonSprite := $YSort/NewWaveButton/AnimatedSprite
 var largeSpawns : Array
 var medSpawns : Array
 var smallSpawns : Array
@@ -30,6 +32,14 @@ func _ready():
 	largeSpawns = $LargeSpawns.get_children()
 	medSpawns = $MediumSpawns.get_children()
 	smallSpawns = $SmallSpawns.get_children()
+	
+	# TODO: Add starting weapon choices like this
+	var startingItem : ItemInstance = get_node(ItemManager.createItem("res://Items/Shoes.tres"))
+	
+	var worldItem = WorldItem.instance()
+	worldItem.init(startingItem)
+	worldItem.global_position = newWaveButtonSprite.global_position + Vector2(30, 0)
+	itemSort.add_child(worldItem)
 	
 	# Sorted encounters will be a dictionary of dictionaries corresponding to the levels of the encounters
 	# Each of these arrays will contain three arrays corresponding to each of the sizes of the encounters
