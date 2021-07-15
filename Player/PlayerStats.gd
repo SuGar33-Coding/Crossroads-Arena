@@ -22,6 +22,7 @@ var dexDashRatio : float = .95
 # AttackSpeed starts at 1 and then will slowly scale down as it's multiplied by weapon attack speed
 var attackSpeed : float = 1
 var invulnTimer : float = .6
+var playerColor := Color("#327b38")
 
 # Will be an array of scenes/references to scene instances
 var inventory := []

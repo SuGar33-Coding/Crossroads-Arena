@@ -49,6 +49,8 @@ func _ready():
 	hurtbox.connect("area_entered", self, "_hurtbox_area_entered")
 	$AttackPivot/ComboTimer.connect("timeout", self, "_combo_finished")
 	inventory.connect("inventory_changed", self, "_inventory_changed")
+	
+	sprite.material.set_shader_param("banner_color", stats.playerColor)
 
 
 func _physics_process(delta):

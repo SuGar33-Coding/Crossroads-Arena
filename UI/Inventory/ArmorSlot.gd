@@ -2,12 +2,15 @@ extends Panel
 
 func get_drag_data(_position):
 	var armorType = Armor.Type[get_parent().name]
+	print(armorType)
 	if Inventory.getEquipment()[armorType] != null:
 		var data = {}
 		data.originNode = self
 		data.originPanel = "Armor"
 		data.originItemSlot = armorType
+		print(data)
 		data.originEquipmentType = armorType
+		print(data)
 		
 		var dragTexture = TextureRect.new()
 		dragTexture.expand = true

@@ -6,7 +6,6 @@
 [resource]
 script = ExtResource( 2 )
 name = "Boots"
-value = 0
 texture = ExtResource( 1 )
 type = 2
 defenseValue = 2
