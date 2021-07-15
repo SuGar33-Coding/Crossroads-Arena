@@ -1,19 +1,12 @@
-extends Control
-
-
-var tempalteBagSlot = preload("res://UI/Inventory/BagSlot.tscn")
-var defaultTexture = preload("res://Assets/SmokePuff.png")
-
-onready var gridContainer = $Background/MarginContainer/VBoxContainer/ScrollContainer/GridContainer
+extends InventoryPanel
 
 func _ready():
 	Inventory.connect("inventory_changed", self, "_updateDisplay")
 	Inventory._inventory.bag.Slot1 = get_node(ItemManager.createItem("res://Items/Potion.tres"))
-	
-	for slot in Inventory._inventory.bag.keys():
+	for slot in Inventory.getBag().keys():
 		var newBagSlot = tempalteBagSlot.instance()
-		if Inventory._inventory.bag[slot] != null:
-			var iconTexture = Inventory._inventory.bag[slot].sprite.texture
+		if Inventory.getBag()[slot] != null:
+			var iconTexture = (Inventory.getBag()[slot] as ItemInstance).getTexture()
 			(newBagSlot.get_node("Icon") as TextureRect).texture = iconTexture
 		gridContainer.add_child(newBagSlot, true)
 

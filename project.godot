@@ -104,6 +104,11 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://Actors/Zones/Hurtbox.gd"
 }, {
+"base": "Control",
+"class": "InventoryPanel",
+"language": "GDScript",
+"path": "res://UI/Inventory/InventoryPanel.gd"
+}, {
 "base": "Resource",
 "class": "Item",
 "language": "GDScript",
@@ -224,6 +229,7 @@ _global_script_class_icons={
 "HitEffect": "",
 "Hitbox": "",
 "Hurtbox": "",
+"InventoryPanel": "",
 "Item": "",
 "ItemInstance": "",
 "Lobber": "",

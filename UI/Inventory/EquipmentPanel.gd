@@ -1,22 +1,14 @@
-extends Control
-
-
-var defaultTexture = preload("res://Assets/SmokePuff.png")
-
-onready var gridContainer = $Background/MarginContainer/VBoxContainer/ScrollContainer/GridContainer
-
+extends InventoryPanel 
 
 func _ready():
 	Inventory.connect("inventory_changed", self, "_updateDisplay")
-	
 	Inventory.getEquipment()[Equipment.EquipmentType.Feet] = get_node(ItemManager.createItem("res://Items/Shoes.tres"))
-	for slot in gridContainer.get_children():
-		var slotName: String = slot.name
-		var slotType = Equipment.EquipmentType[slotName]
-		if Inventory.getEquipment()[slotType] != null:
+	for slot in Inventory.getEquipment().keys():
+		if Inventory.getEquipment()[slot] != null:
 			# grab item icon and replace the default icon with it
-			var iconTexture = (Inventory.getEquipment()[slotType] as ItemInstance).getTexture()
-			var icon: TextureRect = slot.get_node("Icon")
+			var iconTexture = (Inventory.getEquipment()[slot] as ItemInstance).getTexture()
+			var equipmentType = Equipment.EquipmentType.keys()[slot]
+			var icon: TextureRect = gridContainer.get_node(equipmentType).get_node("Icon")
 			icon.texture = iconTexture
 
 
