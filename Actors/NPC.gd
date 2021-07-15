@@ -13,7 +13,7 @@ export var movementMaxTime : float = 5.0
 
 signal no_health()
 
-const PERF_THRESHOLD = 800
+const PERF_THRESHOLD = 500
 
 enum State {
 	IDLE,

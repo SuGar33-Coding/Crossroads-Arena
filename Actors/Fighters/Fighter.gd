@@ -96,7 +96,7 @@ func willAttack() -> bool:
 	var distanceToTarget = self.position.distance_to(detectionZone.target.position)
 	if attackTimer.is_stopped():
 		if weaponStats.weaponType == WeaponStats.WeaponType.RANGED or weaponStats.weaponType == WeaponStats.WeaponType.AOE:
-			return distanceToTarget <= weaponStats.projectileRange
+			return isTargetVisible and distanceToTarget <= weaponStats.projectileRange 
 		else:
 			return distanceToTarget <= (weaponStats.length + weaponStats.radius*2)
 	else:
