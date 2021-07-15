@@ -1,8 +1,9 @@
 extends InventoryPanel
 
+var tempalteBagSlot = preload("res://UI/Inventory/BagSlot.tscn")
+
 func _ready():
 	Inventory.connect("inventory_changed", self, "_updateDisplay")
-	Inventory._inventory.bag.Slot1 = get_node(ItemManager.createItem("res://Items/Potion.tres"))
 	for slot in Inventory.getBag().keys():
 		var newBagSlot = tempalteBagSlot.instance()
 		if Inventory.getBag()[slot] != null:
@@ -14,10 +15,10 @@ func _ready():
 func _updateDisplay():
 	var bag := Inventory.getBag()
 	for slot in bag.keys():
-		var slotIcon: TextureRect = gridContainer.get_node(slot).get_child(0)
+		var slotIcon: TextureRect = gridContainer.get_node(slot).get_child(0).get_child(0)
 		if bag[slot] != null:
 			# if there's an item, update the slot with that sprite
 			slotIcon.texture = (bag[slot] as ItemInstance).getTexture()
 		else:
 			# otherwise replace with default texture
-			slotIcon.texture = defaultTexture
+			slotIcon.texture = null

@@ -1,5 +1,4 @@
-extends TextureRect
-
+extends Panel
 
 func get_drag_data(_position):
 	var bagSlot = get_parent().name
@@ -7,16 +6,15 @@ func get_drag_data(_position):
 		var data = {}
 		data.originNode = self
 		data.originPanel = "Bag"
-		data.originItemSlot = bagSlot 
-		data.originEquipmentType = (
-			((Inventory.getBag()[bagSlot] as ItemInstance).resource as Equipment).equipmentType
-			if (Inventory.getBag()[bagSlot] as ItemInstance).resource is Equipment
-			else null
-		)
+		data.originItemSlot = bagSlot
+		# TODO: This code probably works
+		var itemResource = (Inventory.getBag()[bagSlot] as ItemInstance).resource
+		if (itemResource is Armor):
+			data.originEquipmentType = itemResource.type
 
 		var dragTexture = TextureRect.new()
 		dragTexture.expand = true
-		dragTexture.texture = texture
+		dragTexture.texture = get_child(0).texture
 		dragTexture.rect_size = Vector2(100, 100)
 
 		var control = Control.new()
@@ -35,10 +33,10 @@ func can_drop_data(_position, data):
 		return true
 	else:
 		# swap an item
-		if data.originPanel == "Equipment":
+		if data.originPanel != "Bag":
 			# if the item is an equipped equipment
-			if Inventory.getBag()[targetBagSlot] is Equipment:
-				var targetEquipmentType = Inventory.getBag()[targetBagSlot].equipmentType
+			if Inventory.getBag()[targetBagSlot] is Armor:
+				var targetEquipmentType = Inventory.getBag()[targetBagSlot].type
 				# don't let us make an illegal swap
 				return targetEquipmentType == data.originEquipmentType
 			else:

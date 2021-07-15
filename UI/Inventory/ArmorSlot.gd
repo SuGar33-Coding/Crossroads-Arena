@@ -1,17 +1,17 @@
-extends TextureRect
+extends Panel
 
 func get_drag_data(_position):
-	var equipmentType = Equipment.EquipmentType[get_parent().name]
-	if Inventory.getEquipment()[equipmentType] != null:
+	var armorType = Armor.Type[get_parent().name]
+	if Inventory.getEquipment()[armorType] != null:
 		var data = {}
 		data.originNode = self
-		data.originPanel = "Equipment"
-		data.originItemSlot = equipmentType
-		data.originEquipmentType = equipmentType
+		data.originPanel = "Armor"
+		data.originItemSlot = armorType
+		data.originEquipmentType = armorType
 		
 		var dragTexture = TextureRect.new()
 		dragTexture.expand = true
-		dragTexture.texture = texture
+		dragTexture.texture = get_child(0).texture
 		dragTexture.rect_size = Vector2(100,100)
 		
 		var control = Control.new()
@@ -23,7 +23,7 @@ func get_drag_data(_position):
 
 func can_drop_data(_position, data):
 	# make sure we can drop item of this type into this slot
-	var targetEquipmentSlot = Equipment.EquipmentType[get_parent().name]
+	var targetEquipmentSlot = Armor.Type[get_parent().name]
 	data.targetItemSlot = targetEquipmentSlot
 	# only equipment can go in here, so just make sure it fits the slot
 	return targetEquipmentSlot == data.originEquipmentType

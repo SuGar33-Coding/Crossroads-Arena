@@ -19,6 +19,11 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://Weapons/AreaOfEffect.gd"
 }, {
+"base": "Item",
+"class": "Armor",
+"language": "GDScript",
+"path": "res://Items/Armor.gd"
+}, {
 "base": "Position2D",
 "class": "AttackPivot",
 "language": "GDScript",
@@ -44,6 +49,11 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://Actors/Chargers/Charger/ChargerAttackPivot.gd"
 }, {
+"base": "Item",
+"class": "Consumable",
+"language": "GDScript",
+"path": "res://Items/Consumable.gd"
+}, {
 "base": "Area2D",
 "class": "DetectionZone",
 "language": "GDScript",
@@ -58,11 +68,6 @@ _global_script_classes=[ {
 "class": "EncounterStats",
 "language": "GDScript",
 "path": "res://World/Encounters/EncounterStats.gd"
-}, {
-"base": "Item",
-"class": "Equipment",
-"language": "GDScript",
-"path": "res://Items/Equipment.gd"
 }, {
 "base": "NPC",
 "class": "Fighter",
@@ -164,11 +169,6 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://Actors/Movement/Pathfind.gd"
 }, {
-"base": "Item",
-"class": "Potion",
-"language": "GDScript",
-"path": "res://Items/Potion.gd"
-}, {
 "base": "KinematicBody2D",
 "class": "RangedProjectile",
 "language": "GDScript",
@@ -212,15 +212,16 @@ _global_script_classes=[ {
 _global_script_class_icons={
 "AoeFX": "",
 "AreaOfEffect": "",
+"Armor": "",
 "AttackPivot": "",
 "Boundary": "",
 "BurstMoveAA": "",
 "Charger": "",
 "ChargerAttackPivot": "",
+"Consumable": "",
 "DetectionZone": "",
 "Encounter": "",
 "EncounterStats": "",
-"Equipment": "",
 "Fighter": "",
 "FlankAndBurst": "",
 "FlankAndPoke": "",
@@ -241,7 +242,6 @@ _global_script_class_icons={
 "Movement": "",
 "NPC": "",
 "Pathfind": "",
-"Potion": "",
 "RangedProjectile": "",
 "Room": "",
 "RoomArea": "",

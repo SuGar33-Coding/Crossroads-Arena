@@ -2,19 +2,27 @@ extends Node
 
 signal inventory_changed
 
-var potion = preload("res://Items/Potion.tres")
-
 var _inventory := {
 	"bag": {
-		"Slot1": null,
-		"Slot2": null,
-		"Slot3": null,
-		"Slot4": null,
+		"0": null,
+		"1": null,
+		"2": null,
+		"3": null,
 	},
-	"equipment": {
-		Equipment.EquipmentType.Head: null,
-		Equipment.EquipmentType.Chest: null,
-		Equipment.EquipmentType.Feet: null
+	"armor": {
+		Armor.Type.Head: null,
+		Armor.Type.Chest: null,
+		Armor.Type.Feet: null
+	},
+	"consumable": {
+		0: null,
+		1: null,
+		2: null,
+		3: null,
+	},
+	"weapon": {
+		0: null,
+		1: null
 	}
 }
 
@@ -24,7 +32,7 @@ func getBag() -> Dictionary:
 
 
 func getEquipment() -> Dictionary:
-	return _inventory.equipment
+	return _inventory.armor
 
 
 func isBagFull():
