@@ -17,6 +17,9 @@ var Friction: float
 
 onready var stats = get_node("/root/PlayerStats")
 onready var sprite := $Sprite
+onready var headSprite := $Sprite/HeadSprite
+onready var chestSprite := $Sprite/ChestSprite
+onready var legSprite := $Sprite/LegSprite
 onready var shadowSprite := $ShadowSprite
 onready var attackPivot := $AttackPivot
 onready var hurtbox := $Hurtbox
@@ -79,11 +82,17 @@ func _physics_process(delta):
 	var mousePos = self.get_global_mouse_position()
 	if mousePos.x < global_position.x:
 		sprite.flip_h = true
-		shadowSprite.position.x = 1.5
+		headSprite.flip_h = true
+		chestSprite.flip_h = true
+		legSprite.flip_h = true
+		shadowSprite.position.x = .5
 		attackPivot.scale.y = -1
 	else:
 		sprite.flip_h = false
-		shadowSprite.position.x = .5
+		headSprite.flip_h = false
+		chestSprite.flip_h = false
+		legSprite.flip_h = false
+		shadowSprite.position.x = 1.25
 		attackPivot.scale.y = 1
 
 	attackPivot.look_at(mousePos)
