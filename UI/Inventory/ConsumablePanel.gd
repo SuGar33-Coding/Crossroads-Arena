@@ -12,7 +12,7 @@ func _ready():
 			icon.texture = iconTexture
 
 
-func _updateDisplay():
+func _updateDisplay(_from_panel, _to_panel):
 	"""
 	var equipment := Inventory.getEquipment()
 	for slot in equipment.keys():

@@ -12,7 +12,7 @@ func _ready():
 		gridContainer.add_child(newBagSlot, true)
 
 
-func _updateDisplay():
+func _updateDisplay(_from_panel, _to_panel):
 	var bag := Inventory.getBag()
 	for slot in bag.keys():
 		var slotIcon: TextureRect = gridContainer.get_node(slot).get_child(0).get_child(0)

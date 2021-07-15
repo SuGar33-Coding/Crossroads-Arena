@@ -34,11 +34,25 @@ func _ready():
 	smallSpawns = $SmallSpawns.get_children()
 	
 	# TODO: Add starting weapon choices like this
-	var startingItem : ItemInstance = get_node(ItemManager.createItem("res://Items/Shoes.tres"))
+	var startingItem : ItemInstance = get_node(ItemManager.createItem("res://Items/ChestPlate.tres"))
 	
 	var worldItem = WorldItem.instance()
 	worldItem.init(startingItem)
 	worldItem.global_position = newWaveButtonSprite.global_position + Vector2(30, 0)
+	itemSort.add_child(worldItem)
+	
+	startingItem  = get_node(ItemManager.createItem("res://Items/Boots.tres"))
+	
+	worldItem = WorldItem.instance()
+	worldItem.init(startingItem)
+	worldItem.global_position = newWaveButtonSprite.global_position + Vector2(75, 0)
+	itemSort.add_child(worldItem)
+	
+	startingItem = get_node(ItemManager.createItem("res://Items/HalfPlate.tres"))
+
+	worldItem = WorldItem.instance()
+	worldItem.init(startingItem)
+	worldItem.global_position = newWaveButtonSprite.global_position + Vector2(125, 0)
 	itemSort.add_child(worldItem)
 	
 	# Sorted encounters will be a dictionary of dictionaries corresponding to the levels of the encounters

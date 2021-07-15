@@ -1,4 +1,4 @@
-[gd_scene load_steps=38 format=2]
+[gd_scene load_steps=35 format=2]
 
 [ext_resource path="res://Assets/CharacterAssets/PlayerModel.png" type="Texture" id=1]
 [ext_resource path="res://Player/Player.gd" type="Script" id=2]
@@ -23,9 +23,6 @@
 [ext_resource path="res://Weapons/BaseMusket.tres" type="Resource" id=21]
 [ext_resource path="res://Weapons/FireBallStaff.tres" type="Resource" id=22]
 [ext_resource path="res://Weapons/GasLobber.tres" type="Resource" id=23]
-[ext_resource path="res://Assets/ArmorAssets/Armor Helmet.png" type="Texture" id=24]
-[ext_resource path="res://Assets/ArmorAssets/HalfPlate.png" type="Texture" id=25]
-[ext_resource path="res://Assets/ArmorAssets/Boots.png" type="Texture" id=26]
 
 [sub_resource type="CapsuleShape2D" id=1]
 radius = 4.5
@@ -540,17 +537,14 @@ hframes = 5
 frame = 1
 
 [node name="HeadSprite" type="Sprite" parent="Sprite"]
-texture = ExtResource( 24 )
 hframes = 5
 frame = 1
 
 [node name="ChestSprite" type="Sprite" parent="Sprite"]
-texture = ExtResource( 25 )
 hframes = 5
 frame = 1
 
 [node name="LegSprite" type="Sprite" parent="Sprite"]
-texture = ExtResource( 26 )
 hframes = 5
 frame = 1
 

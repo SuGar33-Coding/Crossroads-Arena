@@ -1,6 +1,6 @@
 extends Node
 
-signal inventory_changed
+signal inventory_changed(from_panel, to_panel)
 
 var _inventory := {
 	"bag": {
@@ -46,7 +46,7 @@ func addItemToBag(item: ItemInstance):
 	for slot in _inventory.bag.keys():
 		if _inventory.bag[slot] == null:
 			_inventory.bag[slot] = item
-			emit_signal("inventory_changed")
+			emit_signal("inventory_changed", "bag", "bag")
 			break
 
 
@@ -67,4 +67,4 @@ func swapItems(slot1, slot2):
 	var item1 = _inventory[location1][slot1]
 	_inventory[location1][slot1] = _inventory[location2][slot2]
 	_inventory[location2][slot2] = item1
-	emit_signal("inventory_changed")
+	emit_signal("inventory_changed", location1, location2)

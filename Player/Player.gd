@@ -16,6 +16,7 @@ var floatingText = preload("res://UI/FloatingText.tscn")
 var Friction: float
 
 onready var stats = get_node("/root/PlayerStats")
+onready var inventory = get_node("/root/Inventory")
 onready var sprite := $Sprite
 onready var headSprite := $Sprite/HeadSprite
 onready var chestSprite := $Sprite/ChestSprite
@@ -47,6 +48,7 @@ func _ready():
 	stats.connect("playerLevelChanged", self, "_player_level_changed")
 	hurtbox.connect("area_entered", self, "_hurtbox_area_entered")
 	$AttackPivot/ComboTimer.connect("timeout", self, "_combo_finished")
+	inventory.connect("inventory_changed", self, "_inventory_changed")
 
 
 func _physics_process(delta):
@@ -164,6 +166,20 @@ func _playerstats_no_health():
 	world.playerDied()
 	self.queue_free()
 
+func _inventory_changed(from_panel, to_panel):
+	if(from_panel == "armor" or to_panel == "armor"):
+		var armorDict = inventory.getEquipment()
+		for key in armorDict.keys():
+			var itemInstance = armorDict.get(key)
+			if is_instance_valid(itemInstance):
+				var piece = itemInstance.resource
+				match piece.type:
+					Armor.Type.Head:
+						headSprite.texture = piece.characterTexture
+					Armor.Type.Chest:
+						chestSprite.texture = piece.characterTexture
+					Armor.Type.Feet:
+						legSprite.texture = piece.characterTexture
 
 func _melee_quick():
 	animationPlayer.play("MeleeAttack")
@@ -178,7 +194,6 @@ func _meleeLong():
 func _parry():
 	animationPlayer.play("Parry")
 	PlayerStats.maxSpeed *= .65
-
 
 func _combo_finished():
 	PlayerStats.resetMaxSpeed()
