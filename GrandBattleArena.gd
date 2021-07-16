@@ -41,14 +41,14 @@ func _ready():
 	worldItem.global_position = newWaveButtonSprite.global_position + Vector2(30, 0)
 	itemSort.add_child(worldItem)
 	
-	startingItem  = get_node(ItemManager.createItem("res://Items/Boots.tres"))
+	startingItem  = get_node(ItemManager.createItem("res://Weapons/BaseSword.tres"))
 	
 	worldItem = WorldItem.instance()
 	worldItem.init(startingItem, true)
 	worldItem.global_position = newWaveButtonSprite.global_position + Vector2(75, 0)
 	itemSort.add_child(worldItem)
 	
-	startingItem = get_node(ItemManager.createItem("res://Weapons/BaseSword.tres"))
+	startingItem = get_node(ItemManager.createItem("res://Weapons/BaseBow.tres"))
 
 	worldItem = WorldItem.instance()
 	worldItem.init(startingItem)
@@ -102,9 +102,9 @@ func spawnEnemies():
 	var newEncounter = Encounter.instance()
 	newEncounter.init(selectedEncounter)
 	newEncounter.connect("encounter_finished", self, "encounter_finished")
-	var spawnLocation = smallSpawns[randi() % smallSpawns.size()]
+	var spawnLocation = medSpawns[randi() % medSpawns.size()]
 	newEncounter.global_position = spawnLocation.global_position
-	self.add_child(newEncounter)
+	people.add_child(newEncounter)
 	
 	newWaveButtonSprite.play("Pressed") 
 
@@ -134,6 +134,7 @@ func goToMainMenu(_stuff):
 	get_tree().change_scene("res://UI/StartMenu/StartMenu.tscn")
 
 func encounter_finished():
+	print("finished!")
 	numEncounters -= 1
 
 func _on_NewWaveButton_body_entered(body):

@@ -75,12 +75,13 @@ func _ready():
 	
 	particles.speed_scale = aoeEffect.speedScale
 	
-func _physics_process(_delta):
-	if(checkPosition and targetPosition.distance_to(self.global_position) < THRESHOLD):
+func _physics_process(delta):
+	var move = move_and_collide(velocity * delta)
+	
+	if( (not aoeEffect.aoeType == AoeFX.AoeType.LOBBED and move != null) or (checkPosition and targetPosition.distance_to(self.global_position) < THRESHOLD)):
 		checkPosition = false
 		self.enableAoe()
 		velocity = Vector2.ZERO
-	move_and_slide(velocity)
 	
 	if(fired):
 		crosshair.global_position = targetPosition

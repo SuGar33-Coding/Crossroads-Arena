@@ -1,10 +1,12 @@
-extends Node2D
+extends YSort
 
 class_name Encounter
 
 # BIG TODO: when 2 enemies die at the same time I don't think signal is called twice so button is not reset
 
 signal encounter_finished()
+
+export var checkTime := 3.0
 
 """
 Rules For Encounter Sizes:
@@ -26,8 +28,7 @@ var encounterStats : EncounterStats
 var encounterSize
 var numActors := 0
 var numDead := 0
-
-onready var people = get_node("../YSort/People")
+var currentActors := []
 
 # TODO: Will get level and size it should be, and should pick from large list of encounters which one to spawn
 #func init(encounterLevel := 1, encounterSize : EncounterStats.EncounterSize)
@@ -35,7 +36,7 @@ func init(StatsForEncounter : EncounterStats):
 	encounterStats = StatsForEncounter
 
 # Called when the node enters the scene tree for the first time.
-func _ready():	
+func _ready():
 	
 	encounterSize = encounterStats.encounterSize
 	var numGrunts : int = randi() % GSPAWN_VAR[encounterSize] + GSPAWN_MINS[encounterSize]
@@ -55,8 +56,6 @@ func _ready():
 	for k in range(numBoss):
 		var pathToActor = encounterStats.commanderFilepaths[randi() % encounterStats.commanderFilepaths.size()]
 		spawnActor(pathToActor)
-	
-	
 
 func spawnActor(pathToActor : String):
 	# Resource loader should cache resources so they are not reloaded every time
@@ -67,7 +66,8 @@ func spawnActor(pathToActor : String):
 	
 	newActor.set_deferred("global_position", self.global_position + Vector2(rand_range(-1 * spawnRange, spawnRange),  rand_range(-1 * spawnRange, spawnRange)))
 	newActor.connect("no_health", self, "npc_no_health")
-	people.add_child(newActor)
+	currentActors.append(newActor)
+	self.add_child(newActor)
 	
 func killSelf():
 	emit_signal("encounter_finished")

@@ -10,7 +10,7 @@
 [ext_resource path="res://Actors/Zones/AttackPivot.tscn" type="PackedScene" id=8]
 [ext_resource path="res://Actors/Zones/DetectionZone.tscn" type="PackedScene" id=9]
 [ext_resource path="res://Weapons/BaseSpear.tres" type="Resource" id=10]
-[ext_resource path="res://Actors/Fighters/ChaosKnight/ChaosKnight.tres" type="Resource" id=11]
+[ext_resource path="res://Actors/Fighters/Bandit/Bandit.tres" type="Resource" id=11]
 
 [sub_resource type="Curve" id=1]
 _data = [ Vector2( 0, 1 ), 0.0, 0.0, 0, 0, Vector2( 1, 0.163636 ), 0.0, 0.0, 0, 0 ]

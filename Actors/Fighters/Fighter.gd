@@ -2,7 +2,11 @@ extends NPC
 
 class_name Fighter
 
+# The chance they drop their weapon if they are dropping an item
+const weaponDropChance := .25
+
 var weaponStats : WeaponStats
+var WorldItem = preload("res://Items/WorldItem.tscn")
 
 export var rightShadowX = .5
 export var leftShadowX = .5
@@ -93,7 +97,7 @@ func willChase() -> bool:
 	return detectionZone.hasTarget()
 
 func willAttack() -> bool:
-	var distanceToTarget = self.position.distance_to(detectionZone.target.position)
+	var distanceToTarget = self.global_position.distance_to(detectionZone.target.position)
 	if attackTimer.is_stopped():
 		if weaponStats.weaponType == WeaponStats.WeaponType.RANGED or weaponStats.weaponType == WeaponStats.WeaponType.AOE:
 			return isTargetVisible and distanceToTarget <= weaponStats.projectileRange 
@@ -174,11 +178,25 @@ func _weapon_parried(area : WeaponHitbox):
 	animationPlayer.playback_speed = .3
 	animationPlayer.play("Damaged")
 	
+# Chance to drop weaponStats specifically (so don't include those in the drop list
 func _stats_no_health():
 	self.switchToStun()
 	animationPlayer.playback_speed = 1
 	animationPlayer.play("Death")
-	emit_signal("no_health")
+	if not stats.itemDrops.empty():
+		if randf() <= stats.dropChance:
+			var itemInstance : ItemInstance
+			
+			if randf() <= self.weaponDropChance:
+				itemInstance = get_node(ItemManager.createItem(attackPivot.weaponStats.resource_path))
+			else:
+				itemInstance = get_node(ItemManager.createItem((stats.itemDrops[randi() % stats.itemDrops.size()] as Item).resource_path))
+	
+			var worldItem = WorldItem.instance()
+			worldItem.init(itemInstance, true)
+			worldItem.global_position = self.global_position
+			# Add it to the room
+			self.get_parent().get_parent().call_deferred("add_child", worldItem)
 
 func _change_direction():
 	moveDir *= -1
@@ -187,5 +205,7 @@ func _change_direction():
 func _strength_changed(value):
 	attackPivot.setUserStr(value)
 
-func _anim_finished(_animName):
+func _anim_finished(animName):
 	animationPlayer.playback_speed = 1
+	if animName == "Death":
+		emit_signal("no_health")

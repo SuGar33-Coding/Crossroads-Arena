@@ -14,6 +14,8 @@ var maxHealth : int = 100 setget setMaxHealth, getMaxHealth
 var attackSpeed : float = 1
 var detectionRange : float = 1000
 var leaveRange : float = 100
+var itemDrops : Array = []
+var dropChance := 0.1
 
 signal noHealth
 signal healthChanged(value)
@@ -30,12 +32,12 @@ func _ready():
 		var detectionZone : DetectionZone = get_node("../DetectionZone")
 		detectionZone.leaveRange = statsResource.leaveRange
 		detectionZone.setDetectionRange(statsResource.detectionRange)
+		itemDrops = statsResource.itemDrops
+		dropChance = statsResource.dropChance
 	maxHealth = baseHealth * pow(PlayerStats.conRatio, con)
 	health = maxHealth
 	
 	self.attackSpeed = pow(PlayerStats.dexAttackRatio, dex)
-	
-	
 
 func setMaxHealth(value : int):
 	maxHealth = max(value, 1)

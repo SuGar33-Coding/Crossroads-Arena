@@ -9,3 +9,5 @@ con = 5
 dex = -3
 detectionRange = 2000.0
 leaveRange = 2500.0
+dropChance = 0.2
+itemDrops = [  ]
