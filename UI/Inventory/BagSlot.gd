@@ -5,12 +5,9 @@ func get_drag_data(_position):
 	if Inventory.getBag()[bagSlot] != null:
 		var data = {}
 		data.originNode = self
-		data.originPanel = "Bag"
-		data.originItemSlot = bagSlot
-		# TODO: This code probably works
-		var itemResource = (Inventory.getBag()[bagSlot] as ItemInstance).resource
-		if (itemResource is Armor):
-			data.originEquipmentType = itemResource.type
+		data.originPanel = "bag"
+		data.originSlotName = bagSlot
+		data.originResource = (Inventory.getBag()[bagSlot] as ItemInstance).resource
 
 		var dragTexture = TextureRect.new()
 		dragTexture.expand = true
@@ -27,13 +24,13 @@ func get_drag_data(_position):
 
 func can_drop_data(_position, data):
 	var targetBagSlot = get_parent().name
-	data.targetItemSlot = targetBagSlot
+	data.targetSlotName = targetBagSlot
 	if Inventory.getBag()[targetBagSlot] == null:
 		# move an item
 		return true
 	else:
 		# swap an item
-		if data.originPanel != "Bag":
+		if data.originPanel != "bag":
 			# if the item is an equipped equipment
 			if Inventory.getBag()[targetBagSlot] is Armor:
 				var targetEquipmentType = Inventory.getBag()[targetBagSlot].type
@@ -47,4 +44,4 @@ func can_drop_data(_position, data):
 
 
 func drop_data(_position, data):
-	Inventory.swapItems(data.originItemSlot, data.targetItemSlot)
+	Inventory.swapItems(data.originPanel, data.originSlotName, 'bag', data.targetSlotName)

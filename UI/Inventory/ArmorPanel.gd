@@ -3,21 +3,19 @@ extends InventoryPanel
 func _ready():
 	Inventory.connect("inventory_changed", self, "_updateDisplay")
 
-	for slot in Inventory.getEquipment().keys():
-		if Inventory.getEquipment()[slot] != null:
+	for slot in Inventory.getArmor().keys():
+		if Inventory.getArmor()[slot] != null:
 			# grab item icon and replace the default icon with it
-			var iconTexture = (Inventory.getEquipment()[slot] as ItemInstance).getTexture()
+			var iconTexture = (Inventory.getArmor()[slot] as ItemInstance).getTexture()
 			var equipmentType = Armor.Type.keys()[slot]
 			var icon: TextureRect = gridContainer.get_node(equipmentType).get_node("Icon")
 			icon.texture = iconTexture
 
 
 func _updateDisplay(_from_panel, _to_panel):
-	var equipment := Inventory.getEquipment()
+	var equipment := Inventory.getArmor()
 	for slot in equipment.keys():
 		var equipmentType = Armor.Type.keys()[slot]
-		var thing = gridContainer.get_node(equipmentType)
-		var thing2 = thing.get_child(0)
 		var slotIcon: TextureRect = gridContainer.get_node(equipmentType).get_child(0).get_child(0)
 		if equipment[slot] != null:
 			# if there's an item, update the slot with that sprite

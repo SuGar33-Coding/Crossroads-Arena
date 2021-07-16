@@ -170,7 +170,7 @@ func _playerstats_no_health():
 
 func _inventory_changed(from_panel, to_panel):
 	if(from_panel == "armor" or to_panel == "armor"):
-		var armorDict = inventory.getEquipment()
+		var armorDict = inventory.getArmor()
 		for key in armorDict.keys():
 			var itemInstance = armorDict.get(key)
 			if is_instance_valid(itemInstance):

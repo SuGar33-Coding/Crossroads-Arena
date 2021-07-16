@@ -15,14 +15,14 @@ var _inventory := {
 		Armor.Type.Feet: null
 	},
 	"consumable": {
-		0: null,
-		1: null,
-		2: null,
-		3: null,
+		"0": null,
+		"1": null,
+		"2": null,
+		"3": null,
 	},
 	"weapon": {
-		0: null,
-		1: null
+		"0": null,
+		"1": null
 	}
 }
 
@@ -31,8 +31,12 @@ func getBag() -> Dictionary:
 	return _inventory.bag
 
 
-func getEquipment() -> Dictionary:
+func getArmor() -> Dictionary:
 	return _inventory.armor
+
+
+func getConsumables() -> Dictionary:
+	return _inventory.consumable
 
 
 func isBagFull():
@@ -50,19 +54,7 @@ func addItemToBag(item: ItemInstance):
 			break
 
 
-func swapItems(slot1, slot2):
-	# get locations of items
-	var location1
-	var location2
-	for location in _inventory.keys():
-		if slot1 in _inventory[location].keys():
-			location1 = location
-			break
-	for location in _inventory.keys():
-		if slot2 in _inventory[location].keys():
-			location2 = location
-			break
-
+func swapItems(location1, slot1, location2, slot2):
 	# do da swappe
 	var item1 = _inventory[location1][slot1]
 	_inventory[location1][slot1] = _inventory[location2][slot2]
