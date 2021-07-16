@@ -12,6 +12,7 @@ enum WeaponType {
 }
 
 export(WeaponType) var weaponType = WeaponType.MELEE
+export(Texture) var weaponTexture
 export var damage : int = 10
 export var knockbackValue : int = 350
 export var radius : float = 15.5

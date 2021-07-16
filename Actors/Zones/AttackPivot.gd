@@ -150,7 +150,7 @@ func startAOEAttack(targetGlobalPos : Vector2, sourceStr := 0):
 func setWeapon(weaponStats : WeaponStats):
 	self.weaponStats = weaponStats
 	weaponHitbox.setWeapon(weaponStats)
-	weaponSprite.texture = weaponStats.texture
+	weaponSprite.texture = weaponStats.weaponTexture
 	tween.remove_all()
 	backTween.remove_all()
 	weaponSprite.position = Vector2.ZERO

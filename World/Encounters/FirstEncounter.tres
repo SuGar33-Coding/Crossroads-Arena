@@ -5,7 +5,7 @@
 [resource]
 script = ExtResource( 1 )
 encounterSize = 1
-gruntFilepaths = [ "res://Actors/Fighters/Mage/Mage.tscn" ]
+gruntFilepaths = [ "res://Actors/Fighters/Bandit/Bandit.tscn" ]
 specialFilepaths = [ "res://Actors/Fighters/ChaosKnight/ChaosKnight.tscn" ]
 commanderFilepaths = [ "res://Actors/Chargers/Charger/Charger.tscn" ]
 difficultyLevel = 1

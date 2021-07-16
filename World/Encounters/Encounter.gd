@@ -30,15 +30,13 @@ var numActors := 0
 var numDead := 0
 var currentActors := []
 
-# TODO: Will get level and size it should be, and should pick from large list of encounters which one to spawn
-#func init(encounterLevel := 1, encounterSize : EncounterStats.EncounterSize)
 func init(StatsForEncounter : EncounterStats):
 	encounterStats = StatsForEncounter
+	encounterSize = encounterStats.encounterSize
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	
-	encounterSize = encounterStats.encounterSize
 	var numGrunts : int = randi() % GSPAWN_VAR[encounterSize] + GSPAWN_MINS[encounterSize]
 	var numSpecial : int = randi() % SSPAWN_VAR[encounterSize] + SSPAWN_MINS[encounterSize]
 	var numBoss : int = randi() % BSPAWN_VAR[encounterSize] + BSPAWN_MINS[encounterSize]

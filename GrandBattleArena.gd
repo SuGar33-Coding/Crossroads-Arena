@@ -1,6 +1,7 @@
 extends Node2D
 
-export (Array,Resource) var encounters 
+export (Array,Resource) var encounters
+export var multiEncounterChance := 0.5 
 
 var Fighter = preload("res://Actors/Fighters/Bandit/Bandit.tscn")
 var Slime = preload("res://Actors/Slime/Slime.tscn")
@@ -16,6 +17,7 @@ var numEncounters := 0
 var playerNearButton := false
 var waveNumber := 0
 var sortedEncounters := {}
+var maxEncounterDifficulty := 0
 
 onready var people := $YSort/People
 onready var camera := $YSort/Player/MainCamera
@@ -24,7 +26,7 @@ onready var newWaveButtonSprite := $YSort/NewWaveButton/AnimatedSprite
 var largeSpawns : Array
 var medSpawns : Array
 var smallSpawns : Array
-
+var spawns : Array
 	
 	
 func _ready():
@@ -32,6 +34,7 @@ func _ready():
 	largeSpawns = $LargeSpawns.get_children()
 	medSpawns = $MediumSpawns.get_children()
 	smallSpawns = $SmallSpawns.get_children()
+	spawns = [smallSpawns, medSpawns, largeSpawns]
 	
 	# TODO: Add starting weapon choices like this
 	var startingItem : ItemInstance = get_node(ItemManager.createItem("res://Items/ChestPlate.tres"))
@@ -44,7 +47,7 @@ func _ready():
 	startingItem  = get_node(ItemManager.createItem("res://Weapons/BaseSword.tres"))
 	
 	worldItem = WorldItem.instance()
-	worldItem.init(startingItem, true)
+	worldItem.init(startingItem)
 	worldItem.global_position = newWaveButtonSprite.global_position + Vector2(75, 0)
 	itemSort.add_child(worldItem)
 	
@@ -57,10 +60,13 @@ func _ready():
 	
 	# Sorted encounters will be a dictionary of dictionaries corresponding to the levels of the encounters
 	# Each of these arrays will contain three arrays corresponding to each of the sizes of the encounters
+	# Reminder: Decided not to sort by size because size should factor into difficulty level
 	for encounter in encounters:
+		if maxEncounterDifficulty < encounter.difficultyLevel:
+			maxEncounterDifficulty = encounter.difficultyLevel
 		if not sortedEncounters.has(encounter.difficultyLevel):
-			sortedEncounters[encounter.difficultyLevel] = {0: [], 1: [], 2: []}
-		sortedEncounters.get(encounter.difficultyLevel)[encounter.encounterSize].append(encounter)
+			sortedEncounters[encounter.difficultyLevel] = [] #{EncounterStats.EncounterSize.SMALL: [], EncounterStats.EncounterSize.MEDIUM: [], EncounterStats.EncounterSize.LARGE: []}
+		sortedEncounters.get(encounter.difficultyLevel).append(encounter)
 
 func _physics_process(_delta):
 	if Input.is_action_just_pressed("addlevel"):
@@ -88,21 +94,35 @@ func spawnEnemies():
 	var onLevelEncounters := []
 	
 	# TODO: Set up multi-encounters and different sizes
+	var multiEncounterVal = randf()
 	
 	var selectedEncounter : EncounterStats
+	print(waveNumber/2)
+	print(int(waveNumber/2))
+	# lvl 0 is for debug and will always have size small
 	if sortedEncounters.has(0):
-		selectedEncounter = sortedEncounters[0][0][randi() % sortedEncounters[waveNumber][1].size()]
+		selectedEncounter = sortedEncounters[0][randi() % sortedEncounters[waveNumber].size()]
+		spawnNewEncounter(selectedEncounter)
+	elif multiEncounterVal <= multiEncounterChance and sortedEncounters.has(int(waveNumber/2)):
+		var difficultyNum = int(waveNumber/2)
+		spawnNewEncounter(sortedEncounters[difficultyNum][randi() % sortedEncounters[difficultyNum].size()])
+		spawnNewEncounter(sortedEncounters[difficultyNum][randi() % sortedEncounters[difficultyNum].size()])
+		numEncounters = 2
 	elif sortedEncounters.has(waveNumber):
-		selectedEncounter = sortedEncounters[waveNumber][1][randi() % sortedEncounters[waveNumber][1].size()]
+		selectedEncounter = sortedEncounters[waveNumber][randi() % sortedEncounters[waveNumber].size()]
+		spawnNewEncounter(selectedEncounter)
+		numEncounters = 1
 	else:
-		selectedEncounter = sortedEncounters[1][1][randi() % sortedEncounters[1][1].size()]
-	
-	numEncounters = 1
-	
+		# If we've run out of encounters, just keep spawning max level ones
+		selectedEncounter = sortedEncounters[maxEncounterDifficulty][randi() % sortedEncounters[maxEncounterDifficulty].size()]
+		spawnNewEncounter(selectedEncounter)
+
+func spawnNewEncounter(encounterStats : EncounterStats):
 	var newEncounter = Encounter.instance()
-	newEncounter.init(selectedEncounter)
+	newEncounter.init(encounterStats)
 	newEncounter.connect("encounter_finished", self, "encounter_finished")
-	var spawnLocation = medSpawns[randi() % medSpawns.size()]
+	var spawnList = spawns[newEncounter.encounterSize]
+	var spawnLocation = spawnList[randi() % spawnList.size()]
 	newEncounter.global_position = spawnLocation.global_position
 	people.add_child(newEncounter)
 	
@@ -134,7 +154,7 @@ func goToMainMenu(_stuff):
 	get_tree().change_scene("res://UI/StartMenu/StartMenu.tscn")
 
 func encounter_finished():
-	print("finished!")
+	print("encounter finished!")
 	numEncounters -= 1
 
 func _on_NewWaveButton_body_entered(body):

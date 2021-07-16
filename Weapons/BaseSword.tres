@@ -11,6 +11,7 @@ name = ""
 value = 0
 texture = ExtResource( 2 )
 weaponType = 1
+weaponTexture = ExtResource( 2 )
 damage = 10
 knockbackValue = 350
 radius = 15.5

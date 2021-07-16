@@ -11,6 +11,7 @@ name = "Base Spear"
 value = 0
 texture = ExtResource( 4 )
 weaponType = 3
+weaponTexture = ExtResource( 4 )
 damage = 8
 knockbackValue = 350
 radius = 11.0

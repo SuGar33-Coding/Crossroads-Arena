@@ -11,6 +11,7 @@ name = "Long Sword"
 value = 0
 texture = ExtResource( 2 )
 weaponType = 1
+weaponTexture = ExtResource( 2 )
 damage = 20
 knockbackValue = 400
 radius = 15.5

@@ -12,6 +12,7 @@ name = "Fists"
 value = 0
 texture = ExtResource( 5 )
 weaponType = 3
+weaponTexture = ExtResource( 5 )
 damage = 1
 knockbackValue = 100
 radius = 10.0

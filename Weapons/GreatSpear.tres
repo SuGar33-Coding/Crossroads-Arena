@@ -11,6 +11,7 @@ name = "Great Spear"
 value = 0
 texture = ExtResource( 4 )
 weaponType = 3
+weaponTexture = ExtResource( 4 )
 damage = 15
 knockbackValue = 350
 radius = 11.0

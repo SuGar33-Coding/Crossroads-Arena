@@ -11,6 +11,7 @@ name = "Fire Staff"
 value = 0
 texture = ExtResource( 3 )
 weaponType = 5
+weaponTexture = ExtResource( 3 )
 damage = 10
 knockbackValue = 10
 radius = 20.0
