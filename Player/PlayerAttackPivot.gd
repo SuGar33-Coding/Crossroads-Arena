@@ -9,7 +9,9 @@ var chargingRanged: bool = false
 var chargingTime := 0.0
 
 # TODO: Make this a signal call
+onready var inventory = get_node("/root/Inventory")
 onready var animationPlayer := get_node("../AnimationPlayer")
+onready var fistStats := preload("res://Weapons/Fists.tres")
 onready var parryHitbox := $WeaponHitbox/ParryHitbox
 onready var comboTimer := $ComboTimer
 onready var parryTween := $ParryTween
@@ -17,8 +19,8 @@ onready var rangedFx := $RangedWeaponFX
 onready var weaponFxTween := $WeaponEffects
 
 # TODO: remove this cus it should be through inventory
-onready var rangedWeapon : WeaponStats
-onready var meleeWeapon : WeaponStats = weaponStats
+onready var secondaryWeapon : WeaponStats
+onready var primaryWeapon : WeaponStats = weaponStats
 
 signal meleeQuick
 signal meleeLong
@@ -33,8 +35,8 @@ func _ready():
 	self.connect("meleeQuick", self.get_parent(), "_melee_quick")
 	self.connect("meleeLong", self.get_parent(), "_meleeLong")
 	self.connect("parry", self.get_parent(), "_parry")
+	inventory.connect("inventory_changed", self, "_inventory_changed")
 	
-	rangedWeapon = weaponStatsResources[10]#randi() % weaponStatsResources.size()]
 	
 
 func _physics_process(delta):
@@ -114,12 +116,22 @@ func _physics_process(delta):
 			emit_signal("parry")
 			self.startParry()
 
+		# TODO: have a more unique way to check like check the instance in case they have two of the same weapon (but with different mods)
 		elif Input.is_action_just_pressed("swap"):
-			if weaponStats.name == meleeWeapon.name:
-				setWeapon(rangedWeapon)
-			else:
-				setWeapon(meleeWeapon)
+			swapWeapons()
 
+func swapWeapons():
+	if weaponStats == primaryWeapon and is_instance_valid(secondaryWeapon):
+		setWeapon(secondaryWeapon)
+	elif weaponStats == secondaryWeapon and is_instance_valid(primaryWeapon):
+		setWeapon(primaryWeapon)
+	elif weaponStats == fistStats:
+		if is_instance_valid(primaryWeapon):
+			setWeapon(primaryWeapon)
+		if is_instance_valid(secondaryWeapon):
+			setWeapon(secondaryWeapon)
+	else:
+		setWeapon(fistStats)
 
 func getMeleeAttackTime(modifier = 1.0) -> float:
 	var attackDuration = animationPlayer.get_animation("MeleeAttack").length
@@ -223,6 +235,41 @@ func _on_WeaponTween_tween_completed():
 		backTween.interpolate_property(weaponSprite, "rotation", restingRotation + deg2rad(120), restingRotation + deg2rad(140), attackTimer.time_left + .007, self.tweenLength)
 	backTween.start()
 
+func getWeaponsFromInventory():
+	var firstItem : ItemInstance = Inventory.getWeapons()["0"]
+	var secondItem : ItemInstance = Inventory.getWeapons()["1"]
+	if is_instance_valid(firstItem):
+		primaryWeapon = firstItem.resource
+	else:
+		primaryWeapon = null
+		
+	if is_instance_valid(secondItem):
+		secondaryWeapon = secondItem.resource
+	else:
+		secondaryWeapon = null
+
+# TODO: Update to also use weapon modifiers
+func _inventory_changed(from_panel, to_panel):
+	if to_panel == "weapon" or from_panel == "weapon":
+		match weaponStats:
+			primaryWeapon:
+				getWeaponsFromInventory()
+				
+				if is_instance_valid(primaryWeapon):
+					setWeapon(primaryWeapon)
+				else:
+					setWeapon(fistStats)
+			secondaryWeapon:
+				getWeaponsFromInventory()
+				
+				if is_instance_valid(primaryWeapon):
+					setWeapon(primaryWeapon)
+				else:
+					setWeapon(fistStats)
+			fistStats:
+				getWeaponsFromInventory()
+				
+				setWeapon(fistStats)
 
 # Reset weapon back to its original position
 func _combo_finished():

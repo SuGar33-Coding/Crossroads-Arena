@@ -51,10 +51,6 @@ func _ready():
 	weaponStats = weaponStatsResources[randi() % weaponStatsResources.size()]
 	setWeapon(weaponStats)
 	
-	# Set the weapon's SFX
-	quickSfx.stream = weaponStats.quickAttackSFX
-	longSfx.stream = weaponStats.longAttackSFX
-	
 	tween.connect("tween_all_completed", self, "_on_WeaponTween_tween_completed")
 	
 	# Get a local copy of weapon mat
@@ -204,6 +200,10 @@ func setWeapon(weaponStats : WeaponStats):
 		
 	if not weaponStats.weaponType == WeaponStats.WeaponType.RANGED:
 		weaponSprite.hframes = 1
+		
+	# Set the weapon's SFX
+	quickSfx.stream = weaponStats.quickAttackSFX
+	longSfx.stream = weaponStats.longAttackSFX
 
 # TODO: Can set tween delay rather than making multiple tweens
 func _on_WeaponTween_tween_completed():

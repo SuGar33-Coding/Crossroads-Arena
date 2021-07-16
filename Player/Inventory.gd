@@ -38,6 +38,9 @@ func getArmor() -> Dictionary:
 func getConsumables() -> Dictionary:
 	return _inventory.consumable
 
+func getWeapons() -> Dictionary:
+	return _inventory.weapon
+
 
 func isBagFull():
 	for slot in _inventory.bag.keys():

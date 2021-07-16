@@ -1,6 +1,6 @@
 [gd_resource type="Resource" load_steps=5 format=2]
 
-[ext_resource path="res://Weapons/WeaponStats.gd" type="Script" id=1]
+[ext_resource path="res://Items/WeaponStats.gd" type="Script" id=1]
 [ext_resource path="res://Assets/WeaponAssets/Flame.png" type="Texture" id=2]
 [ext_resource path="res://Assets/WeaponAssets/FireStaff.png" type="Texture" id=3]
 [ext_resource path="res://FX/AOE/FireWallFX.tres" type="Resource" id=4]
