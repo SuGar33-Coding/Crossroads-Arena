@@ -23,6 +23,7 @@ func _ready():
 	stats.connectHealthChanged(self)
 	stats.connect("currentXPChanged", self, "_player_xp_changed")
 	stats.connect("playerLevelChanged", self, "_player_level_changed")
+	stats.connect("nextLevelChanged", self, "_next_level_changed")
 	timer.connect("timeout", self, "_timer_timeout")
 	inventory.connect("coins_changed", self, "_coins_changed")
 	
@@ -31,7 +32,7 @@ func setHealthbarValue(value : float):
 		hpTween.remove_all()
 	
 	# Only flash when there is damage
-	if healthbar.value >= value:
+	if healthbar.value > value:
 		flashCounter = 0
 		timer.start(timeBetweenFlashes)
 	
@@ -54,6 +55,9 @@ func _player_xp_changed(newXP):
 	
 func _player_level_changed(_newLevel):
 	lvllabel.text = "Lvl: " + str(stats.playerLevel)
+
+func _next_level_changed(_newLevel):
+	lvllabel.text = "Lvl: " + str(stats.playerLevel) + " (" + str(stats.nextPlayerLevel) + ") "
 
 func _timer_timeout():
 	# If counter is even, go white

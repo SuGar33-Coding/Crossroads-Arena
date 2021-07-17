@@ -158,8 +158,9 @@ func goToMainMenu(_stuff):
 	get_tree().change_scene("res://UI/StartMenu/StartMenu.tscn")
 
 func encounter_finished():
-	print("encounter finished!")
 	numEncounters -= 1
+	if numEncounters <= 0 and PlayerStats.playerLevel < PlayerStats.nextPlayerLevel:
+		PlayerStats.setPlayerLevel()
 
 func _on_NewWaveButton_body_entered(body):
 	playerNearButton = true
