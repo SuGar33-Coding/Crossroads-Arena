@@ -199,7 +199,9 @@ func _stats_no_health():
 			# Add it to the Ysort above the room
 			self.get_parent().get_parent().call_deferred("add_child", worldItem)
 	
-	var numCoins = randi() % (stats.statsResource as StatsResource).maxCoinDrop + (stats.statsResource as StatsResource).minCoinDrop
+	var maxCoins = (stats.statsResource as StatsResource).maxCoinDrop
+	var minCoins = (stats.statsResource as StatsResource).minCoinDrop
+	var numCoins = randi() % (maxCoins - minCoins) + minCoins
 	for i in range(numCoins):
 		var newCoin = CoinScene.instance()
 		newCoin.global_position = self.global_position
