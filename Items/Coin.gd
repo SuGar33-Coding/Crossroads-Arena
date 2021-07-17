@@ -1,8 +1,8 @@
 extends KinematicBody2D
 
-export var baseSpeed = 100
+export var baseSpeed = 75
 export var maxSpeed = 150
-export var Friction = 75
+export var Friction = 125
 export var Acceleration = 60
 
 const SignalScene = preload("res://FX/AttackSignal.tscn")

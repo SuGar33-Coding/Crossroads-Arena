@@ -7,6 +7,7 @@ const weaponDropChance := .25
 
 var weaponStats : WeaponStats
 var WorldItem = preload("res://Items/WorldItem.tscn")
+var CoinScene = preload("res://Items/Coin.tscn")
 
 export var rightShadowX = .5
 export var leftShadowX = .5
@@ -197,6 +198,12 @@ func _stats_no_health():
 			worldItem.global_position = self.global_position
 			# Add it to the Ysort above the room
 			self.get_parent().get_parent().call_deferred("add_child", worldItem)
+	
+	var numCoins = randi() % (stats.statsResource as StatsResource).maxCoinDrop + (stats.statsResource as StatsResource).minCoinDrop
+	for i in range(numCoins):
+		var newCoin = CoinScene.instance()
+		newCoin.global_position = self.global_position
+		self.get_parent().get_parent().call_deferred("add_child", newCoin)
 
 func _change_direction():
 	moveDir *= -1

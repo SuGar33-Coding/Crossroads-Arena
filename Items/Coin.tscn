@@ -80,8 +80,7 @@ tracks/1/keys = {
 
 [sub_resource type="Animation" id=15]
 resource_name = "Pickup"
-length = 0.75
-step = 0.25
+length = 0.2
 tracks/0/type = "value"
 tracks/0/path = NodePath("ItemSprite:speed_scale")
 tracks/0/interp = 1
@@ -89,8 +88,8 @@ tracks/0/loop_wrap = true
 tracks/0/imported = false
 tracks/0/enabled = true
 tracks/0/keys = {
-"times": PoolRealArray( 0, 0.75 ),
-"transitions": PoolRealArray( 0.258816, 1 ),
+"times": PoolRealArray( 0, 0.2 ),
+"transitions": PoolRealArray( 0.5, 1 ),
 "update": 0,
 "values": [ 1.0, 15.0 ]
 }
@@ -101,8 +100,8 @@ tracks/1/loop_wrap = true
 tracks/1/imported = false
 tracks/1/enabled = true
 tracks/1/keys = {
-"times": PoolRealArray( 0, 0.75 ),
-"transitions": PoolRealArray( 0.189465, 1 ),
+"times": PoolRealArray( 0, 0.2 ),
+"transitions": PoolRealArray( 0.707107, 1 ),
 "update": 0,
 "values": [ Vector2( 0, -12 ), Vector2( 0, -50 ) ]
 }
@@ -113,7 +112,7 @@ tracks/2/loop_wrap = true
 tracks/2/imported = false
 tracks/2/enabled = true
 tracks/2/keys = {
-"times": PoolRealArray( 0.75 ),
+"times": PoolRealArray( 0.2 ),
 "transitions": PoolRealArray( 1 ),
 "values": [ {
 "args": [  ],
@@ -187,10 +186,11 @@ scale = Vector2( 0.6, 0.4 )
 texture = ExtResource( 2 )
 
 [node name="ItemSprite" type="AnimatedSprite" parent="."]
-position = Vector2( 0, -5 )
+position = Vector2( 0, -50 )
 scale = Vector2( 0.75, 0.75 )
 frames = SubResource( 13 )
-frame = 4
+frame = 1
+speed_scale = 15.0
 playing = true
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
