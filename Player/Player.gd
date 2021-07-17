@@ -5,15 +5,18 @@ var dashCloudFx = preload("res://FX/DashCloud.tscn")
 
 export var Acceleration: float = 1500
 export var startingFriction: float = 750
-export var dashSpeed := 500
+export var baseDashSpeed := 500
 export var dashDelay := .75
 
+# TODO: Probably move dash speed to player stats
 var velocity := Vector2.ZERO
 var knockback := Vector2.ZERO
 var dashVector := Vector2.ZERO
+var dashSpeed := 500
 var HitEffect = preload("res://FX/HitEffect.tscn")
 var floatingText = preload("res://UI/FloatingText.tscn")
 var Friction: float
+var armorValue : int = 0
 
 onready var stats = get_node("/root/PlayerStats")
 onready var inventory = get_node("/root/Inventory")
@@ -51,6 +54,9 @@ func _ready():
 	inventory.connect("inventory_changed", self, "_inventory_changed")
 	
 	sprite.material.set_shader_param("banner_color", stats.playerColor)
+	
+	dashSpeed = baseDashSpeed
+	checkArmorStats()
 
 
 func _physics_process(delta):
@@ -134,6 +140,27 @@ func playFootstep(foot = 1):
 		2:
 			footstep2.play()
 
+func checkArmorStats():
+	armorValue = 0
+	stats.speedModifier = 1.0
+	var armorDict = inventory.getArmor()
+	for key in armorDict.keys():
+		var itemInstance = armorDict.get(key)
+		if is_instance_valid(itemInstance):
+			var piece : Armor = itemInstance.resource as Armor
+			match piece.type:
+				Armor.Type.Head:
+					headSprite.texture = piece.characterTexture
+				Armor.Type.Chest:
+					chestSprite.texture = piece.characterTexture
+				Armor.Type.Feet:
+					legSprite.texture = piece.characterTexture
+			armorValue += piece.defenseValue
+			stats.speedModifier += piece.speedModifier
+	stats.resetMaxSpeed()
+	# Speed modifier affects dash speed half as much
+	dashSpeed = baseDashSpeed * (1.0 + ((stats.speedModifier - 1.0)/2.0))
+
 
 func _player_level_changed(_newPlayerLevel):
 	attackPivot.userStr = PlayerStats.strength
@@ -141,16 +168,19 @@ func _player_level_changed(_newPlayerLevel):
 
 
 func _hurtbox_area_entered(area: Hitbox):
+	var damageAmount = max(1, int(area.damage * (1 - (armorValue/100.0))))
+	
 	var text = floatingText.instance()
-	text.amount = area.damage
+	text.amount = damageAmount
 	add_child(text)
 
 	var hitEffect = HitEffect.instance()
 	hitEffect.init(area.getSourcePos())
 	add_child(hitEffect)
+	
 
-	stats.health -= area.damage
-	stats.currentXP += area.damage
+	stats.health -= damageAmount
+	stats.currentXP += damageAmount
 	camera.add_trauma(area.knockbackValue / 1000.0)
 	knockback = area.getKnockbackVector(self.global_position)
 	damagedPlayer.play("Damaged")
@@ -170,18 +200,7 @@ func _playerstats_no_health():
 
 func _inventory_changed(from_panel, to_panel):
 	if(from_panel == "armor" or to_panel == "armor"):
-		var armorDict = inventory.getArmor()
-		for key in armorDict.keys():
-			var itemInstance = armorDict.get(key)
-			if is_instance_valid(itemInstance):
-				var piece = itemInstance.resource
-				match piece.type:
-					Armor.Type.Head:
-						headSprite.texture = piece.characterTexture
-					Armor.Type.Chest:
-						chestSprite.texture = piece.characterTexture
-					Armor.Type.Feet:
-						legSprite.texture = piece.characterTexture
+		checkArmorStats()
 
 func _melee_quick():
 	animationPlayer.play("MeleeAttack")

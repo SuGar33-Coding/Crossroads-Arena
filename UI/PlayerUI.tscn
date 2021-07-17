@@ -1,7 +1,7 @@
 [gd_scene load_steps=12 format=2]
 
 [ext_resource path="res://UI/PlayerUI.gd" type="Script" id=1]
-[ext_resource path="res://Assets/CoinStatic.png" type="Texture" id=2]
+[ext_resource path="res://Assets/ItemAssets/EmberstoneIcon.png" type="Texture" id=2]
 
 [sub_resource type="DynamicFontData" id=1]
 font_path = "res://Assets/Adventurer.ttf"
@@ -83,7 +83,7 @@ script = ExtResource( 1 )
 margin_left = 32.0
 margin_top = 32.0
 margin_right = 709.0
-margin_bottom = 60.0
+margin_bottom = 64.0
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -221,10 +221,11 @@ margin_bottom = 30.0
 rect_min_size = Vector2( 100, 0 )
 
 [node name="CoinLabel" type="Label" parent="HBoxContainer/PanelContainer/HBoxContainer"]
-margin_top = 2.0
-margin_right = 64.0
-margin_bottom = 25.0
-rect_min_size = Vector2( 45, 0 )
+margin_left = 9.0
+margin_top = 5.0
+margin_right = 65.0
+margin_bottom = 28.0
+rect_min_size = Vector2( 35, 0 )
 size_flags_horizontal = 3
 custom_fonts/font = SubResource( 9 )
 text = "0"

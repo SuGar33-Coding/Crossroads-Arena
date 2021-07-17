@@ -7,6 +7,7 @@ enum Type {
 export (Type) var type
 # Texture to be used on top of character sprite
 export (Texture) var characterTexture
+# Percentile reduction from 1 to 100
 export (int) var defenseValue
-# A multiplier to wearer's speed
+# speedModifier should be negative if it slows, positive if it boosts
 export (float) var speedModifier

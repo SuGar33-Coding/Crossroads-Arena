@@ -11,5 +11,5 @@ value = 10
 texture = ExtResource( 2 )
 type = 2
 characterTexture = ExtResource( 1 )
-defenseValue = 3
-speedModifier = 2.0
+defenseValue = 2
+speedModifier = 0.1

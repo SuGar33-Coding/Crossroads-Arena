@@ -174,8 +174,10 @@ func sightCheck() -> bool:
 	return false
 	
 func _hurtbox_area_entered(area : Hitbox):
+	var damageAmount = max(1, int(area.damage * (1 - (stats.armorValue/100.0))))
+	
 	var text = floatingText.instance()
-	text.amount = area.damage
+	text.amount = damageAmount
 	add_child(text)
 	
 	var hitEffect = HitEffect.instance()
@@ -183,11 +185,11 @@ func _hurtbox_area_entered(area : Hitbox):
 	add_child(hitEffect)
 	
 	if area.fromPlayer:
-		PlayerStats.currentXP += min(stats.health, area.damage)
+		PlayerStats.currentXP += min(stats.health, damageAmount)
 	
 	if willStun():
 		switchToStun()
-	stats.health -= area.damage
+	stats.health -= damageAmount
 	knockback = area.getKnockbackVector(self.global_position)
 	
 	damagedSfx.play()

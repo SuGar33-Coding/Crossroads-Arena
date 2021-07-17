@@ -19,6 +19,8 @@ var dex : int = 0 setget setDex
 var dexMoveRatio : float = 1.025
 var dexAttackRatio : float = .93
 var dexDashRatio : float = .95
+# Used for when player is wearing different types of armor
+var speedModifier : float = 1.0
 # AttackSpeed starts at 1 and then will slowly scale down as it's multiplied by weapon attack speed
 var attackSpeed : float = 1
 var invulnTimer : float = .6
@@ -94,7 +96,7 @@ func setDex(value):
 	resetMaxSpeed()
 	
 func resetMaxSpeed():
-	self.maxSpeed = self.baseSpeed * pow(dexMoveRatio, dex)
+	self.maxSpeed = self.baseSpeed * pow(dexMoveRatio, dex) * speedModifier
 
 func setPlayerLevel(newLevel):
 	if playerLevel < newLevel:
