@@ -306,3 +306,4 @@ func _attack_timeout():
 		chargingAoe = false
 		self.startAOEAttack(get_global_mouse_position(), PlayerStats.strength)
 		PlayerStats.resetMaxSpeed()
+		attackTimer.start(getRangedAttackTime())

@@ -88,6 +88,8 @@ func _physics_process(_delta):
 		if playerNearButton:
 			spawnLabel.visible = true
 			if Input.is_action_just_pressed("openmap"):
+				if numEncounters <= 0 and PlayerStats.playerLevel < PlayerStats.nextPlayerLevel:
+					PlayerStats.setPlayerLevel()
 				spawnEnemies()
 		elif spawnLabel.visible == true:
 			spawnLabel.visible = false
@@ -158,8 +160,6 @@ func goToMainMenu(_stuff):
 
 func encounter_finished():
 	numEncounters -= 1
-	if numEncounters <= 0 and PlayerStats.playerLevel < PlayerStats.nextPlayerLevel:
-		PlayerStats.setPlayerLevel()
 
 func _on_NewWaveButton_body_entered(body):
 	playerNearButton = true

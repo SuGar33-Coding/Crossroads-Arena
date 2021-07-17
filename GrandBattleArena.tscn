@@ -1,4 +1,4 @@
-[gd_scene load_steps=36 format=2]
+[gd_scene load_steps=35 format=2]
 
 [ext_resource path="res://GrandBattleArena.gd" type="Script" id=1]
 [ext_resource path="res://Assets/TileSets/RockBase.tres" type="TileSet" id=2]
@@ -16,7 +16,6 @@
 [ext_resource path="res://World/Encounters/FirstEncounterTwo.tres" type="Resource" id=14]
 [ext_resource path="res://UI/Inventory/Inventory.tscn" type="PackedScene" id=15]
 [ext_resource path="res://Items/Coin.tscn" type="PackedScene" id=16]
-[ext_resource path="res://World/Encounters/TestEncounter.tres" type="Resource" id=17]
 
 [sub_resource type="NavigationPolygon" id=1]
 vertices = PoolVector2Array( 0, 0, 24, 0, 24, 24, 0, 24 )
@@ -144,7 +143,7 @@ font_data = SubResource( 17 )
 
 [node name="World" type="Node2D"]
 script = ExtResource( 1 )
-encounters = [ ExtResource( 12 ), ExtResource( 13 ), ExtResource( 14 ), ExtResource( 17 ) ]
+encounters = [ ExtResource( 12 ), ExtResource( 13 ), ExtResource( 14 ) ]
 
 [node name="Navigation2D" type="Navigation2D" parent="."]
 
