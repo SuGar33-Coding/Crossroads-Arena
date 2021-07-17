@@ -104,27 +104,27 @@ extents = Vector2( 16.1287, 19.299 )
 
 [sub_resource type="AtlasTexture" id=12]
 atlas = ExtResource( 11 )
-region = Rect2( 32, 0, 16, 16 )
+region = Rect2( 0, 0, 16, 16 )
 
 [sub_resource type="AtlasTexture" id=13]
 atlas = ExtResource( 11 )
-region = Rect2( 0, 0, 16, 16 )
+region = Rect2( 16, 0, 16, 16 )
 
 [sub_resource type="AtlasTexture" id=14]
 atlas = ExtResource( 11 )
-region = Rect2( 16, 0, 16, 16 )
+region = Rect2( 32, 0, 16, 16 )
 
 [sub_resource type="SpriteFrames" id=15]
 animations = [ {
-"frames": [ SubResource( 12 ) ],
-"loop": true,
-"name": "Pressed",
-"speed": 5.0
-}, {
-"frames": [ SubResource( 13 ), SubResource( 14 ) ],
+"frames": [ SubResource( 12 ), SubResource( 13 ) ],
 "loop": true,
 "name": "Ready",
 "speed": 2.0
+}, {
+"frames": [ SubResource( 14 ) ],
+"loop": true,
+"name": "Pressed",
+"speed": 5.0
 } ]
 
 [sub_resource type="CapsuleShape2D" id=16]
@@ -220,6 +220,7 @@ shape = SubResource( 11 )
 position = Vector2( 0.625, -2.25 )
 frames = SubResource( 15 )
 animation = "Ready"
+frame = 1
 playing = true
 
 [node name="StaticBody2D" type="StaticBody2D" parent="YSort/NewWaveButton"]
