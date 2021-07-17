@@ -7,6 +7,7 @@ const AttackSignalScene = preload("res://FX/AttackSignal.tscn")
 
 const AOE_ROTATION = -45
 const STAFF_RAISE = 18
+const STAFF_ROTATION = 25
 const RANGED_ROTATION = 45
 
 enum MeleeAttackType {
@@ -72,9 +73,11 @@ func lookAtTarget(targetPos: Vector2):
 	self.look_at(targetPos)
 	if(weaponStats.weaponType == WeaponStats.WeaponType.AOE):
 		if(self.scale.y > 0):
-			weaponSprite.rotation =  deg2rad(AOE_ROTATION) - self.global_rotation
+			returnRot =  deg2rad(AOE_ROTATION) - self.global_rotation
+			weaponSprite.rotation = returnRot
 		else:
-			weaponSprite.rotation =  deg2rad(AOE_ROTATION) + self.global_rotation + deg2rad(180)
+			returnRot =  deg2rad(AOE_ROTATION) + self.global_rotation + deg2rad(180)
+			weaponSprite.rotation = returnRot
 	
 	
 func setUserStr(sourceStr):
@@ -129,11 +132,10 @@ func startRangedAttack(sourceStr := 0, accuracy := RangedProjectile.NORMAL):
 	rangedProjectile.fire(restingPos.global_position, self.global_rotation)
 	
 func startAOEAnimation(animLength: float):
-	"""self.tweenLength = animLength * 4/5
-	tween.interpolate_property(weaponSprite, "position", weaponSprite.position, restingPos.position - Vector2(0,STAFF_RAISE), tweenLength)
+	self.tweenLength = animLength * 4/5
+	tween.interpolate_property(weaponSprite, "rotation", weaponSprite.rotation, weaponSprite.rotation - deg2rad(STAFF_ROTATION), tweenLength)
 	
-	tween.start()"""
-	pass
+	tween.start()
 	
 func startAOEAttack(targetGlobalPos : Vector2, sourceStr := 0):
 	var areaOfEffect = AreaOfEffectScene.instance()
@@ -193,10 +195,19 @@ func setWeapon(weaponStats : WeaponStats):
 		restingPos.set_deferred("position", Vector2(15, 0))
 		weaponSprite.set_deferred("rotation", deg2rad(RANGED_ROTATION))
 		weaponSprite.hframes = 6
+		# Make sure to flip the swipe sprite if we needed to flip behind_parent
+		if self.show_behind_parent:
+			swipe.set_deferred("flip_h", not swipe.flip_h)
+		self.show_behind_parent = false
 	else:
 		restingPos.position = Vector2(10, 0)
 		weaponSprite.set_deferred("rotation", deg2rad(AOE_ROTATION))
+		returnRot = deg2rad(AOE_ROTATION)
 		swordAnimDist = weaponCollision.position - restingPos.position
+		# Make sure to flip the swipe sprite if we needed to flip behind_parent
+		if self.show_behind_parent:
+			swipe.set_deferred("flip_h", not swipe.flip_h)
+		self.show_behind_parent = false
 		
 	if not weaponStats.weaponType == WeaponStats.WeaponType.RANGED:
 		weaponSprite.hframes = 1
@@ -207,16 +218,17 @@ func setWeapon(weaponStats : WeaponStats):
 
 # TODO: Can set tween delay rather than making multiple tweens
 func _on_WeaponTween_tween_completed():
-		
-	self.show_behind_parent = not self.show_behind_parent
 	if weaponStats.weaponType == WeaponStats.WeaponType.SPEAR:
+		self.show_behind_parent = not self.show_behind_parent
 		backTween.interpolate_property(weaponSprite, "position", weaponSprite.position, Vector2(weaponStats.length/2, 0), self.tweenLength, Tween.TRANS_LINEAR, Tween.EASE_IN_OUT)
 
 		# Add the .007 so if player is spam clicking it feels more fluid/no stop on swing
 		backTween.interpolate_property(weaponSprite, "position", Vector2(weaponStats.length/2, 0), Vector2.ZERO, attackTimer.time_left + .007, Tween.TRANS_LINEAR, Tween.EASE_IN_OUT, self.tweenLength)
 	elif weaponStats.weaponType == WeaponStats.WeaponType.AOE:
-		backTween.interpolate_property(weaponSprite, "position", restingPos.position - Vector2(0,STAFF_RAISE), restingPos.position, tweenLength/4)
+		backTween.interpolate_property(weaponSprite, "rotation", weaponSprite.rotation - deg2rad(STAFF_ROTATION), weaponSprite.rotation + deg2rad(STAFF_ROTATION)*2, tweenLength/5)
+		backTween.interpolate_property(weaponSprite, "rotation", weaponSprite.rotation + deg2rad(STAFF_ROTATION)*2, returnRot, tweenLength/3, Tween.TRANS_LINEAR, Tween.EASE_IN_OUT, tweenLength/5)
 	else:
+		self.show_behind_parent = not self.show_behind_parent
 		backTween.interpolate_property(weaponSprite, "position", weaponSprite.position, Vector2(-20, 5), self.tweenLength, Tween.TRANS_LINEAR, Tween.EASE_IN_OUT)
 		backTween.interpolate_property(weaponSprite, "rotation", weaponSprite.rotation, restingRotation - deg2rad(50), self.tweenLength, Tween.TRANS_LINEAR, Tween.EASE_IN)
 

@@ -7,6 +7,8 @@ var comboCounter: int = 0 setget setComboCounter
 var parryPos: Vector2
 var chargingRanged: bool = false
 var chargingTime := 0.0
+var chargingAoe := false
+var aoeAttackLeadup := 0.5
 
 # TODO: Make this a signal call
 onready var inventory = get_node("/root/Inventory")
@@ -36,7 +38,7 @@ func _ready():
 	self.connect("meleeLong", self.get_parent(), "_meleeLong")
 	self.connect("parry", self.get_parent(), "_parry")
 	inventory.connect("inventory_changed", self, "_inventory_changed")
-	
+	attackTimer.connect("timeout", self, "_attack_timeout")
 	
 
 func _physics_process(delta):
@@ -100,8 +102,10 @@ func _physics_process(delta):
 				chargingRanged = true
 				chargingTime = 0.0
 			elif weaponStats.weaponType == WeaponStats.WeaponType.AOE:
-				attackTimer.start(getMeleeAttackTime())
-				self.startAOEAttack(get_global_mouse_position(), PlayerStats.strength)
+				attackTimer.start(aoeAttackLeadup)
+				chargingAoe = true
+				self.startAOEAnimation(aoeAttackLeadup)
+				PlayerStats.maxSpeed *= .5
 				
 		elif chargingRanged and (not Input.is_action_pressed("attack")) and chargingRanged and weaponStats.weaponType == WeaponStats.WeaponType.RANGED:
 			chargingRanged = false
@@ -296,3 +300,9 @@ func _combo_finished():
 		)
 
 		backTween.start()
+
+func _attack_timeout():
+	if chargingAoe:
+		chargingAoe = false
+		self.startAOEAttack(get_global_mouse_position(), PlayerStats.strength)
+		PlayerStats.resetMaxSpeed()

@@ -53,7 +53,7 @@ func _ready():
 	worldItem.global_position = newWaveButtonSprite.global_position + Vector2(75, 0)
 	itemSort.add_child(worldItem)
 	
-	startingItem = get_node(ItemManager.createItem("res://Weapons/BaseMusket.tres"))
+	startingItem = get_node(ItemManager.createItem("res://Weapons/FireBallStaff.tres"))
 
 	worldItem = WorldItem.instance()
 	worldItem.init(startingItem)
@@ -105,23 +105,22 @@ func spawnEnemies():
 	var selectedEncounter : EncounterStats
 	# lvl 0 is for debug and will always have size small
 	if sortedEncounters.has(0):
-		selectedEncounter = sortedEncounters[0][randi() % sortedEncounters[waveNumber].size()]
+		selectedEncounter = sortedEncounters[0][randi() % sortedEncounters[0].size()]
 		spawnNewEncounter(selectedEncounter)
 	elif multiEncounterVal <= multiEncounterChance and sortedEncounters.has(int(waveNumber/2)):
 		var difficultyNum = int(waveNumber/2)
 		spawnNewEncounter(sortedEncounters[difficultyNum][randi() % sortedEncounters[difficultyNum].size()])
 		spawnNewEncounter(sortedEncounters[difficultyNum][randi() % sortedEncounters[difficultyNum].size()])
-		numEncounters = 2
 	elif sortedEncounters.has(waveNumber):
 		selectedEncounter = sortedEncounters[waveNumber][randi() % sortedEncounters[waveNumber].size()]
 		spawnNewEncounter(selectedEncounter)
-		numEncounters = 1
 	else:
 		# If we've run out of encounters, just keep spawning max level ones
 		selectedEncounter = sortedEncounters[maxEncounterDifficulty][randi() % sortedEncounters[maxEncounterDifficulty].size()]
 		spawnNewEncounter(selectedEncounter)
 
 func spawnNewEncounter(encounterStats : EncounterStats):
+	numEncounters += 1
 	var newEncounter = Encounter.instance()
 	newEncounter.init(encounterStats)
 	newEncounter.connect("encounter_finished", self, "encounter_finished")

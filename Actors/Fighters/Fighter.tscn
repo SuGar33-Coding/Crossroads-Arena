@@ -756,7 +756,6 @@ offset = Vector2( 0.5, 5 )
 
 [node name="Sprite" parent="." index="2"]
 position = Vector2( 0, -5 )
-scale = Vector2( 0.8, 0.8 )
 texture = ExtResource( 8 )
 hframes = 5
 
@@ -767,9 +766,6 @@ leaveRange = 1000
 
 [node name="AttackPivot" parent="." index="6" instance=ExtResource( 4 )]
 weaponStatsResources = [ ExtResource( 3 ), ExtResource( 1 ), ExtResource( 9 ) ]
-
-[node name="ParryCollision" parent="AttackPivot/WeaponHitbox/ParryHitbox" index="0"]
-disabled = false
 
 [node name="Swipe" parent="AttackPivot" index="1"]
 frame = 0
