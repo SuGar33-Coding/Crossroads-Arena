@@ -29,6 +29,13 @@ var _inventory := {
 	"coins": 0
 }
 
+func resetInventory():
+	for key in _inventory.keys():
+		if key == "coins":
+			_inventory[key] = 0
+		else:
+			for lowerKey in _inventory[key].keys():
+				_inventory[key][lowerKey] = null
 
 func getBag() -> Dictionary:
 	return _inventory.bag
@@ -36,7 +43,6 @@ func getBag() -> Dictionary:
 
 func getArmor() -> Dictionary:
 	return _inventory.armor
-
 
 func getConsumables() -> Dictionary:
 	return _inventory.consumable
@@ -50,7 +56,6 @@ func isBagFull():
 		if _inventory.bag[slot] == null:
 			return false
 	return true
-
 
 func addItemToBag(item: ItemInstance):
 	for slot in _inventory.bag.keys():
