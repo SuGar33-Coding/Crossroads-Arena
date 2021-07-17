@@ -6,7 +6,7 @@
 
 [resource]
 script = ExtResource( 3 )
-name = ""
+name = "Boots"
 value = 10
 texture = ExtResource( 2 )
 type = 2

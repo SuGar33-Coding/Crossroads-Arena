@@ -5,12 +5,13 @@ var flashCounter = 0
 var maxFlashes = 6
 var timeBetweenFlashes = .05
 
+onready var inventory : Inventory = get_node("/root/Inventory")
 onready var healthbar : ProgressBar = $HBoxContainer/VBoxContainer/HealthbarContainer/Healthbar
 onready var xpbar : ProgressBar = $HBoxContainer/VBoxContainer/HBoxContainer/XPbar
 onready var lvllabel : Label = $HBoxContainer/VBoxContainer/HBoxContainer/LvlLabel
 onready var healthbarLabel : Label = $HBoxContainer/VBoxContainer/HealthbarContainer/Healthbar/HealthbarLabel
 onready var xpbarLabel : Label = $HBoxContainer/VBoxContainer/HBoxContainer/XPbar/XPbarLabel
-onready var potLabel : Label = $HBoxContainer/PanelContainer/HBoxContainer/PotLabel
+onready var coinLabel : Label = $HBoxContainer/PanelContainer/HBoxContainer/CoinLabel
 onready var stats = get_node("/root/PlayerStats")
 onready var animationPlayer := $AnimationPlayer
 onready var hpTween := $HPTween
@@ -23,6 +24,7 @@ func _ready():
 	stats.connect("currentXPChanged", self, "_player_xp_changed")
 	stats.connect("playerLevelChanged", self, "_player_level_changed")
 	timer.connect("timeout", self, "_timer_timeout")
+	inventory.connect("coins_changed", self, "_coins_changed")
 	
 func setHealthbarValue(value : float):
 	if hpTween.is_active():
@@ -59,3 +61,6 @@ func _timer_timeout():
 	flashCounter += 1
 	if flashCounter < maxFlashes:
 		timer.start(timeBetweenFlashes)
+
+func _coins_changed(newValue):
+	coinLabel.text = str(newValue)

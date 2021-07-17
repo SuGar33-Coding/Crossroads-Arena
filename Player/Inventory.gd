@@ -1,7 +1,9 @@
 extends Node
 
 signal inventory_changed(from_panel, to_panel)
+signal coins_changed(total_coins)
 
+# TODO: Do we want different coin types?
 var _inventory := {
 	"bag": {
 		"0": null,
@@ -23,7 +25,8 @@ var _inventory := {
 	"weapon": {
 		"0": null,
 		"1": null
-	}
+	},
+	"coins": 0
 }
 
 
@@ -56,6 +59,9 @@ func addItemToBag(item: ItemInstance):
 			emit_signal("inventory_changed", "bag", "bag")
 			break
 
+func addCoins(numCoins: int):
+	_inventory["coins"] += numCoins
+	emit_signal("coins_changed", _inventory["coins"])
 
 func swapItems(location1, slot1, location2, slot2):
 	# do da swappe

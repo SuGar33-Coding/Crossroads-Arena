@@ -7,7 +7,7 @@
 
 [resource]
 script = ExtResource( 1 )
-name = ""
+name = "Base Sword"
 value = 0
 texture = ExtResource( 2 )
 weaponType = 1

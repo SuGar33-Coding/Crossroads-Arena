@@ -1,4 +1,4 @@
-[gd_scene load_steps=32 format=2]
+[gd_scene load_steps=33 format=2]
 
 [ext_resource path="res://GrandBattleArena.gd" type="Script" id=1]
 [ext_resource path="res://Assets/TileSets/RockBase.tres" type="TileSet" id=2]
@@ -15,6 +15,7 @@
 [ext_resource path="res://World/Encounters/SecondEncounter.tres" type="Resource" id=13]
 [ext_resource path="res://World/Encounters/FirstEncounterTwo.tres" type="Resource" id=14]
 [ext_resource path="res://UI/Inventory/Inventory.tscn" type="PackedScene" id=15]
+[ext_resource path="res://Items/Coin.tscn" type="PackedScene" id=16]
 
 [sub_resource type="NavigationPolygon" id=1]
 vertices = PoolVector2Array( 0, 0, 24, 0, 24, 24, 0, 24 )
@@ -209,6 +210,7 @@ shape = SubResource( 11 )
 position = Vector2( 0.125, -2.25 )
 frames = SubResource( 15 )
 animation = "Ready"
+frame = 1
 playing = true
 
 [node name="StaticBody2D" type="StaticBody2D" parent="YSort/NewWaveButton"]
@@ -383,6 +385,27 @@ position = Vector2( 704, 264 )
 position = Vector2( 1072, 1128 )
 
 [node name="Items" type="YSort" parent="YSort"]
+
+[node name="Coin" parent="YSort/Items" instance=ExtResource( 16 )]
+position = Vector2( 902.297, 848.004 )
+
+[node name="Coin2" parent="YSort/Items" instance=ExtResource( 16 )]
+position = Vector2( 789.153, 924.621 )
+
+[node name="Coin3" parent="YSort/Items" instance=ExtResource( 16 )]
+position = Vector2( 744.608, 900.567 )
+
+[node name="Coin4" parent="YSort/Items" instance=ExtResource( 16 )]
+position = Vector2( 786.48, 880.076 )
+
+[node name="Coin5" parent="YSort/Items" instance=ExtResource( 16 )]
+position = Vector2( 782.026, 742.878 )
+
+[node name="Coin6" parent="YSort/Items" instance=ExtResource( 16 )]
+position = Vector2( 1006.53, 758.023 )
+
+[node name="Coin7" parent="YSort/Items" instance=ExtResource( 16 )]
+position = Vector2( 970.897, 733.969 )
 
 [node name="Gates" type="Node" parent="."]
 

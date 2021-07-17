@@ -195,7 +195,7 @@ func _stats_no_health():
 			var worldItem = WorldItem.instance()
 			worldItem.init(itemInstance, true)
 			worldItem.global_position = self.global_position
-			# Add it to the room
+			# Add it to the Ysort above the room
 			self.get_parent().get_parent().call_deferred("add_child", worldItem)
 
 func _change_direction():
