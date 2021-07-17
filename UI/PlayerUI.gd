@@ -29,10 +29,14 @@ func _ready():
 func setHealthbarValue(value : float):
 	if hpTween.is_active():
 		hpTween.remove_all()
+	
+	# Only flash when there is damage
+	if healthbar.value >= value:
+		flashCounter = 0
+		timer.start(timeBetweenFlashes)
+	
 	hpTween.interpolate_property(healthbar, "value", healthbar.value, value, maxFlashes * timeBetweenFlashes, Tween.TRANS_LINEAR, Tween.EASE_IN_OUT)
 	hpTween.start()
-	flashCounter = 0
-	timer.start(timeBetweenFlashes)
 
 func setXPbarValue(value : float):
 	xpbar.value = value

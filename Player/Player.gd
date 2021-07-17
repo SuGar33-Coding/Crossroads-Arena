@@ -157,6 +157,15 @@ func checkArmorStats():
 					legSprite.texture = piece.characterTexture
 			armorValue += piece.defenseValue
 			stats.speedModifier += piece.speedModifier
+		else:
+			match key:
+				Armor.Type.Head:
+					headSprite.texture = null
+				Armor.Type.Chest:
+					chestSprite.texture = null
+				Armor.Type.Feet:
+					legSprite.texture = null
+	 
 	stats.resetMaxSpeed()
 	# Speed modifier affects dash speed half as much
 	dashSpeed = baseDashSpeed * (1.0 + ((stats.speedModifier - 1.0)/2.0))

@@ -5,6 +5,7 @@
 [node name="HBoxContainer" type="CenterContainer"]
 margin_right = 21.0
 margin_bottom = 6.0
+mouse_filter = 2
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -15,3 +16,5 @@ margin_right = 10.0
 margin_bottom = 6.0
 size_flags_vertical = 0
 custom_fonts/font = ExtResource( 1 )
+align = 1
+valign = 1

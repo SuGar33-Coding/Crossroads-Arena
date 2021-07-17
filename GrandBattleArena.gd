@@ -23,6 +23,7 @@ onready var people := $YSort/People
 onready var camera := $YSort/Player/MainCamera
 onready var itemSort := $YSort/Items
 onready var newWaveButtonSprite := $YSort/NewWaveButton/AnimatedSprite
+onready var spawnLabel := $YSort/NewWaveButton/Label
 var largeSpawns : Array
 var medSpawns : Array
 var smallSpawns : Array
@@ -35,6 +36,7 @@ func _ready():
 	medSpawns = $MediumSpawns.get_children()
 	smallSpawns = $SmallSpawns.get_children()
 	spawns = [smallSpawns, medSpawns, largeSpawns]
+	spawnLabel.visible = false
 	
 	# TODO: Add starting weapon choices like this
 	var startingItem : ItemInstance = get_node(ItemManager.createItem("res://Items/ChestPlate.tres"))
@@ -84,11 +86,15 @@ func _physics_process(_delta):
 	if numEncounters <= 0:
 		newWaveButtonSprite.play("Ready")
 		if playerNearButton:
+			spawnLabel.visible = true
 			if Input.is_action_just_pressed("openmap"):
 				spawnEnemies()
-				
+		elif spawnLabel.visible == true:
+			spawnLabel.visible = false
 
 func spawnEnemies():
+	spawnLabel.visible = false
+	
 	waveNumber += 1
 	
 	var onLevelEncounters := []
@@ -97,8 +103,6 @@ func spawnEnemies():
 	var multiEncounterVal = randf()
 	
 	var selectedEncounter : EncounterStats
-	print(waveNumber/2)
-	print(int(waveNumber/2))
 	# lvl 0 is for debug and will always have size small
 	if sortedEncounters.has(0):
 		selectedEncounter = sortedEncounters[0][randi() % sortedEncounters[waveNumber].size()]
