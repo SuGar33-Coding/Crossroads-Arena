@@ -110,7 +110,7 @@ func incrementPlayerLevel():
 	if playerLevel != 1:
 		var newMenu = levelUpMenu.instance()
 		newMenu.connect("upgradeChosen", self, "_emit_level_changed")
-		var world = get_tree().current_scene
+		var world = get_tree().current_scene.get_node("CanvasLayer")
 		world.call_deferred("add_child", newMenu)
 		get_tree().paused = true
 

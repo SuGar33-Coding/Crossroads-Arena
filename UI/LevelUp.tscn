@@ -105,7 +105,7 @@ tracks/4/keys = {
 "values": [ true, false ]
 }
 
-[node name="Control" type="CanvasLayer"]
+[node name="LevelUp" type="CanvasLayer"]
 pause_mode = 2
 script = ExtResource( 8 )
 
