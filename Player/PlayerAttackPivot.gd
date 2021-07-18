@@ -52,80 +52,77 @@ func _physics_process(delta):
 		chargingTime += delta
 
 	if not animationPlayer.is_playing():
-		if Input.is_action_just_pressed("attack") and attackTimer.is_stopped():
-			if backTween.is_active():
-				backTween.stop_all()
-				backTween.remove_all()
-			
-			if weaponStats.weaponType == WeaponStats.WeaponType.MELEE or weaponStats.weaponType == WeaponStats.WeaponType.SPEAR or weaponStats.weaponType == WeaponStats.WeaponType.SWORD:
-				var attackType: int
-				if comboCounter == 0:
+		if not get_parent().inventoryUI.isVisible():
+			if Input.is_action_just_pressed("attack") and attackTimer.is_stopped():
+				if backTween.is_active():
+					backTween.stop_all()
+					backTween.remove_all()
+				
+				if weaponStats.weaponType == WeaponStats.WeaponType.MELEE or weaponStats.weaponType == WeaponStats.WeaponType.SPEAR or weaponStats.weaponType == WeaponStats.WeaponType.SWORD:
+					var attackType: int
+					if comboCounter == 0:
+						# Minimum time between attacks is the time it takes to play the attack animation
+						attackTimer.start(getMeleeAttackTime(0.4))
+						emit_signal("meleeQuick")
+						attackType = MeleeAttackType.QUICK
+						comboTimer.start(comboTime*.65)
+					elif comboCounter == 1:
+						attackTimer.start(getMeleeAttackTime(0.75))
+						emit_signal("meleeQuick")
+						attackType = MeleeAttackType.QUICK
+						comboTimer.start(comboTime)
+					else:
+						attackTimer.start(getMeleeAttackTime())
+						emit_signal("meleeLong")
+						attackType = MeleeAttackType.LONG
+						comboTimer.stop()
+						
+					self.comboCounter = (self.comboCounter + 1) % 3
+					
+					var animLength = animationPlayer.current_animation_length
+					self.startMeleeAttack(animLength, attackType)
+				elif weaponStats.weaponType == WeaponStats.WeaponType.HEAVY:
+					var attackDuration = animationPlayer.get_animation("MeleeAttack").length
+					var attackType: int
+					
 					# Minimum time between attacks is the time it takes to play the attack animation
-					attackTimer.start(getMeleeAttackTime(0.4))
+					attackTimer.start(max(weaponStats.attackSpeed * PlayerStats.attackSpeed, attackDuration))
 					emit_signal("meleeQuick")
 					attackType = MeleeAttackType.QUICK
 					comboTimer.start(comboTime*.65)
-				elif comboCounter == 1:
-					attackTimer.start(getMeleeAttackTime(0.75))
-					emit_signal("meleeQuick")
-					attackType = MeleeAttackType.QUICK
-					comboTimer.start(comboTime)
-				else:
-					attackTimer.start(getMeleeAttackTime())
-					emit_signal("meleeLong")
-					attackType = MeleeAttackType.LONG
-					comboTimer.stop()
+				
+					var animLength = animationPlayer.current_animation_length
+					self.startMeleeAttack(animLength, attackType)
+				elif weaponStats.weaponType == WeaponStats.WeaponType.RANGED:
+					# Ranged weapon, enter the pull back state
+					weaponFxTween.interpolate_property(rangedFx, "scale", Vector2.ONE, Vector2.ZERO, getRangedAttackTime())
+					weaponFxTween.interpolate_property(rangedFx, "scale", Vector2.ZERO, Vector2.ONE, RangedProjectile.REDUCED, Tween.TRANS_LINEAR, Tween.EASE_IN_OUT, getRangedAttackTime())
+					weaponFxTween.start()
+					rangedFx.global_position = get_global_mouse_position()
+					rangedFx.visible = true
+					attackTimer.start(.5)
+					animationPlayer.play("Ranged Draw")
+					PlayerStats.maxSpeed *= .5
+					chargingRanged = true
+					chargingTime = 0.0
+				elif weaponStats.weaponType == WeaponStats.WeaponType.AOE:
+					attackTimer.start(aoeAttackLeadup)
+					chargingAoe = true
+					self.startAOEAnimation(aoeAttackLeadup)
+					PlayerStats.maxSpeed *= .5
 					
-				self.comboCounter = (self.comboCounter + 1) % 3
+			elif chargingRanged and (not Input.is_action_pressed("attack")) and weaponStats.weaponType == WeaponStats.WeaponType.RANGED:
+				fireRangedAttack()
 				
-				var animLength = animationPlayer.current_animation_length
-				self.startMeleeAttack(animLength, attackType)
-			elif weaponStats.weaponType == WeaponStats.WeaponType.HEAVY:
-				var attackDuration = animationPlayer.get_animation("MeleeAttack").length
-				var attackType: int
-				
-				# Minimum time between attacks is the time it takes to play the attack animation
-				attackTimer.start(max(weaponStats.attackSpeed * PlayerStats.attackSpeed, attackDuration))
-				emit_signal("meleeQuick")
-				attackType = MeleeAttackType.QUICK
-				comboTimer.start(comboTime*.65)
-			
-				var animLength = animationPlayer.current_animation_length
-				self.startMeleeAttack(animLength, attackType)
-			elif weaponStats.weaponType == WeaponStats.WeaponType.RANGED:
-				# Ranged weapon, enter the pull back state
-				weaponFxTween.interpolate_property(rangedFx, "scale", Vector2.ONE, Vector2.ZERO, getRangedAttackTime())
-				weaponFxTween.interpolate_property(rangedFx, "scale", Vector2.ZERO, Vector2.ONE, RangedProjectile.REDUCED, Tween.TRANS_LINEAR, Tween.EASE_IN_OUT, getRangedAttackTime())
-				weaponFxTween.start()
-				rangedFx.global_position = get_global_mouse_position()
-				rangedFx.visible = true
-				attackTimer.start(.5)
-				animationPlayer.play("Ranged Draw")
-				PlayerStats.maxSpeed *= .5
-				chargingRanged = true
-				chargingTime = 0.0
-			elif weaponStats.weaponType == WeaponStats.WeaponType.AOE:
-				attackTimer.start(aoeAttackLeadup)
-				chargingAoe = true
-				self.startAOEAnimation(aoeAttackLeadup)
-				PlayerStats.maxSpeed *= .5
-				
-		elif chargingRanged and (not Input.is_action_pressed("attack")) and chargingRanged and weaponStats.weaponType == WeaponStats.WeaponType.RANGED:
-			chargingRanged = false
-			rangedFx.visible = false
-			PlayerStats.resetMaxSpeed()
-			# To measure accuracy, we find what portion of the attack speed time they were off
-			var atkSpeed = getRangedAttackTime()
-			animationPlayer.play("RangedRelease")
-			self.startRangedAttack(PlayerStats.strength, chargingTime - atkSpeed)
-			
-		elif Input.is_action_just_pressed("fire") and (weaponStats.weaponType == WeaponStats.WeaponType.SWORD) and attackTimer.is_stopped():
-			emit_signal("parry")
-			self.startParry()
+			elif Input.is_action_just_pressed("fire") and (weaponStats.weaponType == WeaponStats.WeaponType.SWORD) and attackTimer.is_stopped():
+				emit_signal("parry")
+				self.startParry()
 
-		# TODO: have a more unique way to check like check the instance in case they have two of the same weapon (but with different mods)
-		elif Input.is_action_just_pressed("swap"):
-			swapWeapons()
+			# TODO: have a more unique way to check like check the instance in case they have two of the same weapon (but with different mods)
+			elif Input.is_action_just_pressed("swap"):
+				swapWeapons()
+		elif chargingRanged:
+			fireRangedAttack()
 
 func swapWeapons():
 	if weaponStats == primaryWeapon and is_instance_valid(secondaryWeapon):
@@ -139,6 +136,15 @@ func swapWeapons():
 			setWeapon(secondaryWeapon)
 	else:
 		setWeapon(fistStats)
+
+func fireRangedAttack():
+	chargingRanged = false
+	rangedFx.visible = false
+	PlayerStats.resetMaxSpeed()
+	# To measure accuracy, we find what portion of the attack speed time they were off
+	var atkSpeed = getRangedAttackTime()
+	animationPlayer.play("RangedRelease")
+	self.startRangedAttack(PlayerStats.strength, chargingTime - atkSpeed)
 
 func getMeleeAttackTime(modifier = 1.0) -> float:
 	var attackDuration = animationPlayer.get_animation("MeleeAttack").length
@@ -307,6 +313,7 @@ func _combo_finished():
 func _attack_timeout():
 	if chargingAoe:
 		chargingAoe = false
-		self.startAOEAttack(get_global_mouse_position(), PlayerStats.strength)
-		PlayerStats.resetMaxSpeed()
-		attackTimer.start(getRangedAttackTime())
+		if not get_parent().inventoryUI.isVisible():
+			self.startAOEAttack(get_global_mouse_position(), PlayerStats.strength)
+			PlayerStats.resetMaxSpeed()
+			attackTimer.start(getRangedAttackTime())

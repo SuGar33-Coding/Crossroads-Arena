@@ -1,4 +1,4 @@
-extends CanvasLayer
+class_name InventoryUI extends CanvasLayer
 
 onready var controlNode := $Control
 
