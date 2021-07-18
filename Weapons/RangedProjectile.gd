@@ -11,7 +11,7 @@ const REDUCED = 0.75
 var fromPlayer : bool = false
 var speed
 var velocity := Vector2.ZERO
-var weaponStats : WeaponStats
+var weaponStats : WeaponInstance
 var source
 var accuracy : float
 var userStr : int
@@ -21,7 +21,7 @@ onready var weaponHitbox := $WeaponHitbox
 onready var sprite := $Sprite
 onready var collision := $CollisionShape2D
 
-func init(weaponStats: WeaponStats, source, sourceStr: int, acc := NORMAL):
+func init(weaponStats: WeaponInstance, source, sourceStr: int, acc := NORMAL):
 	self.weaponStats = weaponStats
 	self.source = source
 	self.accuracy = acc

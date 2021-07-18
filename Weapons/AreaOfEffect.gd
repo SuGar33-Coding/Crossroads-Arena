@@ -16,7 +16,7 @@ var lifetime := 1.0
 var fromPlayer : bool = false
 var speed
 var velocity := Vector2.ZERO
-var weaponStats : WeaponStats
+var weaponStats : WeaponInstance
 var source
 var userStr : int
 var HitEffect = preload("res://FX/HitEffect.tscn")
@@ -35,7 +35,7 @@ onready var sprite := $Sprite
 onready var animationPlayer := $AnimationPlayer
 onready var crosshair := $CrosshairSprite
 
-func init(weaponStats: WeaponStats, source, sourceStr: int, lifetime: float, numberOfTicks: int):
+func init(weaponStats: WeaponInstance, source, sourceStr: int, lifetime: float, numberOfTicks: int):
 	self.weaponStats = weaponStats
 	self.source = source
 	self.totalTicks = numberOfTicks
