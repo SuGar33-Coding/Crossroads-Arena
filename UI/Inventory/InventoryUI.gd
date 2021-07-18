@@ -13,3 +13,6 @@ func _process(_delta):
 
 func toggleVisible():
 	controlNode.visible = not controlNode.visible
+
+func isVisible() -> bool:
+	return controlNode.visible

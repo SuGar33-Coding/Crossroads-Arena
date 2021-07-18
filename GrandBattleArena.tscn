@@ -1,4 +1,4 @@
-[gd_scene load_steps=35 format=2]
+[gd_scene load_steps=36 format=2]
 
 [ext_resource path="res://GrandBattleArena.gd" type="Script" id=1]
 [ext_resource path="res://Assets/TileSets/RockBase.tres" type="TileSet" id=2]
@@ -16,6 +16,7 @@
 [ext_resource path="res://World/Encounters/FirstEncounterTwo.tres" type="Resource" id=14]
 [ext_resource path="res://UI/Inventory/Inventory.tscn" type="PackedScene" id=15]
 [ext_resource path="res://Items/Coin.tscn" type="PackedScene" id=16]
+[ext_resource path="res://UI/Shop/Shop.tscn" type="PackedScene" id=17]
 
 [sub_resource type="NavigationPolygon" id=1]
 vertices = PoolVector2Array( 0, 0, 24, 0, 24, 24, 0, 24 )
@@ -237,7 +238,7 @@ margin_top = -28.777
 margin_right = 31.8608
 margin_bottom = -9.77704
 custom_fonts/font = SubResource( 18 )
-text = "Press [M] to spawn
+text = "Press [F] to spawn
 next wave"
 align = 1
 valign = 1
@@ -497,6 +498,8 @@ mix_target = 1
 bus = "BGM"
 
 [node name="Inventory" parent="." instance=ExtResource( 15 )]
+
+[node name="Shop" parent="." instance=ExtResource( 17 )]
 
 [connection signal="body_entered" from="YSort/NewWaveButton" to="." method="_on_NewWaveButton_body_entered"]
 [connection signal="body_exited" from="YSort/NewWaveButton" to="." method="_on_NewWaveButton_body_exited"]

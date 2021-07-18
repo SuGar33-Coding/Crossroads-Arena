@@ -24,6 +24,7 @@ onready var camera := $YSort/Player/MainCamera
 onready var itemSort := $YSort/Items
 onready var newWaveButtonSprite := $YSort/NewWaveButton/AnimatedSprite
 onready var spawnLabel := $YSort/NewWaveButton/Label
+onready var shopUI := $Shop
 var largeSpawns : Array
 var medSpawns : Array
 var smallSpawns : Array
@@ -87,12 +88,17 @@ func _physics_process(_delta):
 		newWaveButtonSprite.play("Ready")
 		if playerNearButton:
 			spawnLabel.visible = true
-			if Input.is_action_just_pressed("openmap"):
+			if Input.is_action_just_pressed("interact"):
 				if numEncounters <= 0 and PlayerStats.playerLevel < PlayerStats.nextPlayerLevel:
 					PlayerStats.setPlayerLevel()
 				spawnEnemies()
-		elif spawnLabel.visible == true:
-			spawnLabel.visible = false
+			elif Input.is_action_just_pressed("openmap"):
+				shopUI.toggleVisible()
+		else:
+			if spawnLabel.visible == true:
+				spawnLabel.visible = false
+			if shopUI.isVisible():
+				shopUI.toggleVisible()
 
 func spawnEnemies():
 	spawnLabel.visible = false

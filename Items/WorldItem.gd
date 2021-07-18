@@ -37,7 +37,6 @@ func _ready():
 	pickupMessage.visible = false
 	itemSprite.texture = item.getTexture()
 	if is_instance_valid(item.modifier):
-		print("Modifier! " + item.modifier.name)
 		nameLabel.text = item.modifier.name + " " + item.itemName
 	else:
 		nameLabel.text = item.itemName

@@ -8,7 +8,7 @@
 [resource]
 script = ExtResource( 1 )
 name = "Fire Staff"
-value = 0
+value = 25
 texture = ExtResource( 3 )
 modifiers = [  ]
 weaponType = 5
