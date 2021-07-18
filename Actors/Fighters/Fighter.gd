@@ -5,7 +5,7 @@ class_name Fighter
 # The chance they drop their weapon if they are dropping an item
 const weaponDropChance := .25
 
-var weaponStats : WeaponStats
+var weaponStats : WeaponInstance
 var WorldItem = preload("res://Items/WorldItem.tscn")
 var CoinScene = preload("res://Items/Coin.tscn")
 

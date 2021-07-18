@@ -36,7 +36,11 @@ func _ready():
 	tooltipPanel.visible = false
 	pickupMessage.visible = false
 	itemSprite.texture = item.getTexture()
-	nameLabel.text = item.itemName
+	if is_instance_valid(item.modifier):
+		print("Modifier! " + item.modifier.name)
+		nameLabel.text = item.modifier.name + " " + item.itemName
+	else:
+		nameLabel.text = item.itemName
 	valueLabel.text = str(itemResource.value)
 	itemSprite.material = ShaderMaterial.new()
 	

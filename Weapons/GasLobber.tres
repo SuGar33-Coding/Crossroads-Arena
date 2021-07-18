@@ -10,6 +10,7 @@ script = ExtResource( 1 )
 name = "Gas Lobber"
 value = 0
 texture = ExtResource( 3 )
+modifiers = [  ]
 weaponType = 5
 weaponTexture = ExtResource( 4 )
 damage = 15

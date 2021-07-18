@@ -9,11 +9,12 @@ var chargingRanged: bool = false
 var chargingTime := 0.0
 var chargingAoe := false
 var aoeAttackLeadup := 0.5
+var fistStats : WeaponInstance
 
 # TODO: Make this a signal call
 onready var inventory = get_node("/root/Inventory")
 onready var animationPlayer := get_node("../AnimationPlayer")
-onready var fistStats := preload("res://Weapons/Fists.tres")
+onready var fistsResource := preload("res://Weapons/Fists.tres")
 onready var parryHitbox := $WeaponHitbox/ParryHitbox
 onready var comboTimer := $ComboTimer
 onready var parryTween := $ParryTween
@@ -21,8 +22,8 @@ onready var rangedFx := $RangedWeaponFX
 onready var weaponFxTween := $WeaponEffects
 
 # TODO: remove this cus it should be through inventory
-onready var secondaryWeapon : WeaponStats
-onready var primaryWeapon : WeaponStats = weaponStats
+onready var secondaryWeapon : WeaponInstance
+onready var primaryWeapon : WeaponInstance = weaponStats
 
 signal meleeQuick
 signal meleeLong
@@ -39,6 +40,8 @@ func _ready():
 	self.connect("parry", self.get_parent(), "_parry")
 	inventory.connect("inventory_changed", self, "_inventory_changed")
 	attackTimer.connect("timeout", self, "_attack_timeout")
+	
+	fistStats = get_node(ItemManager.createItem(fistsResource.resource_path))
 	
 
 func _physics_process(delta):
@@ -160,7 +163,7 @@ func startParry():
 	parryTween.interpolate_property(attackSignalPos, "position", parryPos - attackSignalPos.position, attackSignalPos.position, tweenLen, Tween.TRANS_LINEAR, Tween.EASE_IN_OUT, tweenLen)
 	parryTween.start()
 
-func setWeapon(weaponStats : WeaponStats):
+func setWeapon(weaponStats : WeaponInstance):
 	"""if weaponStats.weaponType == WeaponStats.WeaponType.RANGED:
 		Input.set_custom_mouse_cursor(weaponStats.projectileTexture)
 	else:
@@ -243,12 +246,12 @@ func getWeaponsFromInventory():
 	var firstItem : ItemInstance = Inventory.getWeapons()["0"]
 	var secondItem : ItemInstance = Inventory.getWeapons()["1"]
 	if is_instance_valid(firstItem):
-		primaryWeapon = firstItem.resource
+		primaryWeapon = firstItem
 	else:
 		primaryWeapon = null
 		
 	if is_instance_valid(secondItem):
-		secondaryWeapon = secondItem.resource
+		secondaryWeapon = secondItem
 	else:
 		secondaryWeapon = null
 

@@ -10,6 +10,7 @@ script = ExtResource( 1 )
 name = "Glaive"
 value = 0
 texture = ExtResource( 2 )
+modifiers = [  ]
 weaponType = 0
 weaponTexture = ExtResource( 2 )
 damage = 10

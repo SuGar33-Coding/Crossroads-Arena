@@ -10,6 +10,7 @@ script = ExtResource( 1 )
 name = "Fire Staff"
 value = 0
 texture = ExtResource( 3 )
+modifiers = [  ]
 weaponType = 5
 weaponTexture = ExtResource( 3 )
 damage = 10

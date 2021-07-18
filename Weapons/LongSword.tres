@@ -10,6 +10,7 @@ script = ExtResource( 1 )
 name = "Long Sword"
 value = 0
 texture = ExtResource( 2 )
+modifiers = [  ]
 weaponType = 1
 weaponTexture = ExtResource( 2 )
 damage = 20

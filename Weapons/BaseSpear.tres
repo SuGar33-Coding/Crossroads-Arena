@@ -10,6 +10,7 @@ script = ExtResource( 1 )
 name = "Base Spear"
 value = 0
 texture = ExtResource( 4 )
+modifiers = [  ]
 weaponType = 3
 weaponTexture = ExtResource( 4 )
 damage = 8

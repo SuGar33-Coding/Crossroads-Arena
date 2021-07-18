@@ -26,7 +26,7 @@ onready var backTween := $BackTween
 onready var weaponCollision := $WeaponHitbox/WeaponCollision
 onready var weaponHitbox = $WeaponHitbox
 onready var restingRotation = weaponSprite.rotation
-onready var weaponStats : WeaponStats
+onready var weaponStats : WeaponInstance
 onready var attackTimer := $AttackTimer
 onready var attackSignalPos := $WeaponRestingPos/AttackSignalPos
 onready var quickSfx: AudioStreamPlayer2D = $QuickSFX
@@ -49,7 +49,9 @@ func _ready():
 	randomize()
 	source = get_parent()
 	weaponHitbox.setSource(source)
-	weaponStats = weaponStatsResources[randi() % weaponStatsResources.size()]
+	var weaponResource : Resource = weaponStatsResources[randi() % weaponStatsResources.size()]
+	weaponStats = get_node(ItemManager.createItem(weaponResource.resource_path))
+	
 	setWeapon(weaponStats)
 	
 	tween.connect("tween_all_completed", self, "_on_WeaponTween_tween_completed")
@@ -149,7 +151,7 @@ func startAOEAttack(targetGlobalPos : Vector2, sourceStr := 0):
 	# TODO: Possibly pass in a rotation if it is a directional aoe (like a cone)
 	areaOfEffect.fire(self.global_position, targetGlobalPos, self.global_rotation)
 
-func setWeapon(weaponStats : WeaponStats):
+func setWeapon(weaponStats : WeaponInstance):
 	self.weaponStats = weaponStats
 	weaponHitbox.setWeapon(weaponStats)
 	weaponSprite.texture = weaponStats.weaponTexture
@@ -211,7 +213,7 @@ func setWeapon(weaponStats : WeaponStats):
 		
 	if not weaponStats.weaponType == WeaponStats.WeaponType.RANGED:
 		weaponSprite.hframes = 1
-		
+	
 	# Set the weapon's SFX
 	quickSfx.stream = weaponStats.quickAttackSFX
 	longSfx.stream = weaponStats.longAttackSFX

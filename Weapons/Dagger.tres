@@ -10,6 +10,7 @@ script = ExtResource( 1 )
 name = "Dagger"
 value = 0
 texture = ExtResource( 2 )
+modifiers = [  ]
 weaponType = 3
 weaponTexture = ExtResource( 2 )
 damage = 7

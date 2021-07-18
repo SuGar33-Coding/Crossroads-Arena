@@ -8,7 +8,7 @@ var fromPlayer: bool = false
 var userStr: int = 0 setget setUserStr
 var source
 var hitboxOffset = 5
-var weaponStats: WeaponStats
+var weaponStats: WeaponInstance
 var weaponDamage: int
 var baseDamage : int = 1 setget setBaseDamage
 var baseKnockback : float setget setBaseKnockback
@@ -45,7 +45,7 @@ func getSource():
 func getSourcePos() -> Vector2:
 	return self.source.global_position
 	
-func setWeapon(weapon : WeaponStats):
+func setWeapon(weapon : WeaponInstance):
 	weaponStats = weapon
 	weaponDamage = weapon.damage
 	weaponKnockback = weapon.knockbackValue

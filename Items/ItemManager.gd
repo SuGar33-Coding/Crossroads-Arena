@@ -4,8 +4,16 @@ extends Node
 # ItemManager
 func createItem(resourcePath: String):
 	var resource: Item = load(resourcePath)
-	var item := ItemInstance.new()
+	var item : ItemInstance
+	if resource is WeaponStats:
+		item = WeaponInstance.new()
+	else:
+		item = ItemInstance.new()
 	item.resource = resource
+	
+	if resource.modifiers.size() > 0:
+		var modifier: Modifier = resource.modifiers[randi() % resource.modifiers.size()]
+		item.modifier = modifier
 	
 	add_child(item)
 	

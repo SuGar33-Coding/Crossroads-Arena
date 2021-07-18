@@ -10,6 +10,7 @@ script = ExtResource( 1 )
 name = "Great Hammer"
 value = 0
 texture = ExtResource( 2 )
+modifiers = [  ]
 weaponType = 2
 weaponTexture = ExtResource( 2 )
 damage = 25

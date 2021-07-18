@@ -11,6 +11,7 @@ script = ExtResource( 1 )
 name = "Fists"
 value = 0
 texture = ExtResource( 5 )
+modifiers = [  ]
 weaponType = 3
 weaponTexture = ExtResource( 5 )
 damage = 1
