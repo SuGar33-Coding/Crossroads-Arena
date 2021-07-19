@@ -52,7 +52,7 @@ func _physics_process(delta):
 		chargingTime += delta
 
 	if not animationPlayer.is_playing():
-		if not get_parent().inventoryUI.isVisible():
+		if not (get_parent().inventoryUI.isVisible() or get_parent().shopUI.isVisible()):
 			if Input.is_action_just_pressed("attack") and attackTimer.is_stopped():
 				if backTween.is_active():
 					backTween.stop_all()
@@ -313,7 +313,7 @@ func _combo_finished():
 func _attack_timeout():
 	if chargingAoe:
 		chargingAoe = false
-		if not get_parent().inventoryUI.isVisible():
+		if not (get_parent().inventoryUI.isVisible() or get_parent().shopUI.isVisible()):
 			self.startAOEAttack(get_global_mouse_position(), PlayerStats.strength)
 			PlayerStats.resetMaxSpeed()
 			attackTimer.start(getRangedAttackTime())

@@ -35,6 +35,7 @@ onready var animationPlayer := $AnimationPlayer
 onready var footstep1 := $Footstep1
 onready var footstep2 := $Footstep2
 onready var inventoryUI : InventoryUI = get_node("../../Inventory")
+onready var shopUI : ShopUI = get_node("../../Shop")
 
 
 func _ready():
@@ -69,12 +70,12 @@ func _physics_process(delta):
 
 	var inputVector = Vector2.ZERO
 
-	if not inventoryUI.isVisible():
+	if not (inventoryUI.isVisible() or shopUI.isVisible()):
 		inputVector.x = Input.get_action_strength("right") - Input.get_action_strength("left")
 		inputVector.y = Input.get_action_strength("down") - Input.get_action_strength("up")
 		inputVector = inputVector.normalized()
 
-	if Input.is_action_just_pressed("dash") and dashTimer.is_stopped() and not inventoryUI.isVisible():
+	if Input.is_action_just_pressed("dash") and dashTimer.is_stopped() and not (inventoryUI.isVisible() or shopUI.isVisible()):
 		# Cannot dash while aiming
 		if not attackPivot.chargingRanged:
 			dashVector = inputVector * dashSpeed

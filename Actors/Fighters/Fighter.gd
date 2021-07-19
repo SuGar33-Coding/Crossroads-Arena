@@ -189,7 +189,7 @@ func _stats_no_health():
 			var itemInstance : ItemInstance
 			
 			if randf() <= self.weaponDropChance:
-				itemInstance = get_node(ItemManager.createItem(attackPivot.weaponStats.resource_path))
+				itemInstance = attackPivot.weaponStats
 			else:
 				itemInstance = get_node(ItemManager.createItem((stats.itemDrops[randi() % stats.itemDrops.size()] as Item).resource_path))
 	
