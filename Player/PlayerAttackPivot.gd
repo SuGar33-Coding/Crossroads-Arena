@@ -43,6 +43,8 @@ func _ready():
 	
 	fistStats = get_node(ItemManager.createItem(fistsResource.resource_path))
 	
+	getWeaponsFromInventory()
+	
 
 func _physics_process(delta):
 	self.lookAtTarget(get_global_mouse_position())
@@ -193,7 +195,8 @@ func setComboCounter(value):
 		weaponHitbox.scaleKnockback(.25)
 	else:
 		weaponHitbox.scaleDamage(2)
-		weaponHitbox.scaleKnockback(1)
+		# Scale knockback down for player in general
+		weaponHitbox.scaleKnockback(.5)
 	comboCounter = value
 
 
@@ -254,35 +257,34 @@ func getWeaponsFromInventory():
 	if is_instance_valid(firstItem):
 		primaryWeapon = firstItem
 	else:
-		primaryWeapon = null
+		primaryWeapon = fistStats
 		
 	if is_instance_valid(secondItem):
 		secondaryWeapon = secondItem
 	else:
-		secondaryWeapon = null
+		secondaryWeapon = fistStats
 
 # TODO: Update to also use weapon modifiers
 func _inventory_changed(from_panel, to_panel):
 	if to_panel == "weapon" or from_panel == "weapon":
-		match weaponStats:
-			primaryWeapon:
+		match weaponStats.itemName:
+			fistStats.itemName:
+				var oldPrimaryName := primaryWeapon.itemName
+				
 				getWeaponsFromInventory()
 				
-				if is_instance_valid(primaryWeapon):
+				if oldPrimaryName != primaryWeapon.itemName:
 					setWeapon(primaryWeapon)
 				else:
-					setWeapon(fistStats)
-			secondaryWeapon:
+					setWeapon(secondaryWeapon)
+			primaryWeapon.itemName:
 				getWeaponsFromInventory()
 				
-				if is_instance_valid(primaryWeapon):
-					setWeapon(primaryWeapon)
-				else:
-					setWeapon(fistStats)
-			fistStats:
+				setWeapon(primaryWeapon)
+			secondaryWeapon.itemName:
 				getWeaponsFromInventory()
 				
-				setWeapon(fistStats)
+				setWeapon(secondaryWeapon)
 
 # Reset weapon back to its original position
 func _combo_finished():
