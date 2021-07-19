@@ -509,20 +509,6 @@ tracks/5/keys = {
 "update": 1,
 "values": [ true ]
 }
-tracks/6/type = "method"
-tracks/6/path = NodePath(".")
-tracks/6/interp = 1
-tracks/6/loop_wrap = true
-tracks/6/imported = false
-tracks/6/enabled = true
-tracks/6/keys = {
-"times": PoolRealArray( 0.1 ),
-"transitions": PoolRealArray( 1 ),
-"values": [ {
-"args": [ false ],
-"method": "setBursting"
-} ]
-}
 
 [sub_resource type="Animation" id=10]
 length = 0.4
@@ -833,7 +819,6 @@ frame = 0
 
 [node name="Particles2D" type="Particles2D" parent="AttackPivot" index="6"]
 position = Vector2( 0, 5 )
-emitting = false
 amount = 50
 lifetime = 0.4
 one_shot = true
