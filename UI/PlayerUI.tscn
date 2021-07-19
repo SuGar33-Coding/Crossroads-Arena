@@ -1,7 +1,9 @@
-[gd_scene load_steps=12 format=2]
+[gd_scene load_steps=14 format=2]
 
 [ext_resource path="res://UI/PlayerUI.gd" type="Script" id=1]
 [ext_resource path="res://Assets/ItemAssets/EmberstoneIcon.png" type="Texture" id=2]
+[ext_resource path="res://Assets/UIAssets/InnerDash.png" type="Texture" id=3]
+[ext_resource path="res://Assets/UIAssets/ProgressRing.png" type="Texture" id=4]
 
 [sub_resource type="DynamicFontData" id=1]
 font_path = "res://Assets/Adventurer.ttf"
@@ -92,7 +94,7 @@ __meta__ = {
 
 [node name="VBoxContainer" type="VBoxContainer" parent="HBoxContainer"]
 margin_right = 517.0
-margin_bottom = 32.0
+margin_bottom = 53.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 __meta__ = {
@@ -206,17 +208,19 @@ __meta__ = {
 [node name="SpaceHolder" type="Control" parent="HBoxContainer"]
 margin_left = 521.0
 margin_right = 621.0
-margin_bottom = 32.0
+margin_bottom = 53.0
 rect_min_size = Vector2( 100, 0 )
 
 [node name="VBoxContainer2" type="VBoxContainer" parent="HBoxContainer"]
 margin_left = 625.0
 margin_right = 677.0
-margin_bottom = 32.0
+margin_bottom = 53.0
+alignment = 1
 
 [node name="PanelContainer" type="PanelContainer" parent="HBoxContainer/VBoxContainer2"]
+margin_top = 8.0
 margin_right = 52.0
-margin_bottom = 17.0
+margin_bottom = 25.0
 size_flags_horizontal = 3
 custom_styles/panel = SubResource( 7 )
 
@@ -259,9 +263,26 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
+[node name="CenterContainer" type="CenterContainer" parent="HBoxContainer/VBoxContainer2"]
+margin_top = 29.0
+margin_right = 52.0
+margin_bottom = 45.0
+
+[node name="DashProgress" type="TextureProgress" parent="HBoxContainer/VBoxContainer2/CenterContainer"]
+margin_left = 18.0
+margin_right = 34.0
+margin_bottom = 16.0
+value = 100.0
+rounded = true
+texture_over = ExtResource( 3 )
+texture_progress = ExtResource( 4 )
+fill_mode = 4
+
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 
 [node name="Timer" type="Timer" parent="."]
 one_shot = true
 
 [node name="HPTween" type="Tween" parent="."]
+
+[node name="DashTween" type="Tween" parent="."]

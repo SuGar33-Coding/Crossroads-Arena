@@ -8,6 +8,8 @@ export var startingFriction: float = 750
 export var baseDashSpeed := 500
 export var dashDelay := .75
 
+signal player_dashed(dashRefresh)
+
 # TODO: Probably move dash speed to player stats
 var velocity := Vector2.ZERO
 var knockback := Vector2.ZERO
@@ -78,9 +80,11 @@ func _physics_process(delta):
 	if Input.is_action_just_pressed("dash") and dashTimer.is_stopped() and not (inventoryUI.isVisible() or shopUI.isVisible()):
 		# Cannot dash while aiming
 		if not attackPivot.chargingRanged:
+			var refreshTime = dashDelay * pow(PlayerStats.dexDashRatio, PlayerStats.dex)
 			dashVector = inputVector * dashSpeed
-			dashTimer.start(dashDelay * pow(PlayerStats.dexDashRatio, PlayerStats.dex))
+			dashTimer.start(refreshTime)
 			movementAnimation.play("Dashing")
+			emit_signal("player_dashed", refreshTime)
 			PlayerStats.resetMaxSpeed()
 	elif inputVector != Vector2.ZERO:
 		velocity = velocity.move_toward(inputVector * stats.maxSpeed, Acceleration * delta)

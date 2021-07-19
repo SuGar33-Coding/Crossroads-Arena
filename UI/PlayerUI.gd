@@ -16,6 +16,8 @@ onready var stats = get_node("/root/PlayerStats")
 onready var animationPlayer := $AnimationPlayer
 onready var hpTween := $HPTween
 onready var timer := $Timer
+onready var dashTween := $DashTween
+onready var dashProgress := $HBoxContainer/VBoxContainer2/CenterContainer/DashProgress
 
 func _ready():
 	self._playerstats_health_changed(stats.health)
@@ -26,6 +28,7 @@ func _ready():
 	stats.connect("nextLevelChanged", self, "_next_level_changed")
 	timer.connect("timeout", self, "_timer_timeout")
 	inventory.connect("coins_changed", self, "_coins_changed")
+	get_parent().connect("player_dashed", self, "_player_dashed")
 	
 func setHealthbarValue(value : float):
 	if hpTween.is_active():
@@ -72,3 +75,7 @@ func _timer_timeout():
 
 func _coins_changed(newValue):
 	coinLabel.text = str(newValue)
+
+func _player_dashed(refreshTime : float):
+	dashTween.interpolate_property(dashProgress, "value", 0, 100, refreshTime, Tween.TRANS_LINEAR, Tween.EASE_IN_OUT)
+	dashTween.start()
