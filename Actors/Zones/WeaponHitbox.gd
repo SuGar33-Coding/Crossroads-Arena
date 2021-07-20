@@ -48,6 +48,7 @@ func getSourcePos() -> Vector2:
 func setWeapon(weapon : WeaponInstance):
 	weaponStats = weapon
 	weaponDamage = weapon.damage
+	armorPierce = weapon.armorPierce
 	weaponKnockback = weapon.knockbackValue
 	self.baseDamage = self.weaponDamage *  pow(PlayerStats.strRatio, self.userStr)
 	self.baseKnockback = weaponStats.knockbackValue * pow(strKnockbackRatio, self.userStr)

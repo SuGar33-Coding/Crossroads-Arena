@@ -14,6 +14,8 @@ enum WeaponType {
 export(WeaponType) var weaponType = WeaponType.MELEE
 export(Texture) var weaponTexture
 export var damage : int = 10
+# Percentage of armor that damage goes through
+export var armorPierce : int = 0
 export var knockbackValue : int = 350
 export var radius : float = 15.5
 export var length : float = 10.5

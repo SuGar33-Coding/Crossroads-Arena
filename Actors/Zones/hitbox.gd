@@ -3,6 +3,7 @@ extends Area2D
 class_name Hitbox
 
 export var damage : int = 1
+export var armorPierce : int = 0
 export var knockbackValue : float = 475.0
 
 func getSourcePos() -> Vector2:

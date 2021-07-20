@@ -174,7 +174,7 @@ func sightCheck() -> bool:
 	return false
 	
 func _hurtbox_area_entered(area : Hitbox):
-	var damageAmount = max(1, int(area.damage * (1 - (stats.armorValue/100.0))))
+	var damageAmount = max(1, int(area.damage * (1 - ( max((stats.armorValue - area.armorPierce), 0) /100.0))))
 	
 	var text = floatingText.instance()
 	text.amount = damageAmount

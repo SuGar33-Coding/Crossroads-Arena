@@ -184,7 +184,7 @@ func _player_level_changed(_newPlayerLevel):
 
 
 func _hurtbox_area_entered(area: Hitbox):
-	var damageAmount = max(1, int(area.damage * (1 - (armorValue/100.0))))
+	var damageAmount = max(1, int(area.damage * (1 - ( max((stats.armorValue - area.armorPierce), 0) /100.0))))
 	
 	var text = floatingText.instance()
 	text.amount = damageAmount

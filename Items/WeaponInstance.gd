@@ -4,6 +4,7 @@ class_name WeaponInstance extends ItemInstance
 var weaponType
 var weaponTexture : Texture
 var damage : int = 10
+var armorPierce : int = 0
 var knockbackValue : int = 350
 var radius : float = 15.5
 var length : float = 10.5
@@ -32,6 +33,7 @@ func _setResource(newResource):
 	weaponType = weaponStats.weaponType
 	weaponTexture = weaponStats.weaponTexture
 	damage = weaponStats.damage
+	armorPierce = weaponStats.armorPierce
 	knockbackValue = weaponStats.knockbackValue
 	radius = weaponStats.radius
 	length = weaponStats.length

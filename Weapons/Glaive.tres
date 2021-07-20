@@ -14,6 +14,7 @@ modifiers = [  ]
 weaponType = 0
 weaponTexture = ExtResource( 2 )
 damage = 10
+armorPierce = 0
 knockbackValue = 350
 radius = 25.0
 length = 5.0
