@@ -57,7 +57,10 @@ func _player_xp_changed(newXP):
 	xpbarLabel.text = str(int(newXP)) + " / " + str(stats.xpToNextLevel())
 	
 func _player_level_changed(_newLevel):
-	lvllabel.text = "Lvl: " + str(stats.playerLevel)
+	if stats.playerLevel == stats.nextPlayerLevel:
+		lvllabel.text = "Lvl: " + str(stats.playerLevel)
+	else:
+		lvllabel.text = "Lvl: " + str(stats.playerLevel) + " (" + str(stats.nextPlayerLevel) + ") "
 
 func _next_level_changed(_newLevel):
 	lvllabel.text = "Lvl: " + str(stats.playerLevel) + " (" + str(stats.nextPlayerLevel) + ") "

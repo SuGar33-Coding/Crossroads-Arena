@@ -107,12 +107,13 @@ func setNextPlayerLevel(newLevel):
 
 func incrementPlayerLevel():
 	playerLevel += 1
-	if playerLevel != 1:
+	self._emit_level_changed()
+	"""if playerLevel != 1:
 		var newMenu = levelUpMenu.instance()
 		newMenu.connect("upgradeChosen", self, "_emit_level_changed")
 		var world = get_tree().current_scene.get_node("CanvasLayer")
 		world.call_deferred("add_child", newMenu)
-		get_tree().paused = true
+		get_tree().paused = true"""
 
 # Starts a signal loop that will get player level up to newLevel
 func setPlayerLevel(newLevel := nextPlayerLevel):
@@ -125,8 +126,8 @@ func setPlayerLevel(newLevel := nextPlayerLevel):
 func _emit_level_changed():
 	get_tree().paused = false
 	emit_signal("playerLevelChanged", playerLevel)
-	if playerLevel < nextPlayerLevel:
-		incrementPlayerLevel()
+	#if playerLevel < nextPlayerLevel:
+		#incrementPlayerLevel()
 
 func addItemToInventory(item : Item):
 	inventory.append(item)
