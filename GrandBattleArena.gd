@@ -59,7 +59,7 @@ func _ready():
 	worldItem.global_position = newWaveButtonSprite.global_position + Vector2(30, 0)
 	itemSort.add_child(worldItem)
 	
-	startingItem  = get_node(ItemManager.createItem("res://Weapons/BaseSword.tres"))
+	startingItem  = get_node(ItemManager.createItem("res://Weapons/LongSword.tres"))
 	
 	worldItem = WorldItem.instance()
 	worldItem.init(startingItem)
@@ -71,6 +71,13 @@ func _ready():
 	worldItem = WorldItem.instance()
 	worldItem.init(startingItem)
 	worldItem.global_position = newWaveButtonSprite.global_position + Vector2(125, 0)
+	itemSort.add_child(worldItem)
+	
+	startingItem = get_node(ItemManager.createItem("res://Items/HealthPotion.tres"))
+
+	worldItem = WorldItem.instance()
+	worldItem.init(startingItem)
+	worldItem.global_position = newWaveButtonSprite.global_position + Vector2(75, 75)
 	itemSort.add_child(worldItem)
 	
 	# Sorted encounters will be a dictionary of dictionaries corresponding to the levels of the encounters
@@ -117,17 +124,17 @@ func _physics_process(_delta):
 			if Input.is_action_just_pressed("interact"):
 				match true:
 					playerNearStr:
-						PlayerStats.strength += 1
+						PlayerStats.baseStr += 1
 						PlayerStats.incrementPlayerLevel()
 						strPillarAnimation.play("ChargeUp")
 						strPillarLabel.visible = false
 					playerNearCon:
-						PlayerStats.con += 1
+						PlayerStats.baseCon += 1
 						PlayerStats.incrementPlayerLevel()
 						conPillarAnimation.play("ChargeUp")
 						conPillarLabel.visible = false
 					playerNearDex:
-						PlayerStats.dex += 1
+						PlayerStats.baseDex += 1
 						PlayerStats.incrementPlayerLevel()
 						dexPillarAnimation.play("ChargeUp")
 						dexPillarLabel.visible = false
@@ -146,7 +153,7 @@ func _physics_process(_delta):
 			spawnLabel.visible = true
 			if Input.is_action_just_pressed("interact"):
 				spawnEnemies()
-			elif Input.is_action_just_pressed("openmap"):
+			elif Input.is_action_just_pressed("openShop"):
 				shopUI.toggleVisible()
 		else:
 			if spawnLabel.visible == true:

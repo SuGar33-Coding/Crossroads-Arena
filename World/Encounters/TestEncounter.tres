@@ -5,8 +5,8 @@
 [resource]
 script = ExtResource( 1 )
 encounterSize = 1
-gruntFilepaths = [ "res://Actors/Fighters/Bandit/Bandit.tscn" ]
-specialFilepaths = [ "res://Actors/Brute/Brute.tscn" ]
-commanderFilepaths = [ "res://Actors/Brute/Brute.tscn" ]
+gruntFilepaths = [ "res://Actors/Fighters/ChaosKnight/ChaosKnight.tscn" ]
+specialFilepaths = [ "res://Actors/Fighters/ChaosKnight/ChaosKnight.tscn" ]
+commanderFilepaths = [ "res://Actors/Fighters/ChaosKnight/ChaosKnight.tscn" ]
 difficultyLevel = 0
 guaranteeBoss = false

@@ -22,6 +22,7 @@ export var length : float = 10.5
 # Number of seconds between each attack
 export var attackSpeed : float = .7
 
+export(Array, Resource) var effectResources
 # SFX
 export var quickAttackSFX: AudioStream
 export var longAttackSFX: AudioStream

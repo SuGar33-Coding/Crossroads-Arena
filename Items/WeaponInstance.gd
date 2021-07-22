@@ -11,6 +11,7 @@ var length : float = 10.5
 # Number of seconds between each attack
 var attackSpeed : float = .7
 
+var effectResources := []
 # SFX
 var quickAttackSFX: AudioStream
 var longAttackSFX: AudioStream
@@ -38,6 +39,8 @@ func _setResource(newResource):
 	radius = weaponStats.radius
 	length = weaponStats.length
 	attackSpeed = weaponStats.attackSpeed
+	
+	effectResources = weaponStats.effectResources
 	
 	quickAttackSFX = weaponStats.quickAttackSFX
 	longAttackSFX = weaponStats.longAttackSFX

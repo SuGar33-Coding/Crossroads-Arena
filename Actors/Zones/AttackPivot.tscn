@@ -97,4 +97,6 @@ bus = "AttackSFX"
 [node name="LongSFX" type="AudioStreamPlayer2D" parent="."]
 bus = "AttackSFX"
 
+[node name="EffectsTimer" type="Timer" parent="."]
+
 [editable path="WeaponHitbox"]

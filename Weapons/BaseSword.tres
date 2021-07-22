@@ -20,6 +20,7 @@ knockbackValue = 350
 radius = 15.5
 length = 10.5
 attackSpeed = 0.7
+effectResources = [  ]
 quickAttackSFX = ExtResource( 4 )
 longAttackSFX = ExtResource( 3 )
 projectileSpeed = 1500.0

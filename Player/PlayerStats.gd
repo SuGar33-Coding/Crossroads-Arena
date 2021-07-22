@@ -12,11 +12,14 @@ var playerLevel : int = 1 setget setPlayerLevel
 # Used to help remember what level the player should be boosted to at the end of the next wave
 var nextPlayerLevel : int = 1 setget setNextPlayerLevel
 var currentXP : int = 0 setget setCurrentXP, getCurrentXP
+var baseStr : int = 0 setget setBaseStr
 var strength : int = 0 setget setStr
 export(float) var strRatio := 1.2
+var baseCon : int = 0 setget setBaseCon
 var con : int = 0 setget setCon
 var conRatio : float = 1.2
 var conFrictionRatio : float = 1.1
+var baseDex : int = 0 setget setBaseDex
 var dex : int = 0 setget setDex
 var dexMoveRatio : float = 1.025
 var dexAttackRatio : float = .93
@@ -39,6 +42,9 @@ signal playerLevelChanged(newLevel)
 signal nextLevelChanged(newLevel)
 signal addedToInventory(newItem)
 signal removedFromInventory(removedItem)
+signal playerStrChanged()
+signal playerConChanged()
+signal playerDexChanged()
 
 func _ready():
 	self.maxHealth = startingMaxHealth
@@ -86,17 +92,33 @@ func setCurrentXP(value):
 func getCurrentXP() -> int:
 	return currentXP
 
+# TODO: May not want to set value equal to base value every time
+func setBaseStr(value):
+	baseStr = value
+	self.strength = baseStr
+
 func setStr(value):
 	strength = value
-	
+	emit_signal("playerStrChanged")
+
+func setBaseCon(value):
+	baseCon = value
+	self.con = baseCon
+
 func setCon(value):
 	con = value
 	self.maxHealth = int(startingMaxHealth * pow(conRatio, con))
-	
+	emit_signal("playerConChanged")
+
+func setBaseDex(value):
+	baseDex = value
+	self.dex = baseDex
+
 func setDex(value):
 	dex = value
 	self.attackSpeed = pow(dexAttackRatio, dex)
 	resetMaxSpeed()
+	emit_signal("playerDexChanged")
 	
 func resetMaxSpeed():
 	self.maxSpeed = self.baseSpeed * pow(dexMoveRatio, dex) * speedModifier

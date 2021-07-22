@@ -751,6 +751,7 @@ tracks/2/keys = {
 script = ExtResource( 2 )
 
 [node name="Shadow" type="Sprite" parent="." index="0"]
+visible = false
 texture = ExtResource( 7 )
 offset = Vector2( 0.5, 5 )
 
@@ -758,6 +759,9 @@ offset = Vector2( 0.5, 5 )
 position = Vector2( 0, -5 )
 texture = ExtResource( 8 )
 hframes = 5
+
+[node name="HurtboxCollision" parent="Hurtbox" index="0"]
+disabled = true
 
 [node name="DetectionZone" parent="." index="5" instance=ExtResource( 5 )]
 visible = false

@@ -18,6 +18,8 @@ onready var weaponHitbox := $AttackPivot/WeaponHitbox
 onready var animationPlayer: AnimationPlayer = $AnimationPlayer
 onready var attackTimer := $AttackPivot/AttackTimer
 onready var shadowSprite := $Shadow
+onready var bloodParticles := $AttackPivot/Particles2D
+onready var effectsTimer := $AttackPivot/EffectsTimer
 
 var sinX = rand_range(0, TAU)
 var noise := OpenSimplexNoise.new()
@@ -39,6 +41,8 @@ func _ready():
 	moveDir = pow(-1, randi() % 2)
 	movementTimer.start(rand_range(1, movementMaxTime))
 	movementTimer.connect("timeout", self, "_change_direction")
+	
+	effectsTimer.connect("timeout", self, "_process_effects")
 	
 	# Set everything to default values
 	animationPlayer.connect("animation_finished", self, "_anim_finished")
@@ -155,9 +159,16 @@ func playMeleeAttack():
 	animationPlayer.playback_speed = 1
 	animationPlayer.play("MeleeAttack")
 
+func addEffects(effectResources : Array):
+	for effectResource in effectResources:
+		effectResource = effectResource as Effect
+		effects.append({"effect": effectResource, "ticks": effectResource.totalTicks})
+
 func _hurtbox_area_entered(area: Hitbox):
 	# Stop any sheen
 	attackPivot.weaponMat.set_shader_param("active", false)
+	
+	addEffects(area.effectResources)
 	
 	._hurtbox_area_entered(area)
 	# Only play damaged if we're not dead
@@ -218,3 +229,65 @@ func _anim_finished(animName):
 	animationPlayer.playback_speed = 1
 	if animName == "Death":
 		emit_signal("no_health")
+
+func _process_effects():
+	var totalStr = stats.strength
+	var totalCon = stats.con
+	var totatDex = stats.dex
+	var totalHeal := 0
+	var totalDamage := 0
+	var isPoisoned := false
+	
+	var removeArray = []
+	
+	for i in range(effects.size()):
+		var effectEntry = effects[i]
+		var effect = effectEntry.effect as Effect
+		match effect.effectType:
+			Effect.EffectType.HEAL:
+				totalHeal += effect.amount
+				
+			Effect.EffectType.BLEED:
+				totalDamage += effect.amount
+				
+			Effect.EffectType.POISON:
+				totalDamage += effect.amount
+				
+				isPoisoned = true
+			Effect.EffectType.STR:
+				pass
+			Effect.EffectType.CON:
+				pass
+			Effect.EffectType.DEX:
+				pass
+		
+		effectEntry.ticks -= 1
+		
+		if effectEntry.ticks <= 0:
+			removeArray.append(i)
+	
+	# Invert array since we went through the array in order originally
+	# Avoids changing array indices while iterating through
+	removeArray.invert()
+	for index in removeArray:
+		effects.remove(index)
+	
+	if isPoisoned:
+		sprite.modulate = Color(0, 1, 0)
+	else:
+		sprite.modulate = Color(1,1,1)
+		
+	if totalHeal > 0:
+		stats.health += totalHeal
+				
+		var text = floatingText.instance()
+		text.amount = totalHeal
+		text.isDamage = false
+		add_child(text)
+	if totalDamage > 0:
+		stats.health -= totalDamage
+		
+		bloodParticles.emitting = true
+		var text = floatingText.instance()
+		text.amount = totalDamage
+		add_child(text)

@@ -37,6 +37,8 @@ var pathIdx := 0
 var flag = true
 var isTargetVisible := false
 var MaxSpeed: float
+# effects will be a list of effects resources and remaining ticks until effect goes away
+var effects := []
 
 onready var movement: Movement = movementResource
 onready var sprite := $Sprite
@@ -215,3 +217,4 @@ func _dexterity_changed(value):
 func _stats_no_health():
 	emit_signal("no_health")
 	queue_free()
+

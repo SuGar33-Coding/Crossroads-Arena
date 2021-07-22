@@ -50,6 +50,7 @@ func setWeapon(weapon : WeaponInstance):
 	weaponDamage = weapon.damage
 	armorPierce = weapon.armorPierce
 	weaponKnockback = weapon.knockbackValue
+	effectResources = weapon.effectResources
 	self.baseDamage = self.weaponDamage *  pow(PlayerStats.strRatio, self.userStr)
 	self.baseKnockback = weaponStats.knockbackValue * pow(strKnockbackRatio, self.userStr)
 		

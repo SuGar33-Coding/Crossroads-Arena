@@ -5,6 +5,7 @@ class_name Hitbox
 export var damage : int = 1
 export var armorPierce : int = 0
 export var knockbackValue : float = 475.0
+var effectResources = []
 
 func getSourcePos() -> Vector2:
 	return self.get_parent().global_position

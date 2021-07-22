@@ -61,6 +61,8 @@ func resetInventory():
 	
 	# TODO: Figure out how/when to populate the shop
 	_inventory.shop["0"] = get_node(ItemManager.createItem("res://Items/Boots.tres"))
+	for i in range(1, 10):
+		_inventory.shop[str(i)] = get_node(ItemManager.createItem("res://Items/HealthPotion.tres"))
 
 func getBag() -> Dictionary:
 	return _inventory.bag

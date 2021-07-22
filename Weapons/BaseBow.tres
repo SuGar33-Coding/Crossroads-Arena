@@ -19,6 +19,7 @@ knockbackValue = 100
 radius = 3.478
 length = 7.592
 attackSpeed = 0.85
+effectResources = [  ]
 projectileTexture = ExtResource( 3 )
 projectileSpeed = 1500.0
 projectileRange = 350.0

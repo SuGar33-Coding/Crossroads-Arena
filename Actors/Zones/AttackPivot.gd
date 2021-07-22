@@ -52,6 +52,8 @@ func _ready():
 	var weaponResource : Resource = weaponStatsResources[randi() % weaponStatsResources.size()]
 	weaponStats = get_node(ItemManager.createItem(weaponResource.resource_path))
 	
+	$EffectsTimer.start(1)
+	
 	setWeapon(weaponStats)
 	
 	tween.connect("tween_all_completed", self, "_on_WeaponTween_tween_completed")

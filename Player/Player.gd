@@ -19,10 +19,12 @@ var HitEffect = preload("res://FX/HitEffect.tscn")
 var floatingText = preload("res://UI/FloatingText.tscn")
 var Friction: float
 var armorValue : int = 0
+# effects will be a list of effects resources and remaining ticks until effect goes away
+var effects := []
 
 onready var stats = get_node("/root/PlayerStats")
 onready var inventory = get_node("/root/Inventory")
-onready var sprite := $Sprite
+onready var sprite : Sprite = $Sprite
 onready var headSprite := $Sprite/HeadSprite
 onready var chestSprite := $Sprite/ChestSprite
 onready var legSprite := $Sprite/LegSprite
@@ -32,10 +34,12 @@ onready var hurtbox := $Hurtbox
 onready var camera := $MainCamera
 onready var damagedPlayer := $DamagedPlayer
 onready var dashTimer := $DashTimer
+onready var effectsTimer := $EffectsTimer
 onready var movementAnimation := $MovementAnimation
 onready var animationPlayer := $AnimationPlayer
 onready var footstep1 := $Footstep1
 onready var footstep2 := $Footstep2
+onready var bloodParticles := $BloodParticles
 onready var inventoryUI : InventoryUI = get_node("../../Inventory")
 onready var shopUI : ShopUI = get_node("../../Shop")
 
@@ -53,9 +57,14 @@ func _ready():
 	Friction = startingFriction
 	stats.connect("noHealth", self, "_playerstats_no_health")
 	stats.connect("playerLevelChanged", self, "_player_level_changed")
+	stats.connect("playerStrChanged", self, "_player_str_changed")
+	stats.connect("playerConChanged", self, "_player_con_changed")
 	hurtbox.connect("area_entered", self, "_hurtbox_area_entered")
 	$AttackPivot/ComboTimer.connect("timeout", self, "_combo_finished")
 	inventory.connect("inventory_changed", self, "_inventory_changed")
+	effectsTimer.connect("timeout", self, "_process_effects")
+	
+	effectsTimer.start(1)
 	
 	sprite.material.set_shader_param("banner_color", stats.playerColor)
 	
@@ -76,6 +85,20 @@ func _physics_process(delta):
 		inputVector.x = Input.get_action_strength("right") - Input.get_action_strength("left")
 		inputVector.y = Input.get_action_strength("down") - Input.get_action_strength("up")
 		inputVector = inputVector.normalized()
+	
+	if Input.is_action_just_pressed("item"):
+		var consumables := Inventory.getConsumables()
+		var keys := consumables.keys()
+		
+		var consumableInstance = null
+		
+		for key in keys:
+			if is_instance_valid(consumables[key]):
+				consumableInstance = consumables[key]
+		
+		if is_instance_valid(consumableInstance):
+			var consumableResource := (consumableInstance.resource as Consumable)
+			self.addEffects(consumableResource.effectResources)
 
 	if Input.is_action_just_pressed("dash") and dashTimer.is_stopped() and not (inventoryUI.isVisible() or shopUI.isVisible()):
 		# Cannot dash while aiming
@@ -177,11 +200,21 @@ func checkArmorStats():
 	# Speed modifier affects dash speed half as much
 	dashSpeed = baseDashSpeed * (1.0 + ((stats.speedModifier - 1.0)/2.0))
 
+# Takes a list of effect resources and adds them to the player's list of effects
+func addEffects(effectResources : Array):
+	for effectResource in effectResources:
+		effectResource = effectResource as Effect
+		effects.append({"effect": effectResource, "ticks": effectResource.totalTicks})
 
 func _player_level_changed(_newPlayerLevel):
 	attackPivot.userStr = PlayerStats.strength
 	self.Friction = self.startingFriction * pow(PlayerStats.conFrictionRatio, PlayerStats.con)
 
+func _player_str_changed():
+	attackPivot.userStr = PlayerStats.strength
+	
+func _player_con_changed():
+	self.Friction = self.startingFriction * pow(PlayerStats.conFrictionRatio, PlayerStats.con)
 
 func _hurtbox_area_entered(area: Hitbox):
 	var damageAmount = max(1, int(area.damage * (1 - ( max((self.armorValue - area.armorPierce), 0) /100.0))))
@@ -194,6 +227,7 @@ func _hurtbox_area_entered(area: Hitbox):
 	hitEffect.init(area.getSourcePos())
 	add_child(hitEffect)
 	
+	addEffects(area.effectResources)
 
 	stats.health -= damageAmount
 	stats.currentXP += damageAmount
@@ -234,3 +268,66 @@ func _parry():
 
 func _combo_finished():
 	PlayerStats.resetMaxSpeed()
+
+func _process_effects():
+	var totalStr = stats.baseStr
+	var totalCon = stats.baseCon
+	var totatDex = stats.baseDex
+	var totalHeal := 0
+	var totalDamage := 0
+	var isPoisoned := false
+	
+	var removeArray = []
+	
+	for i in range(effects.size()):
+		var effectEntry = effects[i]
+		var effect = effectEntry.effect as Effect
+		match effect.effectType:
+			Effect.EffectType.HEAL:
+				totalHeal += effect.amount
+				
+			Effect.EffectType.BLEED:
+				totalDamage += effect.amount
+				
+			Effect.EffectType.POISON:
+				totalDamage += effect.amount
+				
+				isPoisoned = true
+			Effect.EffectType.STR:
+				pass
+			Effect.EffectType.CON:
+				pass
+			Effect.EffectType.DEX:
+				pass
+		
+		effectEntry.ticks -= 1
+		
+		if effectEntry.ticks <= 0:
+			removeArray.append(i)
+	
+	# Invert array since we went through the array in order originally
+	# Avoids changing array indices while iterating through
+	removeArray.invert()
+	for index in removeArray:
+		effects.remove(index)
+	
+	if isPoisoned:
+		sprite.modulate = Color(0, 1, 0)
+	else:
+		sprite.modulate = Color(1,1,1)
+		
+	if totalHeal > 0:
+		stats.health += totalHeal
+				
+		var text = floatingText.instance()
+		text.amount = totalHeal
+		text.isDamage = false
+		add_child(text)
+	if totalDamage > 0:
+		stats.health -= totalDamage
+		
+		bloodParticles.emitting = true
+		var text = floatingText.instance()
+		text.amount = totalDamage
+		add_child(text)
+
