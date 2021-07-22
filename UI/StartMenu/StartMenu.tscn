@@ -131,10 +131,10 @@ __meta__ = {
 }
 
 [node name="ColorPicker" type="ColorPicker" parent="Control"]
-margin_left = -248.0
-margin_top = 196.0
-margin_right = 60.0
-margin_bottom = 608.0
+margin_left = -274.923
+margin_top = 204.0
+margin_right = 33.0765
+margin_bottom = 616.0
 color = Color( 0.0823529, 0.545098, 0, 1 )
 edit_alpha = false
 presets_enabled = false
