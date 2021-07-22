@@ -1,4 +1,4 @@
-[gd_scene load_steps=54 format=2]
+[gd_scene load_steps=53 format=2]
 
 [ext_resource path="res://GrandBattleArena.gd" type="Script" id=1]
 [ext_resource path="res://Assets/TileSets/RockBase.tres" type="TileSet" id=2]
@@ -21,7 +21,6 @@
 [ext_resource path="res://Assets/CharacterAssets/Shadows/LargeShadow.png" type="Texture" id=19]
 [ext_resource path="res://Assets/DexPillar.png" type="Texture" id=20]
 [ext_resource path="res://Assets/ConPillar.png" type="Texture" id=21]
-[ext_resource path="res://World/Encounters/TestEncounter.tres" type="Resource" id=22]
 
 [sub_resource type="NavigationPolygon" id=1]
 vertices = PoolVector2Array( 0, 0, 24, 0, 24, 24, 0, 24 )
@@ -307,7 +306,8 @@ tracks/0/keys = {
 
 [node name="World" type="Node2D"]
 script = ExtResource( 1 )
-encounters = [ ExtResource( 12 ), ExtResource( 13 ), ExtResource( 14 ), ExtResource( 22 ) ]
+encounters = [ ExtResource( 12 ), ExtResource( 13 ), ExtResource( 14 ) ]
+multiEncounterChance = 0.2
 
 [node name="Navigation2D" type="Navigation2D" parent="."]
 
@@ -384,6 +384,7 @@ shape = SubResource( 11 )
 position = Vector2( 0.625, -2.25 )
 frames = SubResource( 15 )
 animation = "Ready"
+frame = 1
 playing = true
 
 [node name="StaticBody2D" type="StaticBody2D" parent="YSort/NewWaveButton"]
