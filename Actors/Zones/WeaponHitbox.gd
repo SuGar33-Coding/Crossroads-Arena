@@ -21,8 +21,8 @@ onready var parrySfx := $ParrySFX
 signal parried(area)
 
 func setSource(newSource, sourceStr := 0):
-	self.source = newSource
-	fromPlayer = (self.source.name == "Player")
+	source = newSource
+	fromPlayer = (source.name == "Player")
 	setUserStr(sourceStr)
 	
 func setUserStr(value):
