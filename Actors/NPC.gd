@@ -14,6 +14,9 @@ export var movementMaxTime : float = 5.0
 signal no_health()
 
 const PERF_THRESHOLD = 500
+const HAIR_COLORS = [ "#090806", "#504444", "#b89778", "#e6cea8", "#533d32", "#8d4a43"]
+const SKIN_TONES = [ "#6a4e42", "#dcd0ba", "#e5c8a8", "#3b3024", "#cabfb1", "#885e42", "#debc99", "#a56b46"]
+const skinHairShader = preload("res://Actors/SkinHairShader.tres")
 
 enum State {
 	IDLE,
@@ -53,6 +56,11 @@ func _ready():
 	self.MaxSpeed = self.baseSpeed * pow(PlayerStats.dexMoveRatio, stats.dex)
 	stats.connect("dexChanged", self, "_dexterity_changed")
 	self.Friction = self.Friction * pow(PlayerStats.conFrictionRatio, stats.con)
+	
+	if is_instance_valid(sprite.material):
+		sprite.material = skinHairShader.duplicate()
+		randomHairAndSkin()
+	
 	
 func _physics_process(delta):
 	if debug:
@@ -161,6 +169,13 @@ func flipRight():
 	
 func findClosestAlly():
 	pass
+	
+func randomHairAndSkin():
+	var hairColor = Color(HAIR_COLORS[randi() % HAIR_COLORS.size()])
+	sprite.material.set_shader_param("hair_color", hairColor)
+	
+	var skinColor = Color(SKIN_TONES[randi() % SKIN_TONES.size()])
+	sprite.material.set_shader_param("skin_color", skinColor)
 	
 # Returns whether NPC can see target or not
 func sightCheck() -> bool:

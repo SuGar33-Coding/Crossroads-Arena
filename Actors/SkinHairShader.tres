@@ -1,0 +1,11 @@
+[gd_resource type="ShaderMaterial" load_steps=2 format=2]
+
+[ext_resource path="res://Actors/SkinHair.shader" type="Shader" id=1]
+
+[resource]
+shader = ExtResource( 1 )
+shader_param/skin_mask_color = Color( 1, 0, 1, 1 )
+shader_param/skin_color = Color( 0.517647, 0.329412, 0.329412, 1 )
+shader_param/hair_mask_color = Color( 1, 1, 0, 1 )
+shader_param/hair_color = Color( 0.835294, 0.937255, 0.741176, 1 )
+shader_param/tolerance = 0.001

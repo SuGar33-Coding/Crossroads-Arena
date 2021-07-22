@@ -6,19 +6,19 @@
 [ext_resource path="res://Actors/NPC.tscn" type="PackedScene" id=4]
 [ext_resource path="res://Actors/Fighters/Fighter.gd" type="Script" id=5]
 [ext_resource path="res://Assets/CharacterAssets/Shadows/MediumShadow.png" type="Texture" id=6]
-[ext_resource path="res://Assets/CharacterAssets/Bandit.png" type="Texture" id=7]
+[ext_resource path="res://Assets/CharacterAssets/BanditEdit.png" type="Texture" id=7]
 [ext_resource path="res://Actors/Zones/AttackPivot.tscn" type="PackedScene" id=8]
 [ext_resource path="res://Actors/Zones/DetectionZone.tscn" type="PackedScene" id=9]
 [ext_resource path="res://Weapons/BaseSpear.tres" type="Resource" id=10]
 [ext_resource path="res://Actors/Fighters/Bandit/Bandit.tres" type="Resource" id=11]
 
-[sub_resource type="Curve" id=1]
+[sub_resource type="Curve" id=2]
 _data = [ Vector2( 0, 1 ), 0.0, 0.0, 0, 0, Vector2( 1, 0.163636 ), 0.0, 0.0, 0, 0 ]
 
-[sub_resource type="CurveTexture" id=2]
-curve = SubResource( 1 )
+[sub_resource type="CurveTexture" id=3]
+curve = SubResource( 2 )
 
-[sub_resource type="ParticlesMaterial" id=3]
+[sub_resource type="ParticlesMaterial" id=4]
 emission_shape = 1
 emission_sphere_radius = 3.0
 flag_disable_z = true
@@ -33,10 +33,10 @@ linear_accel = 1.0
 angle = 45.0
 angle_random = 1.0
 scale = 3.0
-scale_curve = SubResource( 2 )
+scale_curve = SubResource( 3 )
 color = Color( 0.627451, 0, 0, 1 )
 
-[sub_resource type="Animation" id=4]
+[sub_resource type="Animation" id=5]
 length = 0.3
 tracks/0/type = "method"
 tracks/0/path = NodePath(".")
@@ -113,7 +113,7 @@ tracks/5/keys = {
 "values": [ true ]
 }
 
-[sub_resource type="Animation" id=5]
+[sub_resource type="Animation" id=6]
 length = 2.2
 tracks/0/type = "value"
 tracks/0/path = NodePath("Hurtbox/HurtboxCollision:disabled")
@@ -250,7 +250,7 @@ tracks/10/keys = {
 "values": [ 0 ]
 }
 
-[sub_resource type="Animation" id=6]
+[sub_resource type="Animation" id=7]
 length = 0.01
 tracks/0/type = "value"
 tracks/0/path = NodePath("CollisionShape2D:disabled")
@@ -385,7 +385,7 @@ tracks/10/keys = {
 "values": [ true ]
 }
 
-[sub_resource type="Animation" id=7]
+[sub_resource type="Animation" id=8]
 length = 0.5
 step = 0.01
 tracks/0/type = "method"
@@ -465,8 +465,7 @@ tracks/5/keys = {
 "values": [ true ]
 }
 
-[sub_resource type="Animation" id=8]
-resource_name = "MeleeWindup"
+[sub_resource type="Animation" id=9]
 length = 0.4
 tracks/0/type = "method"
 tracks/0/path = NodePath(".")
@@ -557,7 +556,7 @@ tracks/6/keys = {
 "values": [ 0 ]
 }
 
-[sub_resource type="Animation" id=9]
+[sub_resource type="Animation" id=10]
 length = 0.5
 tracks/0/type = "method"
 tracks/0/path = NodePath(".")
@@ -636,8 +635,7 @@ tracks/5/keys = {
 "values": [ true ]
 }
 
-[sub_resource type="Animation" id=10]
-resource_name = "Walk"
+[sub_resource type="Animation" id=11]
 length = 0.6
 tracks/0/type = "value"
 tracks/0/path = NodePath("Sprite:frame")
@@ -714,17 +712,17 @@ amount = 50
 lifetime = 0.4
 one_shot = true
 explosiveness = 0.65
-process_material = SubResource( 3 )
+process_material = SubResource( 4 )
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="." index="7"]
 autoplay = "Idle"
-anims/Damaged = SubResource( 4 )
-anims/Death = SubResource( 5 )
-anims/Idle = SubResource( 6 )
-anims/MeleeAttack = SubResource( 7 )
-anims/MeleeWindup = SubResource( 8 )
-anims/RangedAttack = SubResource( 9 )
-anims/Walk = SubResource( 10 )
+anims/Damaged = SubResource( 5 )
+anims/Death = SubResource( 6 )
+anims/Idle = SubResource( 7 )
+anims/MeleeAttack = SubResource( 8 )
+anims/MeleeWindup = SubResource( 9 )
+anims/RangedAttack = SubResource( 10 )
+anims/Walk = SubResource( 11 )
 
 [editable path="Hurtbox"]
 [editable path="DetectionZone"]

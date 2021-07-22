@@ -1,0 +1,9 @@
+[gd_resource type="ShaderMaterial" load_steps=2 format=2]
+
+[ext_resource path="res://FX/BannerColor.shader" type="Shader" id=1]
+
+[resource]
+shader = ExtResource( 1 )
+shader_param/banner_mask_color = Color( 1, 0, 1, 1 )
+shader_param/banner_color = Color( 0.196078, 0.482353, 0.219608, 1 )
+shader_param/tolerance = 0.001
