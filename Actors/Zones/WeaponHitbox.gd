@@ -6,7 +6,7 @@ const strKnockbackRatio = 1.05
 
 var fromPlayer: bool = false
 var userStr: int = 0 setget setUserStr
-var source
+var source setget setSource
 var hitboxOffset = 5
 var weaponStats: WeaponInstance
 var weaponDamage: int

@@ -33,7 +33,7 @@ func init(weaponStats: WeaponInstance, source, sourceStr: int, acc := NORMAL):
 
 func _ready():
 	weaponHitbox.setWeapon(weaponStats)
-	weaponHitbox.setSource(source, userStr)
+	weaponHitbox.setSource(self, userStr)
 	
 	if accuracy >= 0:
 		if accuracy <= CRIT:

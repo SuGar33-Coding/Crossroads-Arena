@@ -37,20 +37,21 @@ onready var crosshair := $CrosshairSprite
 
 func init(weaponStats: WeaponInstance, source, sourceStr: int, lifetime: float, numberOfTicks: int):
 	self.weaponStats = weaponStats
-	self.source = source
+	
 	self.totalTicks = numberOfTicks
 	self.lifetime = lifetime
-	
+	self.source = source
 	# AOE stuff scales less with strength
 	self.userStr = sourceStr * 1/3
 	
 	self.fromPlayer = (source.name == "Player")
 	
 	
+	
 
 func _ready():
 	weaponHitbox.setWeapon(weaponStats)
-	weaponHitbox.setSource(source, userStr)
+	weaponHitbox.setSource(self, userStr)
 	
 	# Crosshair radius is 20, so scale that to aoe
 	crosshair.scale.x = .33333
