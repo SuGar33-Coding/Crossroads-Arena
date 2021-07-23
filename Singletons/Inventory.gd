@@ -109,8 +109,12 @@ func sellItem(bagSlot):
 		addCoins(itemToSell.value)
 
 func removeItem(panelName, panelSlot):
+	var item = _inventory[panelName][panelSlot]
 	_inventory[panelName][panelSlot] = null
+	
 	emit_signal("inventory_changed", panelName, null)
+	
+	return item
 
 func swapItems(location1, slot1, location2, slot2):
 	
@@ -129,11 +133,3 @@ func swapItems(location1, slot1, location2, slot2):
 	_inventory[location2][slot2] = item1
 	
 	emit_signal("inventory_changed", location1, location2)
-
-func removeItem(location, slot) -> ItemInstance:
-	var item = _inventory[location][slot]
-	_inventory[location][slot] = null
-	
-	emit_signal("inventory_changed", location)
-	
-	return item
