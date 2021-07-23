@@ -73,7 +73,7 @@ func switchToAttack():
 	attackTimer.start(weaponStats.attackSpeed * stats.attackSpeed * 2)
 	if weaponStats.weaponType == WeaponStats.WeaponType.RANGED:
 		animationPlayer.play("RangedAttack")
-	elif weaponStats.weaponType == WeaponStats.WeaponType.AOE:
+	elif weaponStats.weaponType == WeaponStats.WeaponType.AOE and is_instance_valid(target):
 		# TODO: As soon as they aim, whatever starting aoe animation we have should start playing
 		aoeAttackPos = detectionZone.target.global_position
 		animationPlayer.play("AOEAttack")
@@ -102,7 +102,9 @@ func willChase() -> bool:
 	return detectionZone.hasTarget()
 
 func willAttack() -> bool:
-	var distanceToTarget = self.global_position.distance_to(detectionZone.target.position)
+	var distanceToTarget := 100000.0
+	if detectionZone.hasTarget():
+		distanceToTarget = self.global_position.distance_to(detectionZone.target.position)
 	if attackTimer.is_stopped():
 		if weaponStats.weaponType == WeaponStats.WeaponType.RANGED or weaponStats.weaponType == WeaponStats.WeaponType.AOE:
 			return isTargetVisible and distanceToTarget <= weaponStats.projectileRange 
@@ -118,7 +120,7 @@ func willFlipLeft():
 		return false
 		
 func willFlipRight():
-	if state == State.CHASE:
+	if state == State.CHASE and detectionZone.hasTarget():
 		return global_position.x < target.global_position.x
 	else:
 		return false

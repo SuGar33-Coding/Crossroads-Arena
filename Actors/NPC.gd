@@ -155,7 +155,10 @@ func switchToStun():
 	self.state = State.STUN
 	
 func getTargetPos():
-	return target.global_position
+	if is_instance_valid(target):
+		return target.global_position
+	else:
+		return self.global_position
 	
 func willFlipLeft() -> bool:
 	return velocity.x < 0
@@ -181,7 +184,7 @@ func randomHairAndSkin():
 	
 # Returns whether NPC can see target or not
 func sightCheck() -> bool:
-	if target != null:
+	if is_instance_valid(target):
 		var spaceState := get_world_2d().direct_space_state
 		# Cast ray from collision box since that is the thing that needs to be routed
 		var rayCollision := spaceState.intersect_ray(collision.global_position, target.global_position, [self], collision_mask)

@@ -232,7 +232,8 @@ func _hurtbox_area_entered(area: Hitbox):
 	
 	addEffects(area.effectResources)
 
-	stats.health -= damageAmount
+	if stats.health > 0:
+		stats.health -= damageAmount
 	stats.currentXP += damageAmount
 	camera.add_trauma(area.knockbackValue / 1000.0)
 	knockback = area.getKnockbackVector(self.global_position)

@@ -157,7 +157,7 @@ tracks/10/keys = {
 "values": [ 0 ]
 }
 
-[sub_resource type="Animation" id=16]
+[sub_resource type="Animation" id=3]
 resource_name = "Idle"
 length = 0.01
 tracks/0/type = "value"
@@ -281,7 +281,7 @@ tracks/9/keys = {
 "values": [ 0 ]
 }
 
-[sub_resource type="Animation" id=3]
+[sub_resource type="Animation" id=4]
 length = 0.1
 step = 0.01
 tracks/0/type = "value"
@@ -321,7 +321,7 @@ tracks/2/keys = {
 "values": [ 90.0 ]
 }
 
-[sub_resource type="Animation" id=4]
+[sub_resource type="Animation" id=5]
 length = 0.1
 step = 0.01
 tracks/0/type = "value"
@@ -399,7 +399,7 @@ tracks/5/keys = {
 } ]
 }
 
-[sub_resource type="Animation" id=5]
+[sub_resource type="Animation" id=6]
 length = 0.35
 step = 0.087
 tracks/0/type = "value"
@@ -415,7 +415,7 @@ tracks/0/keys = {
 "values": [ 0, 1, 2, 3, 4 ]
 }
 
-[sub_resource type="Animation" id=6]
+[sub_resource type="Animation" id=7]
 length = 0.1
 step = 0.05
 tracks/0/type = "value"
@@ -431,7 +431,7 @@ tracks/0/keys = {
 "values": [ 5, 0 ]
 }
 
-[sub_resource type="Animation" id=7]
+[sub_resource type="Animation" id=8]
 length = 0.1
 step = 0.01
 tracks/0/type = "value"
@@ -471,7 +471,7 @@ tracks/2/keys = {
 "values": [ Vector2( 0, 0 ), Vector2( 30, 0 ), Vector2( 28.7, 0 ) ]
 }
 
-[sub_resource type="Animation" id=8]
+[sub_resource type="Animation" id=9]
 length = 0.6
 tracks/0/type = "value"
 tracks/0/path = NodePath("Sprite:modulate")
@@ -486,7 +486,7 @@ tracks/0/keys = {
 "values": [ Color( 1, 1, 1, 1 ), Color( 0.682353, 0, 0, 1 ), Color( 1, 1, 1, 1 ), Color( 0.682353, 0, 0, 1 ), Color( 1, 1, 1, 1 ), Color( 0.682353, 0, 0, 1 ), Color( 1, 1, 1, 1 ) ]
 }
 
-[sub_resource type="Animation" id=9]
+[sub_resource type="Animation" id=10]
 length = 0.15
 step = 0.01
 tracks/0/type = "value"
@@ -514,7 +514,7 @@ tracks/1/keys = {
 "values": [ Color( 1, 1, 1, 1 ), Color( 0.0784314, 0, 1, 1 ), Color( 0.0784314, 0, 1, 1 ), Color( 1, 1, 1, 1 ) ]
 }
 
-[sub_resource type="Animation" id=10]
+[sub_resource type="Animation" id=11]
 length = 0.2
 step = 0.05
 tracks/0/type = "method"
@@ -558,7 +558,7 @@ tracks/1/keys = {
 } ]
 }
 
-[sub_resource type="Animation" id=11]
+[sub_resource type="Animation" id=12]
 length = 0.01
 tracks/0/type = "value"
 tracks/0/path = NodePath("Sprite:frame")
@@ -657,7 +657,7 @@ tracks/7/keys = {
 "values": [ 0 ]
 }
 
-[sub_resource type="Animation" id=12]
+[sub_resource type="Animation" id=13]
 length = 0.6
 step = 0.05
 tracks/0/type = "method"
@@ -767,13 +767,13 @@ tracks/7/keys = {
 "values": [ 1, 2, 3, 4 ]
 }
 
-[sub_resource type="Curve" id=13]
+[sub_resource type="Curve" id=14]
 _data = [ Vector2( 0, 1 ), 0.0, 0.0, 0, 0, Vector2( 1, 0.163636 ), 0.0, 0.0, 0, 0 ]
 
-[sub_resource type="CurveTexture" id=14]
-curve = SubResource( 13 )
+[sub_resource type="CurveTexture" id=15]
+curve = SubResource( 14 )
 
-[sub_resource type="ParticlesMaterial" id=15]
+[sub_resource type="ParticlesMaterial" id=16]
 emission_shape = 1
 emission_sphere_radius = 3.0
 flag_disable_z = true
@@ -788,7 +788,7 @@ linear_accel = 1.0
 angle = 45.0
 angle_random = 1.0
 scale = 3.0
-scale_curve = SubResource( 14 )
+scale_curve = SubResource( 15 )
 color = Color( 0.627451, 0, 0, 1 )
 
 [node name="Player" type="KinematicBody2D"]
@@ -796,7 +796,6 @@ collision_layer = 2
 script = ExtResource( 2 )
 
 [node name="ShadowSprite" type="Sprite" parent="."]
-visible = false
 position = Vector2( 0.5, 5 )
 texture = ExtResource( 10 )
 
@@ -864,20 +863,19 @@ collision_layer = 16
 
 [node name="HurtboxCollision" parent="Hurtbox" index="0"]
 position = Vector2( 0, -4 )
-disabled = true
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 autoplay = "Idle"
 anims/Death = SubResource( 2 )
-anims/Idle = SubResource( 16 )
-anims/MeleeAttack = SubResource( 3 )
-anims/Parry = SubResource( 4 )
-"anims/Ranged Draw" = SubResource( 5 )
-anims/RangedRelease = SubResource( 6 )
-anims/Stab = SubResource( 7 )
+anims/Idle = SubResource( 3 )
+anims/MeleeAttack = SubResource( 4 )
+anims/Parry = SubResource( 5 )
+"anims/Ranged Draw" = SubResource( 6 )
+anims/RangedRelease = SubResource( 7 )
+anims/Stab = SubResource( 8 )
 
 [node name="DamagedPlayer" type="AnimationPlayer" parent="."]
-anims/Damaged = SubResource( 8 )
+anims/Damaged = SubResource( 9 )
 
 [node name="DashTimer" type="Timer" parent="."]
 one_shot = true
@@ -886,10 +884,10 @@ one_shot = true
 
 [node name="MovementAnimation" type="AnimationPlayer" parent="."]
 autoplay = "Idle"
-anims/Blink = SubResource( 9 )
-anims/Dashing = SubResource( 10 )
-anims/Idle = SubResource( 11 )
-anims/Walking = SubResource( 12 )
+anims/Blink = SubResource( 10 )
+anims/Dashing = SubResource( 11 )
+anims/Idle = SubResource( 12 )
+anims/Walking = SubResource( 13 )
 
 [node name="Footstep1" type="AudioStreamPlayer2D" parent="."]
 stream = ExtResource( 12 )
@@ -908,7 +906,7 @@ amount = 50
 lifetime = 0.4
 one_shot = true
 explosiveness = 0.65
-process_material = SubResource( 15 )
+process_material = SubResource( 16 )
 
 [editable path="AttackPivot"]
 [editable path="AttackPivot/WeaponHitbox"]

@@ -56,9 +56,6 @@ func willStun() -> bool:
 	return not bursting
 
 func lookAtTarget():
-	#if bursting:
-	#	attackPivot.rotation = 0
-	#else:
 	attackPivot.lookAtTarget(detectionZone.target.position)
 
 func slowBurstSpeed():
@@ -79,8 +76,10 @@ func setBurstTargetPos():
 func getTargetPos():
 	if bursting:
 		return burstTarget
-	else:
+	elif is_instance_valid(target):
 		return target.global_position
+	else:
+		return self.global_position
 
 func setBursting(value : bool):
 	bursting = value
@@ -98,7 +97,7 @@ func spawnPoundFx():
 	attackPivot.add_child(poundFxInstance)"""
 
 func canBurst():
-	if self.isTargetVisible:
+	if self.isTargetVisible and is_instance_valid(target):
 		var distanceToTarget = self.global_position.distance_to(target.global_position)
 		return burstTimer.is_stopped() and distanceToTarget <= maxBurstRange and distanceToTarget >= minBurstRange
 	else:

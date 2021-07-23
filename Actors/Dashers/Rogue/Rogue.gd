@@ -77,8 +77,10 @@ func setBurstTargetPos():
 func getTargetPos():
 	if bursting:
 		return burstTarget
-	else:
+	elif is_instance_valid(target):
 		return target.global_position
+	else:
+		return self.global_position
 
 func setBursting(value : bool):
 	bursting = value
@@ -91,7 +93,7 @@ func spawnDashFx():
 	get_tree().current_scene.add_child(dashCloudFxInstance)
 
 func canBurst():
-	if self.isTargetVisible:
+	if self.isTargetVisible and is_instance_valid(target):
 		var distanceToTarget = self.global_position.distance_to(target.global_position)
 		return burstTimer.is_stopped() and distanceToTarget <= maxBurstRange and distanceToTarget >= minBurstRange
 	else:
