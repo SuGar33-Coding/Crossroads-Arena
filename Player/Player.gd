@@ -90,13 +90,16 @@ func _physics_process(delta):
 		var consumables := Inventory.getConsumables()
 		var keys := consumables.keys()
 		
+		var consumableKey = null
 		var consumableInstance = null
 		
 		for key in keys:
 			if is_instance_valid(consumables[key]):
 				consumableInstance = consumables[key]
+				consumableKey = key
 		
 		if is_instance_valid(consumableInstance):
+			Inventory.removeItem("consumable", consumableKey)
 			var consumableResource := (consumableInstance.resource as Consumable)
 			self.addEffects(consumableResource.effectResources)
 
@@ -246,7 +249,7 @@ func _playerstats_no_health():
 	var world = get_tree().current_scene
 	world.add_child(camera)
 	world.playerDied()
-	self.queue_free()
+	animationPlayer.play("Death")
 
 func _inventory_changed(from_panel, to_panel):
 	if(from_panel == "armor" or to_panel == "armor"):
@@ -272,7 +275,7 @@ func _combo_finished():
 func _process_effects():
 	var totalStr = stats.baseStr
 	var totalCon = stats.baseCon
-	var totatDex = stats.baseDex
+	var totalDex = stats.baseDex
 	var totalHeal := 0
 	var totalDamage := 0
 	var isPoisoned := false
@@ -294,11 +297,11 @@ func _process_effects():
 				
 				isPoisoned = true
 			Effect.EffectType.STR:
-				pass
+				totalStr += effect.amount
 			Effect.EffectType.CON:
-				pass
+				totalCon += effect.amount
 			Effect.EffectType.DEX:
-				pass
+				totalDex += effect.amount
 		
 		effectEntry.ticks -= 1
 		
@@ -315,6 +318,15 @@ func _process_effects():
 		sprite.modulate = Color(0, 1, 0)
 	else:
 		sprite.modulate = Color(1,1,1)
+		
+	if stats.baseStr != totalStr or stats.strength != stats.baseStr:
+		stats.strength = totalStr
+		
+	if stats.baseCon != totalCon or stats.con != stats.baseCon:
+		stats.con = totalCon
+		
+	if stats.baseDex != totalDex or stats.dex != stats.baseDex:
+		stats.dex = totalDex
 		
 	if totalHeal > 0:
 		stats.health += totalHeal

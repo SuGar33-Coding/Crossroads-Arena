@@ -59,7 +59,7 @@ func _ready():
 	worldItem.global_position = newWaveButtonSprite.global_position + Vector2(30, 0)
 	itemSort.add_child(worldItem)
 	
-	startingItem  = get_node(ItemManager.createItem("res://Weapons/LongSword.tres"))
+	startingItem  = get_node(ItemManager.createItem("res://Weapons/BaseSword.tres"))
 	
 	worldItem = WorldItem.instance()
 	worldItem.init(startingItem)

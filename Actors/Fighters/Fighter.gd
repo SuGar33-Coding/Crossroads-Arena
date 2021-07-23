@@ -168,6 +168,7 @@ func _hurtbox_area_entered(area: Hitbox):
 	# Stop any sheen
 	attackPivot.weaponMat.set_shader_param("active", false)
 	
+	
 	addEffects(area.effectResources)
 	
 	._hurtbox_area_entered(area)
@@ -284,7 +285,7 @@ func _process_effects():
 		text.amount = totalHeal
 		text.isDamage = false
 		add_child(text)
-	if totalDamage > 0:
+	if totalDamage > 0 and stats.health >= 1:
 		stats.health -= totalDamage
 		
 		bloodParticles.emitting = true

@@ -109,6 +109,10 @@ func sellItem(bagSlot):
 	if is_instance_valid(itemToSell):
 		addCoins(itemToSell.value)
 
+func removeItem(panelName, panelSlot):
+	_inventory[panelName][panelSlot] = null
+	emit_signal("inventory_changed", panelName, null)
+
 func swapItems(location1, slot1, location2, slot2):
 	
 	# TODO: Move this somewhere else maybe but only change money with swaps involving shop
