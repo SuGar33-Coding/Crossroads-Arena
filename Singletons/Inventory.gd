@@ -87,6 +87,9 @@ func isBagFull():
 			return false
 	return true
 
+func isSlotEmpty(panel, slot):
+	return !is_instance_valid(_inventory[panel][slot])
+
 func addItemToBag(item: ItemInstance):
 	for slot in _inventory.bag.keys():
 		if _inventory.bag[slot] == null:

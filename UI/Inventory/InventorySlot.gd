@@ -1,5 +1,19 @@
 class_name InventorySlot extends Panel
 
+var tooltip = preload("res://UI/Inventory/ToolTip.tscn")
+
+var ttInstance: Popup
+
+func _ready():
+	self.connect("mouse_entered", self, "onMouseEntered")
+	self.connect("mouse_exited", self, "onMouseExited")
+
+func _process(delta):
+	if Input.is_action_pressed("info") and is_instance_valid(ttInstance):
+		ttInstance.show()
+	elif is_instance_valid(ttInstance):
+		ttInstance.hide()
+
 func _gui_input(event):
 	if event is InputEventMouseButton:
 		if event.button_index == BUTTON_RIGHT and event.pressed:
@@ -42,3 +56,13 @@ func get_drag_data(_position):
 
 func drop_data(_position, data):
 	Inventory.swapItems(data.originPanel, data.originSlotName, getPanelName(), data.targetSlotName)
+
+func onMouseEntered():
+	if (!Inventory.isSlotEmpty(getPanelName(), getSlotName())):
+		ttInstance = tooltip.instance()
+		# TODO: pass in the item instance
+		add_child(ttInstance)
+
+func onMouseExited():
+	if (is_instance_valid(ttInstance)):
+		ttInstance.queue_free()
