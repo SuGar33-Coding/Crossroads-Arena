@@ -48,16 +48,15 @@ var _inventory := {
 		"0": null,
 		"1": null
 	},
-	"coins": 0
 }
 
+var _coins: int = 0
+
 func resetInventory():
+	_coins = 0
 	for key in _inventory.keys():
-		if key == "coins":
-			_inventory[key] = 0
-		else:
-			for lowerKey in _inventory[key].keys():
-				_inventory[key][lowerKey] = null
+		for lowerKey in _inventory[key].keys():
+			_inventory[key][lowerKey] = null
 	
 	# TODO: Figure out how/when to populate the shop
 	_inventory.shop["0"] = get_node(ItemManager.createItem("res://Items/Boots.tres"))
@@ -80,7 +79,7 @@ func getWeapons() -> Dictionary:
 	return _inventory.weapon
 
 func getCoins() -> int:
-	return _inventory.coins
+	return _coins
 
 func isBagFull():
 	for slot in _inventory.bag.keys():
@@ -96,8 +95,8 @@ func addItemToBag(item: ItemInstance):
 			break
 
 func addCoins(numCoins: int):
-	_inventory["coins"] += numCoins
-	emit_signal("coins_changed", _inventory["coins"])
+	_coins += numCoins
+	emit_signal("coins_changed", _coins)
 
 func buyItem(shopSlot):
 	var itemToBuy : ItemInstance = Inventory.getShop()[shopSlot]
@@ -126,3 +125,11 @@ func swapItems(location1, slot1, location2, slot2):
 	_inventory[location2][slot2] = item1
 	
 	emit_signal("inventory_changed", location1, location2)
+
+func removeItem(location, slot) -> ItemInstance:
+	var item = _inventory[location][slot]
+	_inventory[location][slot] = null
+	
+	emit_signal("inventory_changed", location)
+	
+	return item

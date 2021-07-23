@@ -290,9 +290,9 @@ config/icon="res://icon.png"
 
 [autoload]
 
-ItemManager="*res://Items/ItemManager.gd"
+ItemManager="*res://Singletons/ItemManager.gd"
 PlayerStats="*res://Player/PlayerStats.gd"
-Inventory="*res://Player/Inventory.gd"
+Inventory="*res://Singletons/Inventory.gd"
 
 [display]
 
