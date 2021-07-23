@@ -91,7 +91,7 @@ func addItemToBag(item: ItemInstance):
 	for slot in _inventory.bag.keys():
 		if _inventory.bag[slot] == null:
 			_inventory.bag[slot] = item
-			emit_signal("inventory_changed", "bag", "bag")
+			emit_signal("inventory_changed", null, "bag")
 			break
 
 func addCoins(numCoins: int):
@@ -108,7 +108,7 @@ func sellItem(bagSlot):
 	if is_instance_valid(itemToSell):
 		addCoins(itemToSell.value)
 
-func removeItem(panelName, panelSlot):
+func removeItem(panelName, panelSlot) -> ItemInstance:
 	var item = _inventory[panelName][panelSlot]
 	_inventory[panelName][panelSlot] = null
 	
