@@ -65,7 +65,7 @@ func stopBurstSpeed():
 	BurstSpeed = 0
 	
 func setBurstTargetPos():
-	if target:
+	if is_instance_valid(target):
 		burstTarget = target.global_position
 		if self.global_position.distance_to(burstTarget) > maxBurstRange:
 			burstTarget = self.global_position + self.global_position.direction_to(burstTarget) * maxBurstRange
