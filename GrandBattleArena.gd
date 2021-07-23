@@ -15,6 +15,7 @@ var Encounter = preload("res://World/Encounters/Encounter.tscn")
 var WorldItem = preload("res://Items/WorldItem.tscn")
 var numEncounters := 0
 var playerNearButton := false
+var playerNearShop := false
 var playerNearStr := false
 var playerNearCon := false
 var playerNearDex := false
@@ -34,6 +35,7 @@ onready var strPillarLabel := $YSort/StrengthPillar/Label
 onready var conPillarLabel := $YSort/ConPillar/Label
 onready var dexPillarLabel := $YSort/DexPillar/Label
 onready var shopUI := $Shop
+onready var shopkeep : ShopKeep = $YSort/ShopKeep
 var largeSpawns : Array
 var medSpawns : Array
 var smallSpawns : Array
@@ -50,6 +52,9 @@ func _ready():
 	strPillarLabel.visible = false
 	conPillarLabel.visible = false
 	dexPillarLabel.visible = false
+	
+	shopkeep.connect("body_entered", self, "_player_entered_shopkeep")
+	shopkeep.connect("body_exited", self, "_player_exited_shopkeep")
 	
 	# TODO: Add starting weapon choices like this
 	var startingItem : ItemInstance = get_node(ItemManager.createItem("res://Items/ChestPlate.tres"))
@@ -153,16 +158,18 @@ func _physics_process(_delta):
 			spawnLabel.visible = true
 			if Input.is_action_just_pressed("interact"):
 				spawnEnemies()
-			elif Input.is_action_just_pressed("openShop"):
+		elif spawnLabel.visible == true:
+			spawnLabel.visible = false
+		
+		if playerNearShop:
+			if Input.is_action_just_pressed("openShop"):
 				shopUI.toggleVisible()
-		else:
-			if spawnLabel.visible == true:
-				spawnLabel.visible = false
-			if shopUI.isVisible():
-				shopUI.toggleVisible()
+		elif shopUI.isVisible():
+			shopUI.toggleVisible()
 
 func spawnEnemies():
 	spawnLabel.visible = false
+	shopkeep.setAvailable(false)
 	
 	waveNumber += 1
 	
@@ -232,27 +239,34 @@ func encounter_finished():
 		strPillarAnimation.play("ChargeUp")
 		conPillarAnimation.play("ChargeUp")
 		dexPillarAnimation.play("ChargeUp")
+		shopkeep.setAvailable(true)
 
-func _on_NewWaveButton_body_entered(body):
+func _on_NewWaveButton_body_entered(_body):
 	playerNearButton = true
 
-func _on_NewWaveButton_body_exited(body):
+func _on_NewWaveButton_body_exited(_body):
 	playerNearButton = false
 
-func _on_StrengthPillar_body_entered(body):
+func _on_StrengthPillar_body_entered(_body):
 	playerNearStr = true
 
-func _on_StrengthPillar_body_exited(body):
+func _on_StrengthPillar_body_exited(_body):
 	playerNearStr = false
 
-func _on_ConPillar_body_entered(body):
+func _on_ConPillar_body_entered(_body):
 	playerNearCon = true
 
-func _on_ConPillar_body_exited(body):
+func _on_ConPillar_body_exited(_body):
 	playerNearCon = false
 
-func _on_DexPillar_body_entered(body):
+func _on_DexPillar_body_entered(_body):
 	playerNearDex = true
 
-func _on_DexPillar_body_exited(body):
+func _on_DexPillar_body_exited(_body):
 	playerNearDex = false
+
+func _player_entered_shopkeep(_body):
+	playerNearShop = true
+
+func _player_exited_shopkeep(_body):
+	playerNearShop = false
