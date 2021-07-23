@@ -35,7 +35,7 @@ func setHealthbarValue(value : float):
 		hpTween.remove_all()
 	
 	# Only flash when there is damage
-	if healthbar.value > value:
+	if healthbar.value >= value:
 		flashCounter = 0
 		timer.start(timeBetweenFlashes)
 	

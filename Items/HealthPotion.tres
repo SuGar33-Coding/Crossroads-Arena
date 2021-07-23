@@ -1,8 +1,9 @@
-[gd_resource type="Resource" load_steps=4 format=2]
+[gd_resource type="Resource" load_steps=5 format=2]
 
 [ext_resource path="res://Items/Consumable.gd" type="Script" id=1]
 [ext_resource path="res://Assets/ItemAssets/Potion.png" type="Texture" id=2]
 [ext_resource path="res://Items/Effects/LightHealing.tres" type="Resource" id=3]
+[ext_resource path="res://Items/Effects/LightConBuff.tres" type="Resource" id=4]
 
 [resource]
 script = ExtResource( 1 )
@@ -10,4 +11,4 @@ name = "Health Potion"
 value = 20
 texture = ExtResource( 2 )
 modifiers = [  ]
-effectResources = [ ExtResource( 3 ) ]
+effectResources = [ ExtResource( 3 ), ExtResource( 4 ) ]

@@ -136,10 +136,6 @@ __meta__ = {
 
 [node name="NameContainer" parent="PanelContainer/VBoxContainer" instance=ExtResource( 4 )]
 
-[node name="ValueContainer" parent="PanelContainer/VBoxContainer" instance=ExtResource( 4 )]
-margin_top = 10.0
-margin_bottom = 16.0
-
 [node name="PickupMessage" type="Node2D" parent="."]
 position = Vector2( 0, -30 )
 

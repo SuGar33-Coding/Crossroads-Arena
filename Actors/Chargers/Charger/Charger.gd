@@ -74,7 +74,7 @@ func willFlipRight():
 		 return .willFlipRight()
 
 func canCharge():
-	if self.isTargetVisible:
+	if self.isTargetVisible and is_instance_valid(target):
 		var distanceToTarget = self.global_position.distance_to(target.global_position)
 
 		return chargeTimer.is_stopped() and distanceToTarget <= maxChargeRange and distanceToTarget >= minChargeRange

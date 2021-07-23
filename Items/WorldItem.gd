@@ -18,7 +18,6 @@ onready var itemSprite = $ItemSprite
 onready var tooltipPanel = $PanelContainer
 onready var vboxContainer = $PanelContainer/VBoxContainer
 onready var nameLabel = $PanelContainer/VBoxContainer/NameContainer/Label
-onready var valueLabel = $PanelContainer/VBoxContainer/ValueContainer/Label
 onready var animationPlayer = $AnimationPlayer
 onready var pickupMessage = $PickupMessage
 
@@ -37,10 +36,9 @@ func _ready():
 	pickupMessage.visible = false
 	itemSprite.texture = item.getTexture()
 	if is_instance_valid(item.modifier):
-		nameLabel.text = item.modifier.name + " " + item.itemName
-	else:
-		nameLabel.text = item.itemName
-	valueLabel.text = str(itemResource.value)
+		nameLabel.text = item.modifier.name + " "
+	
+	nameLabel.text += item.itemName + " - " + str(itemResource.value)
 	itemSprite.material = ShaderMaterial.new()
 	
 	velocity = baseSpeed * movementDir
@@ -50,12 +48,21 @@ func _ready():
 		addNewLabel("DEF:   " + str(itemResource.defenseValue))
 		addNewLabel("SPD:   " + str(itemResource.speedModifier))
 	elif itemResource is Consumable:
-		pass
+		if itemResource.effectResources.size() > 0:
+			for effectResource in itemResource.effectResources:
+				addNewLabel(Effect.EffectType.keys()[effectResource.effectType] + ": " + str(effectResource.amount))
+			
 	elif itemResource is WeaponStats:
 		itemResource = itemResource as WeaponStats
 		addNewLabel("Type:   " + WeaponStats.WeaponType.keys()[itemResource.weaponType])
 		addNewLabel("DMG:   " + str(itemResource.damage))
+		addNewLabel("AP:    " + str(itemResource.armorPierce))
 		addNewLabel("ATK:   " + str(stepify((1.0/itemResource.attackSpeed), .01)) + "/s")
+		if itemResource.effectResources.size() > 0:
+			var effectLabel = "EFF: "
+			for effectResource in itemResource.effectResources:
+				effectLabel += Effect.EffectType.keys()[effectResource.effectType] + " "
+			addNewLabel(effectLabel)
 
 func _physics_process(delta):
 	if(playerInZone and mouseInZone):

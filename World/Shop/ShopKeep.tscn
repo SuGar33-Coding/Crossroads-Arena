@@ -1,0 +1,116 @@
+[gd_scene load_steps=16 format=2]
+
+[ext_resource path="res://World/Shop/ShopKeep.gd" type="Script" id=1]
+[ext_resource path="res://Assets/CharacterAssets/ShopKeep.png" type="Texture" id=2]
+[ext_resource path="res://Assets/CharacterAssets/Shadows/MediumShadow.png" type="Texture" id=3]
+
+[sub_resource type="AtlasTexture" id=1]
+atlas = ExtResource( 2 )
+region = Rect2( 0, 0, 32, 32 )
+
+[sub_resource type="AtlasTexture" id=2]
+atlas = ExtResource( 2 )
+region = Rect2( 32, 0, 32, 32 )
+
+[sub_resource type="SpriteFrames" id=3]
+animations = [ {
+"frames": [ SubResource( 1 ), SubResource( 2 ) ],
+"loop": true,
+"name": "default",
+"speed": 2.0
+} ]
+
+[sub_resource type="Gradient" id=8]
+offsets = PoolRealArray( 0, 0.542636 )
+colors = PoolColorArray( 0.890961, 0.232468, 0.929872, 1, 0.996278, 0.962742, 0.610999, 1 )
+
+[sub_resource type="GradientTexture" id=9]
+gradient = SubResource( 8 )
+
+[sub_resource type="Curve" id=5]
+_data = [ Vector2( 0, 1 ), 0.0, 0.0, 0, 0, Vector2( 1, 0 ), -1.87786, 0.0, 0, 0 ]
+
+[sub_resource type="CurveTexture" id=6]
+curve = SubResource( 5 )
+
+[sub_resource type="ParticlesMaterial" id=7]
+emission_shape = 1
+emission_sphere_radius = 1.0
+flag_disable_z = true
+direction = Vector3( 0, 0, 0 )
+spread = 170.58
+gravity = Vector3( 0, 0, 0 )
+initial_velocity = 250.0
+initial_velocity_random = 0.22
+orbit_velocity = 0.0
+orbit_velocity_random = 0.0
+scale = 2.0
+scale_curve = SubResource( 6 )
+color_ramp = SubResource( 9 )
+
+[sub_resource type="CapsuleShape2D" id=4]
+radius = 3.5
+height = 7.5
+
+[sub_resource type="CircleShape2D" id=10]
+radius = 35.8441
+
+[sub_resource type="DynamicFontData" id=17]
+font_path = "res://Assets/Adventurer.ttf"
+
+[sub_resource type="DynamicFont" id=18]
+size = 7
+outline_size = 1
+outline_color = Color( 0, 0, 0, 1 )
+use_filter = true
+font_data = SubResource( 17 )
+
+[node name="ShopKeep" type="Area2D"]
+collision_layer = 0
+collision_mask = 2
+script = ExtResource( 1 )
+
+[node name="AnimatedSprite" type="AnimatedSprite" parent="."]
+position = Vector2( 0, -6.25 )
+frames = SubResource( 3 )
+playing = true
+
+[node name="ShadowSprite" type="Sprite" parent="AnimatedSprite"]
+position = Vector2( 0.496063, 10.2185 )
+texture = ExtResource( 3 )
+
+[node name="Particles2D" type="Particles2D" parent="."]
+position = Vector2( 0, -5 )
+emitting = false
+amount = 100
+lifetime = 0.15
+one_shot = true
+explosiveness = 1.0
+process_material = SubResource( 7 )
+
+[node name="StaticBody2D" type="StaticBody2D" parent="."]
+collision_layer = 0
+
+[node name="CollisionShape" type="CollisionShape2D" parent="StaticBody2D"]
+position = Vector2( 0.5, 2.75 )
+rotation = 1.5708
+shape = SubResource( 4 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource( 10 )
+
+[node name="Label" type="Label" parent="."]
+margin_left = -34.9122
+margin_top = -41.5049
+margin_right = 39.0878
+margin_bottom = -22.5049
+custom_fonts/font = SubResource( 18 )
+text = "Press [B] to open shop"
+align = 1
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[connection signal="body_entered" from="." to="." method="_on_ShopKeep_body_entered"]
+[connection signal="body_exited" from="." to="." method="_on_ShopKeep_body_exited"]
