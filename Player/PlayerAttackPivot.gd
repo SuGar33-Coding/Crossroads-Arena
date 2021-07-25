@@ -104,14 +104,14 @@ func _physics_process(delta):
 					rangedFx.visible = true
 					attackTimer.start(.5)
 					animationPlayer.play("Ranged Draw")
-					PlayerStats.maxSpeed *= .5
+					PlayerStats.maxSpeed *= .3
 					chargingRanged = true
 					chargingTime = 0.0
 				elif weaponStats.weaponType == WeaponStats.WeaponType.AOE:
 					attackTimer.start(aoeAttackLeadup)
 					chargingAoe = true
 					self.startAOEAnimation(aoeAttackLeadup)
-					PlayerStats.maxSpeed *= .5
+					PlayerStats.maxSpeed *= .3
 					
 			elif chargingRanged and (not Input.is_action_pressed("attack")) and weaponStats.weaponType == WeaponStats.WeaponType.RANGED:
 				fireRangedAttack()

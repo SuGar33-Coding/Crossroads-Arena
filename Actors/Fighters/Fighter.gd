@@ -24,7 +24,7 @@ onready var effectsTimer := $AttackPivot/EffectsTimer
 var sinX = rand_range(0, TAU)
 var noise := OpenSimplexNoise.new()
 var noiseY = 1
-
+var baseColor := Color(1,1,1)
 var aoeAttackPos := Vector2.ZERO
 
 # TODO: Possibly not necessary for the generic fighter class
@@ -153,6 +153,9 @@ func findClosestAlly():
 	if minDist >= 1000:
 		closestAlly = null
 
+func returnToBaseColor():
+	sprite.modulate = baseColor
+
 func playMovement():
 	animationPlayer.playback_speed = 1
 	animationPlayer.play("Walk")
@@ -234,63 +237,74 @@ func _anim_finished(animName):
 		emit_signal("no_health")
 
 func _process_effects():
-	var totalStr = stats.strength
-	var totalCon = stats.con
-	var totatDex = stats.dex
-	var totalHeal := 0
-	var totalDamage := 0
-	var isPoisoned := false
-	
-	var removeArray = []
-	
-	for i in range(effects.size()):
-		var effectEntry = effects[i]
-		var effect = effectEntry.effect as Effect
-		match effect.effectType:
-			Effect.EffectType.HEAL:
-				totalHeal += effect.amount
-				
-			Effect.EffectType.BLEED:
-				totalDamage += effect.amount
-				
-			Effect.EffectType.POISON:
-				totalDamage += effect.amount
-				
-				isPoisoned = true
-			Effect.EffectType.STR:
-				pass
-			Effect.EffectType.CON:
-				pass
-			Effect.EffectType.DEX:
-				pass
+	if not effects.empty():
+		var totalHeal := 0
+		var totalDamage := 0
+		var maxPoison := 0
+		var maxBleed := 0
+		var isPoisoned := false
+		var isBleeding := false
+		var speedSlow := 0.0
 		
-		effectEntry.ticks -= 1
+		var removeArray = []
 		
-		if effectEntry.ticks <= 0:
-			removeArray.append(i)
-	
-	# Invert array since we went through the array in order originally
-	# Avoids changing array indices while iterating through
-	removeArray.invert()
-	for index in removeArray:
-		effects.remove(index)
-	
-	if isPoisoned:
-		sprite.modulate = Color(0, 1, 0)
-	else:
-		sprite.modulate = Color(1,1,1)
+		# TODO: as of rn enemies are not effected by stat changes
+		for i in range(effects.size()):
+			var effectEntry = effects[i]
+			var effect = effectEntry.effect as Effect
+			match effect.effectType:
+				Effect.EffectType.HEAL:
+					if effect.amount > totalHeal:
+						totalHeal = effect.amount
+					
+				Effect.EffectType.BLEED:
+					if effect.amount > maxBleed:
+						maxBleed = effect.amount
+					isBleeding = true
+				Effect.EffectType.POISON:
+					if effect.amount > maxPoison:
+						maxPoison = effect.amount
+					
+					isPoisoned = true
+				Effect.EffectType.SLOW:
+					if effect.amount > speedSlow:
+						speedSlow = effect.amount
+			
+			effectEntry.ticks -= 1
+			
+			if effectEntry.ticks <= 0:
+				removeArray.append(i)
 		
-	if totalHeal > 0:
-		stats.health += totalHeal
-				
-		var text = floatingText.instance()
-		text.amount = totalHeal
-		text.isDamage = false
-		add_child(text)
-	if totalDamage > 0 and stats.health >= 1:
-		stats.health -= totalDamage
+		totalDamage = maxBleed + maxPoison
 		
-		bloodParticles.emitting = true
-		var text = floatingText.instance()
-		text.amount = totalDamage
-		add_child(text)
+		# Invert array since we went through the array in order originally
+		# Avoids changing array indices while iterating through
+		removeArray.invert()
+		for index in removeArray:
+			effects.remove(index)
+		
+		if isPoisoned:
+			baseColor = Color(0, 1, 0)
+		else:
+			baseColor = Color(1,1,1)
+			
+		returnToBaseColor()
+			
+		if isBleeding:
+			bloodParticles.emitting = true
+			
+		if totalHeal > 0:
+			stats.health += totalHeal
+					
+			var text = floatingText.instance()
+			text.amount = totalHeal
+			text.isDamage = false
+			add_child(text)
+		if totalDamage > 0 and stats.health >= 1:
+			stats.health -= totalDamage
+			
+			var text = floatingText.instance()
+			text.amount = totalDamage
+			add_child(text)
+		
+		self.MaxSpeed = self.baseSpeed * pow(PlayerStats.dexRatio, stats.dex) * (1.0 - (speedSlow/100.0))

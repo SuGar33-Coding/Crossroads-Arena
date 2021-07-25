@@ -18,7 +18,11 @@ var dashSpeed := 500
 var HitEffect = preload("res://FX/HitEffect.tscn")
 var floatingText = preload("res://UI/FloatingText.tscn")
 var Friction: float
+var baseArmorValue : int = 0
 var armorValue : int = 0
+var currentArmorShred : int = 0
+var currentArmorBuff : int = 0
+var baseColor := Color(1,1,1)
 # effects will be a list of effects resources and remaining ticks until effect goes away
 var effects := []
 
@@ -174,7 +178,7 @@ func playFootstep(foot = 1):
 			footstep2.play()
 
 func checkArmorStats():
-	armorValue = 0
+	baseArmorValue = 0
 	stats.speedModifier = 1.0
 	var armorDict = inventory.getArmor()
 	for key in armorDict.keys():
@@ -188,7 +192,7 @@ func checkArmorStats():
 					chestSprite.texture = piece.characterTexture
 				Armor.Type.Feet:
 					legSprite.texture = piece.characterTexture
-			armorValue += piece.defenseValue
+			baseArmorValue += piece.defenseValue
 			stats.speedModifier += piece.speedModifier
 		else:
 			match key:
@@ -198,7 +202,9 @@ func checkArmorStats():
 					chestSprite.texture = null
 				Armor.Type.Feet:
 					legSprite.texture = null
-	 
+	
+	armorValue = baseArmorValue - currentArmorShred + currentArmorBuff
+	
 	stats.resetMaxSpeed()
 	# Speed modifier affects dash speed half as much
 	dashSpeed = baseDashSpeed * (1.0 + ((stats.speedModifier - 1.0)/2.0))
@@ -208,6 +214,9 @@ func addEffects(effectResources : Array):
 	for effectResource in effectResources:
 		effectResource = effectResource as Effect
 		effects.append({"effect": effectResource, "ticks": effectResource.totalTicks})
+
+func returnToBaseColor():
+	sprite.modulate = baseColor
 
 func _player_level_changed(_newPlayerLevel):
 	attackPivot.userStr = PlayerStats.strength
@@ -274,73 +283,107 @@ func _combo_finished():
 	PlayerStats.resetMaxSpeed()
 
 func _process_effects():
-	var totalStr = stats.baseStr
-	var totalCon = stats.baseCon
-	var totalDex = stats.baseDex
-	var totalHeal := 0
-	var totalDamage := 0
-	var isPoisoned := false
-	
-	var removeArray = []
-	
-	for i in range(effects.size()):
-		var effectEntry = effects[i]
-		var effect = effectEntry.effect as Effect
-		match effect.effectType:
-			Effect.EffectType.HEAL:
-				totalHeal += effect.amount
-				
-			Effect.EffectType.BLEED:
-				totalDamage += effect.amount
-				
-			Effect.EffectType.POISON:
-				totalDamage += effect.amount
-				
-				isPoisoned = true
-			Effect.EffectType.STR:
-				totalStr += effect.amount
-			Effect.EffectType.CON:
-				totalCon += effect.amount
-			Effect.EffectType.DEX:
-				totalDex += effect.amount
+	if not effects.empty():
+		var totalStr = stats.baseStr
+		var totalCon = stats.baseCon
+		var totalDex = stats.baseDex
+		var totalHeal := 0
+		var totalDamage := 0
+		var maxPoison := 0
+		var maxBleed := 0
+		var isPoisoned := false
+		var isBleeding := false
+		var speedSlow := 0.0
+		var armorShred := 0
+		var armorBuff := 0
 		
-		effectEntry.ticks -= 1
+		var removeArray = []
 		
-		if effectEntry.ticks <= 0:
-			removeArray.append(i)
-	
-	# Invert array since we went through the array in order originally
-	# Avoids changing array indices while iterating through
-	removeArray.invert()
-	for index in removeArray:
-		effects.remove(index)
-	
-	if isPoisoned:
-		sprite.modulate = Color(0, 1, 0)
-	else:
-		sprite.modulate = Color(1,1,1)
+		for i in range(effects.size()):
+			var effectEntry = effects[i]
+			var effect = effectEntry.effect as Effect
+			match effect.effectType:
+				Effect.EffectType.HEAL:
+					if effect.amount > totalHeal:
+						totalHeal = effect.amount
+					
+				Effect.EffectType.BLEED:
+					if effect.amount > maxBleed:
+						maxBleed = effect.amount
+					isBleeding = true
+				Effect.EffectType.POISON:
+					if effect.amount > maxPoison:
+						maxPoison = effect.amount
+					
+					isPoisoned = true
+				Effect.EffectType.STR:
+					totalStr += effect.amount
+				Effect.EffectType.CON:
+					totalCon += effect.amount
+				Effect.EffectType.DEX:
+					totalDex += effect.amount
+				Effect.EffectType.SLOW:
+					if effect.amount > speedSlow:
+						speedSlow = effect.amount
+				Effect.EffectType.ARMOR_SHRED:
+					if effect.amount > armorShred:
+						armorShred = effect.amount
+				Effect.EffectType.ARMOR_BUFF:
+					if effect.amount > armorBuff:
+						armorBuff = effect.amount
+			
+			effectEntry.ticks -= 1
+			
+			if effectEntry.ticks <= 0:
+				removeArray.append(i)
 		
-	if stats.baseStr != totalStr or stats.strength != stats.baseStr:
-		stats.strength = totalStr
+		totalDamage = maxBleed + maxPoison
 		
-	if stats.baseCon != totalCon or stats.con != stats.baseCon:
-		stats.con = totalCon
+		# Invert array since we went through the array in order originally
+		# Avoids changing array indices while iterating through
+		removeArray.invert()
+		for index in removeArray:
+			effects.remove(index)
 		
-	if stats.baseDex != totalDex or stats.dex != stats.baseDex:
-		stats.dex = totalDex
+		if isPoisoned:
+			baseColor = Color(0, 1, 0)
+		else:
+			baseColor = Color(1,1,1)
+			
+		returnToBaseColor()
+			
+		if isBleeding:
+			bloodParticles.emitting = true
+			
+		if stats.baseStr != totalStr or stats.strength != stats.baseStr:
+			stats.strength = totalStr
+			
+		if stats.baseCon != totalCon or stats.con != stats.baseCon:
+			stats.con = totalCon
+			
+		if stats.baseDex != totalDex or stats.dex != stats.baseDex:
+			stats.dex = totalDex
+			
+		if totalHeal > 0:
+			stats.health += totalHeal
+					
+			var text = floatingText.instance()
+			text.amount = totalHeal
+			text.isDamage = false
+			add_child(text)
+		if totalDamage > 0:
+			stats.health -= totalDamage
+					
+			var text = floatingText.instance()
+			text.amount = totalDamage
+			add_child(text)
 		
-	if totalHeal > 0:
-		stats.health += totalHeal
-				
-		var text = floatingText.instance()
-		text.amount = totalHeal
-		text.isDamage = false
-		add_child(text)
-	if totalDamage > 0:
-		stats.health -= totalDamage
+		# Adjust current player speed to this new modifier
+		var newSpeedModifier = 1.0 - (speedSlow / 100.0)
+		PlayerStats.maxSpeed = (PlayerStats.maxSpeed / PlayerStats.effectsSpeedModifier ) * newSpeedModifier
+		PlayerStats.effectsSpeedModifier = newSpeedModifier
 		
-		bloodParticles.emitting = true
-		var text = floatingText.instance()
-		text.amount = totalDamage
-		add_child(text)
+		currentArmorShred = armorShred
+		currentArmorBuff = armorBuff
+		armorValue = baseArmorValue - currentArmorShred + currentArmorBuff
 
