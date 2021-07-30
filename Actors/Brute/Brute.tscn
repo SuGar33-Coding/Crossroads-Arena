@@ -1163,7 +1163,6 @@ rightShadowX = 0.0
 leftShadowX = -2.0
 
 [node name="AttackSignalPos" type="Sprite" parent="." index="0"]
-visible = false
 modulate = Color( 1, 0.952941, 0.576471, 0.611765 )
 position = Vector2( 0, -28 )
 texture = ExtResource( 9 )
@@ -1209,7 +1208,6 @@ rotation = -2.87979
 
 [node name="Particles2D" type="Particles2D" parent="AttackPivot" index="6"]
 position = Vector2( 0, 5 )
-emitting = false
 amount = 50
 lifetime = 0.4
 one_shot = true
