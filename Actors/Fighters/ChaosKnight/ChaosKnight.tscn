@@ -790,7 +790,6 @@ anims/RangedAttack = SubResource( 9 )
 anims/Walk = SubResource( 10 )
 
 [node name="AttackSignalPos" type="Sprite" parent="." index="11"]
-visible = false
 modulate = Color( 1, 0.952941, 0.576471, 0.611765 )
 position = Vector2( 0, -20 )
 texture = ExtResource( 11 )

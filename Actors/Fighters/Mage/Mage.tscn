@@ -858,7 +858,6 @@ frame = 0
 
 [node name="Particles2D" type="Particles2D" parent="AttackPivot" index="6"]
 position = Vector2( 0, 5 )
-emitting = false
 amount = 50
 lifetime = 0.4
 one_shot = true
@@ -877,7 +876,6 @@ anims/RangedAttack = SubResource( 10 )
 anims/Walk = SubResource( 11 )
 
 [node name="AttackSignalPos" type="Sprite" parent="." index="11"]
-visible = false
 modulate = Color( 1, 0.952941, 0.576471, 0.611765 )
 position = Vector2( 0, -20 )
 texture = ExtResource( 11 )
