@@ -179,7 +179,7 @@ func playFootstep(foot = 1):
 
 func checkArmorStats():
 	baseArmorValue = 0
-	stats.speedModifier = 1.0
+	stats.armorSpeedModifier = 1.0
 	var armorDict = inventory.getArmor()
 	for key in armorDict.keys():
 		var itemInstance = armorDict.get(key)
@@ -193,7 +193,7 @@ func checkArmorStats():
 				Armor.Type.Feet:
 					legSprite.texture = piece.characterTexture
 			baseArmorValue += piece.defenseValue
-			stats.speedModifier += piece.speedModifier
+			stats.armorSpeedModifier += piece.speedModifier
 		else:
 			match key:
 				Armor.Type.Head:
@@ -207,7 +207,7 @@ func checkArmorStats():
 	
 	stats.resetMaxSpeed()
 	# Speed modifier affects dash speed half as much
-	dashSpeed = baseDashSpeed * (1.0 + ((stats.speedModifier - 1.0)/2.0))
+	dashSpeed = baseDashSpeed * (1.0 + ((stats.armorSpeedModifier - 1.0)/2.0))
 
 # Takes a list of effect resources and adds them to the player's list of effects
 func addEffects(effectResources : Array):
