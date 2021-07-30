@@ -7,6 +7,8 @@ onready var resumeButton := $ResumeButton
 onready var controlLabel := $ControlsLabel
 onready var controlInfo := $controlsinfo
 onready var background := $ColorRect
+onready var waveLabel := $WaveLabel
+onready var animationPlayer := $AnimationPlayer
 
 # If there are more than starting children, that means there is another menu active
 var startingChildren : int
@@ -36,3 +38,7 @@ func togglePause():
 		background.modulate = Color(1,1,1,.3)
 	else:
 		background.modulate = Color(1,1,1,0)
+
+func newWave():
+	waveLabel.text = "Wave " + str(get_parent().waveNumber)
+	animationPlayer.play("NewWave")

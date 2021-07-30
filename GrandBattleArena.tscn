@@ -805,14 +805,14 @@ rotation = -1.57079
 [node name="CollisionShape2D" parent="Gates/Gate8" index="0"]
 position = Vector2( -9.79987, 0 )
 
-[node name="CanvasLayer" parent="." instance=ExtResource( 8 )]
-layer = 2
-
 [node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
 stream = ExtResource( 7 )
 autoplay = true
 mix_target = 1
 bus = "BGM"
+
+[node name="CanvasLayer" parent="." instance=ExtResource( 8 )]
+layer = 2
 
 [node name="Inventory" parent="." instance=ExtResource( 15 )]
 

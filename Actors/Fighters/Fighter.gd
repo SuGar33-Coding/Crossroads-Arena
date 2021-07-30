@@ -207,6 +207,7 @@ func _stats_no_health():
 			
 			if randf() <= self.weaponDropChance:
 				itemInstance = attackPivot.weaponStats
+				$AttackPivot/WeaponRestingPos/Weapon.visible = false
 			else:
 				itemInstance = get_node(ItemManager.createItem((stats.itemDrops[randi() % stats.itemDrops.size()] as Item).resource_path))
 	
