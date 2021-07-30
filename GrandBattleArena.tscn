@@ -1,4 +1,4 @@
-[gd_scene load_steps=54 format=2]
+[gd_scene load_steps=52 format=2]
 
 [ext_resource path="res://GrandBattleArena.gd" type="Script" id=1]
 [ext_resource path="res://Assets/TileSets/RockBase.tres" type="TileSet" id=2]
@@ -11,9 +11,7 @@
 [ext_resource path="res://Assets/WorldAssets/grassTileMap.png" type="Texture" id=9]
 [ext_resource path="res://World/Gate.tscn" type="PackedScene" id=10]
 [ext_resource path="res://Assets/WaveButton.png" type="Texture" id=11]
-[ext_resource path="res://World/Encounters/FirstEncounter.tres" type="Resource" id=12]
-[ext_resource path="res://World/Encounters/SecondEncounter.tres" type="Resource" id=13]
-[ext_resource path="res://World/Encounters/FirstEncounterTwo.tres" type="Resource" id=14]
+[ext_resource path="res://World/Encounters/TestEncounter.tres" type="Resource" id=12]
 [ext_resource path="res://UI/Inventory/Inventory.tscn" type="PackedScene" id=15]
 [ext_resource path="res://Items/Coin.tscn" type="PackedScene" id=16]
 [ext_resource path="res://UI/Shop/Shop.tscn" type="PackedScene" id=17]
@@ -137,7 +135,7 @@ animations = [ {
 radius = 6.27716
 height = 21.6687
 
-[sub_resource type="DynamicFontData" id=32]
+[sub_resource type="DynamicFontData" id=17]
 font_path = "res://Assets/Adventurer.ttf"
 
 [sub_resource type="DynamicFont" id=18]
@@ -145,7 +143,7 @@ size = 7
 outline_size = 1
 outline_color = Color( 0, 0, 0, 1 )
 use_filter = true
-font_data = SubResource( 32 )
+font_data = SubResource( 17 )
 
 [sub_resource type="CapsuleShape2D" id=19]
 radius = 25.4543
@@ -307,7 +305,7 @@ tracks/0/keys = {
 
 [node name="World" type="Node2D"]
 script = ExtResource( 1 )
-encounters = [ ExtResource( 12 ), ExtResource( 13 ), ExtResource( 14 ) ]
+encounters = [ ExtResource( 12 ), ExtResource( 12 ), ExtResource( 12 ) ]
 multiEncounterChance = 0.2
 
 [node name="Navigation2D" type="Navigation2D" parent="."]

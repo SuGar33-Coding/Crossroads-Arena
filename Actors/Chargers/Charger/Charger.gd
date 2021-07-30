@@ -1,10 +1,14 @@
 class_name Charger extends Fighter
 
+const ChargeDmgSpeedFrac = 0.25
+
 export var maxChargeRange: int = 125
 export var minChargeRange: int = 20
 export var chargeTimeMax: float = 15
 export var chargeTimeMin: float = 8
 export var chargeTimeout: float = 4 # Timeout after which a charge is forced to stop
+
+var dirtSpreadFX = preload("res://FX/DirtSpread.tscn")
 
 var charging := false setget setCharging
 var chargeDirection := Vector2.ZERO
@@ -24,9 +28,18 @@ func _ready():
 	add_child(chargeTimeoutTimer)
 
 func _physics_process(_delta):
-	if charging and (get_slide_count() > 0 or chargeTimeoutTimer.is_stopped()):
-		self.charging = false
-		self.switchToStun()
+	if charging:
+		# check stop conditions
+		if get_slide_count() > 0:
+			# hit something
+			self.charging = false
+		elif chargeTimeoutTimer.is_stopped():
+			# charged for too long
+			self.charging = false
+		
+		# determine when to activate hitbox
+		if velocity.length() > (MaxSpeed * ChargeDmgSpeedFrac):
+			attackPivot.weaponCollision.disabled = false
 
 func willAttack() -> bool:
 	if not charging:
@@ -91,19 +104,33 @@ func setCharging(value: bool):
 	if charging:
 		# Adjust movement for charge
 		self.velocity = Vector2.ZERO
-		self.MaxSpeed = baseMaxSpeed * 2
-		self.Acceleration = baseAcceleration * 2
+		self.MaxSpeed = baseMaxSpeed * 2.5
+		self.Acceleration = baseAcceleration * 0.1
 		
 		setChargeDirection()
 		(attackPivot as ChargerAttackPivot).startCharge(chargeDirection)
 	else:
 		# Reset movement
-		self.velocity = Vector2.ZERO
-		self.MaxSpeed = baseMaxSpeed
 		self.Acceleration = baseAcceleration
+		if get_slide_count() > 0:
+			# hit something
+			var collision := get_slide_collision(0)
+			var travelDir := collision.travel.normalized()
+			var recoilDir := (travelDir * -1).rotated(deg2rad(rand_range(-15, 15)))
+			self.velocity = recoilDir * self.velocity.length() * 1.5
+			
+			var dirtSpreadFXNode: Particles2D = dirtSpreadFX.instance()
+			add_child(dirtSpreadFXNode)
+			dirtSpreadFXNode.emitting = true
+		else:
+			self.velocity = Vector2.ZERO
+		self.MaxSpeed = baseMaxSpeed
 		
 		# Reset weapon
 		(attackPivot as ChargerAttackPivot).stopCharge()
+		
+		# always stun
+		self.switchToStun()
 
 func setChargeDirection():
 	if target != null:

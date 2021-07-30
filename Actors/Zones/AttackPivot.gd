@@ -23,7 +23,7 @@ onready var restingPos := $WeaponRestingPos
 onready var swipe := $Swipe
 onready var tween := $WeaponTween
 onready var backTween := $BackTween
-onready var weaponCollision := $WeaponHitbox/WeaponCollision
+onready var weaponCollision: CollisionShape2D = $WeaponHitbox/WeaponCollision
 onready var weaponHitbox = $WeaponHitbox
 onready var restingRotation = weaponSprite.rotation
 onready var weaponStats : WeaponInstance
