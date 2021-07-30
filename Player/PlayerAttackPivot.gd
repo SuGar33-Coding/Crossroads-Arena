@@ -10,6 +10,7 @@ var chargingTime := 0.0
 var chargingAoe := false
 var aoeAttackLeadup := 0.5
 var fistStats : WeaponInstance
+var perfectEmitted := false
 
 # TODO: Make this a signal call
 onready var inventory = get_node("/root/Inventory")
@@ -52,6 +53,12 @@ func _physics_process(delta):
 	if chargingRanged:
 		rangedFx.global_position = get_global_mouse_position()
 		chargingTime += delta
+		if not perfectEmitted and abs(chargingTime - getRangedAttackTime()) <= RangedProjectile.CRIT:
+			perfectEmitted = true
+			var atkSignal : Particles2D = AttackSignalScene.instance()
+			atkSignal.position = get_global_mouse_position()
+			get_tree().get_current_scene().add_child(atkSignal)
+			atkSignal.set_deferred("emitting", true)
 
 	if not animationPlayer.is_playing():
 		if not (get_parent().inventoryUI.isVisible() or get_parent().shopUI.isVisible()):
@@ -142,6 +149,7 @@ func swapWeapons():
 func fireRangedAttack():
 	chargingRanged = false
 	rangedFx.visible = false
+	perfectEmitted = false
 	PlayerStats.resetMaxSpeed()
 	# To measure accuracy, we find what portion of the attack speed time they were off
 	var atkSpeed = getRangedAttackTime()
