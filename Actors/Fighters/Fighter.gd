@@ -307,4 +307,4 @@ func _process_effects():
 			text.amount = totalDamage
 			add_child(text)
 		
-		self.MaxSpeed = self.baseSpeed * pow(PlayerStats.dexRatio, stats.dex) * (1.0 - (speedSlow/100.0))
+		self.MaxSpeed = self.baseSpeed * pow(PlayerStats.dexMoveRatio, stats.dex) * (1.0 - (speedSlow/100.0))

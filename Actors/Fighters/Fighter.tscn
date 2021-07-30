@@ -1,4 +1,4 @@
-[gd_scene load_steps=21 format=2]
+[gd_scene load_steps=22 format=2]
 
 [ext_resource path="res://Weapons/LongSword.tres" type="Resource" id=1]
 [ext_resource path="res://Actors/Fighters/Fighter.gd" type="Script" id=2]
@@ -9,6 +9,7 @@
 [ext_resource path="res://Assets/CharacterAssets/Shadows/MediumShadow.png" type="Texture" id=7]
 [ext_resource path="res://Assets/CharacterAssets/Bandit.png" type="Texture" id=8]
 [ext_resource path="res://Weapons/BaseSpear.tres" type="Resource" id=9]
+[ext_resource path="res://Assets/CharacterAssets/Attack.png" type="Texture" id=10]
 
 [sub_resource type="Curve" id=1]
 _data = [ Vector2( 0, 1 ), 0.0, 0.0, 0, 0, Vector2( 1, 0.163636 ), 0.0, 0.0, 0, 0 ]
@@ -180,6 +181,18 @@ tracks/5/keys = {
 "update": 1,
 "values": [ true ]
 }
+tracks/6/type = "value"
+tracks/6/path = NodePath("AttackSignalPos:visible")
+tracks/6/interp = 1
+tracks/6/loop_wrap = true
+tracks/6/imported = false
+tracks/6/enabled = true
+tracks/6/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ false ]
+}
 
 [sub_resource type="Animation" id=6]
 length = 2.2
@@ -316,6 +329,18 @@ tracks/10/keys = {
 "transitions": PoolRealArray( 1 ),
 "update": 1,
 "values": [ 0 ]
+}
+tracks/11/type = "value"
+tracks/11/path = NodePath("AttackSignalPos:visible")
+tracks/11/interp = 1
+tracks/11/loop_wrap = true
+tracks/11/imported = false
+tracks/11/enabled = true
+tracks/11/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ false ]
 }
 
 [sub_resource type="Animation" id=7]
@@ -463,6 +488,18 @@ tracks/11/keys = {
 "transitions": PoolRealArray( 1 ),
 "update": 1,
 "values": [ 0 ]
+}
+tracks/12/type = "value"
+tracks/12/path = NodePath("AttackSignalPos:visible")
+tracks/12/interp = 1
+tracks/12/loop_wrap = true
+tracks/12/imported = false
+tracks/12/enabled = true
+tracks/12/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ false ]
 }
 
 [sub_resource type="Animation" id=8]
@@ -635,6 +672,30 @@ tracks/6/keys = {
 "update": 1,
 "values": [ 0 ]
 }
+tracks/7/type = "value"
+tracks/7/path = NodePath("AttackSignalPos:visible")
+tracks/7/interp = 1
+tracks/7/loop_wrap = true
+tracks/7/imported = false
+tracks/7/enabled = true
+tracks/7/keys = {
+"times": PoolRealArray( 0, 0.4 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 1,
+"values": [ true, false ]
+}
+tracks/8/type = "value"
+tracks/8/path = NodePath("AttackSignalPos:modulate")
+tracks/8/interp = 1
+tracks/8/loop_wrap = true
+tracks/8/imported = false
+tracks/8/enabled = true
+tracks/8/keys = {
+"times": PoolRealArray( 0, 0.4 ),
+"transitions": PoolRealArray( 2.07053, 1 ),
+"update": 0,
+"values": [ Color( 1, 0.952941, 0.576471, 0.611765 ), Color( 1, 0, 0, 1 ) ]
+}
 
 [sub_resource type="Animation" id=10]
 length = 0.5
@@ -748,7 +809,6 @@ tracks/2/keys = {
 [node name="Fighter" groups=[
 "Enemies",
 ] instance=ExtResource( 6 )]
-rotation = -1.5708
 script = ExtResource( 2 )
 
 [node name="Shadow" type="Sprite" parent="." index="0"]
@@ -769,7 +829,13 @@ visible = false
 detectionRange = 325
 leaveRange = 1000
 
-[node name="AttackPivot" parent="." index="6" instance=ExtResource( 4 )]
+[node name="AttackSignalPos" type="Sprite" parent="." index="6"]
+visible = false
+modulate = Color( 1, 0.952941, 0.576471, 0.611765 )
+position = Vector2( 0, -20 )
+texture = ExtResource( 10 )
+
+[node name="AttackPivot" parent="." index="7" instance=ExtResource( 4 )]
 weaponStatsResources = [ ExtResource( 3 ), ExtResource( 1 ), ExtResource( 9 ) ]
 
 [node name="Swipe" parent="AttackPivot" index="1"]
@@ -784,7 +850,7 @@ one_shot = true
 explosiveness = 0.65
 process_material = SubResource( 3 )
 
-[node name="AnimationPlayer" type="AnimationPlayer" parent="." index="7"]
+[node name="AnimationPlayer" type="AnimationPlayer" parent="." index="8"]
 autoplay = "Idle"
 anims/AOEAttack = SubResource( 4 )
 anims/Damaged = SubResource( 5 )

@@ -28,7 +28,7 @@ onready var weaponHitbox = $WeaponHitbox
 onready var restingRotation = weaponSprite.rotation
 onready var weaponStats : WeaponInstance
 onready var attackTimer := $AttackTimer
-onready var attackSignalPos := $WeaponRestingPos/AttackSignalPos
+#onready var attackSignalPos := $AttackSignalPos
 onready var quickSfx: AudioStreamPlayer2D = $QuickSFX
 onready var longSfx: AudioStreamPlayer2D = $LongSFX
 
@@ -111,10 +111,10 @@ func startMeleeAttack(animLength: float, type = MeleeAttackType.QUICK):
 	tween.start()
 		
 func playAttackSignal(windUpTime: float, shading: bool = true):
-	var atkSignal : Particles2D = AttackSignalScene.instance()
+	"""var atkSignal : Particles2D = AttackSignalScene.instance()
 	atkSignal.position = attackSignalPos.position
 	restingPos.add_child(atkSignal)
-	atkSignal.set_deferred("emitting", true)
+	atkSignal.set_deferred("emitting", true)"""
 	
 	# Activate the sheen shader
 	if shading:

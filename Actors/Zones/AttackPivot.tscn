@@ -85,9 +85,6 @@ rotation = -1.309
 texture = SubResource( 5 )
 flip_h = true
 
-[node name="AttackSignalPos" type="Position2D" parent="WeaponRestingPos"]
-position = Vector2( -4.13908, -8.41847 )
-
 [node name="AttackTimer" type="Timer" parent="."]
 one_shot = true
 

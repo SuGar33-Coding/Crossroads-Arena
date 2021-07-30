@@ -1,4 +1,4 @@
-[gd_scene load_steps=21 format=2]
+[gd_scene load_steps=22 format=2]
 
 [ext_resource path="res://Weapons/BaseBow.tres" type="Resource" id=1]
 [ext_resource path="res://Actors/Movement/MaintainAndFlank.tres" type="Resource" id=2]
@@ -10,6 +10,7 @@
 [ext_resource path="res://Actors/Zones/AttackPivot.tscn" type="PackedScene" id=8]
 [ext_resource path="res://Actors/Zones/DetectionZone.tscn" type="PackedScene" id=9]
 [ext_resource path="res://Assets/WeaponAssets/Item__01.png" type="Texture" id=10]
+[ext_resource path="res://Assets/CharacterAssets/Attack.png" type="Texture" id=11]
 
 [sub_resource type="Curve" id=1]
 _data = [ Vector2( 0, 1 ), 0.0, 0.0, 0, 0, Vector2( 1, 0.163636 ), 0.0, 0.0, 0, 0 ]
@@ -122,6 +123,18 @@ tracks/6/keys = {
 "transitions": PoolRealArray( 1 ),
 "update": 1,
 "values": [ 0 ]
+}
+tracks/7/type = "value"
+tracks/7/path = NodePath("AttackSignalPos:visible")
+tracks/7/interp = 1
+tracks/7/loop_wrap = true
+tracks/7/imported = false
+tracks/7/enabled = true
+tracks/7/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ false ]
 }
 
 [sub_resource type="Animation" id=5]
@@ -259,6 +272,18 @@ tracks/10/keys = {
 "transitions": PoolRealArray( 1 ),
 "update": 1,
 "values": [ 0 ]
+}
+tracks/11/type = "value"
+tracks/11/path = NodePath("AttackSignalPos:visible")
+tracks/11/interp = 1
+tracks/11/loop_wrap = true
+tracks/11/imported = false
+tracks/11/enabled = true
+tracks/11/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ false ]
 }
 
 [sub_resource type="Animation" id=6]
@@ -418,6 +443,18 @@ tracks/12/keys = {
 "transitions": PoolRealArray( 1 ),
 "update": 1,
 "values": [ 1 ]
+}
+tracks/13/type = "value"
+tracks/13/path = NodePath("AttackSignalPos:visible")
+tracks/13/interp = 1
+tracks/13/loop_wrap = true
+tracks/13/imported = false
+tracks/13/enabled = true
+tracks/13/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ false ]
 }
 
 [sub_resource type="Animation" id=7]
@@ -591,6 +628,30 @@ tracks/6/keys = {
 "update": 1,
 "values": [ 0 ]
 }
+tracks/7/type = "value"
+tracks/7/path = NodePath("AttackSignalPos:visible")
+tracks/7/interp = 1
+tracks/7/loop_wrap = true
+tracks/7/imported = false
+tracks/7/enabled = true
+tracks/7/keys = {
+"times": PoolRealArray( 0, 0.4 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 1,
+"values": [ true, false ]
+}
+tracks/8/type = "value"
+tracks/8/path = NodePath("AttackSignalPos:modulate")
+tracks/8/interp = 1
+tracks/8/loop_wrap = true
+tracks/8/imported = false
+tracks/8/enabled = true
+tracks/8/keys = {
+"times": PoolRealArray( 0, 0.4 ),
+"transitions": PoolRealArray( 2.07053, 1 ),
+"update": 0,
+"values": [ Color( 1, 0.952941, 0.576471, 0.611765 ), Color( 1, 0, 0, 1 ) ]
+}
 
 [sub_resource type="Animation" id=9]
 length = 0.5
@@ -735,6 +796,7 @@ rightShadowX = -0.5
 leftShadowX = -0.5
 
 [node name="Shadow" type="Sprite" parent="." index="0"]
+visible = false
 texture = ExtResource( 6 )
 offset = Vector2( 0.5, 5 )
 
@@ -742,6 +804,9 @@ offset = Vector2( 0.5, 5 )
 position = Vector2( 0, -5 )
 texture = ExtResource( 7 )
 hframes = 5
+
+[node name="HurtboxCollision" parent="Hurtbox" index="0"]
+disabled = true
 
 [node name="Stats" parent="." index="4"]
 statsResource = ExtResource( 3 )
@@ -778,6 +843,12 @@ anims/MeleeAttack = SubResource( 7 )
 anims/MeleeWindup = SubResource( 8 )
 anims/RangedAttack = SubResource( 9 )
 anims/Walk = SubResource( 10 )
+
+[node name="AttackSignalPos" type="Sprite" parent="." index="11"]
+visible = false
+modulate = Color( 1, 0.952941, 0.576471, 0.611765 )
+position = Vector2( 0, -20 )
+texture = ExtResource( 11 )
 
 [editable path="Hurtbox"]
 [editable path="DetectionZone"]
