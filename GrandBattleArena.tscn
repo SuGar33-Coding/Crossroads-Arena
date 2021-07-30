@@ -137,7 +137,7 @@ animations = [ {
 radius = 6.27716
 height = 21.6687
 
-[sub_resource type="DynamicFontData" id=32]
+[sub_resource type="DynamicFontData" id=17]
 font_path = "res://Assets/Adventurer.ttf"
 
 [sub_resource type="DynamicFont" id=18]
@@ -145,7 +145,7 @@ size = 7
 outline_size = 1
 outline_color = Color( 0, 0, 0, 1 )
 use_filter = true
-font_data = SubResource( 32 )
+font_data = SubResource( 17 )
 
 [sub_resource type="CapsuleShape2D" id=19]
 radius = 25.4543
@@ -807,14 +807,14 @@ rotation = -1.57079
 [node name="CollisionShape2D" parent="Gates/Gate8" index="0"]
 position = Vector2( -9.79987, 0 )
 
-[node name="CanvasLayer" parent="." instance=ExtResource( 8 )]
-layer = 2
-
 [node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
 stream = ExtResource( 7 )
 autoplay = true
 mix_target = 1
 bus = "BGM"
+
+[node name="CanvasLayer" parent="." instance=ExtResource( 8 )]
+layer = 2
 
 [node name="Inventory" parent="." instance=ExtResource( 15 )]
 
