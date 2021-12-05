@@ -43,12 +43,18 @@ func switchToAttack():
 		state = State.ATTACK
 		animationPlayer.playback_speed = 1
 		animationPlayer.play("ChargeWindup")
+		$ChargeFX.emitting = true
 		var animLength = animationPlayer.current_animation_length
 
 		chargeTimeoutTimer.start(chargeTimeout)
 		chargeTimer.start(rand_range(chargeTimeMin, chargeTimeMax) + animLength)
 	elif attackTimer.is_stopped():
 		.switchToAttack()
+
+func switchToChase():
+	if charging:
+		attackPivot.weaponCollision.disabled = false
+	.switchToChase()
 
 func willStun() -> bool:
 	if charging:

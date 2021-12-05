@@ -1,4 +1,4 @@
-[gd_scene load_steps=25 format=2]
+[gd_scene load_steps=26 format=2]
 
 [ext_resource path="res://Actors/Chargers/Charger/ChargerAttackPivot.gd" type="Script" id=1]
 [ext_resource path="res://Assets/CharacterAssets/Charger.png" type="Texture" id=2]
@@ -11,6 +11,7 @@
 [ext_resource path="res://Actors/Zones/DetectionZone.tscn" type="PackedScene" id=9]
 [ext_resource path="res://Actors/Fighters/ChaosKnight/ChaosKnight.tres" type="Resource" id=10]
 [ext_resource path="res://Assets/CharacterAssets/Attack.png" type="Texture" id=11]
+[ext_resource path="res://FX/Charge.tscn" type="PackedScene" id=12]
 
 [sub_resource type="Curve" id=1]
 _data = [ Vector2( 0, 1 ), 0.0, 0.0, 0, 0, Vector2( 1, 0.163636 ), 0.0, 0.0, 0, 0 ]
@@ -53,7 +54,6 @@ tracks/0/keys = {
 }
 
 [sub_resource type="Animation" id=5]
-length = 0.6
 step = 0.05
 tracks/0/type = "method"
 tracks/0/path = NodePath(".")
@@ -62,24 +62,12 @@ tracks/0/loop_wrap = true
 tracks/0/imported = false
 tracks/0/enabled = true
 tracks/0/keys = {
-"times": PoolRealArray( 0.6 ),
+"times": PoolRealArray( 1 ),
 "transitions": PoolRealArray( 1 ),
 "values": [ {
 "args": [  ],
 "method": "switchToChase"
 } ]
-}
-tracks/1/type = "value"
-tracks/1/path = NodePath("Sprite:frame")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/imported = false
-tracks/1/enabled = false
-tracks/1/keys = {
-"times": PoolRealArray( 0, 0.2, 0.3 ),
-"transitions": PoolRealArray( 1, 1, 1 ),
-"update": 1,
-"values": [ 0, 1, 1 ]
 }
 
 [sub_resource type="Animation" id=6]
@@ -847,9 +835,7 @@ tracks/2/keys = {
 "values": [ Vector2( 1, 1 ), Vector2( 0.9, 0.9 ), Vector2( 1, 1 ) ]
 }
 
-[node name="Charger" groups=[
-"Enemies",
-] instance=ExtResource( 4 )]
+[node name="Charger" groups=["Enemies"] instance=ExtResource( 4 )]
 script = ExtResource( 3 )
 movementResource = ExtResource( 5 )
 
@@ -862,6 +848,7 @@ offset = Vector2( 0.5, 5 )
 position = Vector2( 0, -5 )
 texture = ExtResource( 2 )
 hframes = 5
+frame = 1
 
 [node name="HurtboxCollision" parent="Hurtbox" index="0"]
 disabled = true
@@ -884,6 +871,7 @@ frame = 0
 
 [node name="Particles2D" type="Particles2D" parent="AttackPivot" index="6"]
 position = Vector2( 0, 5 )
+emitting = false
 amount = 50
 lifetime = 0.4
 one_shot = true
@@ -907,6 +895,8 @@ anims/Walk = SubResource( 13 )
 modulate = Color( 1, 0.952941, 0.576471, 0.611765 )
 position = Vector2( 0, -20 )
 texture = ExtResource( 11 )
+
+[node name="ChargeFX" parent="." index="12" instance=ExtResource( 12 )]
 
 [editable path="Hurtbox"]
 [editable path="DetectionZone"]
