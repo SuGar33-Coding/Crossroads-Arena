@@ -25,7 +25,8 @@ func can_drop_data(_position, data):
 			
 			# if the item is an equipped equipment
 			if Inventory.getBag()[targetBagSlot].resource is Armor:
-				var targetEquipmentType = Inventory.getBag()[targetBagSlot].type
+				# TODO: This sucks fix it
+				var targetEquipmentType = ((Inventory.getBag()[targetBagSlot] as ItemInstance).resource as Armor).type
 				# don't let us make an illegal swap
 				return targetEquipmentType == data.originEquipmentType
 			elif Inventory.getBag()[targetBagSlot].resource is WeaponStats:

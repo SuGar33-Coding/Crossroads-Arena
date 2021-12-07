@@ -28,6 +28,9 @@ var aoeLifetime : float = 3.0
 # whether or not to instantly do one of the ticks on aoe start
 var instantTick := false
 
+func _ready():
+	itemType = "weapon"
+
 func _setResource(newResource):
 	._setResource(newResource)
 	var weaponStats = self.resource as WeaponStats

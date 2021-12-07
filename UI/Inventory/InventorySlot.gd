@@ -14,11 +14,21 @@ func _process(delta):
 	elif is_instance_valid(ttInstance):
 		ttInstance.hide()
 
+# NOTE: We must use this to only handle the event once,
+# the moment it's pressed
 func _gui_input(event):
 	if event is InputEventMouseButton:
-		if event.button_index == BUTTON_RIGHT and event.pressed:
-			# drop
-			Inventory.removeItem(getPanelName(), getSlotName())
+		if Input.is_action_just_pressed("auto_equip"):
+			# TODO: This sucks so bad fix it
+			var itemInstance = getPanelInventory()[getSlotName()] as ItemInstance
+			if (is_instance_valid(itemInstance)):
+				var slot
+				# make this WAY more abstract/modular
+				if itemInstance.resource is Armor:
+					slot = (itemInstance.resource as Armor).type
+				else:
+					slot = "0"
+				Inventory.swapItems(getPanelName(), getSlotName(), itemInstance.itemType, slot)
 		elif Input.is_action_pressed("info") and event.button_index == BUTTON_LEFT and event.pressed:
 			# quiquip TM
 			print('event!')
