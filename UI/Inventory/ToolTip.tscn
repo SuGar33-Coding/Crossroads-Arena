@@ -1,6 +1,7 @@
-[gd_scene load_steps=3 format=2]
+[gd_scene load_steps=4 format=2]
 
 [ext_resource path="res://UI/Inventory/ToolTip.gd" type="Script" id=1]
+[ext_resource path="res://UI/Inventory/StatRow.tscn" type="PackedScene" id=2]
 
 [sub_resource type="StyleBoxFlat" id=1]
 bg_color = Color( 0.384314, 0.411765, 0.447059, 1 )
@@ -33,27 +34,22 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="VBoxContainer" type="VBoxContainer" parent="Panel/MarginContainer"]
+[node name="StatsContainer" type="VBoxContainer" parent="Panel/MarginContainer"]
 margin_left = 20.0
 margin_top = 20.0
 margin_right = 180.0
 margin_bottom = 280.0
 mouse_filter = 2
 
-[node name="ItemName" type="Label" parent="Panel/MarginContainer/VBoxContainer"]
+[node name="ItemName" type="Label" parent="Panel/MarginContainer/StatsContainer"]
 margin_right = 160.0
 margin_bottom = 14.0
 text = "Now This"
 align = 1
 
-[node name="Stat1" type="HBoxContainer" parent="Panel/MarginContainer/VBoxContainer"]
+[node name="ValueStat" parent="Panel/MarginContainer/StatsContainer" instance=ExtResource( 2 )]
+anchor_right = 0.0
+anchor_bottom = 0.0
 margin_top = 18.0
 margin_right = 160.0
 margin_bottom = 32.0
-mouse_filter = 2
-
-[node name="Stat" type="Label" parent="Panel/MarginContainer/VBoxContainer/Stat1"]
-margin_right = 24.0
-margin_bottom = 14.0
-text = "Stat"
-valign = 1

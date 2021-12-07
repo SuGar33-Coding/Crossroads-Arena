@@ -60,8 +60,8 @@ func drop_data(_position, data):
 func onMouseEntered():
 	if (!Inventory.isSlotEmpty(getPanelName(), getSlotName())):
 		ttInstance = tooltip.instance()
-		# TODO: pass in the item instance
 		add_child(ttInstance)
+		ttInstance.itemInstance = getPanelInventory()[getSlotName()]
 
 func onMouseExited():
 	if (is_instance_valid(ttInstance)):
