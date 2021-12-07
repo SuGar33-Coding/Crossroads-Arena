@@ -12,14 +12,20 @@ __meta__ = {
 
 [node name="Stat" type="Label" parent="."]
 margin_top = 204.0
-margin_right = 740.0
+margin_right = 728.0
 margin_bottom = 218.0
 size_flags_horizontal = 3
 text = "Value:"
 
 [node name="Value" type="Label" parent="."]
-margin_left = 744.0
+margin_left = 732.0
+margin_top = 204.0
+margin_right = 748.0
+margin_bottom = 218.0
+text = "69"
+
+[node name="OldValue" type="Label" parent="."]
+margin_left = 752.0
 margin_top = 204.0
 margin_right = 752.0
 margin_bottom = 218.0
-text = "0"

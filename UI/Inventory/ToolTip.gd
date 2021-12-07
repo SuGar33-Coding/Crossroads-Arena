@@ -20,6 +20,8 @@ func setItemInstance(newItemInstance):
 	valueStat.statValue = str(itemInstance.resource.value)
 	
 	# Create the proper type of tooltip
+	# Yeah, I know Haskell
+	# Don't @ me
 	var initFunc: String
 	if (itemInstance is WeaponInstance):
 		initFunc = "initWeaponTooltip"
@@ -30,7 +32,12 @@ func setItemInstance(newItemInstance):
 	call(initFunc, itemInstance)
 
 func initWeaponTooltip(weaponInstance: WeaponInstance):
-	addStatRow("Damage", str(weaponInstance.damage))
+	# comparative stats
+	var oldWeapon := Inventory.getWeapons()["0"] as WeaponInstance
+	if (is_instance_valid(oldWeapon)):
+		addStatRow("Damage", str(weaponInstance.damage), str(oldWeapon.damage))
+	else:
+		addStatRow("Damage", str(weaponInstance.damage))
 
 func initArmorTooltip(armorInstance: ItemInstance):
 	var armorResource = armorInstance.resource as Armor
@@ -40,8 +47,11 @@ func initConsumableTooltip(consumableInstance: ItemInstance):
 	var consumableResource = consumableInstance.resource
 	#addStatRow("Thing", consumableResource.)
 
-func addStatRow(statName: String, statValue: String):
+# append a new stat row to the end of the current list of stats
+func addStatRow(statName: String, statValue: String, oldStatValue: String = ""):
 	var statRowInstance = statRow.instance()
 	statsContainer.add_child(statRowInstance)
 	statRowInstance.statName = statName
 	statRowInstance.statValue = statValue
+	if oldStatValue != "":
+		statRowInstance.oldValue = oldStatValue
