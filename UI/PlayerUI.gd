@@ -1,4 +1,4 @@
-extends CanvasLayer
+class_name PlayerUI extends CanvasLayer
 
 var flashCounter = 0
 # Must be an even number
@@ -18,6 +18,7 @@ onready var hpTween := $HPTween
 onready var timer := $Timer
 onready var dashTween := $DashTween
 onready var dashProgress := $HBoxContainer/VBoxContainer2/CenterContainer/DashProgress
+onready var effectPanel : EffectsPanel = $HBoxContainer/EffectsPanel
 
 func _ready():
 	self._playerstats_health_changed(stats.health)
@@ -44,6 +45,12 @@ func setHealthbarValue(value : float):
 
 func setXPbarValue(value : float):
 	xpbar.value = value
+
+func addEffect(effectRes : Effect):
+	effectPanel.addEffect(effectRes)
+
+func removeEffect(effectRes : Effect):
+	effectPanel.removeEffect(effectRes)
 
 func _playerstats_health_changed(value):
 	var newBarVal = float(value) / stats.getMaxHealth() * 100

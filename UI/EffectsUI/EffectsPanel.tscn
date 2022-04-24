@@ -1,0 +1,13 @@
+[gd_scene load_steps=2 format=2]
+
+[ext_resource path="res://UI/EffectsUI/EffectsPanel.gd" type="Script" id=1]
+
+[node name="EffectsPanel" type="Control"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+script = ExtResource( 1 )
+
+[node name="EffectsHBox" type="HBoxContainer" parent="."]
+margin_right = 40.0
+margin_bottom = 40.0
+alignment = 2

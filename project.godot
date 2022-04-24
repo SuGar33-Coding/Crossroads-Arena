@@ -64,6 +64,16 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://Items/Effects/Effect.gd"
 }, {
+"base": "Control",
+"class": "EffectsIcon",
+"language": "GDScript",
+"path": "res://UI/EffectsUI/EffectsIcon.gd"
+}, {
+"base": "Control",
+"class": "EffectsPanel",
+"language": "GDScript",
+"path": "res://UI/EffectsUI/EffectsPanel.gd"
+}, {
 "base": "YSort",
 "class": "Encounter",
 "language": "GDScript",
@@ -184,6 +194,11 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://Actors/Movement/Pathfind.gd"
 }, {
+"base": "CanvasLayer",
+"class": "PlayerUI",
+"language": "GDScript",
+"path": "res://UI/PlayerUI.gd"
+}, {
 "base": "KinematicBody2D",
 "class": "RangedProjectile",
 "language": "GDScript",
@@ -256,6 +271,8 @@ _global_script_class_icons={
 "Consumable": "",
 "DetectionZone": "",
 "Effect": "",
+"EffectsIcon": "",
+"EffectsPanel": "",
 "Encounter": "",
 "EncounterStats": "",
 "Fighter": "",
@@ -280,6 +297,7 @@ _global_script_class_icons={
 "Movement": "",
 "NPC": "",
 "Pathfind": "",
+"PlayerUI": "",
 "RangedProjectile": "",
 "Room": "",
 "RoomArea": "",

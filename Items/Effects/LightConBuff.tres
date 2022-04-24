@@ -1,9 +1,11 @@
-[gd_resource type="Resource" load_steps=2 format=2]
+[gd_resource type="Resource" load_steps=3 format=2]
 
 [ext_resource path="res://Items/Effects/Effect.gd" type="Script" id=1]
+[ext_resource path="res://Assets/CoinStatic.png" type="Texture" id=2]
 
 [resource]
 script = ExtResource( 1 )
 effectType = 4
 amount = 1
 totalTicks = 5
+icon = ExtResource( 2 )

@@ -23,3 +23,4 @@ enum EffectType {
 export(EffectType) var effectType
 export var amount := 10
 export var totalTicks := 1
+export var icon : Texture

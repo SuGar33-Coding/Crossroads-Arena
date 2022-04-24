@@ -44,9 +44,9 @@ onready var animationPlayer := $AnimationPlayer
 onready var footstep1 := $Footstep1
 onready var footstep2 := $Footstep2
 onready var bloodParticles := $BloodParticles
+onready var playerUI : PlayerUI = $PlayerUI
 onready var inventoryUI : InventoryUI = get_node("../../Inventory")
 onready var shopUI : ShopUI = get_node("../../Shop")
-
 
 func _ready():
 	Engine.set_target_fps(Engine.get_iterations_per_second())
@@ -214,6 +214,7 @@ func addEffects(effectResources : Array):
 	for effectResource in effectResources:
 		effectResource = effectResource as Effect
 		effects.append({"effect": effectResource, "ticks": effectResource.totalTicks})
+		playerUI.addEffect(effectResource)
 
 func returnToBaseColor():
 	sprite.modulate = baseColor
@@ -343,6 +344,8 @@ func _process_effects():
 		# Avoids changing array indices while iterating through
 		removeArray.invert()
 		for index in removeArray:
+			var effectRes : Effect = effects[index].effect
+			playerUI.removeEffect(effectRes)
 			effects.remove(index)
 		
 		if isPoisoned:

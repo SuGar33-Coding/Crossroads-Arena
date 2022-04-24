@@ -28,5 +28,4 @@ position = Vector2( 544, 357 )
 visible = false
 
 [editable path="MainCamera"]
-
 [editable path="MapOverlay"]
