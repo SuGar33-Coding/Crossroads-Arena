@@ -7,5 +7,5 @@
 script = ExtResource( 1 )
 effectType = 2
 amount = 5
-totalTicks = 2
+totalTicks = 5
 icon = ExtResource( 2 )

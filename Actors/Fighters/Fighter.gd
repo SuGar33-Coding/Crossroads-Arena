@@ -209,7 +209,7 @@ func _stats_no_health():
 				itemInstance = attackPivot.weaponStats
 				$AttackPivot/WeaponRestingPos/Weapon.visible = false
 			else:
-				itemInstance = get_node(ItemManager.createItem((stats.itemDrops[randi() % stats.itemDrops.size()] as Item).resource_path))
+				itemInstance = get_node(ItemManager.createItemFromResource(((stats.itemDrops[randi() % stats.itemDrops.size()] as Item))))
 	
 			var worldItem = WorldItem.instance()
 			worldItem.init(itemInstance, true)

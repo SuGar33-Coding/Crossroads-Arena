@@ -13,11 +13,20 @@ func _ready():
 func addEffect(effectRes : Effect):
 	var newEffectIcon = EffectsIconScene.instance()
 	newEffectIcon.init(effectRes)
-	newEffectIcon.rect_min_size = Vector2(0, colWidth * 0.7)
+	newEffectIcon.rect_min_size = Vector2(0, colWidth * 0.15)
 	
 	if (effectColTypes.has(effectRes.effectType)):
 		var effectCol = effectsHBox.get_child(effectColTypes.find(effectRes.effectType))
+		
+		var childIndex : int = effectCol.get_child_count()
+		for i in range(childIndex):
+			var effectIcon = effectCol.get_child(i) as EffectsIcon
+			if effectIcon.effectRes.amount > effectRes.amount:
+				childIndex = i
+				break
 		effectCol.add_child(newEffectIcon)
+		effectCol.move_child(newEffectIcon, childIndex)
+		
 	else:
 		effectColTypes.append(effectRes.effectType)
 		var effectColVBox = VBoxContainer.new()

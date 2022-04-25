@@ -50,7 +50,7 @@ func _ready():
 	source = get_parent()
 	weaponHitbox.setSource(source)
 	var weaponResource : Resource = weaponStatsResources[randi() % weaponStatsResources.size()]
-	weaponStats = get_node(ItemManager.createItem(weaponResource.resource_path))
+	weaponStats = get_node(ItemManager.createItemFromPath(weaponResource.resource_path))
 	
 	$EffectsTimer.start(1)
 	

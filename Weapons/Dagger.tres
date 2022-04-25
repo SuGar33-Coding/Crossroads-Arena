@@ -11,6 +11,7 @@ name = "Dagger"
 value = 0
 texture = ExtResource( 2 )
 modifiers = [  ]
+rarity = 0
 weaponType = 3
 weaponTexture = ExtResource( 2 )
 damage = 7

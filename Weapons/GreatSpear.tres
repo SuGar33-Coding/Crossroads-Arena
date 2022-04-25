@@ -11,6 +11,7 @@ name = "Great Spear"
 value = 0
 texture = ExtResource( 4 )
 modifiers = [  ]
+rarity = 0
 weaponType = 3
 weaponTexture = ExtResource( 4 )
 damage = 15

@@ -57,28 +57,28 @@ func _ready():
 	shopkeep.connect("body_exited", self, "_player_exited_shopkeep")
 	
 	# TODO: Add starting weapon choices like this
-	var startingItem : ItemInstance = get_node(ItemManager.createItem("res://Items/ChestPlate.tres"))
+	var startingItem : ItemInstance = get_node(ItemManager.createItemFromPath("res://Items/ChestPlate.tres"))
 	
 	var worldItem = WorldItem.instance()
 	worldItem.init(startingItem)
 	worldItem.global_position = newWaveButtonSprite.global_position + Vector2(30, 0)
 	itemSort.add_child(worldItem)
 	
-	startingItem  = get_node(ItemManager.createItem("res://Weapons/BaseSword.tres"))
+	startingItem  = get_node(ItemManager.createItemFromPath("res://Weapons/BaseSword.tres"))
 	
 	worldItem = WorldItem.instance()
 	worldItem.init(startingItem)
 	worldItem.global_position = newWaveButtonSprite.global_position + Vector2(75, 0)
 	itemSort.add_child(worldItem)
 	
-	startingItem = get_node(ItemManager.createItem("res://Weapons/BaseBow.tres"))
+	startingItem = get_node(ItemManager.createItemFromPath("res://Weapons/BaseBow.tres"))
 
 	worldItem = WorldItem.instance()
 	worldItem.init(startingItem)
 	worldItem.global_position = newWaveButtonSprite.global_position + Vector2(125, 0)
 	itemSort.add_child(worldItem)
 	
-	startingItem = get_node(ItemManager.createItem("res://Items/HealthPotion.tres"))
+	startingItem = get_node(ItemManager.createItemFromPath("res://Items/HealthPotion.tres"))
 
 	worldItem = WorldItem.instance()
 	worldItem.init(startingItem)

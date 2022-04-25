@@ -10,6 +10,7 @@ name = "Boots"
 value = 5
 texture = ExtResource( 2 )
 modifiers = [  ]
+rarity = 0
 type = 2
 characterTexture = ExtResource( 1 )
 defenseValue = 2

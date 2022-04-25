@@ -11,6 +11,7 @@ name = "Base Bow"
 value = 0
 texture = ExtResource( 4 )
 modifiers = [  ]
+rarity = 0
 weaponType = 4
 weaponTexture = ExtResource( 2 )
 damage = 8

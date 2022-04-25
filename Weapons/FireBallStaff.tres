@@ -11,6 +11,7 @@ name = "Fire Staff"
 value = 25
 texture = ExtResource( 3 )
 modifiers = [  ]
+rarity = 0
 weaponType = 5
 weaponTexture = ExtResource( 3 )
 damage = 10

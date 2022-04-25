@@ -213,8 +213,17 @@ func checkArmorStats():
 func addEffects(effectResources : Array):
 	for effectResource in effectResources:
 		effectResource = effectResource as Effect
-		effects.append({"effect": effectResource, "ticks": effectResource.totalTicks})
-		playerUI.addEffect(effectResource)
+		var hasEffect := false
+		
+		for effect in effects:
+			var res = effect.effect
+			if effectResource == res:
+				effect.ticks = effectResource.totalTicks
+				hasEffect = true
+		
+		if not hasEffect:
+			effects.append({"effect": effectResource, "ticks": effectResource.totalTicks})
+			playerUI.addEffect(effectResource)
 
 func returnToBaseColor():
 	sprite.modulate = baseColor

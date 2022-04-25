@@ -42,7 +42,7 @@ func _ready():
 	inventory.connect("inventory_changed", self, "_inventory_changed")
 	attackTimer.connect("timeout", self, "_attack_timeout")
 	
-	fistStats = get_node(ItemManager.createItem(fistsResource.resource_path))
+	fistStats = get_node(ItemManager.createItemFromPath(fistsResource.resource_path))
 	
 	getWeaponsFromInventory()
 	

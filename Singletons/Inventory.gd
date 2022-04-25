@@ -3,6 +3,8 @@ extends Node
 signal inventory_changed(from_panel, to_panel)
 signal coins_changed(total_coins)
 
+export(Array, Resource) var shopItems = []
+
 # TODO: Do we want different coin types?
 var _inventory := {
 	"bag": {
@@ -59,9 +61,20 @@ func resetInventory():
 			_inventory[key][lowerKey] = null
 	
 	# TODO: Figure out how/when to populate the shop
-	_inventory.shop["0"] = get_node(ItemManager.createItem("res://Items/Boots.tres"))
-	for i in range(1, 10):
-		_inventory.shop[str(i)] = get_node(ItemManager.createItem("res://Items/HealthPotion.tres"))
+	#_inventory.shop["0"] = get_node(ItemManager.createItem("res://Items/Boots.tres"))
+	#for i in range(1, 10):
+	#	_inventory.shop[str(i)] = get_node(ItemManager.createItem("res://Items/HealthPotion.tres"))
+
+func generateShop():
+	for j in range(5):
+		var itemArray : Array = []
+		for itemRes in shopItems:
+			itemRes = itemRes as Item
+			if itemRes.rarity == j:
+				itemArray.append(itemArray)
+		for i in range(5):
+			_inventory.shop[j*5 + i] = get_node(ItemManager.createItemFromResource(itemArray[randi() % itemArray.size()]))
+	pass
 
 func getBag() -> Dictionary:
 	return _inventory.bag

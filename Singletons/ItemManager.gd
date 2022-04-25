@@ -2,8 +2,11 @@ extends Node
 
 # Insatnce an item based on an Item resource and return its NodePath in the
 # ItemManager
-func createItem(resourcePath: String):
+func createItemFromPath(resourcePath: String):
 	var resource: Item = load(resourcePath)
+	return createItemFromResource(resource)
+
+func createItemFromResource(resource : Item):
 	var item : ItemInstance
 	if resource is WeaponStats:
 		item = WeaponInstance.new()
