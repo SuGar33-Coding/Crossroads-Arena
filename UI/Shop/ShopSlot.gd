@@ -1,4 +1,10 @@
-extends Panel
+extends InventorySlot
+
+func getPanelName():
+	return 'shop'
+
+func getPanelInventory() -> Dictionary:
+	return Inventory.getShop()
 
 func get_drag_data(_position):
 	var bagSlot = get_parent().name

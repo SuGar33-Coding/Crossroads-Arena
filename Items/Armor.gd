@@ -11,3 +11,5 @@ export (Texture) var characterTexture
 export (int) var defenseValue
 # speedModifier should be negative if it slows, positive if it boosts
 export (float) var speedModifier
+# Resources for different effects that the armor can apply
+export (Array, Resource) var effects

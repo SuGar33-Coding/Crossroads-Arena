@@ -57,7 +57,7 @@ func _ready():
 	shopkeep.connect("body_exited", self, "_player_exited_shopkeep")
 	
 	# TODO: Add starting weapon choices like this
-	var startingItem : ItemInstance = get_node(ItemManager.createItemFromPath("res://Items/ChestPlate.tres"))
+	var startingItem : ItemInstance = get_node(ItemManager.createItemFromPath("res://Items/ItemResources/ChestPlate.tres"))
 	
 	var worldItem = WorldItem.instance()
 	worldItem.init(startingItem)
@@ -78,7 +78,7 @@ func _ready():
 	worldItem.global_position = newWaveButtonSprite.global_position + Vector2(125, 0)
 	itemSort.add_child(worldItem)
 	
-	startingItem = get_node(ItemManager.createItemFromPath("res://Items/HealthPotion.tres"))
+	startingItem = get_node(ItemManager.createItemFromPath("res://Items/ItemResources/HealthPotion.tres"))
 
 	worldItem = WorldItem.instance()
 	worldItem.init(startingItem)

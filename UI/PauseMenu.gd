@@ -9,18 +9,21 @@ onready var controlInfo := $controlsinfo
 onready var background := $ColorRect
 onready var waveLabel := $WaveLabel
 onready var animationPlayer := $AnimationPlayer
+# TODO: be better
+onready var inventoryUI : InventoryUI = get_node("../Inventory")
+onready var shopUI : ShopUI = get_node("../Shop")
 
-# If there are more than starting children, that means there is another menu active
-var startingChildren : int
+var otherUIVisible = false
 
 func _ready():
 	label.visible = false
 	resumeButton.connect("pressed", self, "togglePause")
 	menuButton.connect("pressed", self, "togglePause")
-	startingChildren = self.get_child_count()
+	inventoryUI.connect("visible_toggle", self, "otherVisibleToggle")
+	shopUI.connect("visible_toggle", self, "otherVisibleToggle")
 	
 func _process(_delta):
-	if Input.is_action_just_pressed("pause") and startingChildren == self.get_child_count():
+	if Input.is_action_just_pressed("pause") and not otherUIVisible:
 		togglePause()
 
 func togglePause():
@@ -38,6 +41,9 @@ func togglePause():
 		background.modulate = Color(1,1,1,.3)
 	else:
 		background.modulate = Color(1,1,1,0)
+
+func otherVisibleToggle(visible):
+	otherUIVisible = visible
 
 func newWave():
 	waveLabel.text = "Wave " + str(get_parent().waveNumber)

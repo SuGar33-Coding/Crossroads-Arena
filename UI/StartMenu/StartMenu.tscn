@@ -138,9 +138,6 @@ color = Color( 0.0823529, 0.545098, 0, 1 )
 edit_alpha = false
 presets_enabled = false
 presets_visible = false
-__meta__ = {
-"_edit_use_anchors_": false
-}
 
 [node name="Camera2D" type="Camera2D" parent="."]
 position = Vector2( 576, 336 )
