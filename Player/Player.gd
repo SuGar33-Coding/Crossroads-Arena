@@ -25,6 +25,7 @@ var currentArmorBuff : int = 0
 var baseColor := Color(1,1,1)
 # effects will be a list of effects resources and remaining ticks until effect goes away
 var effects := []
+var armorEffects := []
 
 onready var stats = get_node("/root/PlayerStats")
 onready var inventory = get_node("/root/Inventory")
@@ -179,6 +180,7 @@ func playFootstep(foot = 1):
 
 func checkArmorStats():
 	baseArmorValue = 0
+	armorEffects = []
 	stats.armorSpeedModifier = 1.0
 	var armorDict = inventory.getArmor()
 	for key in armorDict.keys():
@@ -194,6 +196,10 @@ func checkArmorStats():
 					legSprite.texture = piece.characterTexture
 			baseArmorValue += piece.defenseValue
 			stats.armorSpeedModifier += piece.speedModifier
+			
+			# add all armor effects
+			for effect in piece.effects:
+				armorEffects.append(effect)
 		else:
 			match key:
 				Armor.Type.Head:
@@ -293,7 +299,7 @@ func _combo_finished():
 	PlayerStats.resetMaxSpeed()
 
 func _process_effects():
-	if not effects.empty():
+	if not effects.empty() or not armorEffects.empty():
 		var totalStr = stats.baseStr
 		var totalCon = stats.baseCon
 		var totalDex = stats.baseDex
@@ -346,6 +352,39 @@ func _process_effects():
 			
 			if effectEntry.ticks <= 0:
 				removeArray.append(i)
+		
+		for i in range(armorEffects.size()):
+			var effectEntry = armorEffects[i]
+			var effect = effectEntry as Effect
+			match effect.effectType:
+				Effect.EffectType.HEAL:
+					if effect.amount > totalHeal:
+						totalHeal = effect.amount
+					
+				Effect.EffectType.BLEED:
+					if effect.amount > maxBleed:
+						maxBleed = effect.amount
+					isBleeding = true
+				Effect.EffectType.POISON:
+					if effect.amount > maxPoison:
+						maxPoison = effect.amount
+					
+					isPoisoned = true
+				Effect.EffectType.STR:
+					totalStr += effect.amount
+				Effect.EffectType.CON:
+					totalCon += effect.amount
+				Effect.EffectType.DEX:
+					totalDex += effect.amount
+				Effect.EffectType.SLOW:
+					if effect.amount > speedSlow:
+						speedSlow = effect.amount
+				Effect.EffectType.ARMOR_SHRED:
+					if effect.amount > armorShred:
+						armorShred = effect.amount
+				Effect.EffectType.ARMOR_BUFF:
+					if effect.amount > armorBuff:
+						armorBuff = effect.amount
 		
 		totalDamage = maxBleed + maxPoison
 		
