@@ -7,38 +7,33 @@
 bg_color = Color( 0.384314, 0.411765, 0.447059, 1 )
 
 [node name="ToolTip" type="Popup"]
-margin_right = -552.0
-margin_bottom = -123.0
-rect_min_size = Vector2( 200, 300 )
+margin_right = 200.0
+margin_bottom = 72.0
 mouse_filter = 2
+size_flags_vertical = 9
 script = ExtResource( 1 )
-__meta__ = {
-"_edit_use_anchors_": false
-}
 
-[node name="Panel" type="Panel" parent="."]
-anchor_right = 1.0
-anchor_bottom = 1.0
+[node name="Panel" type="PanelContainer" parent="."]
+margin_right = 200.0
+margin_bottom = 72.0
 mouse_filter = 2
+size_flags_vertical = 3
 custom_styles/panel = SubResource( 1 )
 
 [node name="MarginContainer" type="MarginContainer" parent="Panel"]
-anchor_right = 1.0
-anchor_bottom = 1.0
+margin_right = 200.0
+margin_bottom = 72.0
 mouse_filter = 2
 custom_constants/margin_right = 20
 custom_constants/margin_top = 20
 custom_constants/margin_left = 20
 custom_constants/margin_bottom = 20
-__meta__ = {
-"_edit_use_anchors_": false
-}
 
 [node name="StatsContainer" type="VBoxContainer" parent="Panel/MarginContainer"]
 margin_left = 20.0
 margin_top = 20.0
 margin_right = 180.0
-margin_bottom = 280.0
+margin_bottom = 52.0
 mouse_filter = 2
 
 [node name="ItemName" type="Label" parent="Panel/MarginContainer/StatsContainer"]

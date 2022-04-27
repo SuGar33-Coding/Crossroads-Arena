@@ -1,4 +1,4 @@
-extends Popup
+class_name ToolTip extends Popup
 
 var statRow = preload("res://UI/Inventory/StatRow.tscn")
 
@@ -10,6 +10,8 @@ var itemInstance: ItemInstance setget setItemInstance
 
 func _process(delta):
 	rect_position = get_global_mouse_position()
+	if !(get_parent() as CanvasItem).is_visible_in_tree():
+		queue_free()
 
 func setItemInstance(newItemInstance):
 	itemInstance = newItemInstance

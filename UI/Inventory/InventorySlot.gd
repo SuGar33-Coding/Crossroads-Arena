@@ -3,16 +3,20 @@ class_name InventorySlot extends Panel
 var tooltip = preload("res://UI/Inventory/ToolTip.tscn")
 
 var ttInstance: Popup
+var isInventoryOpen = false
 
 func _ready():
 	self.connect("mouse_entered", self, "onMouseEntered")
 	self.connect("mouse_exited", self, "onMouseExited")
 
 func _process(delta):
-	if Input.is_action_pressed("info") and is_instance_valid(ttInstance):
-		ttInstance.show()
+	if is_visible_in_tree():
+		if Input.is_action_pressed("info") and is_instance_valid(ttInstance):
+			ttInstance.show()
+		elif is_instance_valid(ttInstance):
+			ttInstance.hide()
 	elif is_instance_valid(ttInstance):
-		ttInstance.hide()
+		ttInstance.queue_free()
 
 # NOTE: We must use this to only handle the event once,
 # the moment it's pressed
@@ -36,11 +40,14 @@ func _gui_input(event):
 func getSlotName() -> String:
 	return get_parent().name
 
+# abstract function uwu
 func getPanelName() -> String:
+	assert(false, "this is a pure abstract function; it must be implemented")
 	return ""
 
-# abstract function uwu
+# abstract function
 func getPanelInventory() -> Dictionary:
+	assert(false, "this is a pure abstract function; it must be implemented")
 	return {}
 
 func get_drag_data(_position):
