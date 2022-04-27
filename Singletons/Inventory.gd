@@ -3,6 +3,8 @@ extends Node
 signal inventory_changed(from_panel, to_panel)
 signal coins_changed(total_coins)
 
+export (String) var itemDirectoryPath = "res://Items/ItemResources"
+export (String) var weaponDirectoryPath = "res://Weapons"
 export(Array, Resource) var shopItems = []
 
 # TODO: Do we want different coin types?
@@ -54,11 +56,34 @@ var _inventory := {
 
 var _coins: int = 0
 
+func _ready():
+	# on ready load in all item resources
+	getItemsInDirectory(itemDirectoryPath)
+	getItemsInDirectory(weaponDirectoryPath)
+	
+	generateShop()
+
+func getItemsInDirectory(path):
+	var dir = Directory.new()
+	if dir.open(path) == OK:
+		dir.list_dir_begin(true, true)
+		var file_name : String = dir.get_next()
+		while file_name != "":
+			if dir.current_is_dir():
+				getItemsInDirectory(path+"/"+file_name)
+			elif file_name.ends_with(".tres"):
+				var resource := load(path+"/"+file_name)
+				if resource is Item:
+					shopItems.append(resource)
+			file_name = dir.get_next()
+
 func resetInventory():
 	_coins = 0
 	for key in _inventory.keys():
 		for lowerKey in _inventory[key].keys():
 			_inventory[key][lowerKey] = null
+	
+	generateShop()
 	
 	# TODO: Figure out how/when to populate the shop
 	#_inventory.shop["0"] = get_node(ItemManager.createItem("res://Items/Boots.tres"))
@@ -66,15 +91,18 @@ func resetInventory():
 	#	_inventory.shop[str(i)] = get_node(ItemManager.createItem("res://Items/HealthPotion.tres"))
 
 func generateShop():
-	for j in range(5):
+	for i in range(12):
+		var randItemResource = shopItems[randi() % shopItems.size()]
+		print(randItemResource.name)
+		_inventory.shop[str(i)] = get_node(ItemManager.createItemFromResource(randItemResource))
+	"""for j in range(5):
 		var itemArray : Array = []
 		for itemRes in shopItems:
 			itemRes = itemRes as Item
 			if itemRes.rarity == j:
 				itemArray.append(itemArray)
 		for i in range(5):
-			_inventory.shop[j*5 + i] = get_node(ItemManager.createItemFromResource(itemArray[randi() % itemArray.size()]))
-	pass
+			_inventory.shop[j*5 + i] = get_node(ItemManager.createItemFromResource(itemArray[randi() % itemArray.size()]))"""
 
 func getBag() -> Dictionary:
 	return _inventory.bag
