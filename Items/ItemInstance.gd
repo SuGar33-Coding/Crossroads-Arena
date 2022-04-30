@@ -5,6 +5,7 @@ var modifier: Modifier setget _setModifier
 var sprite := Sprite.new()
 var itemName: String
 var itemType: String
+var itemRarity
 var value : int
 
 func _ready():
@@ -17,6 +18,7 @@ func getTexture():
 func _setResource(newResource):
 	resource = newResource
 	itemName = resource.name
+	itemRarity = resource.rarity
 	# TODO: figure out a better way to do this
 	# 1. consolidate WeaponInstance with the resource-based items
 	# 2. set the itemType on those somehow

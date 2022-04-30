@@ -11,4 +11,5 @@ name = "Health Potion"
 value = 20
 texture = ExtResource( 2 )
 modifiers = [  ]
+rarity = 3
 effectResources = [ ExtResource( 3 ), ExtResource( 4 ) ]

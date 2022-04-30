@@ -5,7 +5,8 @@ signal coins_changed(total_coins)
 
 export (String) var itemDirectoryPath = "res://Items/ItemResources"
 export (String) var weaponDirectoryPath = "res://Weapons"
-export(Array, Resource) var shopItems = []
+# Dicitonary of rarity types to array of item resources
+var shopItems : Dictionary = {}
 
 # TODO: Do we want different coin types?
 var _inventory := {
@@ -57,6 +58,9 @@ var _inventory := {
 var _coins: int = 0
 
 func _ready():
+	for rarity in Item.RARITY.values():
+		shopItems[rarity] = []
+	
 	# on ready load in all item resources
 	getItemsInDirectory(itemDirectoryPath)
 	getItemsInDirectory(weaponDirectoryPath)
@@ -73,8 +77,8 @@ func getItemsInDirectory(path):
 				getItemsInDirectory(path+"/"+file_name)
 			elif file_name.ends_with(".tres"):
 				var resource := load(path+"/"+file_name)
-				if resource is Item:
-					shopItems.append(resource)
+				if resource is Item and resource.name != "Fists":
+					shopItems[resource.rarity].append(resource)
 			file_name = dir.get_next()
 
 func resetInventory():
@@ -91,10 +95,12 @@ func resetInventory():
 	#	_inventory.shop[str(i)] = get_node(ItemManager.createItem("res://Items/HealthPotion.tres"))
 
 func generateShop():
-	for i in range(12):
-		var randItemResource = shopItems[randi() % shopItems.size()]
-		print(randItemResource.name)
-		_inventory.shop[str(i)] = get_node(ItemManager.createItemFromResource(randItemResource))
+	var numCols := 4
+	for row in range(5):
+		for col in range(numCols):
+			if shopItems[row].size() > 0:
+				var randItemResource = shopItems[row][randi() % shopItems[row].size()]
+				_inventory.shop[str(row * numCols + col)] = get_node(ItemManager.createItemFromResource(randItemResource))
 	"""for j in range(5):
 		var itemArray : Array = []
 		for itemRes in shopItems:

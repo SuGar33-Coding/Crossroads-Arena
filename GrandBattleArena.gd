@@ -241,6 +241,7 @@ func encounter_finished():
 		conPillarAnimation.play("ChargeUp")
 		dexPillarAnimation.play("ChargeUp")
 		shopkeep.setAvailable(true)
+		Inventory.generateShop()
 
 func _on_NewWaveButton_body_entered(_body):
 	playerNearButton = true

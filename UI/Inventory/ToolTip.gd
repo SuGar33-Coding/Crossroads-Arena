@@ -16,6 +16,23 @@ func _process(delta):
 func setItemInstance(newItemInstance):
 	itemInstance = newItemInstance
 	itemNameTag.text = itemInstance.itemName
+	var nameColor : Color = Color(Color.gray)
+	match itemInstance.itemRarity:
+		Item.RARITY.UBIQUITOS:
+			pass
+		Item.RARITY.COMMON:
+			nameColor = Color(Color.whitesmoke)
+		Item.RARITY.UNCOMMON:
+			nameColor = Color(Color.aquamarine)
+		Item.RARITY.RARE:
+			nameColor = Color(Color.green)
+		Item.RARITY.VERY_RARE:
+			nameColor = Color(Color.blue)
+		Item.RARITY.EXOTIC:
+			nameColor = Color(Color.purple)
+		Item.RARITY.LEGENDARY:
+			nameColor = Color(Color.orange)
+	itemNameTag.add_color_override("font_color", nameColor)
 	
 	# Every item has a value
 	valueStat.statName = "Value"

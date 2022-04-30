@@ -114,12 +114,12 @@ __meta__ = {
 [node name="Background" type="Panel" parent="Control/Shop"]
 anchor_left = -0.033
 anchor_top = -0.053
-anchor_right = 1.368
+anchor_right = 1.662
 anchor_bottom = 1.108
 margin_left = 0.0654931
 margin_top = 0.0558739
-margin_right = 0.0882263
-margin_bottom = 0.111969
+margin_right = 0.0492859
+margin_bottom = 0.111938
 custom_styles/panel = ExtResource( 7 )
 
 [node name="MarginContainer" type="MarginContainer" parent="Control/Shop/Background"]
@@ -129,23 +129,20 @@ custom_constants/margin_right = 19
 custom_constants/margin_top = 11
 custom_constants/margin_left = 19
 custom_constants/margin_bottom = 11
-__meta__ = {
-"_edit_use_anchors_": false
-}
 
 [node name="VBoxContainer" type="VBoxContainer" parent="Control/Shop/Background/MarginContainer"]
 margin_left = 19.0
 margin_top = 11.0
-margin_right = 229.0
+margin_right = 281.0
 margin_bottom = 342.0
 
 [node name="Header" type="HBoxContainer" parent="Control/Shop/Background/MarginContainer/VBoxContainer"]
-margin_right = 210.0
+margin_right = 262.0
 margin_bottom = 40.0
 rect_min_size = Vector2( 0, 40 )
 
 [node name="TitleBG" type="TextureRect" parent="Control/Shop/Background/MarginContainer/VBoxContainer/Header"]
-margin_right = 210.0
+margin_right = 262.0
 margin_bottom = 40.0
 rect_min_size = Vector2( 100, 0 )
 size_flags_horizontal = 3
@@ -159,19 +156,16 @@ text = "Shop
 "
 align = 1
 valign = 1
-__meta__ = {
-"_edit_use_anchors_": false
-}
 
 [node name="ScrollContainer" type="ScrollContainer" parent="Control/Shop/Background/MarginContainer/VBoxContainer"]
 margin_top = 44.0
-margin_right = 210.0
+margin_right = 262.0
 margin_bottom = 331.0
 size_flags_vertical = 3
 
 [node name="GridContainer" type="GridContainer" parent="Control/Shop/Background/MarginContainer/VBoxContainer/ScrollContainer"]
-margin_right = 210.0
+margin_right = 262.0
 margin_bottom = 287.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
-columns = 3
+columns = 4
