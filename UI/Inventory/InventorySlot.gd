@@ -1,22 +1,12 @@
 class_name InventorySlot extends Panel
 
-var tooltip = preload("res://UI/Inventory/ToolTip.tscn")
+var ToolTipClass = preload("res://UI/Inventory/ToolTip.tscn")
 
-var ttInstance: Popup
-var isInventoryOpen = false
+var ttInstance: ToolTip
 
 func _ready():
 	self.connect("mouse_entered", self, "onMouseEntered")
 	self.connect("mouse_exited", self, "onMouseExited")
-
-func _process(delta):
-	if is_visible_in_tree():
-		if Input.is_action_pressed("info") and is_instance_valid(ttInstance):
-			ttInstance.show()
-		elif is_instance_valid(ttInstance):
-			ttInstance.hide()
-	elif is_instance_valid(ttInstance):
-		ttInstance.queue_free()
 
 # NOTE: We must use this to only handle the event once,
 # the moment it's pressed
@@ -76,9 +66,9 @@ func drop_data(_position, data):
 
 func onMouseEntered():
 	if (!Inventory.isSlotEmpty(getPanelName(), getSlotName())):
-		ttInstance = tooltip.instance()
+		ttInstance = ToolTipClass.instance()
 		add_child(ttInstance)
-		ttInstance.itemInstance = getPanelInventory()[getSlotName()]
+		ttInstance.init(getPanelInventory()[getSlotName()])
 
 func onMouseExited():
 	if (is_instance_valid(ttInstance)):

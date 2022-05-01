@@ -8,8 +8,15 @@ onready var valueStat: StatRow = $Panel/MarginContainer/StatsContainer/ValueStat
 
 var itemInstance: ItemInstance setget setItemInstance
 
+func init(itemInstance: ItemInstance):
+	self.itemInstance = itemInstance
+
 func _process(delta):
 	rect_position = get_global_mouse_position()
+	if Input.is_action_pressed("info"):
+		show()
+	else:
+		hide()
 	if !(get_parent() as CanvasItem).is_visible_in_tree():
 		queue_free()
 

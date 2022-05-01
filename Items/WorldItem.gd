@@ -9,15 +9,13 @@ var itemResource : Item
 var playerInZone := false
 var mouseInZone := false
 var highlightShader := preload("res://FX/HighlightFX.shader")
-var LabelContainer := preload("res://UI/TooltipLabel.tscn")
+var ToolTipClass = preload("res://UI/Inventory/ToolTip.tscn")
 var velocity := Vector2.ZERO
 var movement := false
 var movementDir := Vector2.ZERO
+var ttip: ToolTip
 
 onready var itemSprite = $ItemSprite
-onready var tooltipPanel = $PanelContainer
-onready var vboxContainer = $PanelContainer/VBoxContainer
-onready var nameLabel = $PanelContainer/VBoxContainer/NameContainer/Label
 onready var animationPlayer = $AnimationPlayer
 onready var pickupMessage = $PickupMessage
 
@@ -32,37 +30,12 @@ func init(itemInstance: ItemInstance, shouldMove := false):
 
 # TODO: Adjust starting height and animation height based on sprite size
 func _ready():
-	tooltipPanel.visible = false
 	pickupMessage.visible = false
 	itemSprite.texture = item.getTexture()
-	if is_instance_valid(item.modifier):
-		nameLabel.text = item.modifier.name + " "
 	
-	nameLabel.text += item.itemName + " - " + str(itemResource.value)
 	itemSprite.material = ShaderMaterial.new()
 	
 	velocity = baseSpeed * movementDir
-	
-	if itemResource is Armor:
-		addNewLabel("Type:   " + Armor.Type.keys()[itemResource.type])
-		addNewLabel("DEF:   " + str(itemResource.defenseValue))
-		addNewLabel("SPD:   " + str(itemResource.speedModifier))
-	elif itemResource is Consumable:
-		if itemResource.effectResources.size() > 0:
-			for effectResource in itemResource.effectResources:
-				addNewLabel(Effect.EffectType.keys()[effectResource.effectType] + ": " + str(effectResource.amount))
-			
-	elif itemResource is WeaponStats:
-		itemResource = itemResource as WeaponStats
-		addNewLabel("Type:   " + WeaponStats.WeaponType.keys()[itemResource.weaponType])
-		addNewLabel("DMG:   " + str(itemResource.damage))
-		addNewLabel("AP:    " + str(itemResource.armorPierce))
-		addNewLabel("ATK:   " + str(stepify((1.0/itemResource.attackSpeed), .01)) + "/s")
-		if itemResource.effectResources.size() > 0:
-			var effectLabel = "EFF: "
-			for effectResource in itemResource.effectResources:
-				effectLabel += Effect.EffectType.keys()[effectResource.effectType] + " "
-			addNewLabel(effectLabel)
 
 func _physics_process(delta):
 	if(playerInZone and mouseInZone):
@@ -75,33 +48,35 @@ func _physics_process(delta):
 		pickupMessage.visible = false
 	
 	if(mouseInZone and Input.is_action_pressed("info")):
-		tooltipPanel.visible = true
 		pickupMessage.visible = false
-	elif tooltipPanel.visible == true:
-		tooltipPanel.visible = false
 	
 	if movement:
 		velocity = velocity.move_toward(Vector2.ZERO, Friction * delta)
 		
 	velocity = move_and_slide(velocity)
 
-func addNewLabel(labelString : String):
-	var newContainer = LabelContainer.instance()
-	var label = newContainer.get_child(0)
-	label.text = labelString
-	vboxContainer.add_child(newContainer)
-
 func playFloat():
 	animationPlayer.play("Float")
 
 func _on_MouseArea_mouse_entered():
 	mouseInZone = true
+	
+	# create tooltip
+	ttip = ToolTipClass.instance()
+	add_child(ttip)
+	ttip.init(item)
+	
 	if playerInZone:
 		(itemSprite.material as ShaderMaterial).shader = highlightShader
 		pickupMessage.visible = true
 
 func _on_MouseArea_mouse_exited():
 	mouseInZone = false
+	
+	# destroy tooltip
+	if is_instance_valid(ttip):
+		ttip.queue_free()
+	
 	(itemSprite.material as ShaderMaterial).shader = null
 	pickupMessage.visible = false
 

@@ -1,9 +1,8 @@
-[gd_scene load_steps=12 format=2]
+[gd_scene load_steps=11 format=2]
 
 [ext_resource path="res://Assets/WeaponAssets/Item__00.png" type="Texture" id=1]
 [ext_resource path="res://Assets/CharacterAssets/Shadows/SmallShadow.png" type="Texture" id=2]
 [ext_resource path="res://Items/WorldItem.gd" type="Script" id=3]
-[ext_resource path="res://UI/TooltipLabel.tscn" type="PackedScene" id=4]
 
 [sub_resource type="CircleShape2D" id=1]
 radius = 20.0
@@ -113,25 +112,6 @@ texture = ExtResource( 1 )
 autoplay = "Spawn"
 anims/Float = SubResource( 4 )
 anims/Spawn = SubResource( 5 )
-
-[node name="PanelContainer" type="PanelContainer" parent="."]
-margin_left = 9.0
-margin_top = -62.0
-margin_right = 44.0
-margin_bottom = -16.0
-mouse_filter = 2
-
-[node name="VBoxContainer" type="VBoxContainer" parent="PanelContainer"]
-margin_left = 7.0
-margin_top = 7.0
-margin_right = 28.0
-margin_bottom = 39.0
-mouse_filter = 2
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="NameContainer" parent="PanelContainer/VBoxContainer" instance=ExtResource( 4 )]
 
 [node name="PickupMessage" type="Node2D" parent="."]
 position = Vector2( 0, -30 )
