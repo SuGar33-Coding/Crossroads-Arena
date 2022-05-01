@@ -7,6 +7,9 @@ onready var itemNameTag: Label = $Panel/MarginContainer/StatsContainer/ItemName
 onready var valueStat: StatRow = $Panel/MarginContainer/StatsContainer/ValueStat
 
 var itemInstance: ItemInstance setget setItemInstance
+var valFmtStr = "%d"
+var dmgFmtStr = "%d"
+var atkSpdFmtStr = "%.1f/s"
 
 func init(itemInstance: ItemInstance):
 	self.itemInstance = itemInstance
@@ -43,7 +46,7 @@ func setItemInstance(newItemInstance):
 	
 	# Every item has a value
 	valueStat.statName = "Value"
-	valueStat.statValue = str(itemInstance.resource.value)
+	valueStat.statValue = valFmtStr % itemInstance.resource.value
 	
 	# Create the proper type of tooltip
 	# Yeah, I know Haskell
@@ -60,10 +63,9 @@ func setItemInstance(newItemInstance):
 func initWeaponTooltip(weaponInstance: WeaponInstance):
 	# comparative stats
 	var oldWeapon := Inventory.getWeapons()["0"] as WeaponInstance
-	if (is_instance_valid(oldWeapon)):
-		addStatRow("Damage", str(weaponInstance.damage), str(oldWeapon.damage))
-	else:
-		addStatRow("Damage", str(weaponInstance.damage))
+	var hasOld = is_instance_valid(oldWeapon)
+	addStatRow("Damage", dmgFmtStr % weaponInstance.damage, dmgFmtStr % oldWeapon.damage if hasOld else "")
+	addStatRow("Speed", atkSpdFmtStr % weaponInstance.attackSpeed, atkSpdFmtStr % oldWeapon.attackSpeed if hasOld else "")
 
 func initArmorTooltip(armorInstance: ItemInstance):
 	var armorResource = armorInstance.resource as Armor
