@@ -1,4 +1,4 @@
-[gd_scene load_steps=54 format=2]
+[gd_scene load_steps=52 format=2]
 
 [ext_resource path="res://GrandBattleArena.gd" type="Script" id=1]
 [ext_resource path="res://Assets/TileSets/RockBase.tres" type="TileSet" id=2]
@@ -7,16 +7,14 @@
 [ext_resource path="res://World/Scenery/FlatBush.tscn" type="PackedScene" id=5]
 [ext_resource path="res://World/Scenery/Tree.tscn" type="PackedScene" id=6]
 [ext_resource path="res://Audio/BGM/Wave of Darkness II.mp3" type="AudioStream" id=7]
-[ext_resource path="res://UI/PauseMenu.tscn" type="PackedScene" id=8]
+[ext_resource path="res://UI/UIHandler.tscn" type="PackedScene" id=8]
 [ext_resource path="res://Assets/WorldAssets/grassTileMap.png" type="Texture" id=9]
 [ext_resource path="res://World/Gate.tscn" type="PackedScene" id=10]
 [ext_resource path="res://Assets/WaveButton.png" type="Texture" id=11]
 [ext_resource path="res://World/Encounters/FirstEncounter.tres" type="Resource" id=12]
 [ext_resource path="res://World/Encounters/SecondEncounter.tres" type="Resource" id=13]
 [ext_resource path="res://World/Encounters/FirstEncounterTwo.tres" type="Resource" id=14]
-[ext_resource path="res://UI/Inventory/Inventory.tscn" type="PackedScene" id=15]
 [ext_resource path="res://Items/Coin.tscn" type="PackedScene" id=16]
-[ext_resource path="res://UI/Shop/Shop.tscn" type="PackedScene" id=17]
 [ext_resource path="res://Assets/StrengthPillar.png" type="Texture" id=18]
 [ext_resource path="res://Assets/CharacterAssets/Shadows/LargeShadow.png" type="Texture" id=19]
 [ext_resource path="res://Assets/DexPillar.png" type="Texture" id=20]
@@ -108,6 +106,10 @@ polygons = [ PoolIntArray( 0, 1, 2, 3 ) ]
 [sub_resource type="RectangleShape2D" id=11]
 extents = Vector2( 16.1287, 19.299 )
 
+[sub_resource type="AtlasTexture" id=14]
+atlas = ExtResource( 11 )
+region = Rect2( 32, 0, 16, 16 )
+
 [sub_resource type="AtlasTexture" id=12]
 atlas = ExtResource( 11 )
 region = Rect2( 0, 0, 16, 16 )
@@ -116,21 +118,17 @@ region = Rect2( 0, 0, 16, 16 )
 atlas = ExtResource( 11 )
 region = Rect2( 16, 0, 16, 16 )
 
-[sub_resource type="AtlasTexture" id=14]
-atlas = ExtResource( 11 )
-region = Rect2( 32, 0, 16, 16 )
-
 [sub_resource type="SpriteFrames" id=15]
 animations = [ {
-"frames": [ SubResource( 12 ), SubResource( 13 ) ],
-"loop": true,
-"name": "Ready",
-"speed": 2.0
-}, {
 "frames": [ SubResource( 14 ) ],
 "loop": true,
 "name": "Pressed",
 "speed": 5.0
+}, {
+"frames": [ SubResource( 12 ), SubResource( 13 ) ],
+"loop": true,
+"name": "Ready",
+"speed": 2.0
 } ]
 
 [sub_resource type="CapsuleShape2D" id=16]
@@ -385,7 +383,6 @@ shape = SubResource( 11 )
 position = Vector2( 0.625, -2.25 )
 frames = SubResource( 15 )
 animation = "Ready"
-frame = 1
 playing = true
 
 [node name="StaticBody2D" type="StaticBody2D" parent="YSort/NewWaveButton"]
@@ -814,12 +811,7 @@ autoplay = true
 mix_target = 1
 bus = "BGM"
 
-[node name="CanvasLayer" parent="." instance=ExtResource( 8 )]
-layer = 2
-
-[node name="Inventory" parent="." instance=ExtResource( 15 )]
-
-[node name="Shop" parent="." instance=ExtResource( 17 )]
+[node name="UIHandler" parent="." instance=ExtResource( 8 )]
 
 [connection signal="body_entered" from="YSort/NewWaveButton" to="." method="_on_NewWaveButton_body_entered"]
 [connection signal="body_exited" from="YSort/NewWaveButton" to="." method="_on_NewWaveButton_body_exited"]

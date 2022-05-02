@@ -195,6 +195,11 @@ _global_script_classes=[ {
 "path": "res://Actors/Movement/Pathfind.gd"
 }, {
 "base": "CanvasLayer",
+"class": "PauseMenu",
+"language": "GDScript",
+"path": "res://UI/PauseMenu.gd"
+}, {
+"base": "CanvasLayer",
 "class": "PlayerUI",
 "language": "GDScript",
 "path": "res://UI/PlayerUI.gd"
@@ -249,6 +254,11 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://UI/Inventory/ToolTip.gd"
 }, {
+"base": "CanvasLayer",
+"class": "UIHandler",
+"language": "GDScript",
+"path": "res://UI/UIHandler.gd"
+}, {
 "base": "Hitbox",
 "class": "WeaponHitbox",
 "language": "GDScript",
@@ -302,6 +312,7 @@ _global_script_class_icons={
 "Movement": "",
 "NPC": "",
 "Pathfind": "",
+"PauseMenu": "",
 "PlayerUI": "",
 "RangedProjectile": "",
 "Room": "",
@@ -313,6 +324,7 @@ _global_script_class_icons={
 "StatsResource": "",
 "TestingSteering": "",
 "ToolTip": "",
+"UIHandler": "",
 "WeaponHitbox": "",
 "WeaponInstance": "",
 "WeaponStats": ""

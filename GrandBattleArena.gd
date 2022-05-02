@@ -34,7 +34,7 @@ onready var dexPillarAnimation := $YSort/DexPillar/AnimationPlayer
 onready var strPillarLabel := $YSort/StrengthPillar/Label
 onready var conPillarLabel := $YSort/ConPillar/Label
 onready var dexPillarLabel := $YSort/DexPillar/Label
-onready var shopUI := $Shop
+onready var shopUI := $UIHandler/Shop
 onready var shopkeep : ShopKeep = $YSort/ShopKeep
 var largeSpawns : Array
 var medSpawns : Array

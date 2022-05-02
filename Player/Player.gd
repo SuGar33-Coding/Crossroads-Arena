@@ -46,8 +46,8 @@ onready var footstep1 := $Footstep1
 onready var footstep2 := $Footstep2
 onready var bloodParticles := $BloodParticles
 onready var playerUI : PlayerUI = $PlayerUI
-onready var inventoryUI : InventoryUI = get_node("../../Inventory")
-onready var shopUI : ShopUI = get_node("../../Shop")
+onready var inventoryUI : InventoryUI = get_node("../../UIHandler/Inventory")
+onready var shopUI : ShopUI = get_node("../../UIHandler/Shop")
 
 func _ready():
 	Engine.set_target_fps(Engine.get_iterations_per_second())
