@@ -1,4 +1,4 @@
-extends Node2D
+class_name Arena extends Node2D
 
 export (Array,Resource) var encounters
 export var multiEncounterChance := 0.5 
@@ -233,6 +233,9 @@ func playerDied():
 func goToMainMenu(_stuff):
 	get_tree().paused = false
 	get_tree().change_scene("res://UI/StartMenu/StartMenu.tscn")
+
+func getPlayerNode() -> Player:
+	return get_node("./YSort/Player") as Player
 
 func encounter_finished():
 	numEncounters -= 1

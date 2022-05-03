@@ -1,4 +1,4 @@
-extends KinematicBody2D
+class_name Player extends KinematicBody2D
 
 var dirtFx = preload("res://FX/DirtSpread.tscn")
 var dashCloudFx = preload("res://FX/DashCloud.tscn")
@@ -30,9 +30,9 @@ var armorEffects := []
 onready var stats = get_node("/root/PlayerStats")
 onready var inventory = get_node("/root/Inventory")
 onready var sprite : Sprite = $Sprite
-onready var headSprite := $Sprite/HeadSprite
-onready var chestSprite := $Sprite/ChestSprite
-onready var legSprite := $Sprite/LegSprite
+onready var headSprite : Sprite = $Sprite/HeadSprite
+onready var chestSprite : Sprite = $Sprite/ChestSprite
+onready var legSprite : Sprite = $Sprite/LegSprite
 onready var shadowSprite := $ShadowSprite
 onready var attackPivot := $AttackPivot
 onready var hurtbox := $Hurtbox

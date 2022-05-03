@@ -19,6 +19,11 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://Weapons/AreaOfEffect.gd"
 }, {
+"base": "Node2D",
+"class": "Arena",
+"language": "GDScript",
+"path": "res://GrandBattleArena.gd"
+}, {
 "base": "Item",
 "class": "Armor",
 "language": "GDScript",
@@ -199,6 +204,11 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://UI/PauseMenu.gd"
 }, {
+"base": "KinematicBody2D",
+"class": "Player",
+"language": "GDScript",
+"path": "res://Player/Player.gd"
+}, {
 "base": "CanvasLayer",
 "class": "PlayerUI",
 "language": "GDScript",
@@ -244,6 +254,11 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://Actors/Generic/StatsResource.gd"
 }, {
+"base": "CanvasLayer",
+"class": "StatsUI",
+"language": "GDScript",
+"path": "res://UI/StatsUI/StatsUI.gd"
+}, {
 "base": "Movement",
 "class": "TestingSteering",
 "language": "GDScript",
@@ -277,6 +292,7 @@ _global_script_classes=[ {
 _global_script_class_icons={
 "AoeFX": "",
 "AreaOfEffect": "",
+"Arena": "",
 "Armor": "",
 "AttackPivot": "",
 "Boundary": "",
@@ -313,6 +329,7 @@ _global_script_class_icons={
 "NPC": "",
 "Pathfind": "",
 "PauseMenu": "",
+"Player": "",
 "PlayerUI": "",
 "RangedProjectile": "",
 "Room": "",
@@ -322,6 +339,7 @@ _global_script_class_icons={
 "StatRow": "",
 "Stats": "",
 "StatsResource": "",
+"StatsUI": "",
 "TestingSteering": "",
 "ToolTip": "",
 "UIHandler": "",
@@ -484,6 +502,11 @@ item={
 auto_equip={
 "deadzone": 0.5,
 "events": [ Object(InputEventMouseButton,"resource_local_to_scene":false,"resource_name":"","device":0,"alt":false,"shift":false,"control":false,"meta":false,"command":false,"button_mask":0,"position":Vector2( 0, 0 ),"global_position":Vector2( 0, 0 ),"factor":1.0,"button_index":2,"pressed":false,"doubleclick":false,"script":null)
+ ]
+}
+stats={
+"deadzone": 0.5,
+"events": [ Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":0,"alt":false,"shift":false,"control":false,"meta":false,"command":false,"pressed":false,"scancode":71,"physical_scancode":0,"unicode":0,"echo":false,"script":null)
  ]
 }
 
