@@ -55,7 +55,7 @@ var _inventory := {
 	},
 }
 
-var _coins: int = 0
+var _coins: int = 200
 
 func _ready():
 	for rarity in Item.RARITY.values():
@@ -101,14 +101,8 @@ func generateShop():
 			if shopItems[row].size() > 0:
 				var randItemResource = shopItems[row][randi() % shopItems[row].size()]
 				_inventory.shop[str(row * numCols + col)] = get_node(ItemManager.createItemFromResource(randItemResource))
-	"""for j in range(5):
-		var itemArray : Array = []
-		for itemRes in shopItems:
-			itemRes = itemRes as Item
-			if itemRes.rarity == j:
-				itemArray.append(itemArray)
-		for i in range(5):
-			_inventory.shop[j*5 + i] = get_node(ItemManager.createItemFromResource(itemArray[randi() % itemArray.size()]))"""
+	
+	emit_signal("inventory_changed", null, "shop")
 
 func getBag() -> Dictionary:
 	return _inventory.bag

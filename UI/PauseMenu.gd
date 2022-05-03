@@ -35,5 +35,5 @@ func togglePause():
 		background.modulate = Color(1,1,1,0)
 
 func newWave():
-	waveLabel.text = "Wave " + str(get_parent().waveNumber)
+	waveLabel.text = "Wave " + str(get_parent().get_parent().waveNumber)
 	animationPlayer.play("NewWave")

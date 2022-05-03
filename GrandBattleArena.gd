@@ -172,7 +172,7 @@ func spawnEnemies():
 	shopkeep.setAvailable(false)
 	
 	waveNumber += 1
-	$CanvasLayer.newWave()
+	$UIHandler.newWave()
 	
 	var onLevelEncounters := []
 	

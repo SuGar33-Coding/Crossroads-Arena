@@ -14,6 +14,7 @@ var velocity := Vector2.ZERO
 var movement := false
 var movementDir := Vector2.ZERO
 var ttip: ToolTip
+var outlineColor : Color = Color.white
 
 onready var itemSprite = $ItemSprite
 onready var animationPlayer = $AnimationPlayer
@@ -26,6 +27,8 @@ func init(itemInstance: ItemInstance, shouldMove := false):
 	if movement:
 		movementDir = Vector2(rand_range(-1, 1), rand_range(-1, 1))
 		movementDir = movementDir.normalized()
+	
+	outlineColor = Constants.getRarityColor(itemResource.rarity)
 
 
 # TODO: Adjust starting height and animation height based on sprite size
@@ -58,6 +61,15 @@ func _physics_process(delta):
 func playFloat():
 	animationPlayer.play("Float")
 
+func displayPickup():
+	(itemSprite.material as ShaderMaterial).shader = highlightShader
+	itemSprite.material.set_shader_param("outline_color", outlineColor)
+	pickupMessage.visible = true
+
+func hidePickup():
+	(itemSprite.material as ShaderMaterial).shader = null
+	pickupMessage.visible = false
+
 func _on_MouseArea_mouse_entered():
 	mouseInZone = true
 	
@@ -67,8 +79,7 @@ func _on_MouseArea_mouse_entered():
 	ttip.init(item)
 	
 	if playerInZone:
-		(itemSprite.material as ShaderMaterial).shader = highlightShader
-		pickupMessage.visible = true
+		displayPickup()
 
 func _on_MouseArea_mouse_exited():
 	mouseInZone = false
@@ -77,17 +88,14 @@ func _on_MouseArea_mouse_exited():
 	if is_instance_valid(ttip):
 		ttip.queue_free()
 	
-	(itemSprite.material as ShaderMaterial).shader = null
-	pickupMessage.visible = false
+	hidePickup()
 
 func _on_PlayerCollision_body_entered(body):
 	playerInZone = true
 	if mouseInZone:
-		(itemSprite.material as ShaderMaterial).shader = highlightShader
-		pickupMessage.visible = true
+		displayPickup()
 
 func _on_PlayerCollision_body_exited(body):
 	playerInZone = false
-	(itemSprite.material as ShaderMaterial).shader = null
-	pickupMessage.visible = false
+	hidePickup()
 

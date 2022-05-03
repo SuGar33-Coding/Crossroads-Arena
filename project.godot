@@ -359,6 +359,7 @@ config/icon="res://icon.png"
 ItemManager="*res://Singletons/ItemManager.gd"
 PlayerStats="*res://Player/PlayerStats.gd"
 Inventory="*res://Singletons/Inventory.gd"
+Constants="*res://Singletons/Constants.gd"
 
 [display]
 

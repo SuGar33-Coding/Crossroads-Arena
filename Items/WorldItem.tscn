@@ -126,9 +126,6 @@ margin_top = -21.0
 margin_right = 56.0
 margin_bottom = 21.0
 mouse_filter = 2
-__meta__ = {
-"_edit_use_anchors_": false
-}
 
 [node name="Label" type="Label" parent="PickupMessage/CenterContainer"]
 margin_left = 27.0
