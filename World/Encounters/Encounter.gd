@@ -44,21 +44,32 @@ func _ready():
 	numActors = numGrunts + numSpecial + numBoss
 	
 	for i in range(numGrunts):
-		var pathToActor = encounterStats.gruntFilepaths[randi() % encounterStats.gruntFilepaths.size()]
-		spawnActor(pathToActor)
+		var pathToResource = encounterStats.gruntFilepaths[randi() % encounterStats.gruntFilepaths.size()]
+		spawnActor(pathToResource)
 		
 	for j in range(numSpecial):
-		var pathToActor = encounterStats.specialFilepaths[randi() % encounterStats.specialFilepaths.size()]
-		spawnActor(pathToActor)
+		var pathToResource = encounterStats.specialFilepaths[randi() % encounterStats.specialFilepaths.size()]
+		spawnActor(pathToResource)
 		
 	for k in range(numBoss):
-		var pathToActor = encounterStats.commanderFilepaths[randi() % encounterStats.commanderFilepaths.size()]
-		spawnActor(pathToActor)
+		var pathToResource = encounterStats.commanderFilepaths[randi() % encounterStats.commanderFilepaths.size()]
+		spawnActor(pathToResource)
 
-func spawnActor(pathToActor : String):
+func spawnActor(pathToResource : String):
 	# Resource loader should cache resources so they are not reloaded every time
-	var loadedActor = ResourceLoader.load(pathToActor)
-	var newActor : NPC = loadedActor.instance()
+	var statResource : StatsResource = ResourceLoader.load(pathToResource)
+	var loadedActor
+	match statResource.unitType:
+		StatsResource.UNIT_TYPE.FIGHTER:
+			loadedActor = ResourceLoader.load(Constants.FIGHTER_PATH)
+		StatsResource.UNIT_TYPE.BRUTE:
+			loadedActor = ResourceLoader.load(Constants.BRUTE_PATH)
+		StatsResource.UNIT_TYPE.CHARGER:
+			loadedActor = ResourceLoader.load(Constants.CHARGER_PATH)
+		StatsResource.UNIT_TYPE.DASHER:
+			loadedActor = ResourceLoader.load(Constants.DASHER_PATH)
+	var newActor : Fighter = loadedActor.instance()
+	newActor.init(statResource)
 	
 	var spawnRange = SPAWN_RANGES[encounterSize]
 	
@@ -66,6 +77,8 @@ func spawnActor(pathToActor : String):
 	newActor.connect("no_health", self, "npc_no_health")
 	currentActors.append(newActor)
 	self.add_child(newActor)
+	print("\n\nspawned")
+	print(newActor)
 	
 func killSelf():
 	emit_signal("encounter_finished")

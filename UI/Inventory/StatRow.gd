@@ -3,13 +3,15 @@ class_name StatRow extends HBoxContainer
 onready var _statLabel: Label = $Stat
 onready var _valueLabel: Label = $Value
 onready var _oldValueLabel: Label = $OldValue
+onready var _barLabel: Label = $Bar
 
 var statName: String setget setStatName
 var statValue: String setget setStatValue
 var oldValue: String setget setOldValue
 
 func _ready():
-	pass
+	_oldValueLabel.text = ""
+	_barLabel.text = ""
 
 func setStatName(newStatName: String):
 	statName = newStatName
@@ -21,7 +23,8 @@ func setStatValue(newStatValue: String):
 	
 func setOldValue(newOldValue: String):
 	oldValue = newOldValue
-	_oldValueLabel.text = "| " + newOldValue
+	_oldValueLabel.text = newOldValue
+	_barLabel.text = "|"
 
 func setCompareColor(newIsBetter: bool):
 	if newIsBetter:

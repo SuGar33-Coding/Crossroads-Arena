@@ -1,4 +1,4 @@
-[gd_scene load_steps=52 format=2]
+[gd_scene load_steps=53 format=2]
 
 [ext_resource path="res://GrandBattleArena.gd" type="Script" id=1]
 [ext_resource path="res://Assets/TileSets/RockBase.tres" type="TileSet" id=2]
@@ -14,6 +14,7 @@
 [ext_resource path="res://World/Encounters/FirstEncounter.tres" type="Resource" id=12]
 [ext_resource path="res://World/Encounters/SecondEncounter.tres" type="Resource" id=13]
 [ext_resource path="res://World/Encounters/FirstEncounterTwo.tres" type="Resource" id=14]
+[ext_resource path="res://World/Encounters/TestEncounter.tres" type="Resource" id=15]
 [ext_resource path="res://Items/Coin.tscn" type="PackedScene" id=16]
 [ext_resource path="res://Assets/StrengthPillar.png" type="Texture" id=18]
 [ext_resource path="res://Assets/CharacterAssets/Shadows/LargeShadow.png" type="Texture" id=19]
@@ -305,7 +306,7 @@ tracks/0/keys = {
 
 [node name="World" type="Node2D"]
 script = ExtResource( 1 )
-encounters = [ ExtResource( 12 ), ExtResource( 13 ), ExtResource( 14 ) ]
+encounters = [ ExtResource( 12 ), ExtResource( 13 ), ExtResource( 14 ), ExtResource( 15 ) ]
 multiEncounterChance = 0.2
 
 [node name="Navigation2D" type="Navigation2D" parent="."]

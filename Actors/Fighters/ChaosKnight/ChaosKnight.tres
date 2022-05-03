@@ -1,9 +1,13 @@
-[gd_resource type="Resource" load_steps=2 format=2]
+[gd_resource type="Resource" load_steps=5 format=2]
 
 [ext_resource path="res://Actors/Generic/StatsResource.gd" type="Script" id=1]
+[ext_resource path="res://Weapons/LongSword.tres" type="Resource" id=2]
+[ext_resource path="res://Weapons/Glaive.tres" type="Resource" id=3]
+[ext_resource path="res://Assets/CharacterAssets/ChaosKnight.png" type="Texture" id=4]
 
 [resource]
 script = ExtResource( 1 )
+unitType = 0
 strength = 2
 con = 2
 dex = 0
@@ -14,3 +18,5 @@ maxCoinDrop = 5
 minCoinDrop = 1
 dropChance = 0.2
 itemDrops = [  ]
+weaponResources = [ ExtResource( 3 ), ExtResource( 2 ) ]
+texture = ExtResource( 4 )

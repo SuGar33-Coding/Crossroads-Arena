@@ -1,4 +1,4 @@
-[gd_scene load_steps=22 format=2]
+[gd_scene load_steps=23 format=2]
 
 [ext_resource path="res://Weapons/LongSword.tres" type="Resource" id=1]
 [ext_resource path="res://Actors/Fighters/Fighter.gd" type="Script" id=2]
@@ -10,6 +10,7 @@
 [ext_resource path="res://Assets/CharacterAssets/Bandit.png" type="Texture" id=8]
 [ext_resource path="res://Weapons/BaseSpear.tres" type="Resource" id=9]
 [ext_resource path="res://Assets/CharacterAssets/Attack.png" type="Texture" id=10]
+[ext_resource path="res://Actors/Movement/FlankAndPoke.tres" type="Resource" id=11]
 
 [sub_resource type="Curve" id=1]
 _data = [ Vector2( 0, 1 ), 0.0, 0.0, 0, 0, Vector2( 1, 0.163636 ), 0.0, 0.0, 0, 0 ]
@@ -806,10 +807,9 @@ tracks/2/keys = {
 "values": [ Vector2( 1, 1 ), Vector2( 0.9, 0.9 ), Vector2( 1, 1 ) ]
 }
 
-[node name="Fighter" groups=[
-"Enemies",
-] instance=ExtResource( 6 )]
+[node name="Fighter" groups=["Enemies"] instance=ExtResource( 6 )]
 script = ExtResource( 2 )
+movementResource = ExtResource( 11 )
 
 [node name="Shadow" type="Sprite" parent="." index="0"]
 visible = false
@@ -843,6 +843,7 @@ frame = 0
 
 [node name="Particles2D" type="Particles2D" parent="AttackPivot" index="6"]
 position = Vector2( 0, 5 )
+emitting = false
 amount = 50
 lifetime = 0.4
 one_shot = true

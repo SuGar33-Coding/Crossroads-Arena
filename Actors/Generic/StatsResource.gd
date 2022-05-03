@@ -2,6 +2,14 @@ extends Resource
 
 class_name StatsResource
 
+enum UNIT_TYPE {
+	FIGHTER,
+	BRUTE,
+	CHARGER,
+	DASHER
+}
+
+export(UNIT_TYPE) var unitType = UNIT_TYPE.FIGHTER
 export(int) var strength = 0
 export(int) var con = 0
 export(int) var dex = 0
@@ -12,3 +20,5 @@ export(int) var maxCoinDrop = 5
 export(int) var minCoinDrop = 1
 export(float) var dropChance = .2
 export(Array, Resource) var itemDrops = []
+export(Array, Resource) var weaponResources = []
+export(Texture) var texture

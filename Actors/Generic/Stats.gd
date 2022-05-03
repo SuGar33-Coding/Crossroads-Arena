@@ -2,7 +2,7 @@ extends Node
 
 class_name Stats
 
-export(Resource) var statsResource : Resource
+export(Resource) var statsResource : Resource setget setStats
 export(int) var baseHealth = 100
 var strength = 0 setget setStr
 # Can set con to negative in order to lower health of enemies, but 0 is 100hp
@@ -26,21 +26,7 @@ signal dexChanged(value)
 
 func _ready():
 	if statsResource:
-		statsResource = statsResource as StatsResource
-		con = statsResource.con
-		strength = statsResource.strength
-		dex = statsResource.dex
-		# TODO: be better
-		var detectionZone : DetectionZone = get_node("../DetectionZone")
-		detectionZone.leaveRange = statsResource.leaveRange
-		detectionZone.setDetectionRange(statsResource.detectionRange)
-		itemDrops = statsResource.itemDrops
-		dropChance = statsResource.dropChance
-		armorValue = statsResource.armor
-	maxHealth = baseHealth * pow(PlayerStats.conRatio, con)
-	health = maxHealth
-	
-	self.attackSpeed = pow(PlayerStats.dexAttackRatio, dex)
+		setStats(statsResource)
 
 func setMaxHealth(value : int):
 	maxHealth = max(value, 1)
@@ -76,3 +62,22 @@ func setDex(value):
 
 func _on_hurtbox_area_entered(_area):
 	self.health -= 1
+
+func setStats(newVal : StatsResource):
+	statsResource = newVal
+	if statsResource and self.is_inside_tree():
+		statsResource = statsResource as StatsResource
+		con = statsResource.con
+		strength = statsResource.strength
+		dex = statsResource.dex
+		# TODO: be better
+		var detectionZone : DetectionZone = get_node("../DetectionZone")
+		detectionZone.leaveRange = statsResource.leaveRange
+		detectionZone.setDetectionRange(statsResource.detectionRange)
+		itemDrops = statsResource.itemDrops
+		dropChance = statsResource.dropChance
+		armorValue = statsResource.armor
+	maxHealth = baseHealth * pow(PlayerStats.conRatio, con)
+	health = maxHealth
+	
+	self.attackSpeed = pow(PlayerStats.dexAttackRatio, dex)

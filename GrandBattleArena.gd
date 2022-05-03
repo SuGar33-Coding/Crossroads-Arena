@@ -226,7 +226,7 @@ func set_pause_scene(rootNode : Node, pause : bool):
 			set_pause_scene(node, pause)
 
 func playerDied():
-	var sceneChangerPlayer = $CanvasLayer/AnimationPlayer
+	var sceneChangerPlayer = $UIHandler/PauseMenu/AnimationPlayer
 	sceneChangerPlayer.play("SceneChange")
 	sceneChangerPlayer.connect("animation_finished", self, "goToMainMenu")
 	

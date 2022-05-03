@@ -1,15 +1,15 @@
 [gd_resource type="Resource" load_steps=4 format=2]
 
 [ext_resource path="res://Actors/Generic/StatsResource.gd" type="Script" id=1]
-[ext_resource path="res://Weapons/BaseBow.tres" type="Resource" id=2]
-[ext_resource path="res://Assets/CharacterAssets/Bandit.png" type="Texture" id=3]
+[ext_resource path="res://Weapons/GreatHammer.tres" type="Resource" id=2]
+[ext_resource path="res://Assets/CharacterAssets/Brute.png" type="Texture" id=3]
 
 [resource]
 script = ExtResource( 1 )
-unitType = 0
-strength = 0
-con = 0
-dex = 2
+unitType = 1
+strength = 5
+con = 5
+dex = -3
 armor = 0
 detectionRange = 2000.0
 leaveRange = 2500.0

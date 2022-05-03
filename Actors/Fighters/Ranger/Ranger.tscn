@@ -786,9 +786,7 @@ tracks/2/keys = {
 "values": [ Vector2( 1, 1 ), Vector2( 0.9, 0.9 ), Vector2( 1, 1 ) ]
 }
 
-[node name="Ranger" groups=[
-"Enemies",
-] instance=ExtResource( 4 )]
+[node name="Ranger" groups=["Enemies"] instance=ExtResource( 4 )]
 script = ExtResource( 5 )
 movementResource = ExtResource( 2 )
 movementMaxTime = 10.0

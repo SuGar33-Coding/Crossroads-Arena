@@ -12,6 +12,7 @@ var CoinScene = preload("res://Items/Coin.tscn")
 export var rightShadowX = .5
 export var leftShadowX = .5
 
+
 onready var detectionZone := $DetectionZone
 onready var attackPivot: AttackPivot = $AttackPivot
 onready var weaponHitbox := $AttackPivot/WeaponHitbox
@@ -26,11 +27,21 @@ var noise := OpenSimplexNoise.new()
 var noiseY = 1
 var baseColor := Color(1,1,1)
 var aoeAttackPos := Vector2.ZERO
+var statsResource : StatsResource
+var weaponStatsResources : Array = []
+var texture : Texture
 
 # TODO: Possibly not necessary for the generic fighter class
 var moveDir = 1
 
+func init(stats : StatsResource):
+	self.statsResource = stats
+	self.weaponStatsResources = stats.weaponResources
+	self.texture = stats.texture
+
 func _ready():
+	sprite.texture = self.texture
+	stats.statsResource = self.statsResource
 	randomize()
 	weaponStats = weaponHitbox.weaponStats
 	weaponHitbox.connect("parried", self, "_weapon_parried")
@@ -50,6 +61,11 @@ func _ready():
 	
 	attackPivot.setUserStr(stats.strength)
 	stats.connect("strChanged", self, "_strength_changed")
+	
+	var weaponResource : Resource = weaponStatsResources[randi() % weaponStatsResources.size()]
+	weaponStats = get_node(ItemManager.createItemFromPath(weaponResource.resource_path))
+	
+	attackPivot.setWeapon(weaponStats)
 
 func _physics_process(_delta):
 	if state == State.CHASE and velocity.length() > 0 and not animationPlayer.is_playing():

@@ -6,7 +6,7 @@
 [ext_resource path="res://Actors/Movement/FlankAndBurst.tres" type="Resource" id=4]
 [ext_resource path="res://Actors/Zones/DetectionZone.tscn" type="PackedScene" id=5]
 [ext_resource path="res://Actors/Zones/AttackPivot.tscn" type="PackedScene" id=6]
-[ext_resource path="res://Actors/Brute/BruteStats.tres" type="Resource" id=7]
+[ext_resource path="res://Actors/Brute/Brute.tres" type="Resource" id=7]
 [ext_resource path="res://Weapons/GreatHammer.tres" type="Resource" id=8]
 [ext_resource path="res://Assets/CharacterAssets/Attack.png" type="Texture" id=9]
 [ext_resource path="res://Actors/Zones/Hitbox.tscn" type="PackedScene" id=10]
@@ -1154,9 +1154,7 @@ tracks/2/keys = {
 "values": [ Vector2( 1, 1 ), Vector2( 0.9, 0.9 ), Vector2( 1, 1 ) ]
 }
 
-[node name="Brute" groups=[
-"Enemies",
-] instance=ExtResource( 1 )]
+[node name="Brute" groups=["Enemies"] instance=ExtResource( 1 )]
 script = ExtResource( 3 )
 movementResource = ExtResource( 4 )
 rightShadowX = 0.0
@@ -1208,6 +1206,7 @@ rotation = -2.87979
 
 [node name="Particles2D" type="Particles2D" parent="AttackPivot" index="6"]
 position = Vector2( 0, 5 )
+emitting = false
 amount = 50
 lifetime = 0.4
 one_shot = true

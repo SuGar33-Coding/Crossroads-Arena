@@ -52,7 +52,7 @@ func get_drag_data(_position):
 		var dragTexture = TextureRect.new()
 		dragTexture.expand = true
 		dragTexture.texture = get_child(0).texture
-		dragTexture.rect_size = Vector2(100, 100)
+		dragTexture.rect_size = Vector2(50, 50)
 		
 		var control = Control.new()
 		control.add_child(dragTexture)

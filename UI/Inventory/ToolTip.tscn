@@ -1,8 +1,8 @@
-[gd_scene load_steps=5 format=2]
+[gd_scene load_steps=7 format=2]
 
 [ext_resource path="res://UI/Inventory/ToolTip.gd" type="Script" id=1]
-[ext_resource path="res://UI/Inventory/StatRow.tscn" type="PackedScene" id=2]
 [ext_resource path="res://Themes/TooltipFont.tres" type="DynamicFont" id=3]
+[ext_resource path="res://Assets/EmberstoneStatic.png" type="Texture" id=4]
 
 [sub_resource type="StyleBoxFlat" id=1]
 bg_color = Color( 0.294118, 0.313726, 0.345098, 1 )
@@ -16,7 +16,18 @@ corner_radius_top_right = 4
 corner_radius_bottom_right = 4
 corner_radius_bottom_left = 4
 
+[sub_resource type="DynamicFontData" id=2]
+font_path = "res://Assets/Adventurer.ttf"
+
+[sub_resource type="DynamicFont" id=3]
+size = 8
+outline_size = 1
+outline_color = Color( 0, 0, 0, 1 )
+use_filter = true
+font_data = SubResource( 2 )
+
 [node name="ToolTip" type="Popup"]
+visible = true
 margin_right = 100.0
 mouse_filter = 2
 size_flags_vertical = 9
@@ -50,13 +61,31 @@ mouse_filter = 2
 [node name="ItemName" type="Label" parent="Panel/MarginContainer/StatsContainer"]
 margin_right = 51.0
 margin_bottom = 8.0
-custom_fonts/font = ExtResource( 3 )
+size_flags_horizontal = 3
+custom_fonts/font = SubResource( 3 )
 text = "Now This"
 align = 1
 
-[node name="ValueStat" parent="Panel/MarginContainer/StatsContainer" instance=ExtResource( 2 )]
-anchor_right = 0.0
-anchor_bottom = 0.0
+[node name="HBoxContainer" type="HBoxContainer" parent="Panel/MarginContainer/StatsContainer"]
 margin_top = 12.0
 margin_right = 51.0
-margin_bottom = 20.0
+margin_bottom = 25.0
+alignment = 1
+
+[node name="TextureRect" type="TextureRect" parent="Panel/MarginContainer/StatsContainer/HBoxContainer"]
+margin_left = 14.0
+margin_right = 27.0
+margin_bottom = 13.0
+size_flags_horizontal = 0
+size_flags_vertical = 0
+texture = ExtResource( 4 )
+stretch_mode = 4
+
+[node name="ValueLabel" type="Label" parent="Panel/MarginContainer/StatsContainer/HBoxContainer"]
+margin_left = 31.0
+margin_top = 3.0
+margin_right = 36.0
+margin_bottom = 10.0
+custom_fonts/font = ExtResource( 3 )
+text = "21"
+align = 2

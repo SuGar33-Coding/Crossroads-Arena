@@ -4,7 +4,7 @@ var statRow = preload("res://UI/Inventory/StatRow.tscn")
 
 onready var statsContainer: VBoxContainer = $Panel/MarginContainer/StatsContainer
 onready var itemNameTag: Label = $Panel/MarginContainer/StatsContainer/ItemName
-onready var valueStat: StatRow = $Panel/MarginContainer/StatsContainer/ValueStat
+onready var valueLabel: Label = $Panel/MarginContainer/StatsContainer/HBoxContainer/ValueLabel
 
 var itemInstance: ItemInstance setget setItemInstance
 var valFmtStr = "%d"
@@ -30,8 +30,7 @@ func setItemInstance(newItemInstance):
 	itemNameTag.add_color_override("font_color", nameColor)
 	
 	# Every item has a value
-	valueStat.statName = "Val"
-	valueStat.statValue = valFmtStr % itemInstance.resource.value
+	valueLabel.text = str(itemInstance.resource.value)
 	
 	# Create the proper type of tooltip
 	# Yeah, I know Haskell

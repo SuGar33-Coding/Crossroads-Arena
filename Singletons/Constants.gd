@@ -26,3 +26,8 @@ func getRarityColor(rarity) -> Color:
 			return LEGEND_COLOR
 	
 	return UBIQ_COLOR
+
+var FIGHTER_PATH = "res://Actors/Fighters/Fighter.tscn"
+var BRUTE_PATH = "res://Actors/Brute/Brute.tscn"
+var CHARGER_PATH = "res://Actors/Chargers/Charger/Charger.tscn"
+var DASHER_PATH = "res://Actors/Dashers/Rogue/Rogue.tscn"
