@@ -22,3 +22,11 @@ func setStatValue(newStatValue: String):
 func setOldValue(newOldValue: String):
 	oldValue = newOldValue
 	_oldValueLabel.text = "| " + newOldValue
+
+func setCompareColor(newIsBetter: bool):
+	if newIsBetter:
+		_valueLabel.add_color_override("font_color", Color.green)
+		_oldValueLabel.add_color_override("font_color", Color.red)
+	else:
+		_valueLabel.add_color_override("font_color", Color.red)
+		_oldValueLabel.add_color_override("font_color", Color.green)

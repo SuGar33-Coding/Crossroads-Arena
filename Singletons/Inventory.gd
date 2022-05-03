@@ -55,7 +55,7 @@ var _inventory := {
 	},
 }
 
-var _coins: int = 200
+var _coins: int = 0
 
 func _ready():
 	for rarity in Item.RARITY.values():
@@ -82,7 +82,7 @@ func getItemsInDirectory(path):
 			file_name = dir.get_next()
 
 func resetInventory():
-	_coins = 0
+	_coins = 100
 	for key in _inventory.keys():
 		for lowerKey in _inventory[key].keys():
 			_inventory[key][lowerKey] = null
