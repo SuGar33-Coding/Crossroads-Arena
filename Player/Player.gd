@@ -33,6 +33,7 @@ onready var sprite : Sprite = $Sprite
 onready var headSprite : Sprite = $Sprite/HeadSprite
 onready var chestSprite : Sprite = $Sprite/ChestSprite
 onready var legSprite : Sprite = $Sprite/LegSprite
+onready var backSprite : Sprite = $Sprite/BackWeapon
 onready var shadowSprite := $ShadowSprite
 onready var attackPivot := $AttackPivot
 onready var hurtbox := $Hurtbox
@@ -75,6 +76,8 @@ func _ready():
 	
 	dashSpeed = baseDashSpeed
 	checkArmorStats()
+	
+	attackPivot.connect("new_secondary", self, "_new_secondary")
 
 
 func _physics_process(delta):
@@ -133,6 +136,7 @@ func _physics_process(delta):
 		headSprite.flip_h = true
 		chestSprite.flip_h = true
 		legSprite.flip_h = true
+		backSprite.flip_h = true
 		shadowSprite.position.x = .5
 		attackPivot.scale.y = -1
 	else:
@@ -140,6 +144,7 @@ func _physics_process(delta):
 		headSprite.flip_h = false
 		chestSprite.flip_h = false
 		legSprite.flip_h = false
+		backSprite.flip_h = false
 		shadowSprite.position.x = 1.25
 		attackPivot.scale.y = 1
 
@@ -297,6 +302,13 @@ func _parry():
 
 func _combo_finished():
 	PlayerStats.resetMaxSpeed()
+
+func _new_secondary(secondaryWeapon : WeaponInstance):
+	backSprite.texture = secondaryWeapon.weaponTexture
+	if secondaryWeapon.weaponType == WeaponStats.WeaponType.RANGED:
+		backSprite.hframes = 6
+	else:
+		backSprite.hframes = 1
 
 func _process_effects():
 	if not effects.empty() or not armorEffects.empty():
