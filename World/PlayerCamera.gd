@@ -2,8 +2,8 @@ extends Camera2D
 
 class_name MainCamera
 
-onready var topLeft = $Limits/TopLeft
-onready var bottomRight = $Limits/BottomRight
+onready var topLeft : Node2D = $Limits/TopLeft
+onready var bottomRight : Node2D = $Limits/BottomRight
 onready var tween = $Tween
 
 # Camera shake stuff

@@ -1,4 +1,4 @@
-extends Area2D
+class_name Scenery extends WorldSpawn
 
 onready var animationPlayer := $AnimationPlayer
 onready var collider := $CollisionShape2D

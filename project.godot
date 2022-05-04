@@ -234,6 +234,11 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://World/Rooms/RoomArea.gd"
 }, {
+"base": "WorldSpawn",
+"class": "Scenery",
+"language": "GDScript",
+"path": "res://World/Scenery/Scenery.gd"
+}, {
 "base": "Area2D",
 "class": "ShopKeep",
 "language": "GDScript",
@@ -293,6 +298,11 @@ _global_script_classes=[ {
 "class": "WeaponStats",
 "language": "GDScript",
 "path": "res://Items/WeaponStats.gd"
+}, {
+"base": "Node2D",
+"class": "WorldSpawn",
+"language": "GDScript",
+"path": "res://World/Scenery/WorldSpawn.gd"
 } ]
 _global_script_class_icons={
 "AoeFX": "",
@@ -340,6 +350,7 @@ _global_script_class_icons={
 "RangedProjectile": "",
 "Room": "",
 "RoomArea": "",
+"Scenery": "",
 "ShopKeep": "",
 "ShopUI": "",
 "StatRow": "",
@@ -351,7 +362,8 @@ _global_script_class_icons={
 "UIHandler": "",
 "WeaponHitbox": "",
 "WeaponInstance": "",
-"WeaponStats": ""
+"WeaponStats": "",
+"WorldSpawn": ""
 }
 
 [application]

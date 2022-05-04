@@ -29,13 +29,17 @@ onready var itemSort := $YSort/Items
 onready var newWaveButtonSprite := $YSort/NewWaveButton/AnimatedSprite
 onready var spawnLabel := $YSort/NewWaveButton/Label
 onready var strPillarAnimation := $YSort/StrengthPillar/AnimationPlayer
+onready var strParticles := $YSort/StrengthPillar/Particles2D
 onready var conPillarAnimation := $YSort/ConPillar/AnimationPlayer
+onready var conParticles := $YSort/ConPillar/Particles2D
 onready var dexPillarAnimation := $YSort/DexPillar/AnimationPlayer
+onready var dexParticles := $YSort/DexPillar/Particles2D
 onready var strPillarLabel := $YSort/StrengthPillar/Label
 onready var conPillarLabel := $YSort/ConPillar/Label
 onready var dexPillarLabel := $YSort/DexPillar/Label
 onready var shopUI := $UIHandler/Shop
 onready var shopkeep : ShopKeep = $YSort/ShopKeep
+onready var scenery : YSort = $YSort/Scenery
 var largeSpawns : Array
 var medSpawns : Array
 var smallSpawns : Array
@@ -55,6 +59,8 @@ func _ready():
 	
 	shopkeep.connect("body_entered", self, "_player_entered_shopkeep")
 	shopkeep.connect("body_exited", self, "_player_exited_shopkeep")
+	
+	#generateVegetation()
 	
 	# TODO: Add starting weapon choices like this
 	var startingItem : ItemInstance = get_node(ItemManager.createItemFromPath("res://Items/ItemResources/ChestPlate.tres"))
@@ -116,11 +122,11 @@ func _physics_process(_delta):
 		# Strength Pillar
 		if PlayerStats.playerLevel < PlayerStats.nextPlayerLevel:
 			if not strPillarAnimation.is_playing():
-				strPillarAnimation.play("Ready")
+				strPillarAnimation.play("ChargeUp")
 			if not conPillarAnimation.is_playing():
-				conPillarAnimation.play("Ready")
+				conPillarAnimation.play("ChargeUp")
 			if not dexPillarAnimation.is_playing():
-				dexPillarAnimation.play("Ready")
+				dexPillarAnimation.play("ChargeUp")
 				
 			strPillarLabel.visible = playerNearStr
 			conPillarLabel.visible = playerNearCon
@@ -131,26 +137,29 @@ func _physics_process(_delta):
 					playerNearStr:
 						PlayerStats.baseStr += 1
 						PlayerStats.incrementPlayerLevel()
-						strPillarAnimation.play("ChargeUp")
+						strPillarAnimation.play("Chosen")
 						strPillarLabel.visible = false
+						camera.add_trauma(.5)
+						strParticles.emitting = true
 					playerNearCon:
 						PlayerStats.baseCon += 1
 						PlayerStats.incrementPlayerLevel()
-						conPillarAnimation.play("ChargeUp")
+						conPillarAnimation.play("Chosen")
 						conPillarLabel.visible = false
+						conParticles.emitting = true
+						camera.add_trauma(.5)
 					playerNearDex:
 						PlayerStats.baseDex += 1
 						PlayerStats.incrementPlayerLevel()
-						dexPillarAnimation.play("ChargeUp")
+						dexPillarAnimation.play("Chosen")
 						dexPillarLabel.visible = false
+						dexParticles.emitting = true
+						camera.add_trauma(.5)
 		else:
 			# If we just want it to go dark on use, take out the if statements here
-			if strPillarAnimation.current_animation != "ChargeUp":
-				strPillarAnimation.play("Idle")
-			if conPillarAnimation.current_animation != "ChargeUp":
-				conPillarAnimation.play("Idle")
-			if dexPillarAnimation.current_animation != "ChargeUp":
-				dexPillarAnimation.play("Idle")
+			strPillarAnimation.play("Idle")
+			conPillarAnimation.play("Idle")
+			dexPillarAnimation.play("Idle")
 		
 		# Wave Button
 		newWaveButtonSprite.play("Ready")
@@ -166,6 +175,47 @@ func _physics_process(_delta):
 				shopUI.toggleVisible()
 		elif shopUI.isVisible():
 			shopUI.toggleVisible()
+
+func playPillarReadies():
+	strPillarAnimation.play("Ready")
+	conPillarAnimation.play("Ready")
+	dexPillarAnimation.play("Ready")
+
+func stopPillarExplosion():
+	strParticles.emitting = false
+	conParticles.emitting = false
+	dexParticles.emitting = false
+
+func generateVegetation():
+	var vegetationScenes := []
+	
+	var path = "res://World/Scenery/"
+	var dir = Directory.new()
+	if dir.open(path) == OK:
+		dir.list_dir_begin(true, true)
+		var file_name : String = dir.get_next()
+		while file_name != "":
+			if file_name.ends_with(".tscn"):
+				var resource := load(path+"/"+file_name)
+				vegetationScenes.append(resource)
+			file_name = dir.get_next()
+	
+	print(camera.limit_right)
+	print(camera.limit_left)
+	
+	print(camera.limit_bottom)
+	print(camera.limit_top)
+	var xRange := int(camera.limit_right - camera.limit_left)
+	var yRange := int(camera.limit_bottom - camera.limit_top)
+	for i in range(100):
+		var xpos = randi() % xRange + camera.limit_left
+		var ypos = randi() % yRange + camera.limit_top
+		var pos := Vector2(xpos, ypos)
+		var instance = vegetationScenes[randi() % vegetationScenes.size()].instance() as WorldSpawn
+		
+		scenery.add_child(instance)
+		instance.global_position = pos
+		instance.checkWalls()
 
 func spawnEnemies():
 	spawnLabel.visible = false

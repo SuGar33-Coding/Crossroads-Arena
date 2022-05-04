@@ -50,7 +50,6 @@ func setDetectionRange(value):
 	# Need to check this because this might be called before its ready function is called
 	
 	if is_instance_valid(collision):
-		print("Collision set to ", value)
 		var shape : CircleShape2D = CircleShape2D.new()
 		shape.radius = detectionRange
 		collision.shape = shape

@@ -77,8 +77,6 @@ func spawnActor(pathToResource : String):
 	newActor.connect("no_health", self, "npc_no_health")
 	currentActors.append(newActor)
 	self.add_child(newActor)
-	print("\n\nspawned")
-	print(newActor)
 	
 func killSelf():
 	emit_signal("encounter_finished")

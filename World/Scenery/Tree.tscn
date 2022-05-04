@@ -1,7 +1,8 @@
-[gd_scene load_steps=7 format=2]
+[gd_scene load_steps=9 format=2]
 
 [ext_resource path="res://Assets/WorldAssets/forest_tiles_trees.png" type="Texture" id=1]
 [ext_resource path="res://Assets/Leaf.png" type="Texture" id=2]
+[ext_resource path="res://World/Scenery/WorldSpawn.gd" type="Script" id=3]
 
 [sub_resource type="CapsuleShape2D" id=1]
 radius = 4.05255
@@ -30,16 +31,20 @@ orbit_velocity_random = 0.0
 tangential_accel_curve = SubResource( 3 )
 scale = 0.5
 
+[sub_resource type="CircleShape2D" id=5]
+radius = 40.0
+
 [node name="Tree" type="KinematicBody2D"]
 scale = Vector2( 2, 2 )
 collision_mask = 6
+script = ExtResource( 3 )
 
 [node name="Sprite" type="Sprite" parent="."]
 modulate = Color( 0.769531, 0.769531, 0.769531, 1 )
 position = Vector2( 0.0883904, -10.253 )
 texture = ExtResource( 1 )
-vframes = 2
 hframes = 2
+vframes = 2
 frame = 1
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
@@ -57,3 +62,8 @@ explosiveness = 1.0
 randomness = 0.95
 process_material = SubResource( 4 )
 texture = ExtResource( 2 )
+
+[node name="WallCollision" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="WallCollision"]
+shape = SubResource( 5 )
