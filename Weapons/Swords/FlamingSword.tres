@@ -10,7 +10,7 @@
 [resource]
 script = ExtResource( 5 )
 name = "Flaming Sword"
-value = 250
+value = 100
 texture = ExtResource( 6 )
 flip = true
 modifiers = [ ExtResource( 1 ) ]

@@ -181,6 +181,9 @@ func setWeapon(weaponStats : WeaponInstance):
 	if weaponStats.weaponType == WeaponStats.WeaponType.SWORD:
 		parryPos = swordAnimDist * .75
 
+func resetFlip():
+	weaponSprite.flip_v = weaponStats.flip
+	weaponSprite.flip_h = not weaponStats.flip
 
 func setComboCounter(value):
 	if comboCounter < 2:

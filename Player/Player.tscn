@@ -5,7 +5,7 @@
 [ext_resource path="res://Player/PlayerAttackPivot.gd" type="Script" id=3]
 [ext_resource path="res://Actors/Zones/Hurtbox.tscn" type="PackedScene" id=4]
 [ext_resource path="res://Actors/Zones/AttackPivot.tscn" type="PackedScene" id=5]
-[ext_resource path="res://Assets/WeaponAssets/Swing/GreatHammer.png" type="Texture" id=6]
+[ext_resource path="res://Assets/WeaponAssets/Swords/Item__03.png" type="Texture" id=6]
 [ext_resource path="res://World/PlayerCamera.tscn" type="PackedScene" id=7]
 [ext_resource path="res://UI/PlayerUI.tscn" type="PackedScene" id=8]
 [ext_resource path="res://Assets/WeaponAssets/FX/Circle.png" type="Texture" id=9]
@@ -351,7 +351,7 @@ tracks/1/keys = {
 "values": [ -90.0 ]
 }
 tracks/2/type = "value"
-tracks/2/path = NodePath("AttackPivot/WeaponRestingPos/Weapon:flip_h")
+tracks/2/path = NodePath("AttackPivot/WeaponRestingPos/Weapon:modulate")
 tracks/2/interp = 1
 tracks/2/loop_wrap = true
 tracks/2/imported = false
@@ -359,45 +359,24 @@ tracks/2/enabled = true
 tracks/2/keys = {
 "times": PoolRealArray( 0.1 ),
 "transitions": PoolRealArray( 1 ),
-"update": 1,
-"values": [ true ]
+"update": 0,
+"values": [ Color( 1, 1, 1, 1 ) ]
 }
-tracks/3/type = "value"
-tracks/3/path = NodePath("AttackPivot/WeaponRestingPos/Weapon:flip_v")
+tracks/3/type = "method"
+tracks/3/path = NodePath("AttackPivot")
 tracks/3/interp = 1
 tracks/3/loop_wrap = true
 tracks/3/imported = false
 tracks/3/enabled = true
 tracks/3/keys = {
-"times": PoolRealArray( 0.1 ),
-"transitions": PoolRealArray( 1 ),
-"update": 1,
-"values": [ false ]
-}
-tracks/4/type = "value"
-tracks/4/path = NodePath("AttackPivot/WeaponRestingPos/Weapon:modulate")
-tracks/4/interp = 1
-tracks/4/loop_wrap = true
-tracks/4/imported = false
-tracks/4/enabled = true
-tracks/4/keys = {
-"times": PoolRealArray( 0.1 ),
-"transitions": PoolRealArray( 1 ),
-"update": 0,
-"values": [ Color( 1, 1, 1, 1 ) ]
-}
-tracks/5/type = "method"
-tracks/5/path = NodePath("AttackPivot")
-tracks/5/interp = 1
-tracks/5/loop_wrap = true
-tracks/5/imported = false
-tracks/5/enabled = true
-tracks/5/keys = {
-"times": PoolRealArray( 0.02 ),
-"transitions": PoolRealArray( 1 ),
+"times": PoolRealArray( 0.02, 0.1 ),
+"transitions": PoolRealArray( 1, 1 ),
 "values": [ {
 "args": [ 0.4, false ],
 "method": "playAttackSignal"
+}, {
+"args": [  ],
+"method": "resetFlip"
 } ]
 }
 
@@ -896,6 +875,7 @@ collision_mask = 32
 
 [node name="Swipe" parent="AttackPivot" index="1"]
 position = Vector2( 0, 0 )
+rotation = -1.5708
 frame = 0
 
 [node name="Weapon" parent="AttackPivot/WeaponRestingPos" index="0"]
@@ -959,7 +939,6 @@ bus = "PlayerWalking"
 
 [node name="BloodParticles" type="Particles2D" parent="."]
 position = Vector2( 0, 5 )
-emitting = false
 amount = 50
 lifetime = 0.4
 one_shot = true

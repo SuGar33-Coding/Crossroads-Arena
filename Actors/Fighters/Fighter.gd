@@ -288,8 +288,6 @@ func _process_effects():
 					if effect.amount > maxBurn:
 						maxBurn = effect.amount
 					isBurning = true
-					
-					isPoisoned = true
 				Effect.EffectType.SLOW:
 					if effect.amount > speedSlow:
 						speedSlow = effect.amount
