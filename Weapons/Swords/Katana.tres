@@ -1,0 +1,32 @@
+[gd_resource type="Resource" load_steps=6 format=2]
+
+[ext_resource path="res://Assets/WeaponAssets/Swords/Item__02.png" type="Texture" id=1]
+[ext_resource path="res://Audio/Stab.wav" type="AudioStream" id=2]
+[ext_resource path="res://Audio/Swipe2.wav" type="AudioStream" id=3]
+[ext_resource path="res://Items/WeaponStats.gd" type="Script" id=4]
+[ext_resource path="res://Items/Effects/LighterBleed.tres" type="Resource" id=5]
+
+[resource]
+script = ExtResource( 4 )
+name = "Katana"
+value = 75
+texture = ExtResource( 1 )
+flip = false
+modifiers = [  ]
+rarity = 4
+weaponType = 1
+weaponTexture = ExtResource( 1 )
+damage = 35
+armorPierce = 50
+knockbackValue = 250
+radius = 11.5
+length = 12.5
+attackSpeed = 1.0
+effectResources = [ ExtResource( 5 ) ]
+quickAttackSFX = ExtResource( 3 )
+longAttackSFX = ExtResource( 2 )
+projectileSpeed = 1500.0
+projectileRange = 350.0
+aoeNumberOfTicks = 3
+aoeLifetime = 3.0
+instantTick = false

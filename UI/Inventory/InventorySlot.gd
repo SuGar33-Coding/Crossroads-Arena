@@ -19,8 +19,7 @@ func _gui_input(event):
 			autoEquip()
 
 func autoEquip():
-	# Abstract
-	pass
+	assert(false, "this is a pure abstract function; it must be implemented")
 
 func getSlotName() -> String:
 	return get_parent().name

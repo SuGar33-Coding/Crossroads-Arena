@@ -1,0 +1,16 @@
+[gd_resource type="Resource" load_steps=5 format=2]
+
+[ext_resource path="res://Items/Consumable.gd" type="Script" id=1]
+[ext_resource path="res://Items/Effects/LightBurn.tres" type="Resource" id=2]
+[ext_resource path="res://Assets/ItemAssets/Consumables/Item_65.png" type="Texture" id=3]
+[ext_resource path="res://Items/Effects/StrBuff.tres" type="Resource" id=4]
+
+[resource]
+script = ExtResource( 1 )
+name = "BurningRage"
+value = 100
+texture = ExtResource( 3 )
+flip = false
+modifiers = [  ]
+rarity = 5
+effectResources = [ ExtResource( 2 ), ExtResource( 4 ) ]

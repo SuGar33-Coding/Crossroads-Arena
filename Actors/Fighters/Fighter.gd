@@ -20,6 +20,7 @@ onready var animationPlayer: AnimationPlayer = $AnimationPlayer
 onready var attackTimer := $AttackPivot/AttackTimer
 onready var shadowSprite := $Shadow
 onready var bloodParticles := $AttackPivot/Particles2D
+onready var burnParticles := $AttackPivot/BurnParticles
 onready var effectsTimer := $AttackPivot/EffectsTimer
 
 var sinX = rand_range(0, TAU)
@@ -259,8 +260,10 @@ func _process_effects():
 		var totalDamage := 0
 		var maxPoison := 0
 		var maxBleed := 0
+		var maxBurn := 0
 		var isPoisoned := false
 		var isBleeding := false
+		var isBurning := false
 		var speedSlow := 0.0
 		
 		var removeArray = []
@@ -281,6 +284,10 @@ func _process_effects():
 				Effect.EffectType.POISON:
 					if effect.amount > maxPoison:
 						maxPoison = effect.amount
+				Effect.EffectType.BURN:
+					if effect.amount > maxBurn:
+						maxBurn = effect.amount
+					isBurning = true
 					
 					isPoisoned = true
 				Effect.EffectType.SLOW:
@@ -292,7 +299,7 @@ func _process_effects():
 			if effectEntry.ticks <= 0:
 				removeArray.append(i)
 		
-		totalDamage = maxBleed + maxPoison
+		totalDamage = maxBleed + maxPoison + maxBurn
 		
 		# Invert array since we went through the array in order originally
 		# Avoids changing array indices while iterating through
@@ -306,6 +313,8 @@ func _process_effects():
 			baseColor = Color(1,1,1)
 			
 		returnToBaseColor()
+		
+		burnParticles.emitting = isBurning
 			
 		if isBleeding:
 			bloodParticles.emitting = true

@@ -35,6 +35,8 @@ func init(itemInstance: ItemInstance, shouldMove := false):
 func _ready():
 	pickupMessage.visible = false
 	itemSprite.texture = item.getTexture()
+	itemSprite.flip_h = item.flip
+	itemSprite.flip_v = item.flip
 	
 	itemSprite.material = ShaderMaterial.new()
 	

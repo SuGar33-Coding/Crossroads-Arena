@@ -161,6 +161,9 @@ func setWeapon(weaponStats : WeaponInstance):
 	backTween.remove_all()
 	weaponSprite.position = Vector2.ZERO
 	
+	weaponSprite.flip_h = weaponStats.flip
+	weaponSprite.flip_v = weaponStats.flip
+	
 	if weaponStats.weaponType == WeaponStats.WeaponType.MELEE or weaponStats.weaponType == WeaponStats.WeaponType.SWORD:
 		restingPos.position = meleeRestingCoord
 		weaponSprite.rotation = restingRotation

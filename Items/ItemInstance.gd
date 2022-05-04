@@ -3,6 +3,7 @@ class_name ItemInstance extends Node2D
 var resource: Item setget _setResource
 var modifier: Modifier setget _setModifier
 var sprite := Sprite.new()
+var flip := false
 var itemName: String
 var itemType: String
 var itemRarity
@@ -11,7 +12,7 @@ var value : int
 func _ready():
 	add_child(sprite)
 
-func getTexture():
+func getTexture() -> Texture:
 	return sprite.texture
 
 # update this instance whenever the resource gets changed
@@ -27,6 +28,7 @@ func _setResource(newResource):
 	elif resource is Consumable:
 		itemType = "consumable"
 	sprite.texture = resource.texture
+	flip = resource.flip
 	value = resource.value
 
 func _setModifier(newResource : Modifier):

@@ -88,19 +88,13 @@ func resetInventory():
 			_inventory[key][lowerKey] = null
 	
 	generateShop()
-	
-	# TODO: Figure out how/when to populate the shop
-	#_inventory.shop["0"] = get_node(ItemManager.createItem("res://Items/Boots.tres"))
-	#for i in range(1, 10):
-	#	_inventory.shop[str(i)] = get_node(ItemManager.createItem("res://Items/HealthPotion.tres"))
 
 func generateShop():
 	var numCols := 4
-	for row in range(5):
+	for row in range(6):
 		for col in range(numCols):
 			if shopItems[row].size() > 0:
 				var randItemResource = shopItems[row][randi() % shopItems[row].size()]
-				print(randItemResource.name)
 				_inventory.shop[str(row * numCols + col)] = get_node(ItemManager.createItemFromResource(randItemResource))
 	
 	emit_signal("inventory_changed", null, "shop")

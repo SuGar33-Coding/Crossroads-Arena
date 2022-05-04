@@ -11,6 +11,7 @@ script = ExtResource( 4 )
 name = "Glaive"
 value = 0
 texture = ExtResource( 2 )
+flip = false
 modifiers = [  ]
 rarity = 2
 weaponType = 0

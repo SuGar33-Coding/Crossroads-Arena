@@ -9,13 +9,13 @@
 
 [resource]
 script = ExtResource( 5 )
-name = "Base Sword"
+name = "Sword"
 value = 0
 texture = ExtResource( 4 )
+flip = false
 modifiers = [ ExtResource( 6 ), ExtResource( 1 ) ]
 rarity = 1
 weaponType = 1
-weaponTexture = ExtResource( 4 )
 damage = 10
 armorPierce = 0
 knockbackValue = 350

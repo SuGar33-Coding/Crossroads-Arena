@@ -46,6 +46,7 @@ onready var animationPlayer := $AnimationPlayer
 onready var footstep1 := $Footstep1
 onready var footstep2 := $Footstep2
 onready var bloodParticles := $BloodParticles
+onready var burnParticles : Particles2D = $BurnParticles
 onready var playerUI : PlayerUI = $PlayerUI
 onready var inventoryUI : InventoryUI = get_node("../../UIHandler/Inventory")
 onready var shopUI : ShopUI = get_node("../../UIHandler/Shop")
@@ -79,6 +80,9 @@ func _ready():
 	checkArmorStats()
 	
 	attackPivot.connect("new_secondary", self, "_new_secondary")
+	
+	bloodParticles.emitting = false
+	burnParticles.emitting = false
 
 
 func _physics_process(delta):
@@ -324,8 +328,10 @@ func _process_effects():
 		var totalDamage := 0
 		var maxPoison := 0
 		var maxBleed := 0
+		var maxBurn := 0
 		var isPoisoned := false
 		var isBleeding := false
+		var isBurning := false
 		var speedSlow := 0.0
 		var armorShred := 0
 		var armorBuff := 0
@@ -385,8 +391,11 @@ func _process_effects():
 				Effect.EffectType.POISON:
 					if effect.amount > maxPoison:
 						maxPoison = effect.amount
-					
 					isPoisoned = true
+				Effect.EffectType.BURN:
+					if effect.amount > maxBurn:
+						maxBurn = effect.amount
+					isBurning = true
 				Effect.EffectType.STR:
 					totalStr += effect.amount
 				Effect.EffectType.CON:
@@ -403,7 +412,7 @@ func _process_effects():
 					if effect.amount > armorBuff:
 						armorBuff = effect.amount
 		
-		totalDamage = maxBleed + maxPoison
+		totalDamage = maxBleed + maxPoison + maxBurn
 		
 		# Invert array since we went through the array in order originally
 		# Avoids changing array indices while iterating through
@@ -422,6 +431,8 @@ func _process_effects():
 			
 		if isBleeding:
 			bloodParticles.emitting = true
+		
+		burnParticles.emitting = isBurning
 			
 		if stats.baseStr != totalStr or stats.strength != stats.baseStr:
 			stats.strength = totalStr

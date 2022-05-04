@@ -8,7 +8,10 @@ func updateDisplay(bag):
 		var defaultIcon: TextureRect = gridContainer.get_node(slot).get_child(0).get_child(1)
 		if bag[slot] != null:
 			# if there's an item, update the slot with that sprite
-			slotIcon.texture = (bag[slot] as ItemInstance).getTexture()
+			var item := bag[slot] as ItemInstance
+			slotIcon.texture = item.getTexture()
+			slotIcon.flip_h = item.flip
+			slotIcon.flip_v = item.flip
 			defaultIcon.visible = false
 		else:
 			# otherwise replace with default texture

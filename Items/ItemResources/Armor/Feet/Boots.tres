@@ -9,6 +9,7 @@ script = ExtResource( 2 )
 name = "Boots"
 value = 5
 texture = ExtResource( 3 )
+flip = false
 modifiers = [  ]
 rarity = 0
 type = 2

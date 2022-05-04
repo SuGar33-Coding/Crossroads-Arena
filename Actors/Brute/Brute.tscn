@@ -1,4 +1,4 @@
-[gd_scene load_steps=28 format=2]
+[gd_scene load_steps=33 format=2]
 
 [ext_resource path="res://Actors/NPC.tscn" type="PackedScene" id=1]
 [ext_resource path="res://Assets/CharacterAssets/Brute.png" type="Texture" id=2]
@@ -20,6 +20,31 @@ height = 14.8948
 [sub_resource type="CapsuleShape2D" id=2]
 radius = 13.4805
 height = 5.67306
+
+[sub_resource type="Gradient" id=21]
+offsets = PoolRealArray( 0, 0.0807453, 0.291925, 0.900621 )
+colors = PoolColorArray( 1, 1, 1, 1, 1, 0.861328, 0, 1, 1, 0.477539, 0, 1, 1, 0, 0, 1 )
+
+[sub_resource type="GradientTexture" id=18]
+gradient = SubResource( 21 )
+
+[sub_resource type="Curve" id=22]
+_data = [ Vector2( 0, 1 ), 0.0, 0.16157, 0, 0, Vector2( 1, 0 ), -0.681039, 0.0, 0, 0 ]
+
+[sub_resource type="CurveTexture" id=20]
+curve = SubResource( 22 )
+
+[sub_resource type="ParticlesMaterial" id=23]
+emission_shape = 1
+emission_sphere_radius = 8.0
+flag_disable_z = true
+gravity = Vector3( 0, -50, 0 )
+angular_velocity = 691.76
+orbit_velocity = 0.0
+orbit_velocity_random = 0.0
+scale = 1.5
+scale_curve = SubResource( 20 )
+color_ramp = SubResource( 18 )
 
 [sub_resource type="Curve" id=3]
 _data = [ Vector2( 0, 1 ), 0.0, 0.0, 0, 0, Vector2( 1, 0.163636 ), 0.0, 0.0, 0, 0 ]
@@ -1204,7 +1229,14 @@ frame = 0
 [node name="Weapon" parent="AttackPivot/WeaponRestingPos" index="0"]
 rotation = -2.87979
 
-[node name="Particles2D" type="Particles2D" parent="AttackPivot" index="6"]
+[node name="BurnParticles" type="Particles2D" parent="AttackPivot" index="6"]
+position = Vector2( 0, -2 )
+emitting = false
+amount = 100
+lifetime = 1.5
+process_material = SubResource( 23 )
+
+[node name="Particles2D" type="Particles2D" parent="AttackPivot" index="7"]
 position = Vector2( 0, 5 )
 emitting = false
 amount = 50
@@ -1213,7 +1245,7 @@ one_shot = true
 explosiveness = 0.65
 process_material = SubResource( 5 )
 
-[node name="GroundPoundHitbox" parent="AttackPivot" index="9" instance=ExtResource( 10 )]
+[node name="GroundPoundHitbox" parent="AttackPivot" index="10" instance=ExtResource( 10 )]
 position = Vector2( 0, 5 )
 script = ExtResource( 11 )
 hitboxRadius = 20.0

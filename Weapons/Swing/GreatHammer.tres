@@ -10,6 +10,7 @@ script = ExtResource( 4 )
 name = "Great Hammer"
 value = 0
 texture = ExtResource( 2 )
+flip = false
 modifiers = [  ]
 rarity = 3
 weaponType = 2

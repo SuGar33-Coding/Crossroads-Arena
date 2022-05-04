@@ -6,9 +6,14 @@ func _ready():
 	Inventory.connect("inventory_changed", self, "_updateDisplay")
 	for slot in Inventory.getShop().keys():
 		var newBagSlot = tempalteBagSlot.instance()
-		if Inventory.getShop()[slot] != null:
-			var iconTexture = (Inventory.getShop()[slot] as ItemInstance).getTexture()
-			(newBagSlot.get_child(0).get_node("Icon") as TextureRect).texture = iconTexture
+		var item := Inventory.getShop()[slot] as ItemInstance
+		if item != null:
+			var iconTexture := item.getTexture()
+			var slotIcon := newBagSlot.get_child(0).get_node("Icon") as TextureRect
+			slotIcon.texture = iconTexture
+			slotIcon.flip_h = item.flip
+			slotIcon.flip_v = item.flip
+			
 		gridContainer.add_child(newBagSlot, true)
 
 

@@ -17,7 +17,8 @@ enum EffectType {
 	DEX,
 	SLOW,
 	ARMOR_SHRED,
-	ARMOR_BUFF
+	ARMOR_BUFF,
+	BURN
 }
 
 export(EffectType) var effectType

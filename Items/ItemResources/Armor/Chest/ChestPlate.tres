@@ -3,17 +3,18 @@
 [ext_resource path="res://Assets/ArmorAssets/Chest/ChestPlate.png" type="Texture" id=1]
 [ext_resource path="res://Assets/ArmorAssets/Chest/Item__57.png" type="Texture" id=2]
 [ext_resource path="res://Items/Armor.gd" type="Script" id=3]
-[ext_resource path="res://Items/Effects/LightHealing.tres" type="Resource" id=4]
+[ext_resource path="res://Items/Effects/LightBurn.tres" type="Resource" id=4]
 
 [resource]
 script = ExtResource( 3 )
 name = "Plate Armor"
 value = 150
 texture = ExtResource( 2 )
+flip = false
 modifiers = [  ]
 rarity = 2
 type = 1
 characterTexture = ExtResource( 1 )
 defenseValue = 10
-speedModifier = -0.15
+speedModifier = -0.2
 effects = [ ExtResource( 4 ) ]

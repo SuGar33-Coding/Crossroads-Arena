@@ -11,6 +11,7 @@ script = ExtResource( 1 )
 name = "Fists"
 value = 0
 texture = ExtResource( 5 )
+flip = false
 modifiers = [  ]
 rarity = 0
 weaponType = 3

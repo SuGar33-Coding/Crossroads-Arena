@@ -10,6 +10,7 @@ script = ExtResource( 4 )
 name = "Great Spear"
 value = 0
 texture = ExtResource( 3 )
+flip = false
 modifiers = [  ]
 rarity = 3
 weaponType = 3

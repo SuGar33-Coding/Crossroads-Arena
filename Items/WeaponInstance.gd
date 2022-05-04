@@ -35,7 +35,11 @@ func _setResource(newResource):
 	._setResource(newResource)
 	var weaponStats = self.resource as WeaponStats
 	weaponType = weaponStats.weaponType
-	weaponTexture = weaponStats.weaponTexture
+	if weaponStats.weaponTexture == null:
+		weaponTexture = weaponStats.texture
+	else:
+		weaponTexture = weaponStats.weaponTexture
+	flip = weaponStats.flip
 	damage = weaponStats.damage
 	armorPierce = weaponStats.armorPierce
 	knockbackValue = weaponStats.knockbackValue
