@@ -130,14 +130,17 @@ __meta__ = {
 }
 
 [node name="ColorPicker" type="ColorPicker" parent="Control"]
-margin_left = -271.0
-margin_top = 195.0
-margin_right = 37.0
-margin_bottom = 607.0
+margin_left = -267.0
+margin_top = 199.0
+margin_right = 41.0
+margin_bottom = 611.0
 color = Color( 0.0823529, 0.545098, 0, 1 )
 edit_alpha = false
 presets_enabled = false
 presets_visible = false
+__meta__ = {
+"_edit_use_anchors_": false
+}
 
 [node name="Camera2D" type="Camera2D" parent="."]
 position = Vector2( 576, 336 )

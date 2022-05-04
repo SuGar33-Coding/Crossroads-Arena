@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=2]
+[gd_scene load_steps=15 format=2]
 
 [ext_resource path="res://Themes/MainFont.tres" type="DynamicFont" id=1]
 [ext_resource path="res://UI/Inventory/ArmorPanel.gd" type="Script" id=2]
@@ -11,6 +11,9 @@
 [ext_resource path="res://UI/Inventory/WeaponSlot.gd" type="Script" id=9]
 [ext_resource path="res://UI/Inventory/Slot.tscn" type="PackedScene" id=10]
 [ext_resource path="res://UI/Inventory/WeaponPanel.gd" type="Script" id=11]
+[ext_resource path="res://Assets/ArmorAssets/Item__57.png" type="Texture" id=12]
+[ext_resource path="res://Assets/ArmorAssets/Boots Single.png" type="Texture" id=13]
+[ext_resource path="res://Assets/ArmorAssets/Armor Helmet Single.png" type="Texture" id=14]
 
 [node name="Inventory" type="CanvasLayer"]
 script = ExtResource( 6 )
@@ -113,6 +116,10 @@ margin_right = 95.0
 margin_bottom = 50.0
 script = ExtResource( 3 )
 
+[node name="Default" parent="Control/Armor/Background/MarginContainer/VBoxContainer/ScrollContainer/GridContainer/Head/SlotBg" index="0"]
+modulate = Color( 1, 0.54902, 0, 0.784314 )
+texture = ExtResource( 14 )
+
 [node name="Chest" type="CenterContainer" parent="Control/Armor/Background/MarginContainer/VBoxContainer/ScrollContainer/GridContainer"]
 margin_top = 64.0
 margin_right = 151.0
@@ -131,6 +138,10 @@ margin_right = 95.0
 margin_bottom = 50.0
 script = ExtResource( 3 )
 
+[node name="Default" parent="Control/Armor/Background/MarginContainer/VBoxContainer/ScrollContainer/GridContainer/Chest/SlotBg" index="0"]
+modulate = Color( 1, 0.54902, 0, 0.588235 )
+texture = ExtResource( 12 )
+
 [node name="Feet" type="CenterContainer" parent="Control/Armor/Background/MarginContainer/VBoxContainer/ScrollContainer/GridContainer"]
 margin_top = 128.0
 margin_right = 151.0
@@ -148,6 +159,10 @@ margin_top = 10.0
 margin_right = 95.0
 margin_bottom = 50.0
 script = ExtResource( 3 )
+
+[node name="Default" parent="Control/Armor/Background/MarginContainer/VBoxContainer/ScrollContainer/GridContainer/Feet/SlotBg" index="0"]
+modulate = Color( 1, 0.54902, 0, 0.588235 )
+texture = ExtResource( 13 )
 
 [node name="Weapons" type="Control" parent="Control"]
 anchor_left = 0.700573
@@ -496,3 +511,7 @@ margin_bottom = 287.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 columns = 3
+
+[editable path="Control/Armor/Background/MarginContainer/VBoxContainer/ScrollContainer/GridContainer/Head/SlotBg"]
+[editable path="Control/Armor/Background/MarginContainer/VBoxContainer/ScrollContainer/GridContainer/Chest/SlotBg"]
+[editable path="Control/Armor/Background/MarginContainer/VBoxContainer/ScrollContainer/GridContainer/Feet/SlotBg"]

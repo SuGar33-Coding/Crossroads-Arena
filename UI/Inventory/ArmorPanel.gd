@@ -16,10 +16,13 @@ func _updateDisplay(_from_panel, _to_panel):
 	var equipment := Inventory.getArmor()
 	for slot in equipment.keys():
 		var equipmentType = Armor.Type.keys()[slot]
-		var slotIcon: TextureRect = gridContainer.get_node(equipmentType).get_child(0).get_child(0)
+		var slotIcon: TextureRect = gridContainer.get_node(equipmentType).get_child(0).get_child(1)
+		var defaultIcon: TextureRect = gridContainer.get_node(equipmentType).get_child(0).get_child(0)
 		if equipment[slot] != null:
 			# if there's an item, update the slot with that sprite
 			slotIcon.texture = (equipment[slot] as ItemInstance).getTexture()
+			defaultIcon.visible = false
 		else:
 			# otherwise replace with default texture
 			slotIcon.texture = null
+			defaultIcon.visible = true
