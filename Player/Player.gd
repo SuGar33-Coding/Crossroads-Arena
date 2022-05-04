@@ -97,20 +97,21 @@ func _physics_process(delta):
 	
 	if Input.is_action_just_pressed("item"):
 		var consumables := Inventory.getConsumables()
-		var keys := consumables.keys()
+		var key := "0"
 		
-		var consumableKey = null
-		var consumableInstance = null
-		
-		for key in keys:
-			if is_instance_valid(consumables[key]):
-				consumableInstance = consumables[key]
-				consumableKey = key
-		
-		if is_instance_valid(consumableInstance):
-			Inventory.removeItem("consumable", consumableKey)
-			var consumableResource := (consumableInstance.resource as Consumable)
-			self.addEffects(consumableResource.effectResources)
+		if Input.is_key_pressed(KEY_1):
+			key = "0"
+		elif Input.is_key_pressed(KEY_2):
+			key = "1"
+		elif Input.is_key_pressed(KEY_3):
+			key = "2"
+		elif Input.is_key_pressed(KEY_4):
+			key = "3"
+			
+				
+		if is_instance_valid(consumables[key]):
+			self.addEffects(consumables[key].resource.effectResources)
+			Inventory.removeItem("consumable", key)
 
 	if Input.is_action_just_pressed("dash") and dashTimer.is_stopped() and not (inventoryUI.isVisible() or shopUI.isVisible()):
 		# Cannot dash while aiming

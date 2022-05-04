@@ -576,6 +576,7 @@ shape = SubResource( 11 )
 position = Vector2( 0.625, -2.25 )
 frames = SubResource( 15 )
 animation = "Ready"
+frame = 1
 playing = true
 
 [node name="StaticBody2D" type="StaticBody2D" parent="YSort/NewWaveButton"]
@@ -1022,6 +1023,7 @@ mix_target = 1
 bus = "BGM"
 
 [node name="UIHandler" parent="." instance=ExtResource( 8 )]
+layer = 2
 
 [connection signal="body_entered" from="YSort/NewWaveButton" to="." method="_on_NewWaveButton_body_entered"]
 [connection signal="body_exited" from="YSort/NewWaveButton" to="." method="_on_NewWaveButton_body_exited"]
