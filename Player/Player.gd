@@ -312,6 +312,7 @@ func _combo_finished():
 func _new_secondary(secondaryWeapon : WeaponInstance):
 	if is_instance_valid(secondaryWeapon):
 		backSprite.texture = secondaryWeapon.weaponTexture
+		backSprite.flip_v = not secondaryWeapon.flip
 		if secondaryWeapon.weaponType == WeaponStats.WeaponType.RANGED:
 			backSprite.hframes = 6
 		else:

@@ -939,6 +939,7 @@ bus = "PlayerWalking"
 
 [node name="BloodParticles" type="Particles2D" parent="."]
 position = Vector2( 0, 5 )
+emitting = false
 amount = 50
 lifetime = 0.4
 one_shot = true

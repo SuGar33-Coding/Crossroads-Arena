@@ -1,4 +1,4 @@
-[gd_scene load_steps=58 format=2]
+[gd_scene load_steps=57 format=2]
 
 [ext_resource path="res://GrandBattleArena.gd" type="Script" id=1]
 [ext_resource path="res://Assets/TileSets/RockBase.tres" type="TileSet" id=2]
@@ -14,7 +14,6 @@
 [ext_resource path="res://World/Encounters/FirstEncounter.tres" type="Resource" id=12]
 [ext_resource path="res://World/Encounters/SecondEncounter.tres" type="Resource" id=13]
 [ext_resource path="res://World/Encounters/FirstEncounterTwo.tres" type="Resource" id=14]
-[ext_resource path="res://World/Encounters/TestEncounter.tres" type="Resource" id=15]
 [ext_resource path="res://Items/Coin.tscn" type="PackedScene" id=16]
 [ext_resource path="res://Assets/WorldAssets/Pillars/StrengthPillar.png" type="Texture" id=18]
 [ext_resource path="res://Assets/CharacterAssets/Shadows/LargeShadow.png" type="Texture" id=19]
@@ -107,6 +106,10 @@ polygons = [ PoolIntArray( 0, 1, 2, 3 ) ]
 [sub_resource type="RectangleShape2D" id=11]
 extents = Vector2( 16.1287, 19.299 )
 
+[sub_resource type="AtlasTexture" id=14]
+atlas = ExtResource( 11 )
+region = Rect2( 32, 0, 16, 16 )
+
 [sub_resource type="AtlasTexture" id=12]
 atlas = ExtResource( 11 )
 region = Rect2( 0, 0, 16, 16 )
@@ -115,21 +118,17 @@ region = Rect2( 0, 0, 16, 16 )
 atlas = ExtResource( 11 )
 region = Rect2( 16, 0, 16, 16 )
 
-[sub_resource type="AtlasTexture" id=14]
-atlas = ExtResource( 11 )
-region = Rect2( 32, 0, 16, 16 )
-
 [sub_resource type="SpriteFrames" id=15]
 animations = [ {
-"frames": [ SubResource( 12 ), SubResource( 13 ) ],
-"loop": true,
-"name": "Ready",
-"speed": 2.0
-}, {
 "frames": [ SubResource( 14 ) ],
 "loop": true,
 "name": "Pressed",
 "speed": 5.0
+}, {
+"frames": [ SubResource( 12 ), SubResource( 13 ) ],
+"loop": true,
+"name": "Ready",
+"speed": 2.0
 } ]
 
 [sub_resource type="CapsuleShape2D" id=16]
@@ -499,7 +498,7 @@ color = Color( 0.121569, 0.796078, 0.211765, 1 )
 
 [node name="World" type="Node2D"]
 script = ExtResource( 1 )
-encounters = [ ExtResource( 12 ), ExtResource( 13 ), ExtResource( 14 ), ExtResource( 15 ) ]
+encounters = [ ExtResource( 12 ), ExtResource( 13 ), ExtResource( 14 ) ]
 multiEncounterChance = 0.2
 
 [node name="Navigation2D" type="Navigation2D" parent="."]
@@ -576,6 +575,7 @@ shape = SubResource( 11 )
 position = Vector2( 0.625, -2.25 )
 frames = SubResource( 15 )
 animation = "Ready"
+frame = 1
 playing = true
 
 [node name="StaticBody2D" type="StaticBody2D" parent="YSort/NewWaveButton"]
@@ -781,6 +781,9 @@ position = Vector2( 0, 0 )
 
 [node name="BottomRight" parent="YSort/Player/MainCamera/Limits" index="1"]
 position = Vector2( 2376, 1656 )
+
+[node name="BloodParticles" parent="YSort/Player" index="14"]
+emitting = false
 
 [node name="People" type="YSort" parent="YSort"]
 

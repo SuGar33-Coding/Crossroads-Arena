@@ -37,16 +37,19 @@ func getPanelInventory() -> Dictionary:
 func get_drag_data(_position):
 	var slotName = getSlotName()
 	if getPanelInventory()[slotName] != null:
+		var resource := (getPanelInventory()[slotName] as ItemInstance).resource
 		var data = {}
 		data.originNode = self
 		data.originPanel = getPanelName()
 		data.originSlotName = slotName
-		data.originResource = (getPanelInventory()[slotName] as ItemInstance).resource
+		data.originResource = resource
 		
 		var dragTexture = TextureRect.new()
 		dragTexture.expand = true
 		dragTexture.texture = get_child(0).texture
 		dragTexture.rect_size = Vector2(50, 50)
+		dragTexture.flip_h = resource.flip
+		dragTexture.flip_v = resource.flip
 		
 		var control = Control.new()
 		control.add_child(dragTexture)

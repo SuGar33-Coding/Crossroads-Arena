@@ -1,0 +1,19 @@
+[gd_resource type="Resource" load_steps=4 format=2]
+
+[ext_resource path="res://Assets/ArmorAssets/Chest/Item__58.png" type="Texture" id=1]
+[ext_resource path="res://Assets/ArmorAssets/Chest/DefenderArmor.png" type="Texture" id=2]
+[ext_resource path="res://Items/Armor.gd" type="Script" id=3]
+
+[resource]
+script = ExtResource( 3 )
+name = "Defender Armor"
+value = 200
+texture = ExtResource( 1 )
+flip = false
+modifiers = [  ]
+rarity = 4
+type = 1
+characterTexture = ExtResource( 2 )
+defenseValue = 40
+speedModifier = -0.4
+effects = [  ]
