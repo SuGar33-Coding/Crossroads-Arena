@@ -129,9 +129,7 @@ func _physics_process(delta):
 			fireRangedAttack()
 
 func swapWeapons():
-	var secondaryWeapon : WeaponInstance = Inventory.getWeapons()["1"]
-	if is_instance_valid(secondaryWeapon):
-		Inventory.swapItems("weapon", "0", "weapon", "1")
+	Inventory.swapItems("weapon", "0", "weapon", "1")
 
 func fireRangedAttack():
 	chargingRanged = false
@@ -256,8 +254,7 @@ func _inventory_changed(from_panel, to_panel):
 		else:
 			setWeapon(fistStats)
 		
-		if is_instance_valid(secondaryWeapon):
-			emit_signal("new_secondary", secondaryWeapon)
+		emit_signal("new_secondary", secondaryWeapon)
 
 # Reset weapon back to its original position
 func _combo_finished():

@@ -73,6 +73,7 @@ func _ready():
 	effectsTimer.start(1)
 	
 	sprite.material.set_shader_param("banner_color", stats.playerColor)
+	backSprite.texture = null
 	
 	dashSpeed = baseDashSpeed
 	checkArmorStats()
@@ -304,11 +305,14 @@ func _combo_finished():
 	PlayerStats.resetMaxSpeed()
 
 func _new_secondary(secondaryWeapon : WeaponInstance):
-	backSprite.texture = secondaryWeapon.weaponTexture
-	if secondaryWeapon.weaponType == WeaponStats.WeaponType.RANGED:
-		backSprite.hframes = 6
+	if is_instance_valid(secondaryWeapon):
+		backSprite.texture = secondaryWeapon.weaponTexture
+		if secondaryWeapon.weaponType == WeaponStats.WeaponType.RANGED:
+			backSprite.hframes = 6
+		else:
+			backSprite.hframes = 1
 	else:
-		backSprite.hframes = 1
+		backSprite.texture = null
 
 func _process_effects():
 	if not effects.empty() or not armorEffects.empty():
