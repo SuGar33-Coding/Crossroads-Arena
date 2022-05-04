@@ -6,6 +6,15 @@ func getPanelName():
 func getPanelInventory() -> Dictionary:
 	return Inventory.getShop()
 
+func autoEquip():
+	var itemInstance = getPanelInventory()[getSlotName()] as ItemInstance
+	if is_instance_valid(itemInstance) and itemInstance.value <= Inventory.getCoins():
+		var bagDict := Inventory.getBag()
+		for key in bagDict.keys():
+			if not is_instance_valid(bagDict.get(key)):
+				Inventory.swapItems(getPanelName(), getSlotName(), "bag", key)
+				break
+
 func get_drag_data(_position):
 	var bagSlot = get_parent().name
 	if Inventory.getShop()[bagSlot] != null:

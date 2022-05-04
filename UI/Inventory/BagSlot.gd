@@ -6,6 +6,29 @@ func getPanelName():
 func getPanelInventory() -> Dictionary:
 	return Inventory.getBag()
 
+func autoEquip():
+	var itemInstance = getPanelInventory()[getSlotName()] as ItemInstance
+	if (is_instance_valid(itemInstance)):
+		var slot = ""
+		# make this WAY more abstract/modular
+		if itemInstance.resource is Armor:
+			slot = (itemInstance.resource as Armor).type
+		elif itemInstance.resource is WeaponStats:
+			if is_instance_valid(Inventory.getWeapons()["0"]) and not is_instance_valid(Inventory.getWeapons()["1"]):
+				slot = "1"
+			else:
+				slot = "0"
+		else:
+			var consumablesDict := Inventory.getConsumables()
+			for key in consumablesDict.keys():
+				if not is_instance_valid(consumablesDict.get(key)):
+					slot = key
+					break
+			
+			if slot == "":
+				slot = "0"
+		Inventory.swapItems(getPanelName(), getSlotName(), itemInstance.itemType, slot)
+
 func can_drop_data(_position, data):
 	var targetBagSlot = get_parent().name
 	data.targetSlotName = targetBagSlot

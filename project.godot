@@ -89,6 +89,11 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://World/Encounters/EncounterStats.gd"
 }, {
+"base": "InventorySlot",
+"class": "EquipSlot",
+"language": "GDScript",
+"path": "res://UI/Inventory/EquipSlot.gd"
+}, {
 "base": "NPC",
 "class": "Fighter",
 "language": "GDScript",
@@ -306,6 +311,7 @@ _global_script_class_icons={
 "EffectsPanel": "",
 "Encounter": "",
 "EncounterStats": "",
+"EquipSlot": "",
 "Fighter": "",
 "FlankAndBurst": "",
 "FlankAndPoke": "",

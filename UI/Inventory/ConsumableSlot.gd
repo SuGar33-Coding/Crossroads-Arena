@@ -1,4 +1,4 @@
-extends InventorySlot
+extends EquipSlot
 
 func getPanelName():
 	return 'consumable'

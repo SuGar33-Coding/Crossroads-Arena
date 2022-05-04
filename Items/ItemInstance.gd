@@ -32,3 +32,4 @@ func _setResource(newResource):
 func _setModifier(newResource : Modifier):
 	modifier = newResource
 	value = resource.value * modifier.valueModifier
+	itemName = modifier.name + " " + itemName

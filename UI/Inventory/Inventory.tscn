@@ -116,7 +116,7 @@ margin_right = 95.0
 margin_bottom = 50.0
 script = ExtResource( 3 )
 
-[node name="Default" parent="Control/Armor/Background/MarginContainer/VBoxContainer/ScrollContainer/GridContainer/Head/SlotBg" index="0"]
+[node name="Default" parent="Control/Armor/Background/MarginContainer/VBoxContainer/ScrollContainer/GridContainer/Head/SlotBg" index="1"]
 modulate = Color( 1, 0.54902, 0, 0.784314 )
 texture = ExtResource( 14 )
 
@@ -138,7 +138,7 @@ margin_right = 95.0
 margin_bottom = 50.0
 script = ExtResource( 3 )
 
-[node name="Default" parent="Control/Armor/Background/MarginContainer/VBoxContainer/ScrollContainer/GridContainer/Chest/SlotBg" index="0"]
+[node name="Default" parent="Control/Armor/Background/MarginContainer/VBoxContainer/ScrollContainer/GridContainer/Chest/SlotBg" index="1"]
 modulate = Color( 1, 0.54902, 0, 0.588235 )
 texture = ExtResource( 12 )
 
@@ -160,7 +160,7 @@ margin_right = 95.0
 margin_bottom = 50.0
 script = ExtResource( 3 )
 
-[node name="Default" parent="Control/Armor/Background/MarginContainer/VBoxContainer/ScrollContainer/GridContainer/Feet/SlotBg" index="0"]
+[node name="Default" parent="Control/Armor/Background/MarginContainer/VBoxContainer/ScrollContainer/GridContainer/Feet/SlotBg" index="1"]
 modulate = Color( 1, 0.54902, 0, 0.588235 )
 texture = ExtResource( 13 )
 

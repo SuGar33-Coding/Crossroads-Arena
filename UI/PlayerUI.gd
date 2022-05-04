@@ -30,6 +30,7 @@ func _ready():
 	timer.connect("timeout", self, "_timer_timeout")
 	inventory.connect("coins_changed", self, "_coins_changed")
 	get_parent().connect("player_dashed", self, "_player_dashed")
+	coinLabel.text = str(Inventory.getCoins())
 	
 func setHealthbarValue(value : float):
 	if hpTween.is_active():
