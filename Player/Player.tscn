@@ -1,4 +1,4 @@
-[gd_scene load_steps=31 format=2]
+[gd_scene load_steps=33 format=2]
 
 [ext_resource path="res://Assets/CharacterAssets/PlayerModel.png" type="Texture" id=1]
 [ext_resource path="res://Player/Player.gd" type="Script" id=2]
@@ -14,6 +14,8 @@
 [ext_resource path="res://Audio/Footstep1.wav" type="AudioStream" id=12]
 [ext_resource path="res://Weapons/Fists.tres" type="Resource" id=13]
 [ext_resource path="res://Player/PlayerColorShader.tres" type="Material" id=14]
+[ext_resource path="res://Assets/ArmorAssets/HalfPlate.png" type="Texture" id=15]
+[ext_resource path="res://Assets/WeaponAssets/Item__00.png" type="Texture" id=16]
 
 [sub_resource type="CapsuleShape2D" id=1]
 radius = 4.5
@@ -840,6 +842,7 @@ frame = 1
 
 [node name="ChestSprite" type="Sprite" parent="Sprite"]
 use_parent_material = true
+texture = ExtResource( 15 )
 hframes = 5
 frame = 1
 
@@ -847,6 +850,11 @@ frame = 1
 use_parent_material = true
 hframes = 5
 frame = 1
+
+[node name="BackWeapon" type="Sprite" parent="Sprite"]
+show_behind_parent = true
+texture = ExtResource( 16 )
+flip_v = true
 
 [node name="MainCamera" parent="." instance=ExtResource( 7 )]
 position = Vector2( 0, 0 )

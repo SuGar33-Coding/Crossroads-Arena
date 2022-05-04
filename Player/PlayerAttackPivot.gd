@@ -22,13 +22,10 @@ onready var parryTween := $ParryTween
 onready var rangedFx := $RangedWeaponFX
 onready var weaponFxTween := $WeaponEffects
 
-# TODO: remove this cus it should be through inventory
-onready var secondaryWeapon : WeaponInstance
-onready var primaryWeapon : WeaponInstance = weaponStats
-
 signal meleeQuick
 signal meleeLong
 signal parry
+signal new_secondary(secondaryWeapon)
 
 
 func _ready():
@@ -43,8 +40,6 @@ func _ready():
 	attackTimer.connect("timeout", self, "_attack_timeout")
 	
 	fistStats = get_node(ItemManager.createItemFromPath(fistsResource.resource_path))
-	
-	getWeaponsFromInventory()
 	
 
 func _physics_process(delta):
@@ -134,17 +129,9 @@ func _physics_process(delta):
 			fireRangedAttack()
 
 func swapWeapons():
-	if weaponStats == primaryWeapon and is_instance_valid(secondaryWeapon):
-		setWeapon(secondaryWeapon)
-	elif weaponStats == secondaryWeapon and is_instance_valid(primaryWeapon):
-		setWeapon(primaryWeapon)
-	elif weaponStats == fistStats:
-		if is_instance_valid(primaryWeapon):
-			setWeapon(primaryWeapon)
-		if is_instance_valid(secondaryWeapon):
-			setWeapon(secondaryWeapon)
-	else:
-		setWeapon(fistStats)
+	var secondaryWeapon : WeaponInstance = Inventory.getWeapons()["1"]
+	if is_instance_valid(secondaryWeapon):
+		Inventory.swapItems("weapon", "0", "weapon", "1")
 
 func fireRangedAttack():
 	chargingRanged = false
@@ -259,40 +246,18 @@ func _on_WeaponTween_tween_completed():
 		backTween.interpolate_property(weaponSprite, "rotation", restingRotation + deg2rad(120), restingRotation + deg2rad(140), attackTimer.time_left + .007, self.tweenLength)
 	backTween.start()
 
-func getWeaponsFromInventory():
-	var firstItem : ItemInstance = Inventory.getWeapons()["0"]
-	var secondItem : ItemInstance = Inventory.getWeapons()["1"]
-	if is_instance_valid(firstItem):
-		primaryWeapon = firstItem
-	else:
-		primaryWeapon = fistStats
-		
-	if is_instance_valid(secondItem):
-		secondaryWeapon = secondItem
-	else:
-		secondaryWeapon = fistStats
-
 # TODO: Update to also use weapon modifiers
 func _inventory_changed(from_panel, to_panel):
 	if to_panel == "weapon" or from_panel == "weapon":
-		match weaponStats.itemName:
-			fistStats.itemName:
-				var oldPrimaryName := primaryWeapon.itemName
-				
-				getWeaponsFromInventory()
-				
-				if oldPrimaryName != primaryWeapon.itemName:
-					setWeapon(primaryWeapon)
-				else:
-					setWeapon(secondaryWeapon)
-			primaryWeapon.itemName:
-				getWeaponsFromInventory()
-				
-				setWeapon(primaryWeapon)
-			secondaryWeapon.itemName:
-				getWeaponsFromInventory()
-				
-				setWeapon(secondaryWeapon)
+		var primaryWeapon : WeaponInstance = Inventory.getWeapons()["0"]
+		var secondaryWeapon : WeaponInstance = Inventory.getWeapons()["1"]
+		if is_instance_valid(primaryWeapon):
+			setWeapon(primaryWeapon)
+		else:
+			setWeapon(fistStats)
+		
+		if is_instance_valid(secondaryWeapon):
+			emit_signal("new_secondary", secondaryWeapon)
 
 # Reset weapon back to its original position
 func _combo_finished():
