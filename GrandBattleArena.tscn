@@ -16,10 +16,10 @@
 [ext_resource path="res://World/Encounters/FirstEncounterTwo.tres" type="Resource" id=14]
 [ext_resource path="res://World/Encounters/TestEncounter.tres" type="Resource" id=15]
 [ext_resource path="res://Items/Coin.tscn" type="PackedScene" id=16]
-[ext_resource path="res://Assets/StrengthPillar.png" type="Texture" id=18]
+[ext_resource path="res://Assets/WorldAssets/Pillars/StrengthPillar.png" type="Texture" id=18]
 [ext_resource path="res://Assets/CharacterAssets/Shadows/LargeShadow.png" type="Texture" id=19]
-[ext_resource path="res://Assets/DexPillar.png" type="Texture" id=20]
-[ext_resource path="res://Assets/ConPillar.png" type="Texture" id=21]
+[ext_resource path="res://Assets/WorldAssets/Pillars/DexPillar.png" type="Texture" id=20]
+[ext_resource path="res://Assets/WorldAssets/Pillars/ConPillar.png" type="Texture" id=21]
 [ext_resource path="res://World/Shop/ShopKeep.tscn" type="PackedScene" id=22]
 
 [sub_resource type="NavigationPolygon" id=1]

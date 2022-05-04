@@ -1,8 +1,8 @@
 [gd_resource type="Resource" load_steps=5 format=2]
 
 [ext_resource path="res://Actors/Generic/StatsResource.gd" type="Script" id=1]
-[ext_resource path="res://Weapons/BaseSword.tres" type="Resource" id=2]
-[ext_resource path="res://Weapons/Dagger.tres" type="Resource" id=3]
+[ext_resource path="res://Weapons/Swords/BaseSword.tres" type="Resource" id=2]
+[ext_resource path="res://Weapons/Swords/Dagger.tres" type="Resource" id=3]
 [ext_resource path="res://Assets/CharacterAssets/Rogue.png" type="Texture" id=4]
 
 [resource]

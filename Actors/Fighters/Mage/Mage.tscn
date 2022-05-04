@@ -8,8 +8,8 @@
 [ext_resource path="res://Actors/NPC.tscn" type="PackedScene" id=6]
 [ext_resource path="res://Assets/CharacterAssets/Shadows/MediumShadow.png" type="Texture" id=7]
 [ext_resource path="res://Actors/Movement/FlankAndPoke.tres" type="Resource" id=8]
-[ext_resource path="res://Weapons/GasLobber.tres" type="Resource" id=9]
-[ext_resource path="res://Weapons/FireBallStaff.tres" type="Resource" id=10]
+[ext_resource path="res://Weapons/Aoe/GasLobber.tres" type="Resource" id=9]
+[ext_resource path="res://Weapons/Aoe/FireBallStaff.tres" type="Resource" id=10]
 [ext_resource path="res://Assets/CharacterAssets/Attack.png" type="Texture" id=11]
 
 [sub_resource type="Curve" id=1]

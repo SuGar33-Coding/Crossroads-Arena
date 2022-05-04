@@ -2,8 +2,8 @@
 
 [ext_resource path="res://Assets/Wall.png" type="Texture" id=1]
 [ext_resource path="res://UI/StartMenu/StartMenuButton.tscn" type="PackedScene" id=2]
-[ext_resource path="res://Themes/MainFont.tres" type="DynamicFont" id=3]
-[ext_resource path="res://Themes/MainButtonFont.tres" type="DynamicFont" id=4]
+[ext_resource path="res://Themes/Fonts/MainFont.tres" type="DynamicFont" id=3]
+[ext_resource path="res://Themes/Fonts/MainButtonFont.tres" type="DynamicFont" id=4]
 [ext_resource path="res://UI/StartMenu/StartMenu.gd" type="Script" id=5]
 
 [sub_resource type="DynamicFontData" id=1]
@@ -130,10 +130,10 @@ __meta__ = {
 }
 
 [node name="ColorPicker" type="ColorPicker" parent="Control"]
-margin_left = -259.0
-margin_top = 207.0
-margin_right = 49.0
-margin_bottom = 619.0
+margin_left = -247.0
+margin_top = 219.0
+margin_right = 61.0
+margin_bottom = 631.0
 color = Color( 0.0823529, 0.545098, 0, 1 )
 edit_alpha = false
 presets_enabled = false

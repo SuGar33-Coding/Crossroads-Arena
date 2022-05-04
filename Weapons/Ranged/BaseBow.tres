@@ -1,0 +1,29 @@
+[gd_resource type="Resource" load_steps=5 format=2]
+
+[ext_resource path="res://Assets/WeaponAssets/Ranged/Projectiles/arrow.png" type="Texture" id=1]
+[ext_resource path="res://Assets/WeaponAssets/Ranged/BasicBow.png" type="Texture" id=2]
+[ext_resource path="res://Assets/WeaponAssets/Ranged/Item__18.png" type="Texture" id=3]
+[ext_resource path="res://Items/WeaponStats.gd" type="Script" id=4]
+
+[resource]
+script = ExtResource( 4 )
+name = "Base Bow"
+value = 0
+texture = ExtResource( 3 )
+modifiers = [  ]
+rarity = 0
+weaponType = 4
+weaponTexture = ExtResource( 2 )
+damage = 8
+armorPierce = 20
+knockbackValue = 100
+radius = 3.478
+length = 7.592
+attackSpeed = 0.85
+effectResources = [  ]
+projectileTexture = ExtResource( 1 )
+projectileSpeed = 1500.0
+projectileRange = 350.0
+aoeNumberOfTicks = 3
+aoeLifetime = 3.0
+instantTick = false

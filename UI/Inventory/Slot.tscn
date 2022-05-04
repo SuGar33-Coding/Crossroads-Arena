@@ -1,6 +1,6 @@
 [gd_scene load_steps=2 format=2]
 
-[ext_resource path="res://Themes/SlotBG.tres" type="StyleBox" id=2]
+[ext_resource path="res://Themes/Colors/SlotBG.tres" type="StyleBox" id=2]
 
 [node name="SlotBg" type="Panel"]
 anchor_left = 0.024

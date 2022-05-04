@@ -1,9 +1,9 @@
 [gd_scene load_steps=12 format=2]
 
-[ext_resource path="res://Themes/MainFont.tres" type="DynamicFont" id=1]
+[ext_resource path="res://Themes/Fonts/MainFont.tres" type="DynamicFont" id=1]
 [ext_resource path="res://UI/PauseMenu.gd" type="Script" id=2]
 [ext_resource path="res://UI/StartMenu/StartMenuButton.tscn" type="PackedScene" id=4]
-[ext_resource path="res://Themes/MainButtonFont.tres" type="DynamicFont" id=7]
+[ext_resource path="res://Themes/Fonts/MainButtonFont.tres" type="DynamicFont" id=7]
 
 [sub_resource type="DynamicFontData" id=1]
 font_path = "res://Assets/Adventurer.ttf"

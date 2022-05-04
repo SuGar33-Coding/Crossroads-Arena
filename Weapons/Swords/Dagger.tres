@@ -1,0 +1,30 @@
+[gd_resource type="Resource" load_steps=5 format=2]
+
+[ext_resource path="res://Audio/mixkit-dagger-woosh-1487.wav" type="AudioStream" id=1]
+[ext_resource path="res://Audio/Swipe2.wav" type="AudioStream" id=2]
+[ext_resource path="res://Assets/WeaponAssets/Swords/Dagger.png" type="Texture" id=3]
+[ext_resource path="res://Items/WeaponStats.gd" type="Script" id=4]
+
+[resource]
+script = ExtResource( 4 )
+name = "Dagger"
+value = 0
+texture = ExtResource( 3 )
+modifiers = [  ]
+rarity = 1
+weaponType = 3
+weaponTexture = ExtResource( 3 )
+damage = 7
+armorPierce = 0
+knockbackValue = 175
+radius = 10.0
+length = 8.5
+attackSpeed = 0.5
+effectResources = [  ]
+quickAttackSFX = ExtResource( 2 )
+longAttackSFX = ExtResource( 1 )
+projectileSpeed = 1500.0
+projectileRange = 350.0
+aoeNumberOfTicks = 3
+aoeLifetime = 3.0
+instantTick = false

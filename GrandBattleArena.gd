@@ -60,31 +60,29 @@ func _ready():
 	shopkeep.connect("body_entered", self, "_player_entered_shopkeep")
 	shopkeep.connect("body_exited", self, "_player_exited_shopkeep")
 	
-	#generateVegetation()
-	
 	# TODO: Add starting weapon choices like this
-	var startingItem : ItemInstance = get_node(ItemManager.createItemFromPath("res://Items/ItemResources/ChestPlate.tres"))
+	var startingItem : ItemInstance = get_node(ItemManager.createItemFromPath("res://Items/ItemResources/Armor/ChestPlate.tres"))
 	
 	var worldItem = WorldItem.instance()
 	worldItem.init(startingItem)
 	worldItem.global_position = newWaveButtonSprite.global_position + Vector2(30, 0)
 	itemSort.add_child(worldItem)
 	
-	startingItem  = get_node(ItemManager.createItemFromPath("res://Weapons/BaseSword.tres"))
+	startingItem  = get_node(ItemManager.createItemFromPath("res://Weapons/Swords/BaseSword.tres"))
 	
 	worldItem = WorldItem.instance()
 	worldItem.init(startingItem)
 	worldItem.global_position = newWaveButtonSprite.global_position + Vector2(75, 0)
 	itemSort.add_child(worldItem)
 	
-	startingItem = get_node(ItemManager.createItemFromPath("res://Weapons/BaseBow.tres"))
+	startingItem = get_node(ItemManager.createItemFromPath("res://Weapons/Ranged/BaseBow.tres"))
 
 	worldItem = WorldItem.instance()
 	worldItem.init(startingItem)
 	worldItem.global_position = newWaveButtonSprite.global_position + Vector2(125, 0)
 	itemSort.add_child(worldItem)
 	
-	startingItem = get_node(ItemManager.createItemFromPath("res://Items/ItemResources/HealthPotion.tres"))
+	startingItem = get_node(ItemManager.createItemFromPath("res://Items/ItemResources/Consumables/HealthPotion.tres"))
 
 	worldItem = WorldItem.instance()
 	worldItem.init(startingItem)
@@ -186,7 +184,7 @@ func stopPillarExplosion():
 	conParticles.emitting = false
 	dexParticles.emitting = false
 
-func generateVegetation():
+func generateScenery():
 	var vegetationScenes := []
 	
 	var path = "res://World/Scenery/"

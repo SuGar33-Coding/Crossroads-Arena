@@ -1,6 +1,6 @@
 [gd_scene load_steps=18 format=2]
 
-[ext_resource path="res://Assets/Emberstone.png" type="Texture" id=1]
+[ext_resource path="res://Assets/ItemAssets/Emberstone.png" type="Texture" id=1]
 [ext_resource path="res://Assets/CharacterAssets/Shadows/SmallShadow.png" type="Texture" id=2]
 [ext_resource path="res://Items/Coin.gd" type="Script" id=3]
 

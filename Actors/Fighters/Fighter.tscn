@@ -1,14 +1,14 @@
 [gd_scene load_steps=23 format=2]
 
-[ext_resource path="res://Weapons/LongSword.tres" type="Resource" id=1]
+[ext_resource path="res://Weapons/Swords/LongSword.tres" type="Resource" id=1]
 [ext_resource path="res://Actors/Fighters/Fighter.gd" type="Script" id=2]
-[ext_resource path="res://Weapons/Glaive.tres" type="Resource" id=3]
+[ext_resource path="res://Weapons/Swing/Glaive.tres" type="Resource" id=3]
 [ext_resource path="res://Actors/Zones/AttackPivot.tscn" type="PackedScene" id=4]
 [ext_resource path="res://Actors/Zones/DetectionZone.tscn" type="PackedScene" id=5]
 [ext_resource path="res://Actors/NPC.tscn" type="PackedScene" id=6]
 [ext_resource path="res://Assets/CharacterAssets/Shadows/MediumShadow.png" type="Texture" id=7]
 [ext_resource path="res://Assets/CharacterAssets/Bandit.png" type="Texture" id=8]
-[ext_resource path="res://Weapons/BaseSpear.tres" type="Resource" id=9]
+[ext_resource path="res://Weapons/Spears/BaseSpear.tres" type="Resource" id=9]
 [ext_resource path="res://Assets/CharacterAssets/Attack.png" type="Texture" id=10]
 [ext_resource path="res://Actors/Movement/FlankAndPoke.tres" type="Resource" id=11]
 

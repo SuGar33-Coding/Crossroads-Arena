@@ -1,7 +1,7 @@
 [gd_scene load_steps=3 format=2]
 
 [ext_resource path="res://UI/Inventory/StatRow.gd" type="Script" id=1]
-[ext_resource path="res://Themes/TooltipFont.tres" type="DynamicFont" id=2]
+[ext_resource path="res://Themes/Fonts/TooltipFont.tres" type="DynamicFont" id=2]
 
 [node name="StatRow" type="HBoxContainer"]
 anchor_right = 1.0

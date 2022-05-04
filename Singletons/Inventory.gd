@@ -100,6 +100,7 @@ func generateShop():
 		for col in range(numCols):
 			if shopItems[row].size() > 0:
 				var randItemResource = shopItems[row][randi() % shopItems[row].size()]
+				print(randItemResource.name)
 				_inventory.shop[str(row * numCols + col)] = get_node(ItemManager.createItemFromResource(randItemResource))
 	
 	emit_signal("inventory_changed", null, "shop")

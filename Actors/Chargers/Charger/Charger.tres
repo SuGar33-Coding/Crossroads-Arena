@@ -1,9 +1,9 @@
 [gd_resource type="Resource" load_steps=5 format=2]
 
 [ext_resource path="res://Actors/Generic/StatsResource.gd" type="Script" id=1]
-[ext_resource path="res://Weapons/GreatSpear.tres" type="Resource" id=2]
+[ext_resource path="res://Weapons/Spears/GreatSpear.tres" type="Resource" id=2]
 [ext_resource path="res://Assets/CharacterAssets/Charger.png" type="Texture" id=3]
-[ext_resource path="res://Weapons/LongSword.tres" type="Resource" id=4]
+[ext_resource path="res://Weapons/Swords/LongSword.tres" type="Resource" id=4]
 
 [resource]
 script = ExtResource( 1 )

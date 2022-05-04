@@ -5,7 +5,7 @@
 [ext_resource path="res://Player/PlayerAttackPivot.gd" type="Script" id=3]
 [ext_resource path="res://Actors/Zones/Hurtbox.tscn" type="PackedScene" id=4]
 [ext_resource path="res://Actors/Zones/AttackPivot.tscn" type="PackedScene" id=5]
-[ext_resource path="res://Assets/WeaponAssets/GreatHammer.png" type="Texture" id=6]
+[ext_resource path="res://Assets/WeaponAssets/Swing/GreatHammer.png" type="Texture" id=6]
 [ext_resource path="res://World/PlayerCamera.tscn" type="PackedScene" id=7]
 [ext_resource path="res://UI/PlayerUI.tscn" type="PackedScene" id=8]
 [ext_resource path="res://Assets/WeaponAssets/FX/Circle.png" type="Texture" id=9]
@@ -14,8 +14,8 @@
 [ext_resource path="res://Audio/Footstep1.wav" type="AudioStream" id=12]
 [ext_resource path="res://Weapons/Fists.tres" type="Resource" id=13]
 [ext_resource path="res://Player/PlayerColorShader.tres" type="Material" id=14]
-[ext_resource path="res://Assets/ArmorAssets/HalfPlate.png" type="Texture" id=15]
-[ext_resource path="res://Assets/WeaponAssets/Item__00.png" type="Texture" id=16]
+[ext_resource path="res://Assets/ArmorAssets/Chest/HalfPlate.png" type="Texture" id=15]
+[ext_resource path="res://Assets/WeaponAssets/Swords/Item__00.png" type="Texture" id=16]
 
 [sub_resource type="CapsuleShape2D" id=1]
 radius = 4.5

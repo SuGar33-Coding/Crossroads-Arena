@@ -1,10 +1,10 @@
 [gd_scene load_steps=6 format=2]
 
-[ext_resource path="res://Themes/MainFont.tres" type="DynamicFont" id=1]
+[ext_resource path="res://Themes/Fonts/MainFont.tres" type="DynamicFont" id=1]
 [ext_resource path="res://UI/Shop/ShopPanel.gd" type="Script" id=2]
 [ext_resource path="res://UI/Shop/Shop.gd" type="Script" id=3]
 [ext_resource path="res://UI/Inventory/BagPanel.gd" type="Script" id=5]
-[ext_resource path="res://Themes/PanelBG.tres" type="StyleBox" id=7]
+[ext_resource path="res://Themes/Colors/PanelBG.tres" type="StyleBox" id=7]
 
 [node name="Shop" type="CanvasLayer"]
 script = ExtResource( 3 )

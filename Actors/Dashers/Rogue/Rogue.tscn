@@ -1,6 +1,6 @@
 [gd_scene load_steps=23 format=2]
 
-[ext_resource path="res://Weapons/BaseSword.tres" type="Resource" id=1]
+[ext_resource path="res://Weapons/Swords/BaseSword.tres" type="Resource" id=1]
 [ext_resource path="res://Actors/Movement/FlankAndBurst.tres" type="Resource" id=2]
 [ext_resource path="res://Actors/Zones/AttackPivot.tscn" type="PackedScene" id=3]
 [ext_resource path="res://Actors/Zones/DetectionZone.tscn" type="PackedScene" id=4]
@@ -8,7 +8,7 @@
 [ext_resource path="res://Actors/Dashers/Rogue/Rogue.gd" type="Script" id=6]
 [ext_resource path="res://Assets/CharacterAssets/Shadows/MediumShadow.png" type="Texture" id=7]
 [ext_resource path="res://Actors/Dashers/Rogue/Rogue.tres" type="Resource" id=8]
-[ext_resource path="res://Weapons/Dagger.tres" type="Resource" id=9]
+[ext_resource path="res://Weapons/Swords/Dagger.tres" type="Resource" id=9]
 [ext_resource path="res://Assets/CharacterAssets/Rogue.png" type="Texture" id=10]
 [ext_resource path="res://Assets/CharacterAssets/Attack.png" type="Texture" id=11]
 

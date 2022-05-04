@@ -1,8 +1,8 @@
 [gd_resource type="Resource" load_steps=5 format=2]
 
-[ext_resource path="res://Items/ItemResources/Boots.tres" type="Resource" id=1]
+[ext_resource path="res://Items/ItemResources/Armor/Boots.tres" type="Resource" id=1]
 [ext_resource path="res://Actors/Generic/StatsResource.gd" type="Script" id=2]
-[ext_resource path="res://Weapons/GreatSpear.tres" type="Resource" id=3]
+[ext_resource path="res://Weapons/Spears/GreatSpear.tres" type="Resource" id=3]
 [ext_resource path="res://Assets/CharacterAssets/ColdBandit.png" type="Texture" id=4]
 
 [resource]

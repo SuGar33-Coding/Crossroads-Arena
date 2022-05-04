@@ -1,6 +1,6 @@
 [gd_scene load_steps=2 format=2]
 
-[ext_resource path="res://Themes/TooltipFont.tres" type="DynamicFont" id=1]
+[ext_resource path="res://Themes/Fonts/TooltipFont.tres" type="DynamicFont" id=1]
 
 [node name="HBoxContainer" type="HBoxContainer"]
 margin_right = 21.0
