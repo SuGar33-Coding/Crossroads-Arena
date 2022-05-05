@@ -27,7 +27,6 @@ use_filter = true
 font_data = SubResource( 2 )
 
 [node name="ToolTip" type="Popup"]
-visible = true
 margin_right = 100.0
 mouse_filter = 2
 size_flags_vertical = 9

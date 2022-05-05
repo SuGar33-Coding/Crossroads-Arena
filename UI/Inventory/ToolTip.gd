@@ -1,6 +1,7 @@
 class_name ToolTip extends Popup
 
 var statRow = preload("res://UI/Inventory/StatRow.tscn")
+const EffectsIconScene = preload("res://UI/EffectsUI/EffectsIcon.tscn")
 
 onready var statsContainer: VBoxContainer = $Panel/MarginContainer/StatsContainer
 onready var itemNameTag: Label = $Panel/MarginContainer/StatsContainer/ItemName
@@ -62,6 +63,9 @@ func initWeaponTooltip(weaponInstance: WeaponInstance):
 		oldRange = oldWeapon.projectileRange
 	
 	addStatRow("Rng", dmgFmtStr % weaponRange, dmgFmtStr % oldRange if hasOld else "", true)
+	
+	if weaponInstance.effectResources.size() > 0:
+		addEffectsRow(weaponInstance.effectResources)
 
 func initArmorTooltip(armorInstance: ItemInstance):
 	var armorResource = armorInstance.resource as Armor
@@ -76,14 +80,24 @@ func initArmorTooltip(armorInstance: ItemInstance):
 	addStatRow("Def", str(armorResource.defenseValue), str(oldArmor.defenseValue) if hasOld else "", true)
 	if armorResource.speedModifier != 0:
 		addStatRow("Spd", str(armorResource.speedModifier), str(oldArmor.speedModifier) if hasOld else "", true)
+	
+	if armorResource.effects.size() > 0:
+		addEffectsRow(armorResource.effects)
 
 func initConsumableTooltip(consumableInstance: ItemInstance):
 	var consumableResource = consumableInstance.resource
-	#addStatRow("Thing", consumableResource.)
+	addEffectsRow(consumableResource.effectResources)
 
-func addEffectsRow(itemInstance : ItemInstance):
-	# TODO: display small images of all the effects
-	pass
+func addEffectsRow(effectResources : Array):
+	var effectRow : HBoxContainer = HBoxContainer.new()
+	effectRow.alignment = effectRow.ALIGN_CENTER
+	statsContainer.add_child(effectRow)
+		# TODO: display small images of all the effects
+	for effectResource in effectResources:
+		var newEffectIcon = EffectsIconScene.instance()
+		newEffectIcon.init(effectResource)
+		newEffectIcon.rect_min_size = Vector2(10, 10)
+		effectRow.add_child(newEffectIcon)
 
 # append a new stat row to the end of the current list of stats
 func addStatRow(statName: String, statValue: String, oldStatValue: String = "", compareVals: bool = false):
