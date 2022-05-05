@@ -7,13 +7,13 @@
 [resource]
 script = ExtResource( 3 )
 name = "Plate Armor"
-value = 150
+value = 115
 texture = ExtResource( 2 )
 flip = false
 modifiers = [  ]
-rarity = 2
+rarity = 3
 type = 1
 characterTexture = ExtResource( 1 )
-defenseValue = 20
+defenseValue = 15
 speedModifier = -0.2
 effects = [  ]

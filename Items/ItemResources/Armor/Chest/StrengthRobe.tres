@@ -1,0 +1,20 @@
+[gd_resource type="Resource" load_steps=5 format=2]
+
+[ext_resource path="res://Items/Armor.gd" type="Script" id=1]
+[ext_resource path="res://Items/Effects/StrBuff.tres" type="Resource" id=2]
+[ext_resource path="res://Assets/ArmorAssets/Chest/Item_43.png" type="Texture" id=3]
+[ext_resource path="res://Assets/ArmorAssets/Chest/StrengthRobe.png" type="Texture" id=4]
+
+[resource]
+script = ExtResource( 1 )
+name = "Leather Armor"
+value = 25
+texture = ExtResource( 3 )
+flip = false
+modifiers = [  ]
+rarity = 4
+type = 1
+characterTexture = ExtResource( 4 )
+defenseValue = 5
+speedModifier = -0.15
+effects = [ ExtResource( 2 ) ]

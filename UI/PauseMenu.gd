@@ -37,3 +37,7 @@ func togglePause():
 func newWave():
 	waveLabel.text = "Wave " + str(get_parent().get_parent().waveNumber)
 	animationPlayer.play("NewWave")
+
+func goToMainMenu():
+	get_tree().paused = false
+	get_tree().change_scene("res://UI/StartMenu/StartMenu.tscn")

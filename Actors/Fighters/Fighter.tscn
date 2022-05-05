@@ -36,31 +36,6 @@ scale = 3.0
 scale_curve = SubResource( 2 )
 color = Color( 0.627451, 0, 0, 1 )
 
-[sub_resource type="Gradient" id=12]
-offsets = PoolRealArray( 0, 0.0807453, 0.291925, 0.900621 )
-colors = PoolColorArray( 1, 1, 1, 1, 1, 0.861328, 0, 1, 1, 0.477539, 0, 1, 1, 0, 0, 1 )
-
-[sub_resource type="GradientTexture" id=13]
-gradient = SubResource( 12 )
-
-[sub_resource type="Curve" id=14]
-_data = [ Vector2( 0, 1 ), 0.0, 0.16157, 0, 0, Vector2( 1, 0 ), -0.681039, 0.0, 0, 0 ]
-
-[sub_resource type="CurveTexture" id=15]
-curve = SubResource( 14 )
-
-[sub_resource type="ParticlesMaterial" id=16]
-emission_shape = 1
-emission_sphere_radius = 8.0
-flag_disable_z = true
-gravity = Vector3( 0, -50, 0 )
-angular_velocity = 691.76
-orbit_velocity = 0.0
-orbit_velocity_random = 0.0
-scale = 1.5
-scale_curve = SubResource( 15 )
-color_ramp = SubResource( 13 )
-
 [sub_resource type="Animation" id=4]
 resource_name = "AOEAttack"
 length = 0.5
@@ -832,6 +807,31 @@ tracks/2/keys = {
 "values": [ Vector2( 1, 1 ), Vector2( 0.9, 0.9 ), Vector2( 1, 1 ) ]
 }
 
+[sub_resource type="Gradient" id=12]
+offsets = PoolRealArray( 0, 0.0807453, 0.291925, 0.900621 )
+colors = PoolColorArray( 1, 1, 1, 1, 1, 0.861328, 0, 1, 1, 0.477539, 0, 1, 1, 0, 0, 1 )
+
+[sub_resource type="GradientTexture" id=13]
+gradient = SubResource( 12 )
+
+[sub_resource type="Curve" id=14]
+_data = [ Vector2( 0, 1 ), 0.0, 0.16157, 0, 0, Vector2( 1, 0 ), -0.681039, 0.0, 0, 0 ]
+
+[sub_resource type="CurveTexture" id=15]
+curve = SubResource( 14 )
+
+[sub_resource type="ParticlesMaterial" id=16]
+emission_shape = 1
+emission_sphere_radius = 8.0
+flag_disable_z = true
+gravity = Vector3( 0, -50, 0 )
+angular_velocity = 691.76
+orbit_velocity = 0.0
+orbit_velocity_random = 0.0
+scale = 1.5
+scale_curve = SubResource( 15 )
+color_ramp = SubResource( 13 )
+
 [node name="Fighter" groups=["Enemies"] instance=ExtResource( 6 )]
 script = ExtResource( 2 )
 movementResource = ExtResource( 11 )
@@ -875,13 +875,6 @@ one_shot = true
 explosiveness = 0.65
 process_material = SubResource( 3 )
 
-[node name="BurnParticles" type="Particles2D" parent="AttackPivot" index="10"]
-position = Vector2( 0, -7 )
-emitting = false
-amount = 100
-lifetime = 1.5
-process_material = SubResource( 16 )
-
 [node name="AnimationPlayer" type="AnimationPlayer" parent="." index="8"]
 autoplay = "Idle"
 anims/AOEAttack = SubResource( 4 )
@@ -892,6 +885,13 @@ anims/MeleeAttack = SubResource( 8 )
 anims/MeleeWindup = SubResource( 9 )
 anims/RangedAttack = SubResource( 10 )
 anims/Walk = SubResource( 11 )
+
+[node name="BurnParticles" type="Particles2D" parent="." index="12"]
+position = Vector2( 0, -12 )
+emitting = false
+amount = 100
+lifetime = 1.5
+process_material = SubResource( 16 )
 
 [editable path="Hurtbox"]
 [editable path="DetectionZone"]

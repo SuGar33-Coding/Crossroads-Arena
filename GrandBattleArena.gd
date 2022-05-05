@@ -125,12 +125,14 @@ func _physics_process(_delta):
 				conPillarAnimation.play("ChargeUp")
 			if not dexPillarAnimation.is_playing():
 				dexPillarAnimation.play("ChargeUp")
-				
-			strPillarLabel.visible = playerNearStr
-			conPillarLabel.visible = playerNearCon
-			dexPillarLabel.visible = playerNearDex
 			
-			if Input.is_action_just_pressed("interact"):
+			var pillarsReady : bool = strPillarAnimation.current_animation == "Ready"
+			if pillarsReady:
+				strPillarLabel.visible = playerNearStr
+				conPillarLabel.visible = playerNearCon
+				dexPillarLabel.visible = playerNearDex
+			
+			if Input.is_action_just_pressed("interact") and pillarsReady:
 				match true:
 					playerNearStr:
 						PlayerStats.baseStr += 1
@@ -155,10 +157,11 @@ func _physics_process(_delta):
 						camera.add_trauma(.5)
 		else:
 			# If we just want it to go dark on use, take out the if statements here
-			strPillarAnimation.play("Idle")
-			conPillarAnimation.play("Idle")
-			dexPillarAnimation.play("Idle")
-		
+			#strPillarAnimation.play("Idle")
+			#conPillarAnimation.play("Idle")
+			#dexPillarAnimation.play("Idle")
+			pass
+			
 		# Wave Button
 		newWaveButtonSprite.play("Ready")
 		if playerNearButton:
@@ -178,11 +181,6 @@ func playPillarReadies():
 	strPillarAnimation.play("Ready")
 	conPillarAnimation.play("Ready")
 	dexPillarAnimation.play("Ready")
-
-func stopPillarExplosion():
-	strParticles.emitting = false
-	conParticles.emitting = false
-	dexParticles.emitting = false
 
 func generateScenery():
 	var vegetationScenes := []
@@ -276,11 +274,6 @@ func set_pause_scene(rootNode : Node, pause : bool):
 func playerDied():
 	var sceneChangerPlayer = $UIHandler/PauseMenu/AnimationPlayer
 	sceneChangerPlayer.play("SceneChange")
-	sceneChangerPlayer.connect("animation_finished", self, "goToMainMenu")
-	
-func goToMainMenu(_stuff):
-	get_tree().paused = false
-	get_tree().change_scene("res://UI/StartMenu/StartMenu.tscn")
 
 func getPlayerNode() -> Player:
 	return get_node("./YSort/Player") as Player

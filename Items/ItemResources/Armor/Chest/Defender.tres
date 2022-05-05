@@ -14,6 +14,6 @@ modifiers = [  ]
 rarity = 4
 type = 1
 characterTexture = ExtResource( 2 )
-defenseValue = 40
+defenseValue = 30
 speedModifier = -0.4
 effects = [  ]

@@ -20,7 +20,7 @@ onready var animationPlayer: AnimationPlayer = $AnimationPlayer
 onready var attackTimer := $AttackPivot/AttackTimer
 onready var shadowSprite := $Shadow
 onready var bloodParticles := $AttackPivot/Particles2D
-onready var burnParticles := $AttackPivot/BurnParticles
+onready var burnParticles := $BurnParticles
 onready var effectsTimer := $AttackPivot/EffectsTimer
 
 var sinX = rand_range(0, TAU)
@@ -332,3 +332,6 @@ func _process_effects():
 			add_child(text)
 		
 		self.MaxSpeed = self.baseSpeed * pow(PlayerStats.dexMoveRatio, stats.dex) * (1.0 - (speedSlow/100.0))
+	else:
+		burnParticles.emitting = false
+		

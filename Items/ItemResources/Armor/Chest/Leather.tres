@@ -1,19 +1,19 @@
 [gd_resource type="Resource" load_steps=4 format=2]
 
 [ext_resource path="res://Items/Armor.gd" type="Script" id=1]
-[ext_resource path="res://Assets/ArmorAssets/Chest/HalfPlate.png" type="Texture" id=2]
-[ext_resource path="res://Assets/ArmorAssets/Chest/Item_42.png" type="Texture" id=3]
+[ext_resource path="res://Assets/ArmorAssets/Chest/Leather.png" type="Texture" id=2]
+[ext_resource path="res://Assets/ArmorAssets/Chest/Item__56.png" type="Texture" id=3]
 
 [resource]
 script = ExtResource( 1 )
-name = "Half Plate"
-value = 90
+name = "Leather Armor"
+value = 25
 texture = ExtResource( 3 )
 flip = false
 modifiers = [  ]
-rarity = 2
+rarity = 1
 type = 1
 characterTexture = ExtResource( 2 )
-defenseValue = 10
-speedModifier = -0.15
+defenseValue = 5
+speedModifier = -0.1
 effects = [  ]

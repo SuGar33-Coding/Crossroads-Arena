@@ -78,10 +78,24 @@ tracks/1/loop_wrap = true
 tracks/1/imported = false
 tracks/1/enabled = true
 tracks/1/keys = {
-"times": PoolRealArray( 0, 1 ),
+"times": PoolRealArray( 0, 0.98 ),
 "transitions": PoolRealArray( 1, 1 ),
 "update": 0,
 "values": [ Color( 1, 1, 1, 0 ), Color( 1, 1, 1, 1 ) ]
+}
+tracks/2/type = "method"
+tracks/2/path = NodePath(".")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0.99 ),
+"transitions": PoolRealArray( 1 ),
+"values": [ {
+"args": [  ],
+"method": "goToMainMenu"
+} ]
 }
 
 [node name="PauseMenu" type="CanvasLayer"]
@@ -89,6 +103,7 @@ pause_mode = 2
 script = ExtResource( 2 )
 
 [node name="WaveLabel" type="Label" parent="."]
+visible = false
 anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
@@ -97,8 +112,8 @@ margin_left = -372.0
 margin_top = -208.5
 margin_right = 382.0
 margin_bottom = 214.5
-custom_colors/font_color = Color( 1, 0.784314, 0.239216, 0 )
-custom_colors/font_outline_modulate = Color( 0, 0, 0, 0.00304098 )
+custom_colors/font_color = Color( 1, 0.784314, 0.239216, 0.973033 )
+custom_colors/font_outline_modulate = Color( 0, 0, 0, 0.973033 )
 custom_fonts/font = SubResource( 6 )
 text = "Wave X"
 align = 1
