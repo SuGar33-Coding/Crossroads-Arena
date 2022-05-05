@@ -1,19 +1,19 @@
 [gd_resource type="Resource" load_steps=4 format=2]
 
-[ext_resource path="res://Assets/ArmorAssets/Feet/Item__49.png" type="Texture" id=1]
+[ext_resource path="res://Assets/ArmorAssets/Head/Item__55.png" type="Texture" id=1]
 [ext_resource path="res://Items/Armor.gd" type="Script" id=2]
-[ext_resource path="res://Assets/ArmorAssets/Feet/IronBoots.png" type="Texture" id=3]
+[ext_resource path="res://Assets/ArmorAssets/Head/Cowl.png" type="Texture" id=3]
 
 [resource]
 script = ExtResource( 2 )
-name = "Iron Boots"
-value = 17
+name = "Cowl"
+value = 5
 texture = ExtResource( 1 )
 flip = false
 modifiers = [  ]
-rarity = 2
-type = 2
+rarity = 0
+type = 0
 characterTexture = ExtResource( 3 )
-defenseValue = 5
-speedModifier = 0.0
+defenseValue = 1
+speedModifier = 0.01
 effects = [  ]
