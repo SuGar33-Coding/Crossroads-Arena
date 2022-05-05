@@ -1,7 +1,7 @@
 [gd_resource type="Resource" load_steps=3 format=2]
 
 [ext_resource path="res://Items/Effects/Effect.gd" type="Script" id=1]
-[ext_resource path="res://Assets/WeaponAssets/Swords/Item__00.png" type="Texture" id=2]
+[ext_resource path="res://Assets/ItemAssets/Fist.png" type="Texture" id=2]
 
 [resource]
 script = ExtResource( 1 )
