@@ -563,6 +563,7 @@ shape = SubResource( 11 )
 position = Vector2( 0.625, -2.25 )
 frames = SubResource( 15 )
 animation = "Ready"
+frame = 1
 playing = true
 
 [node name="StaticBody2D" type="StaticBody2D" parent="YSort/NewWaveButton"]

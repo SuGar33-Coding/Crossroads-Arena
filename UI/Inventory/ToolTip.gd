@@ -50,7 +50,7 @@ func initWeaponTooltip(weaponInstance: WeaponInstance):
 	var oldWeapon := Inventory.getWeapons()["0"] as WeaponInstance
 	var hasOld = is_instance_valid(oldWeapon) and oldWeapon != weaponInstance
 	addStatRow("Dmg", dmgFmtStr % weaponInstance.damage, dmgFmtStr % oldWeapon.damage if hasOld else "", true)
-	addStatRow("Spd", atkSpdFmtStr % weaponInstance.attackSpeed, atkSpdFmtStr % oldWeapon.attackSpeed if hasOld else "", true)
+	addStatRow("Spd", atkSpdFmtStr % (1.0/weaponInstance.attackSpeed), atkSpdFmtStr % (1.0/oldWeapon.attackSpeed) if hasOld else "", true)
 	
 	if weaponInstance.armorPierce > 0 or (hasOld and oldWeapon.armorPierce > 0):
 		addStatRow("Prc", dmgFmtStr % weaponInstance.armorPierce, dmgFmtStr % oldWeapon.armorPierce if hasOld else "", true)

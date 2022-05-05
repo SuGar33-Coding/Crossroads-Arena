@@ -1,6 +1,5 @@
-[gd_resource type="Resource" load_steps=6 format=2]
+[gd_resource type="Resource" load_steps=5 format=2]
 
-[ext_resource path="res://Items/Modifiers/FlatModifier.tres" type="Resource" id=1]
 [ext_resource path="res://Audio/mixkit-dagger-woosh-1487.wav" type="AudioStream" id=2]
 [ext_resource path="res://Audio/Swipe2.wav" type="AudioStream" id=3]
 [ext_resource path="res://Assets/WeaponAssets/Swords/Item_00.png" type="Texture" id=4]
@@ -12,7 +11,7 @@ name = "Old Sword"
 value = 0
 texture = ExtResource( 4 )
 flip = true
-modifiers = [ ExtResource( 1 ) ]
+modifiers = [  ]
 rarity = 1
 weaponType = 1
 damage = 10
