@@ -6,10 +6,10 @@ onready var strLabel : Label = $PanelContainer/MarginContainer/HBoxContainer/Att
 onready var conLabel : Label = $PanelContainer/MarginContainer/HBoxContainer/AttributeContainer/AttVbox/ConHbox/ConLabel
 onready var dexLabel : Label = $PanelContainer/MarginContainer/HBoxContainer/AttributeContainer/AttVbox/DexHbox/DexLabel
 
-onready var sprite : Sprite = $PanelContainer/MarginContainer/HBoxContainer/PortraitContainer/PortraitVbox/Sprite/ChestSprite
+onready var sprite : Sprite = $PanelContainer/MarginContainer/HBoxContainer/PortraitContainer/PortraitVbox/Sprite
 onready var headSprite : Sprite = $PanelContainer/MarginContainer/HBoxContainer/PortraitContainer/PortraitVbox/Sprite/HeadSprite
 onready var chestSprite : Sprite = $PanelContainer/MarginContainer/HBoxContainer/PortraitContainer/PortraitVbox/Sprite/ChestSprite
-onready var legSprite : Sprite = $PanelContainer/MarginContainer/HBoxContainer/PortraitContainer/PortraitVbox/Sprite/ChestSprite
+onready var legSprite : Sprite = $PanelContainer/MarginContainer/HBoxContainer/PortraitContainer/PortraitVbox/Sprite/LegSprite
 
 onready var controlNode := $PanelContainer
 

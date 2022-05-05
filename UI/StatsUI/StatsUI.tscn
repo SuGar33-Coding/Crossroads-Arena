@@ -165,17 +165,14 @@ hframes = 5
 [node name="HeadSprite" type="Sprite" parent="PanelContainer/MarginContainer/HBoxContainer/PortraitContainer/PortraitVbox/Sprite"]
 use_parent_material = true
 hframes = 5
-frame = 1
 
 [node name="ChestSprite" type="Sprite" parent="PanelContainer/MarginContainer/HBoxContainer/PortraitContainer/PortraitVbox/Sprite"]
 use_parent_material = true
 hframes = 5
-frame = 1
 
 [node name="LegSprite" type="Sprite" parent="PanelContainer/MarginContainer/HBoxContainer/PortraitContainer/PortraitVbox/Sprite"]
 use_parent_material = true
 hframes = 5
-frame = 1
 
 [node name="Space2" type="Control" parent="PanelContainer/MarginContainer/HBoxContainer"]
 margin_left = 292.0

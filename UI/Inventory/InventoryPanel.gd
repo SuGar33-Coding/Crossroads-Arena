@@ -1,6 +1,12 @@
 class_name InventoryPanel extends Control
 
-onready var gridContainer = $Background/MarginContainer/VBoxContainer/ScrollContainer/GridContainer
+var gridContainer : GridContainer
+
+func _ready():
+	getGridContainer()
+
+func getGridContainer():
+	gridContainer = $Background/MarginContainer/VBoxContainer/ScrollContainer/GridContainer
 
 func updateDisplay(bag):
 	for slot in bag.keys():
