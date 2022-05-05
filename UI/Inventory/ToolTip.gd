@@ -15,7 +15,7 @@ var atkSpdFmtStr = "%.1f/s"
 func init(itemInstance: ItemInstance):
 	self.itemInstance = itemInstance
 
-func _process(delta):
+func _process(_delta):
 	rect_position = get_global_mouse_position()
 	if Input.is_action_pressed("info"):
 		show()

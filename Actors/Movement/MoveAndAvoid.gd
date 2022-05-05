@@ -9,7 +9,7 @@ export var avoidanceRadius : float = 25
 # Calculate direction from three weighted unit vectors:
 # - Direction to target
 # - Negative potential from closest group member
-func getMovementDirection(selfNode: KinematicBody2D, targetPos: Vector2, delta: float):
+func getMovementDirection(selfNode: KinematicBody2D, targetPos: Vector2, _delta: float):
 	# Proportionally weight our pathfinding algorithm to how close unit is to target radius
 	var toTargetDir = getToTargetDirection(selfNode, targetPos)
 	var toTargetWeight := getToTargetWeight(selfNode, targetPos)

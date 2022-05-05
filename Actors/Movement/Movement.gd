@@ -3,7 +3,7 @@ extends Resource
 class_name Movement
 
 # Get direction directly towards target
-func getMovementDirection(selfNode: KinematicBody2D, targetPos: Vector2, delta: float):
+func getMovementDirection(selfNode: KinematicBody2D, targetPos: Vector2, _delta: float):
 	return getToTargetDirection(selfNode, targetPos)
 
 # Accelerate straight along Movement Direction
@@ -18,5 +18,5 @@ func getIdleVelocity(selfNode: KinematicBody2D, delta: float):
 func getToTargetDirection(selfNode: KinematicBody2D, targetPos: Vector2):
 	return selfNode.global_position.direction_to(targetPos)
 
-func getToTargetWeight(selfNode: KinematicBody2D, targetPos: Vector2) -> float:
+func getToTargetWeight(_selfNode: KinematicBody2D, _targetPos: Vector2) -> float:
 	return 1.0

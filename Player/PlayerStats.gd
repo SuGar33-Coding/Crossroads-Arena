@@ -59,7 +59,7 @@ func setStartingHealth(value):
 
 func setMaxHealth(value : int):
 	var oldMaxHealth = maxHealth
-	maxHealth = max(value, 1)
+	maxHealth = int(max(value, 1))
 	self.health += maxHealth - oldMaxHealth
 	self.health = min(health, maxHealth)
 	emit_signal("maxHealthChanged", maxHealth)
@@ -125,7 +125,7 @@ func resetMaxSpeed():
 	self.maxSpeed = self.baseSpeed * pow(dexMoveRatio, dex) * armorSpeedModifier * effectsSpeedModifier
 
 func setNextPlayerLevel(newLevel):
-	nextPlayerLevel = max(nextPlayerLevel, max(playerLevel, newLevel))
+	nextPlayerLevel = int(max(nextPlayerLevel, max(playerLevel, newLevel)))
 	emit_signal("nextLevelChanged", nextPlayerLevel)
 
 func incrementPlayerLevel():
