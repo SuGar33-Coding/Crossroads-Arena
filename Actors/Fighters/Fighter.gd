@@ -31,6 +31,7 @@ var aoeAttackPos := Vector2.ZERO
 var statsResource : StatsResource
 var weaponStatsResources : Array = []
 var texture : Texture
+var effectsReset := false
 
 # TODO: Possibly not necessary for the generic fighter class
 var moveDir = 1
@@ -332,6 +333,12 @@ func _process_effects():
 			add_child(text)
 		
 		self.MaxSpeed = self.baseSpeed * pow(PlayerStats.dexMoveRatio, stats.dex) * (1.0 - (speedSlow/100.0))
-	else:
+	elif not effectsReset:
+		effectsReset = true
 		burnParticles.emitting = false
+		
+		baseColor = Color(1,1,1)
+		returnToBaseColor()
+		
+		self.MaxSpeed = self.baseSpeed * pow(PlayerStats.dexMoveRatio, stats.dex)
 		

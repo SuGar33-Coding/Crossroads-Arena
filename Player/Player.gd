@@ -26,6 +26,7 @@ var baseColor := Color(1,1,1)
 # effects will be a list of effects resources and remaining ticks until effect goes away
 var effects := []
 var armorEffects := []
+var effectsReset := false
 
 onready var stats = get_node("/root/PlayerStats")
 onready var inventory = get_node("/root/Inventory")
@@ -322,6 +323,7 @@ func _new_secondary(secondaryWeapon : WeaponInstance):
 
 func _process_effects():
 	if not effects.empty() or not armorEffects.empty():
+		effectsReset = false
 		var totalStr = stats.baseStr
 		var totalCon = stats.baseCon
 		var totalDex = stats.baseDex
@@ -466,5 +468,18 @@ func _process_effects():
 		currentArmorShred = armorShred
 		currentArmorBuff = armorBuff
 		armorValue = baseArmorValue - currentArmorShred + currentArmorBuff
-	else:
+	elif not effectsReset:
+		effectsReset = true
 		burnParticles.emitting = false
+		stats.strength = stats.baseStr
+		stats.con = stats.baseCon
+		stats.dex = stats.baseDex
+		
+		baseColor = Color(1,1,1)
+		returnToBaseColor()
+		
+		var newSpeedModifier = 1.0
+		PlayerStats.maxSpeed = (PlayerStats.maxSpeed / PlayerStats.effectsSpeedModifier ) * newSpeedModifier
+		PlayerStats.effectsSpeedModifier = newSpeedModifier
+		
+		armorValue = baseArmorValue
