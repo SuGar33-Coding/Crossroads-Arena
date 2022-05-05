@@ -18,6 +18,7 @@ func autoEquip():
 func get_drag_data(_position):
 	var bagSlot = get_parent().name
 	if Inventory.getShop()[bagSlot] != null:
+		var resource := (getPanelInventory()[bagSlot] as ItemInstance).resource
 		var data = {}
 		data.originNode = self
 		data.originPanel = "shop"
@@ -27,7 +28,9 @@ func get_drag_data(_position):
 		var dragTexture = TextureRect.new()
 		dragTexture.expand = true
 		dragTexture.texture = get_child(0).texture
-		dragTexture.rect_size = Vector2(100, 100)
+		dragTexture.rect_size = Vector2(50, 50)
+		dragTexture.flip_h = resource.flip
+		dragTexture.flip_v = resource.flip
 
 		var control = Control.new()
 		control.add_child(dragTexture)
