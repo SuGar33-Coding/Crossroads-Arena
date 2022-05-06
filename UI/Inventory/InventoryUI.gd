@@ -26,10 +26,6 @@ func setVisible(visible : bool):
 	updateStats()
 
 func updateStats(_bag1 = null, _bag2 = null):
-	#strLabel.text = str(playerStats.baseStr)
-	#conLabel.text = str(playerStats.baseCon)
-	#dexLabel.text = str(playerStats.baseDex)
-	
 	var world = get_tree().current_scene
 	var playerNode = world.getPlayerNode()
 	
