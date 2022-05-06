@@ -126,35 +126,42 @@ func _physics_process(_delta):
 			if not dexPillarAnimation.is_playing():
 				dexPillarAnimation.play("ChargeUp")
 			
-			var pillarsReady : bool = strPillarAnimation.current_animation == "Ready"
-			if pillarsReady:
+			var strReady : bool = strPillarAnimation.current_animation == "Ready"
+			var conReady : bool = conPillarAnimation.current_animation == "Ready"
+			var dexReady : bool = dexPillarAnimation.current_animation == "Ready"
+			if strReady:
 				strPillarLabel.visible = playerNearStr
+			if conReady:
 				conPillarLabel.visible = playerNearCon
+			if dexReady:
 				dexPillarLabel.visible = playerNearDex
 			
-			if Input.is_action_just_pressed("interact") and pillarsReady:
+			if Input.is_action_just_pressed("interact"):
 				match true:
 					playerNearStr:
-						PlayerStats.baseStr += 1
-						PlayerStats.incrementPlayerLevel()
-						strPillarAnimation.play("Chosen")
-						strPillarLabel.visible = false
-						camera.add_trauma(.5)
-						strParticles.emitting = true
+						if strReady:
+							PlayerStats.baseStr += 1
+							PlayerStats.incrementPlayerLevel()
+							strPillarAnimation.play("Chosen")
+							strPillarLabel.visible = false
+							camera.add_trauma(.5)
+							strParticles.emitting = true
 					playerNearCon:
-						PlayerStats.baseCon += 1
-						PlayerStats.incrementPlayerLevel()
-						conPillarAnimation.play("Chosen")
-						conPillarLabel.visible = false
-						conParticles.emitting = true
-						camera.add_trauma(.5)
+						if conReady:
+							PlayerStats.baseCon += 1
+							PlayerStats.incrementPlayerLevel()
+							conPillarAnimation.play("Chosen")
+							conPillarLabel.visible = false
+							conParticles.emitting = true
+							camera.add_trauma(.5)
 					playerNearDex:
-						PlayerStats.baseDex += 1
-						PlayerStats.incrementPlayerLevel()
-						dexPillarAnimation.play("Chosen")
-						dexPillarLabel.visible = false
-						dexParticles.emitting = true
-						camera.add_trauma(.5)
+						if dexReady:
+							PlayerStats.baseDex += 1
+							PlayerStats.incrementPlayerLevel()
+							dexPillarAnimation.play("Chosen")
+							dexPillarLabel.visible = false
+							dexParticles.emitting = true
+							camera.add_trauma(.5)
 		else:
 			# If we just want it to go dark on use, take out the if statements here
 			#strPillarAnimation.play("Idle")
