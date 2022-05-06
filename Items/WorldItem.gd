@@ -92,12 +92,12 @@ func _on_MouseArea_mouse_exited():
 	
 	hidePickup()
 
-func _on_PlayerCollision_body_entered(body):
+func _on_PlayerCollision_body_entered(_body):
 	playerInZone = true
 	if mouseInZone:
 		displayPickup()
 
-func _on_PlayerCollision_body_exited(body):
+func _on_PlayerCollision_body_exited(_body):
 	playerInZone = false
 	hidePickup()
 

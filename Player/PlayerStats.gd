@@ -24,6 +24,8 @@ var dex : int = 0 setget setDex
 var dexMoveRatio : float = 1.025
 var dexAttackRatio : float = .93
 var dexDashRatio : float = .95
+var dashDelay : float = 1.0
+var baseDashSpeed := 500
 # Used for when player is wearing different types of armor
 var armorSpeedModifier : float = 1.0
 var effectsSpeedModifier : float = 1.0
@@ -59,7 +61,7 @@ func setStartingHealth(value):
 
 func setMaxHealth(value : int):
 	var oldMaxHealth = maxHealth
-	maxHealth = max(value, 1)
+	maxHealth = int(max(value, 1))
 	self.health += maxHealth - oldMaxHealth
 	self.health = min(health, maxHealth)
 	emit_signal("maxHealthChanged", maxHealth)
@@ -125,7 +127,7 @@ func resetMaxSpeed():
 	self.maxSpeed = self.baseSpeed * pow(dexMoveRatio, dex) * armorSpeedModifier * effectsSpeedModifier
 
 func setNextPlayerLevel(newLevel):
-	nextPlayerLevel = max(nextPlayerLevel, max(playerLevel, newLevel))
+	nextPlayerLevel = int(max(nextPlayerLevel, max(playerLevel, newLevel)))
 	emit_signal("nextLevelChanged", nextPlayerLevel)
 
 func incrementPlayerLevel():

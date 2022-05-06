@@ -1,0 +1,11 @@
+[gd_resource type="Resource" load_steps=2 format=2]
+
+[ext_resource path="res://Items/Modifiers/Modifier.gd" type="Script" id=1]
+
+[resource]
+script = ExtResource( 1 )
+name = "Ornate"
+damageModifier = 1.1
+speedModifier = 0.9
+knockbackModifier = 1.0
+valueModifier = 1.3

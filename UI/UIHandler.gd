@@ -16,9 +16,6 @@ func _process(delta):
 	elif Input.is_action_just_pressed("toggleInventory"):
 		if not (shop.isVisible() or stats.isVisible()):
 			inventory.toggleVisible()
-	elif Input.is_action_just_pressed("stats"):
-		if not (shop.isVisible() or inventory.isVisible()):
-			stats.toggleVisible()
 
 func newWave():
 	pauseMenu.newWave()

@@ -43,15 +43,15 @@ func _ready():
 	
 	numActors = numGrunts + numSpecial + numBoss
 	
-	for i in range(numGrunts):
+	for _i in range(numGrunts):
 		var pathToResource = encounterStats.gruntFilepaths[randi() % encounterStats.gruntFilepaths.size()]
 		spawnActor(pathToResource)
 		
-	for j in range(numSpecial):
+	for _j in range(numSpecial):
 		var pathToResource = encounterStats.specialFilepaths[randi() % encounterStats.specialFilepaths.size()]
 		spawnActor(pathToResource)
 		
-	for k in range(numBoss):
+	for _k in range(numBoss):
 		var pathToResource = encounterStats.commanderFilepaths[randi() % encounterStats.commanderFilepaths.size()]
 		spawnActor(pathToResource)
 

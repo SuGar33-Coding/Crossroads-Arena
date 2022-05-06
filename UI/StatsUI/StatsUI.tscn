@@ -4,8 +4,8 @@
 [ext_resource path="res://Player/PlayerColorShader.tres" type="Material" id=2]
 [ext_resource path="res://Themes/Colors/UnselectedButtonTheme.tres" type="StyleBox" id=3]
 [ext_resource path="res://Themes/Fonts/MainButtonFont.tres" type="DynamicFont" id=4]
-[ext_resource path="res://Assets/ItemAssets/Shoes.png" type="Texture" id=5]
-[ext_resource path="res://Assets/WeaponAssets/Swords/Item__00.png" type="Texture" id=6]
+[ext_resource path="res://Assets/ItemAssets/Fist.png" type="Texture" id=5]
+[ext_resource path="res://Assets/ItemAssets/Wing.png" type="Texture" id=6]
 [ext_resource path="res://Assets/WeaponAssets/Item_34.png" type="Texture" id=7]
 [ext_resource path="res://UI/StatsUI/StatsUI.gd" type="Script" id=8]
 [ext_resource path="res://Themes/Fonts/BigStatsFont.tres" type="DynamicFont" id=9]
@@ -74,7 +74,7 @@ margin_right = 64.0
 margin_bottom = 64.0
 rect_min_size = Vector2( 64, 64 )
 size_flags_horizontal = 4
-texture = ExtResource( 6 )
+texture = ExtResource( 5 )
 stretch_mode = 1
 
 [node name="StrLabel" type="Label" parent="PanelContainer/MarginContainer/HBoxContainer/AttributeContainer/AttVbox/StrHbox"]
@@ -122,7 +122,7 @@ margin_right = 64.0
 margin_bottom = 64.0
 rect_min_size = Vector2( 64, 64 )
 size_flags_horizontal = 4
-texture = ExtResource( 5 )
+texture = ExtResource( 6 )
 stretch_mode = 1
 
 [node name="DexLabel" type="Label" parent="PanelContainer/MarginContainer/HBoxContainer/AttributeContainer/AttVbox/DexHbox"]
@@ -165,17 +165,14 @@ hframes = 5
 [node name="HeadSprite" type="Sprite" parent="PanelContainer/MarginContainer/HBoxContainer/PortraitContainer/PortraitVbox/Sprite"]
 use_parent_material = true
 hframes = 5
-frame = 1
 
 [node name="ChestSprite" type="Sprite" parent="PanelContainer/MarginContainer/HBoxContainer/PortraitContainer/PortraitVbox/Sprite"]
 use_parent_material = true
 hframes = 5
-frame = 1
 
 [node name="LegSprite" type="Sprite" parent="PanelContainer/MarginContainer/HBoxContainer/PortraitContainer/PortraitVbox/Sprite"]
 use_parent_material = true
 hframes = 5
-frame = 1
 
 [node name="Space2" type="Control" parent="PanelContainer/MarginContainer/HBoxContainer"]
 margin_left = 292.0

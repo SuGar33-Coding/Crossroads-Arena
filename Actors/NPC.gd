@@ -53,9 +53,12 @@ onready var collision := $CollisionShape2D
 
 func _ready():
 	self.add_to_group(movementGroup)
+# warning-ignore:return_value_discarded
 	hurtbox.connect("area_entered", self, "_hurtbox_area_entered")
+# warning-ignore:return_value_discarded
 	stats.connect("noHealth", self, "_stats_no_health")
 	self.MaxSpeed = self.baseSpeed * pow(PlayerStats.dexMoveRatio, stats.dex)
+# warning-ignore:return_value_discarded
 	stats.connect("dexChanged", self, "_dexterity_changed")
 	self.Friction = self.Friction * pow(PlayerStats.conFrictionRatio, stats.con)
 	

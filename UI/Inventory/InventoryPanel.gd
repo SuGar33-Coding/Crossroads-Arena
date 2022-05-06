@@ -1,11 +1,17 @@
 class_name InventoryPanel extends Control
 
-onready var gridContainer = $Background/MarginContainer/VBoxContainer/ScrollContainer/GridContainer
+var gridContainer : GridContainer
 
-func updateDisplay(bag):
+func _ready():
+	getGridContainer()
+
+func getGridContainer():
+	gridContainer = $Background/MarginContainer/VBoxContainer/ScrollContainer/GridContainer
+
+func updateDisplay(bag, container : Container = gridContainer):
 	for slot in bag.keys():
-		var slotIcon: TextureRect = gridContainer.get_node(slot).get_child(0).get_child(0)
-		var defaultIcon: TextureRect = gridContainer.get_node(slot).get_child(0).get_child(1)
+		var slotIcon: TextureRect = container.get_node(slot).get_child(0).get_child(0)
+		var defaultIcon: TextureRect = container.get_node(slot).get_child(0).get_child(1)
 		if bag[slot] != null:
 			# if there's an item, update the slot with that sprite
 			var item := bag[slot] as ItemInstance

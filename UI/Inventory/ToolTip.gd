@@ -15,7 +15,7 @@ var atkSpdFmtStr = "%.1f/s"
 func init(itemInstance: ItemInstance):
 	self.itemInstance = itemInstance
 
-func _process(delta):
+func _process(_delta):
 	rect_position = get_global_mouse_position()
 	if Input.is_action_pressed("info"):
 		show()
@@ -48,9 +48,9 @@ func setItemInstance(newItemInstance):
 func initWeaponTooltip(weaponInstance: WeaponInstance):
 	# comparative stats
 	var oldWeapon := Inventory.getWeapons()["0"] as WeaponInstance
-	var hasOld = is_instance_valid(oldWeapon)
+	var hasOld = is_instance_valid(oldWeapon) and oldWeapon != weaponInstance
 	addStatRow("Dmg", dmgFmtStr % weaponInstance.damage, dmgFmtStr % oldWeapon.damage if hasOld else "", true)
-	addStatRow("Spd", atkSpdFmtStr % weaponInstance.attackSpeed, atkSpdFmtStr % oldWeapon.attackSpeed if hasOld else "", true)
+	addStatRow("Spd", atkSpdFmtStr % (1.0/weaponInstance.attackSpeed), atkSpdFmtStr % (1.0/oldWeapon.attackSpeed) if hasOld else "", true)
 	
 	if weaponInstance.armorPierce > 0 or (hasOld and oldWeapon.armorPierce > 0):
 		addStatRow("Prc", dmgFmtStr % weaponInstance.armorPierce, dmgFmtStr % oldWeapon.armorPierce if hasOld else "", true)
@@ -64,13 +64,12 @@ func initWeaponTooltip(weaponInstance: WeaponInstance):
 	
 	addStatRow("Rng", dmgFmtStr % weaponRange, dmgFmtStr % oldRange if hasOld else "", true)
 	
-	if weaponInstance.effectResources.size() > 0:
-		addEffectsRow(weaponInstance.effectResources)
+	addEffectsRow(weaponInstance.effectResources, oldWeapon.effectResources if hasOld else [])
 
 func initArmorTooltip(armorInstance: ItemInstance):
 	var armorResource = armorInstance.resource as Armor
 	var oldArmorInstance := Inventory.getArmor()[armorResource.type] as ItemInstance
-	var hasOld = is_instance_valid(oldArmorInstance)
+	var hasOld = is_instance_valid(oldArmorInstance) and oldArmorInstance != armorInstance
 	var oldArmor : Armor = null
 	
 	if hasOld:
@@ -81,23 +80,33 @@ func initArmorTooltip(armorInstance: ItemInstance):
 	if armorResource.speedModifier != 0:
 		addStatRow("Spd", str(armorResource.speedModifier), str(oldArmor.speedModifier) if hasOld else "", true)
 	
-	if armorResource.effects.size() > 0:
-		addEffectsRow(armorResource.effects)
+	addEffectsRow(armorResource.effects, oldArmor.effects if hasOld else [])
 
 func initConsumableTooltip(consumableInstance: ItemInstance):
 	var consumableResource = consumableInstance.resource
 	addEffectsRow(consumableResource.effectResources)
 
-func addEffectsRow(effectResources : Array):
-	var effectRow : HBoxContainer = HBoxContainer.new()
-	effectRow.alignment = effectRow.ALIGN_CENTER
-	statsContainer.add_child(effectRow)
-		# TODO: display small images of all the effects
-	for effectResource in effectResources:
-		var newEffectIcon = EffectsIconScene.instance()
-		newEffectIcon.init(effectResource)
-		newEffectIcon.rect_min_size = Vector2(10, 10)
-		effectRow.add_child(newEffectIcon)
+func addEffectsRow(effectResources : Array, oldEffects : Array = []):
+	if effectResources.size() > 0 or oldEffects.size() > 0:
+		var effectRow : HBoxContainer = HBoxContainer.new()
+		effectRow.alignment = effectRow.ALIGN_CENTER
+		statsContainer.add_child(effectRow)
+		
+		for effectResource in effectResources:
+			effectRow.add_child(createNewEffectIcon(effectResource))
+		
+		if oldEffects.size() > 0:
+			var barLabel := Label.new()
+			barLabel.text = "|"
+			effectRow.add_child(barLabel)
+			for effectResource in oldEffects:
+				effectRow.add_child(createNewEffectIcon(effectResource))
+		
+func createNewEffectIcon(effectResource : Effect) -> EffectsIcon:
+	var newEffectIcon = EffectsIconScene.instance()
+	newEffectIcon.init(effectResource)
+	newEffectIcon.rect_min_size = Vector2(10, 10)
+	return newEffectIcon
 
 # append a new stat row to the end of the current list of stats
 func addStatRow(statName: String, statValue: String, oldStatValue: String = "", compareVals: bool = false):

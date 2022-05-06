@@ -203,7 +203,7 @@ func generateScenery():
 	print(camera.limit_top)
 	var xRange := int(camera.limit_right - camera.limit_left)
 	var yRange := int(camera.limit_bottom - camera.limit_top)
-	for i in range(100):
+	for _i in range(100):
 		var xpos = randi() % xRange + camera.limit_left
 		var ypos = randi() % yRange + camera.limit_top
 		var pos := Vector2(xpos, ypos)

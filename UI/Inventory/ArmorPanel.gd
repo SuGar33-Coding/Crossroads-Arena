@@ -1,6 +1,9 @@
 extends InventoryPanel 
 
+onready var weaponGrid : GridContainer = $Background/MarginContainer/VBoxContainer/HBoxContainer/WeaponContainer/GridContainer
+
 func _ready():
+	getGridContainer()
 	Inventory.connect("inventory_changed", self, "_updateDisplay")
 
 	for slot in Inventory.getArmor().keys():
@@ -11,6 +14,8 @@ func _ready():
 			var icon: TextureRect = gridContainer.get_node(equipmentType).get_node("Icon")
 			icon.texture = iconTexture
 
+func getGridContainer():
+	gridContainer = $Background/MarginContainer/VBoxContainer/HBoxContainer/ScrollContainer/GridContainer
 
 func _updateDisplay(_from_panel, _to_panel):
 	var equipment := Inventory.getArmor()
@@ -26,3 +31,6 @@ func _updateDisplay(_from_panel, _to_panel):
 			# otherwise replace with default texture
 			slotIcon.texture = null
 			defaultIcon.visible = true
+	
+	var weapons := Inventory.getWeapons()
+	.updateDisplay(weapons, weaponGrid)

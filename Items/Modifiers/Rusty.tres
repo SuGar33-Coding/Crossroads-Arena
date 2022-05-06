@@ -1,0 +1,11 @@
+[gd_resource type="Resource" load_steps=2 format=2]
+
+[ext_resource path="res://Items/Modifiers/Modifier.gd" type="Script" id=1]
+
+[resource]
+script = ExtResource( 1 )
+name = "Rusty"
+damageModifier = 0.9
+speedModifier = 0.8
+knockbackModifier = 0.5
+valueModifier = 0.5

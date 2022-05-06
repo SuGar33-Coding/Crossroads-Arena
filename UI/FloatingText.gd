@@ -26,7 +26,7 @@ func _ready():
 		label.set_deferred("modulate", Color(healColor))
 		label.set_text("+"+label.text)
 		
-	var sideSway = randi() % coneSize + 1 - coneSize/2
+	var sideSway = randi() % coneSize + 1 - int(coneSize/2)
 	velocity = Vector2(sideSway, verticalVelocity)
 	
 	tween.interpolate_property(self, 'scale', scale, Vector2(1,1), .2, Tween.TRANS_LINEAR, Tween.EASE_OUT)

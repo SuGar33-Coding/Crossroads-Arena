@@ -66,10 +66,10 @@ func transitionToRoom(topLeftVal, bottomRightVal, direction):
 	tween.start()
 
 func setLimitsToPositions():
-	self.limit_top = topLeft.position.y
-	self.limit_left = topLeft.position.x
-	self.limit_bottom = bottomRight.position.y
-	self.limit_right = bottomRight.position.x
+	self.limit_top = int(topLeft.position.y)
+	self.limit_left = int(topLeft.position.x)
+	self.limit_bottom = int(bottomRight.position.y)
+	self.limit_right = int(bottomRight.position.x)
 
 func _on_Tween_tween_all_completed():
 	setLimitsToPositions()
