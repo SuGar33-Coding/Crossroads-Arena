@@ -34,6 +34,11 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://Actors/Zones/AttackPivot.gd"
 }, {
+"base": "Sprite",
+"class": "BeltSprite",
+"language": "GDScript",
+"path": "res://Player/BeltSprite.gd"
+}, {
 "base": "StaticBody2D",
 "class": "Boundary",
 "language": "GDScript",
@@ -310,6 +315,7 @@ _global_script_class_icons={
 "Arena": "",
 "Armor": "",
 "AttackPivot": "",
+"BeltSprite": "",
 "Boundary": "",
 "BurstMoveAA": "",
 "Charger": "",

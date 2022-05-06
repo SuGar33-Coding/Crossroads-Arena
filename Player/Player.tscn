@@ -1,4 +1,4 @@
-[gd_scene load_steps=38 format=2]
+[gd_scene load_steps=40 format=2]
 
 [ext_resource path="res://Assets/CharacterAssets/PlayerModel.png" type="Texture" id=1]
 [ext_resource path="res://Player/Player.gd" type="Script" id=2]
@@ -16,6 +16,8 @@
 [ext_resource path="res://Player/PlayerColorShader.tres" type="Material" id=14]
 [ext_resource path="res://Assets/ArmorAssets/Chest/HalfPlate.png" type="Texture" id=15]
 [ext_resource path="res://Assets/WeaponAssets/Swords/Item__00.png" type="Texture" id=16]
+[ext_resource path="res://Player/BeltSprite.gd" type="Script" id=17]
+[ext_resource path="res://Assets/ItemAssets/Potion.png" type="Texture" id=18]
 
 [sub_resource type="CapsuleShape2D" id=1]
 radius = 4.5
@@ -860,6 +862,33 @@ frame = 1
 show_behind_parent = true
 texture = ExtResource( 16 )
 flip_v = true
+
+[node name="Belt" type="Node2D" parent="Sprite"]
+position = Vector2( 0, 5 )
+
+[node name="0" type="Sprite" parent="Sprite/Belt"]
+position = Vector2( -5, 0 )
+scale = Vector2( 0.3, 0.3 )
+texture = ExtResource( 18 )
+script = ExtResource( 17 )
+
+[node name="1" type="Sprite" parent="Sprite/Belt"]
+position = Vector2( 5, 0 )
+scale = Vector2( 0.3, 0.3 )
+texture = ExtResource( 18 )
+script = ExtResource( 17 )
+
+[node name="2" type="Sprite" parent="Sprite/Belt"]
+position = Vector2( -2, 0 )
+scale = Vector2( 0.3, 0.3 )
+texture = ExtResource( 18 )
+script = ExtResource( 17 )
+
+[node name="3" type="Sprite" parent="Sprite/Belt"]
+position = Vector2( 2, 0 )
+scale = Vector2( 0.3, 0.3 )
+texture = ExtResource( 18 )
+script = ExtResource( 17 )
 
 [node name="MainCamera" parent="." instance=ExtResource( 7 )]
 position = Vector2( 0, 0 )
