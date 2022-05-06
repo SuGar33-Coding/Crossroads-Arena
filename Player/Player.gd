@@ -5,12 +5,11 @@ var dashCloudFx = preload("res://FX/DashCloud.tscn")
 
 export var Acceleration: float = 1500
 export var startingFriction: float = 750
-export var baseDashSpeed := 500
-export var dashDelay := .75
 
 signal player_dashed(dashRefresh)
 
 # TODO: Probably move dash speed to player stats
+var baseDashSpeed : int
 var velocity := Vector2.ZERO
 var knockback := Vector2.ZERO
 var dashVector := Vector2.ZERO
@@ -35,6 +34,7 @@ onready var headSprite : Sprite = $Sprite/HeadSprite
 onready var chestSprite : Sprite = $Sprite/ChestSprite
 onready var legSprite : Sprite = $Sprite/LegSprite
 onready var backSprite : Sprite = $Sprite/BackWeapon
+onready var weaponSprite : Sprite = $AttackPivot/WeaponRestingPos/Weapon
 onready var shadowSprite := $ShadowSprite
 onready var attackPivot := $AttackPivot
 onready var hurtbox := $Hurtbox
@@ -77,6 +77,7 @@ func _ready():
 	sprite.material.set_shader_param("banner_color", stats.playerColor)
 	backSprite.texture = null
 	
+	baseDashSpeed = PlayerStats.baseDashSpeed
 	dashSpeed = baseDashSpeed
 	checkArmorStats()
 	
@@ -121,7 +122,7 @@ func _physics_process(delta):
 	if Input.is_action_just_pressed("dash") and dashTimer.is_stopped() and not (inventoryUI.isVisible() or shopUI.isVisible()):
 		# Cannot dash while aiming
 		if not attackPivot.chargingRanged:
-			var refreshTime = dashDelay * pow(PlayerStats.dexDashRatio, PlayerStats.dex)
+			var refreshTime = PlayerStats.dashDelay * pow(PlayerStats.dexDashRatio, PlayerStats.dex)
 			dashVector = inputVector * dashSpeed
 			dashTimer.start(refreshTime)
 			movementAnimation.play("Dashing")
@@ -356,8 +357,11 @@ func _process_effects():
 				Effect.EffectType.POISON:
 					if effect.amount > maxPoison:
 						maxPoison = effect.amount
-					
 					isPoisoned = true
+				Effect.EffectType.BURN:
+					if effect.amount > maxBurn:
+						maxBurn = effect.amount
+					isBurning = true
 				Effect.EffectType.STR:
 					totalStr += effect.amount
 				Effect.EffectType.CON:
@@ -453,6 +457,7 @@ func _process_effects():
 			text.amount = totalHeal
 			text.isDamage = false
 			add_child(text)
+		
 		if totalDamage > 0:
 			stats.health -= totalDamage
 					

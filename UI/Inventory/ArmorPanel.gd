@@ -1,5 +1,7 @@
 extends InventoryPanel 
 
+onready var weaponGrid : GridContainer = $Background/MarginContainer/VBoxContainer/HBoxContainer/WeaponContainer/GridContainer
+
 func _ready():
 	getGridContainer()
 	Inventory.connect("inventory_changed", self, "_updateDisplay")
@@ -29,3 +31,6 @@ func _updateDisplay(_from_panel, _to_panel):
 			# otherwise replace with default texture
 			slotIcon.texture = null
 			defaultIcon.visible = true
+	
+	var weapons := Inventory.getWeapons()
+	.updateDisplay(weapons, weaponGrid)

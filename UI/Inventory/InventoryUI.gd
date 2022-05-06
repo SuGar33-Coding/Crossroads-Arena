@@ -7,6 +7,8 @@ onready var sprite : Sprite = $Control/Armor/Background/MarginContainer/VBoxCont
 onready var headSprite : Sprite = $Control/Armor/Background/MarginContainer/VBoxContainer/HBoxContainer/Control/Sprite/HeadSprite
 onready var chestSprite : Sprite = $Control/Armor/Background/MarginContainer/VBoxContainer/HBoxContainer/Control/Sprite/ChestSprite
 onready var legSprite : Sprite = $Control/Armor/Background/MarginContainer/VBoxContainer/HBoxContainer/Control/Sprite/LegSprite
+onready var backSprite : Sprite = $Control/Armor/Background/MarginContainer/VBoxContainer/HBoxContainer/Control/Sprite/BackWeapon
+onready var frontSprite : Sprite = $Control/Armor/Background/MarginContainer/VBoxContainer/HBoxContainer/Control/Sprite/FrontWeapon
 
 func _ready():
 	controlNode.visible = false
@@ -34,3 +36,13 @@ func updateStats(_bag1 = null, _bag2 = null):
 	headSprite.texture = playerNode.headSprite.texture
 	chestSprite.texture = playerNode.chestSprite.texture
 	legSprite.texture = playerNode.legSprite.texture
+	
+	backSprite.texture = playerNode.backSprite.texture
+	backSprite.flip_h = playerNode.backSprite.flip_h
+	backSprite.flip_v = playerNode.backSprite.flip_v
+	backSprite.hframes = playerNode.backSprite.hframes
+	
+	frontSprite.texture = playerNode.weaponSprite.texture
+	frontSprite.flip_h = playerNode.weaponSprite.flip_h
+	frontSprite.flip_v = playerNode.weaponSprite.flip_v
+	frontSprite.hframes = playerNode.weaponSprite.hframes

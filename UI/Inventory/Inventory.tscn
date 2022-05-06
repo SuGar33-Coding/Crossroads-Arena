@@ -1,4 +1,4 @@
-[gd_scene load_steps=18 format=2]
+[gd_scene load_steps=32 format=2]
 
 [ext_resource path="res://Themes/Fonts/MainFont.tres" type="DynamicFont" id=1]
 [ext_resource path="res://UI/Inventory/ArmorPanel.gd" type="Script" id=2]
@@ -10,12 +10,26 @@
 [ext_resource path="res://UI/Inventory/ConsumableSlot.gd" type="Script" id=8]
 [ext_resource path="res://UI/Inventory/WeaponSlot.gd" type="Script" id=9]
 [ext_resource path="res://UI/Inventory/Slot.tscn" type="PackedScene" id=10]
-[ext_resource path="res://UI/Inventory/WeaponPanel.gd" type="Script" id=11]
-[ext_resource path="res://Assets/ArmorAssets/Chest/Item__57.png" type="Texture" id=12]
-[ext_resource path="res://Assets/ArmorAssets/Feet/Boots Single.png" type="Texture" id=13]
-[ext_resource path="res://Assets/ArmorAssets/Head/Armor Helmet Single.png" type="Texture" id=14]
+[ext_resource path="res://Assets/ArmorAssets/Chest/Hollow.png" type="Texture" id=11]
+[ext_resource path="res://Assets/ArmorAssets/Head/Hollow.png" type="Texture" id=12]
+[ext_resource path="res://Assets/ArmorAssets/Feet/Hollow.png" type="Texture" id=13]
+[ext_resource path="res://Assets/WeaponAssets/Hollow.png" type="Texture" id=14]
 [ext_resource path="res://Assets/CharacterAssets/PlayerModel.png" type="Texture" id=15]
 [ext_resource path="res://Player/PlayerColorShader.tres" type="Material" id=16]
+[ext_resource path="res://Assets/WeaponAssets/Swords/Item_00.png" type="Texture" id=17]
+[ext_resource path="res://Assets/WeaponAssets/Swords/Item__00.png" type="Texture" id=18]
+[ext_resource path="res://Assets/WeaponAssets/Item_34.png" type="Texture" id=19]
+[ext_resource path="res://Assets/ItemAssets/Wing.png" type="Texture" id=20]
+[ext_resource path="res://Assets/ItemAssets/Fist.png" type="Texture" id=21]
+[ext_resource path="res://Themes/Fonts/BigStatsFont.tres" type="DynamicFont" id=22]
+[ext_resource path="res://UI/Inventory/StatPanel.gd" type="Script" id=23]
+[ext_resource path="res://Themes/Fonts/SmallStatsFont.tres" type="DynamicFont" id=24]
+[ext_resource path="res://Assets/ItemAssets/Heart.png" type="Texture" id=25]
+[ext_resource path="res://Assets/WeaponAssets/Ranged/Item__18.png" type="Texture" id=26]
+[ext_resource path="res://Assets/ItemAssets/Hollow.png" type="Texture" id=27]
+[ext_resource path="res://Assets/UIAssets/ProgressRing.png" type="Texture" id=28]
+[ext_resource path="res://Assets/UIAssets/InnerDash.png" type="Texture" id=29]
+[ext_resource path="res://Assets/ArmorAssets/Feet/Item__51.png" type="Texture" id=30]
 
 [sub_resource type="StyleBoxFlat" id=1]
 bg_color = Color( 0.286275, 0.215686, 0.168627, 1 )
@@ -35,14 +49,11 @@ script = ExtResource( 6 )
 [node name="Control" type="Control" parent="."]
 anchor_right = 1.0
 anchor_bottom = 1.0
-__meta__ = {
-"_edit_use_anchors_": false
-}
 
 [node name="Armor" type="Control" parent="Control"]
-anchor_left = 0.451232
+anchor_left = 0.450723
 anchor_top = 0.354777
-anchor_right = 0.703955
+anchor_right = 0.759297
 anchor_bottom = 0.955049
 margin_left = 0.0564575
 margin_top = -0.0705414
@@ -57,9 +68,6 @@ __meta__ = {
 anchor_right = 1.0
 anchor_bottom = 1.0
 custom_styles/panel = ExtResource( 7 )
-__meta__ = {
-"_edit_use_anchors_": false
-}
 
 [node name="MarginContainer" type="MarginContainer" parent="Control/Armor/Background"]
 anchor_right = 1.0
@@ -73,17 +81,17 @@ custom_constants/margin_bottom = 11
 [node name="VBoxContainer" type="VBoxContainer" parent="Control/Armor/Background/MarginContainer"]
 margin_left = 19.0
 margin_top = 11.0
-margin_right = 170.0
+margin_right = 213.0
 margin_bottom = 223.0
 
 [node name="Header" type="HBoxContainer" parent="Control/Armor/Background/MarginContainer/VBoxContainer"]
-margin_right = 151.0
+margin_right = 194.0
 margin_bottom = 40.0
 rect_min_size = Vector2( 0, 40 )
 alignment = 1
 
 [node name="TitleBG" type="TextureRect" parent="Control/Armor/Background/MarginContainer/VBoxContainer/Header"]
-margin_right = 151.0
+margin_right = 194.0
 margin_bottom = 40.0
 rect_min_size = Vector2( 100, 0 )
 size_flags_horizontal = 3
@@ -93,31 +101,31 @@ expand = true
 anchor_right = 1.0
 anchor_bottom = 1.0
 custom_fonts/font = ExtResource( 1 )
-text = "Armor"
+text = "Equipment"
 align = 1
 valign = 1
 
 [node name="HBoxContainer" type="HBoxContainer" parent="Control/Armor/Background/MarginContainer/VBoxContainer"]
 margin_top = 44.0
-margin_right = 151.0
+margin_right = 194.0
 margin_bottom = 212.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 
 [node name="ScrollContainer" type="ScrollContainer" parent="Control/Armor/Background/MarginContainer/VBoxContainer/HBoxContainer"]
-margin_right = 42.0
+margin_right = 40.0
 margin_bottom = 168.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 
 [node name="GridContainer" type="GridContainer" parent="Control/Armor/Background/MarginContainer/VBoxContainer/HBoxContainer/ScrollContainer"]
-margin_right = 42.0
+margin_right = 40.0
 margin_bottom = 168.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 
 [node name="Head" type="CenterContainer" parent="Control/Armor/Background/MarginContainer/VBoxContainer/HBoxContainer/ScrollContainer/GridContainer"]
-margin_right = 42.0
+margin_right = 40.0
 margin_bottom = 53.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
@@ -127,19 +135,19 @@ anchor_left = 0.0
 anchor_top = 0.0
 anchor_right = 0.0
 anchor_bottom = 0.0
-margin_left = 1.0
+margin_left = 0.0
 margin_top = 6.0
-margin_right = 41.0
+margin_right = 40.0
 margin_bottom = 46.0
 script = ExtResource( 3 )
 
 [node name="Default" parent="Control/Armor/Background/MarginContainer/VBoxContainer/HBoxContainer/ScrollContainer/GridContainer/Head/SlotBg" index="1"]
 modulate = Color( 1, 0.54902, 0, 0.784314 )
-texture = ExtResource( 14 )
+texture = ExtResource( 12 )
 
 [node name="Chest" type="CenterContainer" parent="Control/Armor/Background/MarginContainer/VBoxContainer/HBoxContainer/ScrollContainer/GridContainer"]
 margin_top = 57.0
-margin_right = 42.0
+margin_right = 40.0
 margin_bottom = 110.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
@@ -149,19 +157,19 @@ anchor_left = 0.0
 anchor_top = 0.0
 anchor_right = 0.0
 anchor_bottom = 0.0
-margin_left = 1.0
+margin_left = 0.0
 margin_top = 6.0
-margin_right = 41.0
+margin_right = 40.0
 margin_bottom = 46.0
 script = ExtResource( 3 )
 
 [node name="Default" parent="Control/Armor/Background/MarginContainer/VBoxContainer/HBoxContainer/ScrollContainer/GridContainer/Chest/SlotBg" index="1"]
 modulate = Color( 1, 0.54902, 0, 0.588235 )
-texture = ExtResource( 12 )
+texture = ExtResource( 11 )
 
 [node name="Feet" type="CenterContainer" parent="Control/Armor/Background/MarginContainer/VBoxContainer/HBoxContainer/ScrollContainer/GridContainer"]
 margin_top = 114.0
-margin_right = 42.0
+margin_right = 40.0
 margin_bottom = 167.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
@@ -171,9 +179,9 @@ anchor_left = 0.0
 anchor_top = 0.0
 anchor_right = 0.0
 anchor_bottom = 0.0
-margin_left = 1.0
+margin_left = 0.0
 margin_top = 6.0
-margin_right = 41.0
+margin_right = 40.0
 margin_bottom = 46.0
 script = ExtResource( 3 )
 
@@ -182,8 +190,8 @@ modulate = Color( 1, 0.54902, 0, 0.588235 )
 texture = ExtResource( 13 )
 
 [node name="Control" type="Panel" parent="Control/Armor/Background/MarginContainer/VBoxContainer/HBoxContainer"]
-margin_left = 46.0
-margin_right = 151.0
+margin_left = 44.0
+margin_right = 149.0
 margin_bottom = 168.0
 rect_min_size = Vector2( 105, 0 )
 size_flags_horizontal = 3
@@ -192,9 +200,14 @@ custom_styles/panel = SubResource( 1 )
 [node name="Sprite" type="Sprite" parent="Control/Armor/Background/MarginContainer/VBoxContainer/HBoxContainer/Control"]
 material = ExtResource( 16 )
 position = Vector2( 51.6171, 84.9998 )
-scale = Vector2( 5.5, 5.5 )
+scale = Vector2( 4.5, 4.5 )
 texture = ExtResource( 15 )
 hframes = 5
+
+[node name="BackWeapon" type="Sprite" parent="Control/Armor/Background/MarginContainer/VBoxContainer/HBoxContainer/Control/Sprite"]
+show_behind_parent = true
+scale = Vector2( 1, 1 )
+texture = ExtResource( 17 )
 
 [node name="HeadSprite" type="Sprite" parent="Control/Armor/Background/MarginContainer/VBoxContainer/HBoxContainer/Control/Sprite"]
 use_parent_material = true
@@ -208,120 +221,69 @@ hframes = 5
 use_parent_material = true
 hframes = 5
 
-[node name="Weapons" type="Control" parent="Control"]
-anchor_left = 0.700573
-anchor_top = 0.352413
-anchor_right = 0.926701
-anchor_bottom = 0.952684
-margin_left = 0.0564575
-margin_top = -0.0705414
-margin_right = 0.00830078
-margin_bottom = 0.0144653
-script = ExtResource( 11 )
-__meta__ = {
-"_edit_use_anchors_": true
-}
+[node name="FrontWeapon" type="Sprite" parent="Control/Armor/Background/MarginContainer/VBoxContainer/HBoxContainer/Control/Sprite"]
+position = Vector2( 2, 0 )
+scale = Vector2( 0.75, 0.75 )
 
-[node name="Background" type="Panel" parent="Control/Weapons"]
-anchor_right = 1.0
-anchor_bottom = 1.0
-custom_styles/panel = ExtResource( 7 )
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="MarginContainer" type="MarginContainer" parent="Control/Weapons/Background"]
-anchor_right = 1.0
-anchor_bottom = 1.0
-custom_constants/margin_right = 19
-custom_constants/margin_top = 11
-custom_constants/margin_left = 19
-custom_constants/margin_bottom = 11
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="VBoxContainer" type="VBoxContainer" parent="Control/Weapons/Background/MarginContainer"]
-margin_left = 19.0
-margin_top = 11.0
-margin_right = 151.0
-margin_bottom = 242.0
-
-[node name="Header" type="HBoxContainer" parent="Control/Weapons/Background/MarginContainer/VBoxContainer"]
-margin_right = 132.0
-margin_bottom = 40.0
-rect_min_size = Vector2( 0, 40 )
-
-[node name="TitleBG" type="TextureRect" parent="Control/Weapons/Background/MarginContainer/VBoxContainer/Header"]
-margin_right = 132.0
-margin_bottom = 40.0
-rect_min_size = Vector2( 100, 0 )
-size_flags_horizontal = 3
-expand = true
-
-[node name="Label" type="Label" parent="Control/Weapons/Background/MarginContainer/VBoxContainer/Header/TitleBG"]
-anchor_right = 1.0
-anchor_bottom = 1.0
-custom_fonts/font = ExtResource( 1 )
-text = "Weapons"
-align = 1
-valign = 1
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="ScrollContainer" type="ScrollContainer" parent="Control/Weapons/Background/MarginContainer/VBoxContainer"]
-margin_top = 44.0
-margin_right = 132.0
-margin_bottom = 231.0
-size_flags_vertical = 3
-
-[node name="GridContainer" type="GridContainer" parent="Control/Weapons/Background/MarginContainer/VBoxContainer/ScrollContainer"]
-margin_right = 132.0
-margin_bottom = 187.0
+[node name="WeaponContainer" type="ScrollContainer" parent="Control/Armor/Background/MarginContainer/VBoxContainer/HBoxContainer"]
+margin_left = 153.0
+margin_right = 194.0
+margin_bottom = 168.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 
-[node name="0" type="CenterContainer" parent="Control/Weapons/Background/MarginContainer/VBoxContainer/ScrollContainer/GridContainer"]
-margin_right = 132.0
-margin_bottom = 91.0
+[node name="GridContainer" type="GridContainer" parent="Control/Armor/Background/MarginContainer/VBoxContainer/HBoxContainer/WeaponContainer"]
+margin_right = 41.0
+margin_bottom = 168.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 
-[node name="SlotBg" parent="Control/Weapons/Background/MarginContainer/VBoxContainer/ScrollContainer/GridContainer/0" instance=ExtResource( 10 )]
+[node name="0" type="CenterContainer" parent="Control/Armor/Background/MarginContainer/VBoxContainer/HBoxContainer/WeaponContainer/GridContainer"]
+margin_right = 41.0
+margin_bottom = 82.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="SlotBg" parent="Control/Armor/Background/MarginContainer/VBoxContainer/HBoxContainer/WeaponContainer/GridContainer/0" instance=ExtResource( 10 )]
 anchor_left = 0.0
 anchor_top = 0.0
 anchor_right = 0.0
 anchor_bottom = 0.0
-margin_left = 46.0
-margin_top = 25.0
-margin_right = 86.0
-margin_bottom = 65.0
+margin_left = 0.0
+margin_top = 21.0
+margin_right = 40.0
+margin_bottom = 61.0
 script = ExtResource( 9 )
 
-[node name="1" type="CenterContainer" parent="Control/Weapons/Background/MarginContainer/VBoxContainer/ScrollContainer/GridContainer"]
-margin_top = 95.0
-margin_right = 132.0
-margin_bottom = 186.0
+[node name="Default" parent="Control/Armor/Background/MarginContainer/VBoxContainer/HBoxContainer/WeaponContainer/GridContainer/0/SlotBg" index="1"]
+texture = ExtResource( 14 )
+
+[node name="1" type="CenterContainer" parent="Control/Armor/Background/MarginContainer/VBoxContainer/HBoxContainer/WeaponContainer/GridContainer"]
+margin_top = 86.0
+margin_right = 41.0
+margin_bottom = 168.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 
-[node name="SlotBg" parent="Control/Weapons/Background/MarginContainer/VBoxContainer/ScrollContainer/GridContainer/1" instance=ExtResource( 10 )]
+[node name="SlotBg" parent="Control/Armor/Background/MarginContainer/VBoxContainer/HBoxContainer/WeaponContainer/GridContainer/1" instance=ExtResource( 10 )]
 anchor_left = 0.0
 anchor_top = 0.0
 anchor_right = 0.0
 anchor_bottom = 0.0
-margin_left = 46.0
-margin_top = 25.0
-margin_right = 86.0
-margin_bottom = 65.0
+margin_left = 0.0
+margin_top = 21.0
+margin_right = 40.0
+margin_bottom = 61.0
 script = ExtResource( 9 )
+
+[node name="Default" parent="Control/Armor/Background/MarginContainer/VBoxContainer/HBoxContainer/WeaponContainer/GridContainer/1/SlotBg" index="1"]
+texture = ExtResource( 14 )
 
 [node name="Consumable" type="Control" parent="Control"]
-anchor_left = 0.446733
-anchor_top = 0.0781809
-anchor_right = 0.926851
-anchor_bottom = 0.35694
+anchor_left = 0.759233
+anchor_top = 0.354777
+anchor_right = 0.92818
+anchor_bottom = 0.952684
 margin_left = 0.0564575
 margin_top = -0.0705414
 margin_right = 0.00830078
@@ -350,16 +312,16 @@ custom_constants/margin_bottom = 11
 [node name="VBoxContainer" type="VBoxContainer" parent="Control/Consumable/Background/MarginContainer"]
 margin_left = 19.0
 margin_top = 11.0
-margin_right = 342.0
-margin_bottom = 107.0
+margin_right = 119.0
+margin_bottom = 242.0
 
 [node name="Header" type="HBoxContainer" parent="Control/Consumable/Background/MarginContainer/VBoxContainer"]
-margin_right = 323.0
+margin_right = 100.0
 margin_bottom = 40.0
 rect_min_size = Vector2( 0, 40 )
 
 [node name="TitleBG" type="TextureRect" parent="Control/Consumable/Background/MarginContainer/VBoxContainer/Header"]
-margin_right = 323.0
+margin_right = 100.0
 margin_bottom = 40.0
 rect_min_size = Vector2( 100, 0 )
 size_flags_horizontal = 3
@@ -369,26 +331,25 @@ expand = true
 anchor_right = 1.0
 anchor_bottom = 1.0
 custom_fonts/font = ExtResource( 1 )
-text = "Consumables"
+text = "Belt"
 align = 1
 valign = 1
 
 [node name="ScrollContainer" type="ScrollContainer" parent="Control/Consumable/Background/MarginContainer/VBoxContainer"]
 margin_top = 44.0
-margin_right = 323.0
-margin_bottom = 96.0
+margin_right = 100.0
+margin_bottom = 231.0
 size_flags_vertical = 3
 
 [node name="GridContainer" type="GridContainer" parent="Control/Consumable/Background/MarginContainer/VBoxContainer/ScrollContainer"]
-margin_right = 323.0
-margin_bottom = 52.0
+margin_right = 100.0
+margin_bottom = 187.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
-columns = 4
 
 [node name="0" type="CenterContainer" parent="Control/Consumable/Background/MarginContainer/VBoxContainer/ScrollContainer/GridContainer"]
-margin_right = 77.0
-margin_bottom = 52.0
+margin_right = 100.0
+margin_bottom = 43.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 __meta__ = {
@@ -400,16 +361,19 @@ anchor_left = 0.0
 anchor_top = 0.0
 anchor_right = 0.0
 anchor_bottom = 0.0
-margin_left = 18.0
-margin_top = 6.0
-margin_right = 58.0
-margin_bottom = 46.0
+margin_left = 30.0
+margin_top = 1.0
+margin_right = 70.0
+margin_bottom = 41.0
 script = ExtResource( 8 )
 
+[node name="Default" parent="Control/Consumable/Background/MarginContainer/VBoxContainer/ScrollContainer/GridContainer/0/SlotBg" index="1"]
+texture = ExtResource( 27 )
+
 [node name="1" type="CenterContainer" parent="Control/Consumable/Background/MarginContainer/VBoxContainer/ScrollContainer/GridContainer"]
-margin_left = 81.0
-margin_right = 158.0
-margin_bottom = 52.0
+margin_top = 47.0
+margin_right = 100.0
+margin_bottom = 90.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 __meta__ = {
@@ -421,16 +385,19 @@ anchor_left = 0.0
 anchor_top = 0.0
 anchor_right = 0.0
 anchor_bottom = 0.0
-margin_left = 18.0
-margin_top = 6.0
-margin_right = 58.0
-margin_bottom = 46.0
+margin_left = 30.0
+margin_top = 1.0
+margin_right = 70.0
+margin_bottom = 41.0
 script = ExtResource( 8 )
 
+[node name="Default" parent="Control/Consumable/Background/MarginContainer/VBoxContainer/ScrollContainer/GridContainer/1/SlotBg" index="1"]
+texture = ExtResource( 27 )
+
 [node name="2" type="CenterContainer" parent="Control/Consumable/Background/MarginContainer/VBoxContainer/ScrollContainer/GridContainer"]
-margin_left = 162.0
-margin_right = 239.0
-margin_bottom = 52.0
+margin_top = 94.0
+margin_right = 100.0
+margin_bottom = 137.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 __meta__ = {
@@ -442,16 +409,19 @@ anchor_left = 0.0
 anchor_top = 0.0
 anchor_right = 0.0
 anchor_bottom = 0.0
-margin_left = 18.0
-margin_top = 6.0
-margin_right = 58.0
-margin_bottom = 46.0
+margin_left = 30.0
+margin_top = 1.0
+margin_right = 70.0
+margin_bottom = 41.0
 script = ExtResource( 8 )
 
+[node name="Default" parent="Control/Consumable/Background/MarginContainer/VBoxContainer/ScrollContainer/GridContainer/2/SlotBg" index="1"]
+texture = ExtResource( 27 )
+
 [node name="3" type="CenterContainer" parent="Control/Consumable/Background/MarginContainer/VBoxContainer/ScrollContainer/GridContainer"]
-margin_left = 243.0
-margin_right = 320.0
-margin_bottom = 52.0
+margin_top = 141.0
+margin_right = 100.0
+margin_bottom = 184.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 __meta__ = {
@@ -463,11 +433,445 @@ anchor_left = 0.0
 anchor_top = 0.0
 anchor_right = 0.0
 anchor_bottom = 0.0
-margin_left = 18.0
-margin_top = 6.0
-margin_right = 58.0
-margin_bottom = 46.0
+margin_left = 30.0
+margin_top = 1.0
+margin_right = 70.0
+margin_bottom = 41.0
 script = ExtResource( 8 )
+
+[node name="Default" parent="Control/Consumable/Background/MarginContainer/VBoxContainer/ScrollContainer/GridContainer/3/SlotBg" index="1"]
+texture = ExtResource( 27 )
+
+[node name="Stats" type="Control" parent="Control"]
+anchor_left = 0.450723
+anchor_top = 0.0687247
+anchor_right = 0.92818
+anchor_bottom = 0.35694
+margin_left = 0.0564575
+margin_top = -0.0705414
+margin_right = 0.00830078
+margin_bottom = 0.0144653
+script = ExtResource( 23 )
+__meta__ = {
+"_edit_use_anchors_": true
+}
+
+[node name="Background" type="Panel" parent="Control/Stats"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+custom_styles/panel = ExtResource( 7 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="MarginContainer" type="MarginContainer" parent="Control/Stats/Background"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+custom_constants/margin_right = 19
+custom_constants/margin_top = 11
+custom_constants/margin_left = 19
+custom_constants/margin_bottom = 11
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Control/Stats/Background/MarginContainer"]
+margin_left = 19.0
+margin_top = 11.0
+margin_right = 350.0
+margin_bottom = 111.0
+
+[node name="Header" type="HBoxContainer" parent="Control/Stats/Background/MarginContainer/VBoxContainer"]
+margin_right = 331.0
+margin_bottom = 40.0
+rect_min_size = Vector2( 0, 40 )
+alignment = 1
+
+[node name="StrHbox" type="HBoxContainer" parent="Control/Stats/Background/MarginContainer/VBoxContainer/Header"]
+margin_right = 95.0
+margin_bottom = 40.0
+
+[node name="TextureRect" type="TextureRect" parent="Control/Stats/Background/MarginContainer/VBoxContainer/Header/StrHbox"]
+margin_right = 40.0
+margin_bottom = 40.0
+rect_min_size = Vector2( 40, 40 )
+size_flags_horizontal = 4
+size_flags_vertical = 5
+texture = ExtResource( 21 )
+stretch_mode = 1
+
+[node name="Space" type="Control" parent="Control/Stats/Background/MarginContainer/VBoxContainer/Header/StrHbox"]
+margin_left = 44.0
+margin_right = 49.0
+margin_bottom = 40.0
+rect_min_size = Vector2( 5, 0 )
+
+[node name="StrLabel" type="Label" parent="Control/Stats/Background/MarginContainer/VBoxContainer/Header/StrHbox"]
+margin_left = 53.0
+margin_top = 4.0
+margin_right = 95.0
+margin_bottom = 35.0
+rect_min_size = Vector2( 35, 0 )
+custom_fonts/font = ExtResource( 22 )
+text = "00"
+align = 1
+valign = 1
+
+[node name="Space" type="Control" parent="Control/Stats/Background/MarginContainer/VBoxContainer/Header"]
+margin_left = 99.0
+margin_right = 114.0
+margin_bottom = 40.0
+rect_min_size = Vector2( 15, 0 )
+
+[node name="ConHbox" type="HBoxContainer" parent="Control/Stats/Background/MarginContainer/VBoxContainer/Header"]
+margin_left = 118.0
+margin_right = 213.0
+margin_bottom = 40.0
+
+[node name="TextureRect" type="TextureRect" parent="Control/Stats/Background/MarginContainer/VBoxContainer/Header/ConHbox"]
+margin_right = 40.0
+margin_bottom = 40.0
+rect_min_size = Vector2( 40, 40 )
+size_flags_horizontal = 4
+texture = ExtResource( 25 )
+stretch_mode = 1
+
+[node name="Space2" type="Control" parent="Control/Stats/Background/MarginContainer/VBoxContainer/Header/ConHbox"]
+margin_left = 44.0
+margin_right = 49.0
+margin_bottom = 40.0
+rect_min_size = Vector2( 5, 0 )
+
+[node name="ConLabel" type="Label" parent="Control/Stats/Background/MarginContainer/VBoxContainer/Header/ConHbox"]
+margin_left = 53.0
+margin_top = 4.0
+margin_right = 95.0
+margin_bottom = 35.0
+rect_min_size = Vector2( 35, 0 )
+custom_fonts/font = ExtResource( 22 )
+text = "00"
+align = 1
+valign = 1
+
+[node name="Space2" type="Control" parent="Control/Stats/Background/MarginContainer/VBoxContainer/Header"]
+margin_left = 217.0
+margin_right = 232.0
+margin_bottom = 40.0
+rect_min_size = Vector2( 15, 0 )
+
+[node name="DexHbox" type="HBoxContainer" parent="Control/Stats/Background/MarginContainer/VBoxContainer/Header"]
+margin_left = 236.0
+margin_right = 331.0
+margin_bottom = 40.0
+
+[node name="TextureRect" type="TextureRect" parent="Control/Stats/Background/MarginContainer/VBoxContainer/Header/DexHbox"]
+margin_right = 40.0
+margin_bottom = 40.0
+rect_min_size = Vector2( 40, 40 )
+size_flags_horizontal = 4
+texture = ExtResource( 20 )
+stretch_mode = 1
+
+[node name="Space2" type="Control" parent="Control/Stats/Background/MarginContainer/VBoxContainer/Header/DexHbox"]
+margin_left = 44.0
+margin_right = 49.0
+margin_bottom = 40.0
+rect_min_size = Vector2( 5, 0 )
+
+[node name="DexLabel" type="Label" parent="Control/Stats/Background/MarginContainer/VBoxContainer/Header/DexHbox"]
+margin_left = 53.0
+margin_top = 4.0
+margin_right = 95.0
+margin_bottom = 35.0
+rect_min_size = Vector2( 35, 0 )
+custom_fonts/font = ExtResource( 22 )
+text = "00"
+align = 1
+valign = 1
+
+[node name="ScrollContainer" type="ScrollContainer" parent="Control/Stats/Background/MarginContainer/VBoxContainer"]
+margin_top = 44.0
+margin_right = 331.0
+margin_bottom = 100.0
+size_flags_vertical = 3
+
+[node name="GridContainer" type="GridContainer" parent="Control/Stats/Background/MarginContainer/VBoxContainer/ScrollContainer"]
+margin_right = 331.0
+margin_bottom = 56.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+columns = 4
+
+[node name="AttackBox" type="HBoxContainer" parent="Control/Stats/Background/MarginContainer/VBoxContainer/ScrollContainer/GridContainer"]
+margin_right = 77.0
+margin_bottom = 25.0
+
+[node name="Control2" type="Control" parent="Control/Stats/Background/MarginContainer/VBoxContainer/ScrollContainer/GridContainer/AttackBox"]
+margin_right = 5.0
+margin_bottom = 25.0
+rect_min_size = Vector2( 5, 0 )
+
+[node name="TextureRect" type="TextureRect" parent="Control/Stats/Background/MarginContainer/VBoxContainer/ScrollContainer/GridContainer/AttackBox"]
+margin_left = 9.0
+margin_right = 34.0
+margin_bottom = 25.0
+rect_min_size = Vector2( 25, 25 )
+size_flags_horizontal = 4
+texture = ExtResource( 18 )
+stretch_mode = 1
+
+[node name="Control" type="Control" parent="Control/Stats/Background/MarginContainer/VBoxContainer/ScrollContainer/GridContainer/AttackBox"]
+margin_left = 38.0
+margin_right = 38.0
+margin_bottom = 25.0
+
+[node name="AttackLabel" type="Label" parent="Control/Stats/Background/MarginContainer/VBoxContainer/ScrollContainer/GridContainer/AttackBox"]
+margin_left = 42.0
+margin_top = 4.0
+margin_right = 77.0
+margin_bottom = 20.0
+rect_min_size = Vector2( 35, 0 )
+custom_fonts/font = ExtResource( 24 )
+text = "00"
+valign = 1
+
+[node name="ArmorBox" type="HBoxContainer" parent="Control/Stats/Background/MarginContainer/VBoxContainer/ScrollContainer/GridContainer"]
+margin_left = 81.0
+margin_right = 158.0
+margin_bottom = 25.0
+
+[node name="Control2" type="Control" parent="Control/Stats/Background/MarginContainer/VBoxContainer/ScrollContainer/GridContainer/ArmorBox"]
+margin_right = 5.0
+margin_bottom = 25.0
+rect_min_size = Vector2( 5, 0 )
+
+[node name="TextureRect" type="TextureRect" parent="Control/Stats/Background/MarginContainer/VBoxContainer/ScrollContainer/GridContainer/ArmorBox"]
+margin_left = 9.0
+margin_right = 34.0
+margin_bottom = 25.0
+rect_min_size = Vector2( 25, 25 )
+size_flags_horizontal = 4
+texture = ExtResource( 19 )
+stretch_mode = 1
+
+[node name="Control" type="Control" parent="Control/Stats/Background/MarginContainer/VBoxContainer/ScrollContainer/GridContainer/ArmorBox"]
+margin_left = 38.0
+margin_right = 38.0
+margin_bottom = 25.0
+
+[node name="ArmorLabel" type="Label" parent="Control/Stats/Background/MarginContainer/VBoxContainer/ScrollContainer/GridContainer/ArmorBox"]
+margin_left = 42.0
+margin_top = 4.0
+margin_right = 77.0
+margin_bottom = 20.0
+rect_min_size = Vector2( 35, 0 )
+custom_fonts/font = ExtResource( 24 )
+text = "00"
+valign = 1
+
+[node name="SpeedBox" type="HBoxContainer" parent="Control/Stats/Background/MarginContainer/VBoxContainer/ScrollContainer/GridContainer"]
+margin_left = 162.0
+margin_right = 239.0
+margin_bottom = 25.0
+
+[node name="Control2" type="Control" parent="Control/Stats/Background/MarginContainer/VBoxContainer/ScrollContainer/GridContainer/SpeedBox"]
+margin_right = 5.0
+margin_bottom = 25.0
+rect_min_size = Vector2( 5, 0 )
+
+[node name="TextureRect" type="TextureRect" parent="Control/Stats/Background/MarginContainer/VBoxContainer/ScrollContainer/GridContainer/SpeedBox"]
+margin_left = 9.0
+margin_right = 34.0
+margin_bottom = 25.0
+rect_min_size = Vector2( 25, 25 )
+size_flags_horizontal = 4
+texture = ExtResource( 30 )
+stretch_mode = 1
+
+[node name="Control" type="Control" parent="Control/Stats/Background/MarginContainer/VBoxContainer/ScrollContainer/GridContainer/SpeedBox"]
+margin_left = 38.0
+margin_right = 38.0
+margin_bottom = 25.0
+
+[node name="SpeedLabel" type="Label" parent="Control/Stats/Background/MarginContainer/VBoxContainer/ScrollContainer/GridContainer/SpeedBox"]
+margin_left = 42.0
+margin_top = 4.0
+margin_right = 77.0
+margin_bottom = 20.0
+rect_min_size = Vector2( 35, 0 )
+custom_fonts/font = ExtResource( 24 )
+text = "00"
+valign = 1
+
+[node name="DattackBox" type="HBoxContainer" parent="Control/Stats/Background/MarginContainer/VBoxContainer/ScrollContainer/GridContainer"]
+margin_left = 243.0
+margin_right = 320.0
+margin_bottom = 25.0
+
+[node name="Control2" type="Control" parent="Control/Stats/Background/MarginContainer/VBoxContainer/ScrollContainer/GridContainer/DattackBox"]
+margin_right = 5.0
+margin_bottom = 25.0
+rect_min_size = Vector2( 5, 0 )
+
+[node name="TextureRect" type="TextureRect" parent="Control/Stats/Background/MarginContainer/VBoxContainer/ScrollContainer/GridContainer/DattackBox"]
+margin_left = 9.0
+margin_right = 34.0
+margin_bottom = 25.0
+rect_min_size = Vector2( 25, 25 )
+size_flags_horizontal = 4
+texture = ExtResource( 26 )
+stretch_mode = 1
+
+[node name="Control" type="Control" parent="Control/Stats/Background/MarginContainer/VBoxContainer/ScrollContainer/GridContainer/DattackBox"]
+margin_left = 38.0
+margin_right = 38.0
+margin_bottom = 25.0
+
+[node name="DattackLabel" type="Label" parent="Control/Stats/Background/MarginContainer/VBoxContainer/ScrollContainer/GridContainer/DattackBox"]
+margin_left = 42.0
+margin_top = 4.0
+margin_right = 77.0
+margin_bottom = 20.0
+rect_min_size = Vector2( 35, 0 )
+custom_fonts/font = ExtResource( 24 )
+text = "00"
+valign = 1
+
+[node name="ArmorBox5" type="HBoxContainer" parent="Control/Stats/Background/MarginContainer/VBoxContainer/ScrollContainer/GridContainer"]
+margin_top = 29.0
+margin_right = 77.0
+margin_bottom = 54.0
+
+[node name="Control2" type="Control" parent="Control/Stats/Background/MarginContainer/VBoxContainer/ScrollContainer/GridContainer/ArmorBox5"]
+margin_right = 5.0
+margin_bottom = 25.0
+rect_min_size = Vector2( 5, 0 )
+
+[node name="TextureRect" type="TextureRect" parent="Control/Stats/Background/MarginContainer/VBoxContainer/ScrollContainer/GridContainer/ArmorBox5"]
+margin_left = 9.0
+margin_right = 34.0
+margin_bottom = 25.0
+rect_min_size = Vector2( 25, 25 )
+size_flags_horizontal = 4
+stretch_mode = 1
+
+[node name="Control" type="Control" parent="Control/Stats/Background/MarginContainer/VBoxContainer/ScrollContainer/GridContainer/ArmorBox5"]
+margin_left = 38.0
+margin_right = 38.0
+margin_bottom = 25.0
+
+[node name="ArmorLabel" type="Label" parent="Control/Stats/Background/MarginContainer/VBoxContainer/ScrollContainer/GridContainer/ArmorBox5"]
+margin_left = 42.0
+margin_top = 4.0
+margin_right = 77.0
+margin_bottom = 20.0
+rect_min_size = Vector2( 35, 0 )
+custom_fonts/font = ExtResource( 24 )
+valign = 1
+
+[node name="ArmorBox6" type="HBoxContainer" parent="Control/Stats/Background/MarginContainer/VBoxContainer/ScrollContainer/GridContainer"]
+margin_left = 81.0
+margin_top = 29.0
+margin_right = 158.0
+margin_bottom = 54.0
+
+[node name="Control2" type="Control" parent="Control/Stats/Background/MarginContainer/VBoxContainer/ScrollContainer/GridContainer/ArmorBox6"]
+margin_right = 5.0
+margin_bottom = 25.0
+rect_min_size = Vector2( 5, 0 )
+
+[node name="TextureRect" type="TextureRect" parent="Control/Stats/Background/MarginContainer/VBoxContainer/ScrollContainer/GridContainer/ArmorBox6"]
+margin_left = 9.0
+margin_right = 34.0
+margin_bottom = 25.0
+rect_min_size = Vector2( 25, 25 )
+size_flags_horizontal = 4
+stretch_mode = 1
+
+[node name="Control" type="Control" parent="Control/Stats/Background/MarginContainer/VBoxContainer/ScrollContainer/GridContainer/ArmorBox6"]
+margin_left = 38.0
+margin_right = 38.0
+margin_bottom = 25.0
+
+[node name="ArmorLabel" type="Label" parent="Control/Stats/Background/MarginContainer/VBoxContainer/ScrollContainer/GridContainer/ArmorBox6"]
+margin_left = 42.0
+margin_top = 4.0
+margin_right = 77.0
+margin_bottom = 20.0
+rect_min_size = Vector2( 35, 0 )
+custom_fonts/font = ExtResource( 24 )
+valign = 1
+
+[node name="ArmorBox7" type="HBoxContainer" parent="Control/Stats/Background/MarginContainer/VBoxContainer/ScrollContainer/GridContainer"]
+margin_left = 162.0
+margin_top = 29.0
+margin_right = 239.0
+margin_bottom = 54.0
+
+[node name="Control2" type="Control" parent="Control/Stats/Background/MarginContainer/VBoxContainer/ScrollContainer/GridContainer/ArmorBox7"]
+margin_right = 5.0
+margin_bottom = 25.0
+rect_min_size = Vector2( 5, 0 )
+
+[node name="TextureRect" type="TextureRect" parent="Control/Stats/Background/MarginContainer/VBoxContainer/ScrollContainer/GridContainer/ArmorBox7"]
+margin_left = 9.0
+margin_right = 34.0
+margin_bottom = 25.0
+rect_min_size = Vector2( 25, 25 )
+size_flags_horizontal = 4
+stretch_mode = 1
+
+[node name="Control" type="Control" parent="Control/Stats/Background/MarginContainer/VBoxContainer/ScrollContainer/GridContainer/ArmorBox7"]
+margin_left = 38.0
+margin_right = 38.0
+margin_bottom = 25.0
+
+[node name="ArmorLabel" type="Label" parent="Control/Stats/Background/MarginContainer/VBoxContainer/ScrollContainer/GridContainer/ArmorBox7"]
+margin_left = 42.0
+margin_top = 4.0
+margin_right = 77.0
+margin_bottom = 20.0
+rect_min_size = Vector2( 35, 0 )
+custom_fonts/font = ExtResource( 24 )
+valign = 1
+
+[node name="DashBox" type="HBoxContainer" parent="Control/Stats/Background/MarginContainer/VBoxContainer/ScrollContainer/GridContainer"]
+margin_left = 243.0
+margin_top = 29.0
+margin_right = 320.0
+margin_bottom = 54.0
+
+[node name="Control2" type="Control" parent="Control/Stats/Background/MarginContainer/VBoxContainer/ScrollContainer/GridContainer/DashBox"]
+margin_right = 5.0
+margin_bottom = 25.0
+rect_min_size = Vector2( 5, 0 )
+
+[node name="TextureRect" type="TextureRect" parent="Control/Stats/Background/MarginContainer/VBoxContainer/ScrollContainer/GridContainer/DashBox"]
+margin_left = 9.0
+margin_right = 34.0
+margin_bottom = 25.0
+rect_min_size = Vector2( 25, 25 )
+size_flags_horizontal = 4
+texture = ExtResource( 29 )
+stretch_mode = 1
+
+[node name="TextureRect" type="TextureRect" parent="Control/Stats/Background/MarginContainer/VBoxContainer/ScrollContainer/GridContainer/DashBox/TextureRect"]
+margin_right = 25.0
+margin_bottom = 25.0
+texture = ExtResource( 28 )
+expand = true
+
+[node name="Control" type="Control" parent="Control/Stats/Background/MarginContainer/VBoxContainer/ScrollContainer/GridContainer/DashBox"]
+margin_left = 38.0
+margin_right = 38.0
+margin_bottom = 25.0
+
+[node name="DashLabel" type="Label" parent="Control/Stats/Background/MarginContainer/VBoxContainer/ScrollContainer/GridContainer/DashBox"]
+margin_left = 42.0
+margin_top = 4.0
+margin_right = 77.0
+margin_bottom = 20.0
+rect_min_size = Vector2( 35, 0 )
+custom_fonts/font = ExtResource( 24 )
+text = "00"
+valign = 1
 
 [node name="Bag" type="Control" parent="Control"]
 anchor_left = 0.0856557
@@ -553,3 +957,9 @@ columns = 3
 [editable path="Control/Armor/Background/MarginContainer/VBoxContainer/HBoxContainer/ScrollContainer/GridContainer/Head/SlotBg"]
 [editable path="Control/Armor/Background/MarginContainer/VBoxContainer/HBoxContainer/ScrollContainer/GridContainer/Chest/SlotBg"]
 [editable path="Control/Armor/Background/MarginContainer/VBoxContainer/HBoxContainer/ScrollContainer/GridContainer/Feet/SlotBg"]
+[editable path="Control/Armor/Background/MarginContainer/VBoxContainer/HBoxContainer/WeaponContainer/GridContainer/0/SlotBg"]
+[editable path="Control/Armor/Background/MarginContainer/VBoxContainer/HBoxContainer/WeaponContainer/GridContainer/1/SlotBg"]
+[editable path="Control/Consumable/Background/MarginContainer/VBoxContainer/ScrollContainer/GridContainer/0/SlotBg"]
+[editable path="Control/Consumable/Background/MarginContainer/VBoxContainer/ScrollContainer/GridContainer/1/SlotBg"]
+[editable path="Control/Consumable/Background/MarginContainer/VBoxContainer/ScrollContainer/GridContainer/2/SlotBg"]
+[editable path="Control/Consumable/Background/MarginContainer/VBoxContainer/ScrollContainer/GridContainer/3/SlotBg"]

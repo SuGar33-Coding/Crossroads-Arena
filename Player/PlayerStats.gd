@@ -24,6 +24,8 @@ var dex : int = 0 setget setDex
 var dexMoveRatio : float = 1.025
 var dexAttackRatio : float = .93
 var dexDashRatio : float = .95
+var dashDelay : float = 1.0
+var baseDashSpeed := 500
 # Used for when player is wearing different types of armor
 var armorSpeedModifier : float = 1.0
 var effectsSpeedModifier : float = 1.0
