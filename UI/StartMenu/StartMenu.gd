@@ -8,6 +8,5 @@ func _ready():
 	Inventory.resetInventory()
 	Input.set_custom_mouse_cursor(cursor)
 
-func _on_ColorPicker_color_changed(color):
+func _on_ColorPickerButton_color_changed(color):
 	playerStats.playerColor = color
-
