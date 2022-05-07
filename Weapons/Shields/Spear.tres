@@ -1,27 +1,29 @@
-[gd_resource type="Resource" load_steps=5 format=2]
+[gd_resource type="Resource" load_steps=6 format=2]
 
+[ext_resource path="res://Assets/ArmorAssets/Shields/Item_32.png" type="Texture" id=1]
 [ext_resource path="res://Audio/mixkit-dagger-woosh-1487.wav" type="AudioStream" id=2]
 [ext_resource path="res://Audio/Swipe2.wav" type="AudioStream" id=3]
-[ext_resource path="res://Assets/WeaponAssets/Swords/Item__00.png" type="Texture" id=4]
+[ext_resource path="res://Assets/WeaponAssets/Spears/Item_04.png" type="Texture" id=4]
 [ext_resource path="res://Items/WeaponStats.gd" type="Script" id=5]
 
 [resource]
 script = ExtResource( 5 )
-name = "Sword"
+name = "Spear & Shield"
 value = 0
 texture = ExtResource( 4 )
 flip = false
 modifiers = [  ]
 rarity = 1
-weaponType = 1
+weaponType = 3
 damage = 10
 armorPierce = 0
 knockbackValue = 350
 radius = 15.5
 length = 10.5
 attackSpeed = 0.7
-hasShield = false
-bonusArmor = 0
+hasShield = true
+bonusArmor = 5
+offhandSprite = ExtResource( 1 )
 effectResources = [  ]
 quickAttackSFX = ExtResource( 3 )
 longAttackSFX = ExtResource( 2 )

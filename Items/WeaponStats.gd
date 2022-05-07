@@ -8,7 +8,8 @@ enum WeaponType {
 	HEAVY,
 	SPEAR,
 	RANGED,
-	AOE
+	AOE,
+	DUAL
 }
 
 export(WeaponType) var weaponType = WeaponType.MELEE
@@ -21,6 +22,10 @@ export var radius : float = 15.5
 export var length : float = 10.5
 # Number of seconds between each attack
 export var attackSpeed : float = .7
+export var hasShield : bool = false
+export var bonusArmor : int = 0
+# Dual/Shield
+export var offhandSprite : Texture
 
 export(Array, Resource) var effectResources
 # SFX

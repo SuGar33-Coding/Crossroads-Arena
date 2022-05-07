@@ -68,6 +68,6 @@ func _setModifier(newResource : Modifier):
 	var weaponMod = newResource as Modifier
 	
 	damage = weaponStats.damage * weaponMod.damageModifier
-	attackSpeed = weaponStats.attackSpeed * weaponMod.speedModifier
+	attackSpeed = weaponStats.attackSpeed / weaponMod.speedModifier
 	knockbackValue = weaponStats.knockbackValue * weaponMod.knockbackModifier
 

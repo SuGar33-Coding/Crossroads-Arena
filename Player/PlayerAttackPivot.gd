@@ -62,30 +62,7 @@ func _physics_process(delta):
 					backTween.stop_all()
 					backTween.remove_all()
 				
-				if weaponStats.weaponType == WeaponStats.WeaponType.MELEE or weaponStats.weaponType == WeaponStats.WeaponType.SPEAR or weaponStats.weaponType == WeaponStats.WeaponType.SWORD:
-					var attackType: int
-					if comboCounter == 0:
-						# Minimum time between attacks is the time it takes to play the attack animation
-						attackTimer.start(getMeleeAttackTime(0.4))
-						emit_signal("meleeQuick")
-						attackType = MeleeAttackType.QUICK
-						comboTimer.start(comboTime*.65)
-					elif comboCounter == 1:
-						attackTimer.start(getMeleeAttackTime(0.75))
-						emit_signal("meleeQuick")
-						attackType = MeleeAttackType.QUICK
-						comboTimer.start(comboTime)
-					else:
-						attackTimer.start(getMeleeAttackTime())
-						emit_signal("meleeLong")
-						attackType = MeleeAttackType.LONG
-						comboTimer.stop()
-						
-					self.comboCounter = (self.comboCounter + 1) % 3
-					
-					var animLength = animationPlayer.current_animation_length
-					self.startMeleeAttack(animLength, attackType)
-				elif weaponStats.weaponType == WeaponStats.WeaponType.HEAVY:
+				if weaponStats.weaponType == WeaponStats.WeaponType.HEAVY:
 					var attackDuration = animationPlayer.get_animation("MeleeAttack").length
 					var attackType: int
 					
@@ -114,6 +91,30 @@ func _physics_process(delta):
 					chargingAoe = true
 					self.startAOEAnimation(aoeAttackLeadup)
 					PlayerStats.maxSpeed *= .3
+				else:
+					# Melee, spear, sword
+					var attackType: int
+					if comboCounter == 0:
+						# Minimum time between attacks is the time it takes to play the attack animation
+						attackTimer.start(getMeleeAttackTime(0.4))
+						emit_signal("meleeQuick")
+						attackType = MeleeAttackType.QUICK
+						comboTimer.start(comboTime*.65)
+					elif comboCounter == 1:
+						attackTimer.start(getMeleeAttackTime(0.75))
+						emit_signal("meleeQuick")
+						attackType = MeleeAttackType.QUICK
+						comboTimer.start(comboTime)
+					else:
+						attackTimer.start(getMeleeAttackTime())
+						emit_signal("meleeLong")
+						attackType = MeleeAttackType.LONG
+						comboTimer.stop()
+						
+					self.comboCounter = (self.comboCounter + 1) % 3
+					
+					var animLength = animationPlayer.current_animation_length
+					self.startMeleeAttack(animLength, attackType)
 					
 			elif chargingRanged and (not Input.is_action_pressed("attack")) and weaponStats.weaponType == WeaponStats.WeaponType.RANGED:
 				fireRangedAttack()
@@ -208,7 +209,8 @@ func _on_WeaponTween_tween_completed():
 	if comboCounter < 2:
 		._on_WeaponTween_tween_completed()
 	elif weaponStats.weaponType == WeaponStats.WeaponType.MELEE:
-		self.show_behind_parent = not self.show_behind_parent
+		if not weaponStats.resource.hasShield:
+			self.show_behind_parent = not self.show_behind_parent
 		backTween.interpolate_property(weaponSprite, "position", weaponSprite.position, Vector2(-20, 5), self.tweenLength, Tween.TRANS_LINEAR, Tween.EASE_IN_OUT)
 		backTween.interpolate_property(weaponSprite, "rotation", weaponSprite.rotation, restingRotation - deg2rad(50), self.tweenLength)
 
@@ -216,7 +218,8 @@ func _on_WeaponTween_tween_completed():
 		backTween.interpolate_property(weaponSprite, "position", Vector2(-20, 5), meleeRestingCoord + Vector2(-3.5, 3.5), attackTimer.time_left + .007, Tween.TRANS_LINEAR, Tween.EASE_IN_OUT, self.tweenLength)
 		backTween.interpolate_property(weaponSprite, "rotation", restingRotation - deg2rad(50), restingRotation - deg2rad(25), attackTimer.time_left + .007, self.tweenLength)
 	elif weaponStats.weaponType == WeaponStats.WeaponType.SWORD:
-		self.show_behind_parent = not self.show_behind_parent
+		if not weaponStats.resource.hasShield:
+			self.show_behind_parent = not self.show_behind_parent
 		backTween.interpolate_property(
 			weaponSprite,
 			"position",
@@ -238,7 +241,6 @@ func _on_WeaponTween_tween_completed():
 		backTween.interpolate_property(weaponSprite, "position", Vector2(-10, 5), meleeRestingCoord + Vector2(5, 17), attackTimer.time_left + .007, Tween.TRANS_LINEAR, Tween.EASE_IN_OUT, self.tweenLength)
 		backTween.interpolate_property(weaponSprite, "rotation", restingRotation + deg2rad(70), restingRotation + deg2rad(110), attackTimer.time_left + .007, self.tweenLength)
 	elif weaponStats.weaponType == WeaponStats.WeaponType.SPEAR:
-		self.show_behind_parent = not self.show_behind_parent
 		backTween.interpolate_property(weaponSprite, "position", weaponSprite.position, Vector2(-10, 0), self.tweenLength, Tween.TRANS_LINEAR, Tween.EASE_IN_OUT)
 		backTween.interpolate_property(weaponSprite, "rotation", weaponSprite.rotation, restingRotation + deg2rad(120), self.tweenLength)
 

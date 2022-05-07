@@ -26,6 +26,7 @@ var baseColor := Color(1,1,1)
 var effects := []
 var armorEffects := []
 var effectsReset := false
+var shieldDistance : int = 6
 
 onready var stats = get_node("/root/PlayerStats")
 onready var inventory = get_node("/root/Inventory")
@@ -35,8 +36,9 @@ onready var chestSprite : Sprite = $Sprite/ChestSprite
 onready var legSprite : Sprite = $Sprite/LegSprite
 onready var backSprite : Sprite = $Sprite/BackWeapon
 onready var weaponSprite : Sprite = $AttackPivot/WeaponRestingPos/Weapon
+onready var shieldSprite : Sprite = $Sprite/Shield
 onready var shadowSprite := $ShadowSprite
-onready var attackPivot := $AttackPivot
+onready var attackPivot : AttackPivot = $AttackPivot
 onready var hurtbox := $Hurtbox
 onready var camera := $MainCamera
 onready var damagedPlayer := $DamagedPlayer
@@ -72,6 +74,9 @@ func _ready():
 	inventory.connect("inventory_changed", self, "_inventory_changed")
 	effectsTimer.connect("timeout", self, "_process_effects")
 	
+	shieldSprite.texture = null
+	attackPivot.init(shieldSprite)
+	
 	effectsTimer.start(1)
 	
 	sprite.material.set_shader_param("banner_color", stats.playerColor)
@@ -85,6 +90,8 @@ func _ready():
 	
 	bloodParticles.emitting = false
 	burnParticles.emitting = false
+	
+	shieldDistance = shieldSprite.position.x
 
 
 func _physics_process(delta):
@@ -145,6 +152,8 @@ func _physics_process(delta):
 		chestSprite.flip_h = true
 		legSprite.flip_h = true
 		backSprite.flip_h = true
+		shieldSprite.flip_h = true
+		shieldSprite.position.x = -shieldDistance
 		shadowSprite.position.x = .5
 		attackPivot.scale.y = -1
 	else:
@@ -153,6 +162,8 @@ func _physics_process(delta):
 		chestSprite.flip_h = false
 		legSprite.flip_h = false
 		backSprite.flip_h = false
+		shieldSprite.flip_h = false
+		shieldSprite.position.x = shieldDistance
 		shadowSprite.position.x = 1.25
 		attackPivot.scale.y = 1
 
@@ -193,6 +204,10 @@ func playFootstep(foot = 1):
 
 func checkArmorStats():
 	baseArmorValue = 0
+	
+	# Check if weapon provides armor
+	baseArmorValue += attackPivot.weaponStats.resource.bonusArmor
+	
 	armorEffects = []
 	stats.armorSpeedModifier = 1.0
 	var armorDict = inventory.getArmor()
@@ -290,9 +305,8 @@ func _playerstats_no_health():
 	world.playerDied()
 	animationPlayer.play("Death")
 
-func _inventory_changed(from_panel, to_panel):
-	if(from_panel == "armor" or to_panel == "armor"):
-		checkArmorStats()
+func _inventory_changed(_from_panel, _to_panel):
+	checkArmorStats()
 
 func _melee_quick():
 	animationPlayer.play("MeleeAttack")
