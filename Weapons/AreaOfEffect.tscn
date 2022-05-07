@@ -70,9 +70,6 @@ rotation = 0.0
 
 [node name="TickTimer" type="Timer" parent="."]
 
-[node name="HurtTimer" type="Timer" parent="."]
-one_shot = true
-
 [node name="Particles2D" type="Particles2D" parent="."]
 emitting = false
 amount = 250
