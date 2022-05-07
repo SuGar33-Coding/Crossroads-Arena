@@ -129,18 +129,22 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="ColorPicker" type="ColorPicker" parent="Control"]
-margin_left = -214.0
-margin_top = 252.0
-margin_right = 92.0
-margin_bottom = 662.0
-color = Color( 0.0823529, 0.545098, 0, 1 )
+[node name="ColorPickerButton" type="ColorPickerButton" parent="Control"]
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+margin_left = -32.667
+margin_top = -20.0
+margin_right = 61.333
+rect_scale = Vector2( 0.7, 0.7 )
 edit_alpha = false
-presets_enabled = false
-presets_visible = false
+__meta__ = {
+"_edit_use_anchors_": false
+}
 
 [node name="Camera2D" type="Camera2D" parent="."]
 position = Vector2( 576, 336 )
 current = true
 
-[connection signal="color_changed" from="Control/ColorPicker" to="Control" method="_on_ColorPicker_color_changed"]
+[connection signal="color_changed" from="Control/ColorPickerButton" to="Control" method="_on_ColorPickerButton_color_changed"]
