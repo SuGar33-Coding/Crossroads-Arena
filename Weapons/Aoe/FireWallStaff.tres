@@ -1,6 +1,6 @@
 [gd_resource type="Resource" load_steps=5 format=2]
 
-[ext_resource path="res://Items/WeaponStats.gd" type="Script" id=1]
+[ext_resource path="res://Weapons/WeaponStats.gd" type="Script" id=1]
 [ext_resource path="res://Assets/WeaponAssets/Ranged/Projectiles/Flame.png" type="Texture" id=2]
 [ext_resource path="res://Assets/WeaponAssets/Aoe/FireStaff.png" type="Texture" id=3]
 [ext_resource path="res://FX/AOE/FireWallFX.tres" type="Resource" id=4]
@@ -10,6 +10,7 @@ script = ExtResource( 1 )
 name = "Fire Staff"
 value = 0
 texture = ExtResource( 3 )
+flip = false
 modifiers = [  ]
 rarity = 5
 weaponType = 5
@@ -27,4 +28,5 @@ projectileRange = 200.0
 aoeEffect = ExtResource( 4 )
 aoeNumberOfTicks = 4
 aoeLifetime = 3.0
-instantTick = false
+aoeType = 0
+instantApplySustain = false

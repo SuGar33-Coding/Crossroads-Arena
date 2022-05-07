@@ -297,12 +297,12 @@ _global_script_classes=[ {
 "base": "ItemInstance",
 "class": "WeaponInstance",
 "language": "GDScript",
-"path": "res://Items/WeaponInstance.gd"
+"path": "res://Weapons/WeaponInstance.gd"
 }, {
 "base": "Item",
 "class": "WeaponStats",
 "language": "GDScript",
-"path": "res://Items/WeaponStats.gd"
+"path": "res://Weapons/WeaponStats.gd"
 }, {
 "base": "Node2D",
 "class": "WorldSpawn",

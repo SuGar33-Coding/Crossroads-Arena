@@ -3,7 +3,7 @@
 [ext_resource path="res://FX/AOE/PoisonLobFX.tres" type="Resource" id=1]
 [ext_resource path="res://Assets/NoSkin.png" type="Texture" id=2]
 [ext_resource path="res://Assets/WeaponAssets/Ranged/Projectiles/PoisonBall.png" type="Texture" id=3]
-[ext_resource path="res://Items/WeaponStats.gd" type="Script" id=4]
+[ext_resource path="res://Weapons/WeaponStats.gd" type="Script" id=4]
 
 [resource]
 script = ExtResource( 4 )
@@ -28,4 +28,5 @@ projectileRange = 200.0
 aoeEffect = ExtResource( 1 )
 aoeNumberOfTicks = 4
 aoeLifetime = 6.0
-instantTick = false
+aoeType = 0
+instantApplySustain = false

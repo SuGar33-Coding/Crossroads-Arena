@@ -1,6 +1,6 @@
 [gd_resource type="Resource" load_steps=6 format=2]
 
-[ext_resource path="res://Items/WeaponStats.gd" type="Script" id=1]
+[ext_resource path="res://Weapons/WeaponStats.gd" type="Script" id=1]
 [ext_resource path="res://Audio/Stab.wav" type="AudioStream" id=2]
 [ext_resource path="res://Audio/Slash.wav" type="AudioStream" id=3]
 [ext_resource path="res://Assets/NoSkin.png" type="Texture" id=4]
@@ -30,4 +30,5 @@ projectileSpeed = 0.0
 projectileRange = 0.0
 aoeNumberOfTicks = 3
 aoeLifetime = 3.0
-instantTick = false
+aoeType = 0
+instantApplySustain = false

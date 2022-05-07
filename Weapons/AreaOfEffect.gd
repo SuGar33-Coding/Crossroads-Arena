@@ -2,9 +2,7 @@
 # Except that it should be given a position away from the user and have 
 # little to no velocity.  An AOE effect does not die on first contact
 # like a projectile does
-extends KinematicBody2D
-
-class_name AreaOfEffect
+class_name AreaOfEffect extends KinematicBody2D
 
 # Accuracy timing thresholds
 const THRESHOLD = 10
@@ -65,23 +63,20 @@ func _ready():
 	
 	# TODO: Reposition so that YSORT position is much lower
 	aoeEffect = weaponStats.aoeEffect
-	
-	particles.emitting = false
-	
-	particles.process_material = aoeEffect.effectMaterial
-	
-	particles.lifetime = aoeEffect.particleLifetime
-	
-	particles.amount = aoeEffect.numParticles
-	
-	particles.speed_scale = aoeEffect.speedScale
+
+	if (weaponStats.aoeType == WeaponStats.AoeType.SUSTAIN or weaponStats.aoeType == WeaponStats.AoeType.IMPACT_AND_SUSTAIN):
+		particles.emitting = false
+		particles.process_material = aoeEffect.effectMaterial
+		particles.lifetime = aoeEffect.particleLifetime
+		particles.amount = aoeEffect.numParticles
+		particles.speed_scale = aoeEffect.speedScale
 	
 func _physics_process(delta):
 	var move = move_and_collide(velocity * delta)
 	
-	if( (not aoeEffect.aoeType == AoeFX.AoeType.LOBBED and move != null) or (checkPosition and targetPosition.distance_to(self.global_position) < THRESHOLD)):
+	if( (not aoeEffect.aoeType == AoeFX.Type.LOBBED and move != null) or (checkPosition and targetPosition.distance_to(self.global_position) < THRESHOLD)):
 		checkPosition = false
-		self.enableAoe()
+		self.startAoe()
 		velocity = Vector2.ZERO
 	
 	if(fired):
@@ -105,14 +100,14 @@ func fire(userPosition : Vector2, targetPosition : Vector2, startingRotation := 
 		self.weaponHitbox.set_collision_mask_bit(4, false)
 		self.weaponHitbox.set_collision_mask_bit(5, true)
 	match aoeEffect.aoeType:
-		AoeFX.AoeType.PLACE:
+		AoeFX.Type.PLACE:
 			# Aoe spawns on given point
 			self.global_position = targetPosition
 			particles.emitting = true
 			
-			self.enableAoe()
+			self.startAoe()
 			
-		AoeFX.AoeType.RANGED:
+		AoeFX.Type.RANGED:
 			# Projectile originating from the user that bursts into an aoe
 			self.global_position = userPosition
 			velocity =  Vector2(1,0).rotated(startingRotation) * speed
@@ -121,7 +116,7 @@ func fire(userPosition : Vector2, targetPosition : Vector2, startingRotation := 
 			sprite.texture = weaponStats.projectileTexture
 			sprite.global_rotation = startingRotation
 			sprite.set_deferred("visible", true)
-		AoeFX.AoeType.LOBBED:
+		AoeFX.Type.LOBBED:
 			# Has an arched projectile originating from the user that bursts into an aoe
 			self.global_position = userPosition
 			velocity =  Vector2(1,0).rotated(startingRotation) * (userPosition.distance_to(targetPosition)/aoeEffect.chargeupTime)
@@ -134,12 +129,12 @@ func fire(userPosition : Vector2, targetPosition : Vector2, startingRotation := 
 			animationPlayer.playback_speed = 1/aoeEffect.chargeupTime
 			animationPlayer.play("Lob")
 			
-		AoeFX.AoeType.MOVING:
+		AoeFX.Type.MOVING:
 			# Aoe spawns on given point and continues moving forward damagin in its path
 			self.global_position = targetPosition
 			velocity =  Vector2(1,0).rotated(startingRotation) * speed
 			
-			self.enableAoe()
+			self.startAoe()
 			
 	# May need to use this if we want aoe to be able to move (like a tornado
 	"""if(weaponStats.aoeAngle >= 0):
@@ -148,24 +143,39 @@ func fire(userPosition : Vector2, targetPosition : Vector2, startingRotation := 
 		self.global_rotation = 0"""
 	
 # Starts the particle and damaging affects of the aoe
-func enableAoe():
+func startAoe():
 	sprite.set_deferred("visible", false)
-	
+	crosshair.visible = false
+
 	# We want ysort to be better so move all of the visuals up but the root node down
 	self.global_position.y += aoeEffect.ysortOffset
 	particles.global_position.y -= aoeEffect.ysortOffset
 	weaponHitbox.global_position.y -= aoeEffect.ysortOffset
-	
-	crosshair.visible = false
-	
+
+	match weaponStats.aoeType:
+		WeaponStats.AoeType.IMPACT:
+			startImpact()
+			# clean up here instad of via sustain
+			killSelf()
+		WeaponStats.AoeType.SUSTAIN:
+			startSustain()
+		WeaponStats.AoeType.IMPACT_AND_SUSTAIN:
+			startImpact()
+			startSustain()
+
+func startImpact():
+	weaponHitbox.collision.set_deferred("disabled", false)
+	yield(get_tree().create_timer(0.1), "timeout")
+	weaponHitbox.collision.set_deferred("disabled", true)	
+	pass
+
+func startSustain():
 	particles.set_deferred("emitting", true)
-	
-	if(weaponStats.instantTick):
+	if(weaponStats.instantApplySustain):
 		_tick_timeout()
 		tickTimer.start(lifetime / totalTicks-1)
 	else:
 		tickTimer.start(lifetime / totalTicks)
-
 	
 func stopMovement():
 	velocity = Vector2.ZERO
@@ -174,16 +184,7 @@ func killSelf():
 	# TODO: Instead have a stop emitting function that stops emitting and kills itself after full lifetime
 	queue_free()
 
-# Tick Timer loops automatically, turn off and on collision box every tick
-# in order to redo damage
+# Ticker for reapplying effects
 func _tick_timeout():
 	weaponHitbox.collision.set_deferred("disabled", false)
-	# Turn on hitbox for .1 seconds to do damage and turn off otherwise
-	hurtTimer.start(.1)
-	
-
-func _hurt_timeout():
-	weaponHitbox.collision.set_deferred("disabled", true)
-	numTicks += 1
-	if numTicks >= totalTicks:
-		killSelf()
+	# TODO: Apply effect

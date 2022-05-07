@@ -1,6 +1,6 @@
 [gd_resource type="Resource" load_steps=3 format=2]
 
-[ext_resource path="res://Items/WeaponStats.gd" type="Script" id=1]
+[ext_resource path="res://Weapons/WeaponStats.gd" type="Script" id=1]
 [ext_resource path="res://Assets/WeaponAssets/Peen.png" type="Texture" id=2]
 
 [resource]

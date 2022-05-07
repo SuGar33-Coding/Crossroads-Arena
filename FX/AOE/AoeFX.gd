@@ -2,14 +2,14 @@ extends Resource
 
 class_name AoeFX
 
-enum AoeType {
+enum Type {
 	PLACE,
 	RANGED,
 	MOVING,
 	LOBBED
 }
 
-export (AoeType) var aoeType
+export (Type) var aoeType
 # Pre-aoe affects time in seconds
 export var chargeupTime := 1.0
 export (Resource) var effectMaterial

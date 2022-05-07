@@ -3,13 +3,13 @@ class_name WeaponInstance extends ItemInstance
 
 var weaponType
 var weaponTexture : Texture
-var damage : int = 10
-var armorPierce : int = 0
-var knockbackValue : int = 350
-var radius : float = 15.5
-var length : float = 10.5
+var damage := 10
+var armorPierce := 0
+var knockbackValue := 350
+var radius := 15.5
+var length := 10.5
 # Number of seconds between each attack
-var attackSpeed : float = .7
+var attackSpeed := 0.7
 
 var effectResources := []
 # SFX
@@ -23,10 +23,10 @@ var projectileRange : float = 350
 
 # AOE Stuff
 var aoeEffect : Resource
-var aoeNumberOfTicks : int = 3
-var aoeLifetime : float = 3.0
-# whether or not to instantly do one of the ticks on aoe start
-var instantTick := false
+var aoeNumberOfTicks := 3
+var aoeLifetime := 3.0
+var aoeType
+var instantApplySustain : bool
 
 func _ready():
 	itemType = "weapon"
@@ -60,7 +60,8 @@ func _setResource(newResource):
 	aoeNumberOfTicks = weaponStats.aoeNumberOfTicks
 	aoeLifetime = weaponStats.aoeLifetime
 	
-	instantTick = weaponStats.instantTick
+	aoeType = weaponStats.aoeType
+	instantApplySustain = weaponStats.instantApplySustain
 
 func _setModifier(newResource : Modifier):
 	._setModifier(newResource)
