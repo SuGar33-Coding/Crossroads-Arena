@@ -32,7 +32,7 @@ tangential_accel_curve = SubResource( 3 )
 scale = 0.5
 
 [sub_resource type="CircleShape2D" id=5]
-radius = 40.0
+radius = 25.0
 
 [node name="Tree" type="KinematicBody2D"]
 scale = Vector2( 2, 2 )
@@ -64,6 +64,7 @@ process_material = SubResource( 4 )
 texture = ExtResource( 2 )
 
 [node name="WallCollision" type="Area2D" parent="."]
+collision_layer = 0
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="WallCollision"]
 shape = SubResource( 5 )

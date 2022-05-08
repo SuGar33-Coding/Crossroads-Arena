@@ -3,6 +3,8 @@ class_name Arena extends Node2D
 export (Array,Resource) var encounters
 export var multiEncounterChance := 0.5 
 
+const NUM_SCENERY := 200
+
 var Encounter = preload("res://World/Encounters/Encounter.tscn")
 var WorldItem = preload("res://Items/WorldItem.tscn")
 var numEncounters := 0
@@ -32,6 +34,7 @@ onready var dexPillarLabel := $YSort/DexPillar/Label
 onready var shopUI := $UIHandler/Shop
 onready var shopkeep : ShopKeep = $YSort/ShopKeep
 onready var scenery : YSort = $YSort/Scenery
+onready var tileMap : TileMap = $Navigation2D/TileMap
 var largeSpawns : Array
 var medSpawns : Array
 var smallSpawns : Array
@@ -51,6 +54,8 @@ func _ready():
 	
 	shopkeep.connect("body_entered", self, "_player_entered_shopkeep")
 	shopkeep.connect("body_exited", self, "_player_exited_shopkeep")
+	
+	generateScenery()
 	
 	# TODO: Add starting weapon choices like this
 	var startingItem : ItemInstance = get_node(ItemManager.createItemFromPath("res://Items/ItemResources/Armor/Chest/Defender.tres"))
@@ -195,14 +200,9 @@ func generateScenery():
 				vegetationScenes.append(resource)
 			file_name = dir.get_next()
 	
-	print(camera.limit_right)
-	print(camera.limit_left)
-	
-	print(camera.limit_bottom)
-	print(camera.limit_top)
 	var xRange := int(camera.limit_right - camera.limit_left)
 	var yRange := int(camera.limit_bottom - camera.limit_top)
-	for _i in range(100):
+	for _i in range(NUM_SCENERY):
 		var xpos = randi() % xRange + camera.limit_left
 		var ypos = randi() % yRange + camera.limit_top
 		var pos := Vector2(xpos, ypos)
@@ -210,7 +210,13 @@ func generateScenery():
 		
 		scenery.add_child(instance)
 		instance.global_position = pos
-		instance.checkWalls()
+	
+	yield(get_tree().create_timer(.1), "timeout")
+	var removedChildren := []
+	for child in scenery.get_children():
+		if child.checkWalls(removedChildren):
+			removedChildren.append(child)
+	
 
 func spawnEnemies():
 	spawnLabel.visible = false

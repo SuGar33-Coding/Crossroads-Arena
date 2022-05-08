@@ -1,11 +1,8 @@
-[gd_scene load_steps=60 format=2]
+[gd_scene load_steps=56 format=2]
 
 [ext_resource path="res://GrandBattleArena.gd" type="Script" id=1]
 [ext_resource path="res://Assets/TileSets/RockBase.tres" type="TileSet" id=2]
 [ext_resource path="res://Player/Player.tscn" type="PackedScene" id=3]
-[ext_resource path="res://World/Scenery/Bush.tscn" type="PackedScene" id=4]
-[ext_resource path="res://World/Scenery/FlatBush.tscn" type="PackedScene" id=5]
-[ext_resource path="res://World/Scenery/Tree.tscn" type="PackedScene" id=6]
 [ext_resource path="res://Audio/BGM/Wave of Darkness II.mp3" type="AudioStream" id=7]
 [ext_resource path="res://UI/UIHandler.tscn" type="PackedScene" id=8]
 [ext_resource path="res://Assets/WorldAssets/grassTileMap.png" type="Texture" id=9]
@@ -15,7 +12,6 @@
 [ext_resource path="res://World/Encounters/SecondEncounter.tres" type="Resource" id=13]
 [ext_resource path="res://World/Encounters/FirstEncounterTwo.tres" type="Resource" id=14]
 [ext_resource path="res://World/Encounters/TestEncounter.tres" type="Resource" id=15]
-[ext_resource path="res://Items/Coin.tscn" type="PackedScene" id=16]
 [ext_resource path="res://Assets/WorldAssets/Pillars/StrengthPillar.png" type="Texture" id=18]
 [ext_resource path="res://Assets/CharacterAssets/Shadows/LargeShadow.png" type="Texture" id=19]
 [ext_resource path="res://Assets/WorldAssets/Pillars/DexPillar.png" type="Texture" id=20]
@@ -778,178 +774,7 @@ position = Vector2( 2376, 1656 )
 
 [node name="Scenery" type="YSort" parent="YSort"]
 
-[node name="StaticBody2D" parent="YSort/Scenery" instance=ExtResource( 6 )]
-position = Vector2( 1352, 704 )
-collision_mask = 0
-
-[node name="StaticBody2D2" parent="YSort/Scenery" instance=ExtResource( 6 )]
-position = Vector2( 904, 672 )
-collision_mask = 0
-
-[node name="StaticBody2D3" parent="YSort/Scenery" instance=ExtResource( 6 )]
-position = Vector2( 1192, 1003 )
-collision_mask = 0
-
-[node name="StaticBody2D4" parent="YSort/Scenery" instance=ExtResource( 6 )]
-position = Vector2( 792, 1080 )
-collision_mask = 0
-
-[node name="StaticBody2D5" parent="YSort/Scenery" instance=ExtResource( 6 )]
-position = Vector2( 1096, 1272 )
-collision_mask = 0
-
-[node name="StaticBody2D6" parent="YSort/Scenery" instance=ExtResource( 6 )]
-position = Vector2( 712, 800 )
-collision_mask = 0
-
-[node name="Bush6" parent="YSort/Scenery" instance=ExtResource( 4 )]
-position = Vector2( 1752, 992 )
-
-[node name="Bush7" parent="YSort/Scenery" instance=ExtResource( 4 )]
-position = Vector2( 1152, 792 )
-
-[node name="Bush8" parent="YSort/Scenery" instance=ExtResource( 4 )]
-position = Vector2( 1680, 376 )
-
-[node name="Bush9" parent="YSort/Scenery" instance=ExtResource( 4 )]
-position = Vector2( 1960, 384 )
-
-[node name="Bush10" parent="YSort/Scenery" instance=ExtResource( 4 )]
-position = Vector2( 1864, 728 )
-
-[node name="Bush11" parent="YSort/Scenery" instance=ExtResource( 4 )]
-position = Vector2( 1320, 928 )
-
-[node name="Bush12" parent="YSort/Scenery" instance=ExtResource( 4 )]
-position = Vector2( 944, 936 )
-
-[node name="Bush13" parent="YSort/Scenery" instance=ExtResource( 4 )]
-position = Vector2( 1016, 768 )
-
-[node name="Bush14" parent="YSort/Scenery" instance=ExtResource( 4 )]
-position = Vector2( 680, 544 )
-
-[node name="Bush15" parent="YSort/Scenery" instance=ExtResource( 4 )]
-position = Vector2( 632, 888 )
-
-[node name="Bush16" parent="YSort/Scenery" instance=ExtResource( 4 )]
-position = Vector2( 704, 1016 )
-
-[node name="Bush17" parent="YSort/Scenery" instance=ExtResource( 4 )]
-position = Vector2( 896, 1248 )
-
-[node name="Bush18" parent="YSort/Scenery" instance=ExtResource( 4 )]
-position = Vector2( 1376, 1368 )
-
-[node name="Bush19" parent="YSort/Scenery" instance=ExtResource( 4 )]
-position = Vector2( 1720, 1552 )
-
-[node name="Bush20" parent="YSort/Scenery" instance=ExtResource( 4 )]
-position = Vector2( 2144, 1320 )
-
-[node name="Bush21" parent="YSort/Scenery" instance=ExtResource( 4 )]
-position = Vector2( 2248, 928 )
-
-[node name="Bush22" parent="YSort/Scenery" instance=ExtResource( 4 )]
-position = Vector2( 840, 344 )
-
-[node name="Bush23" parent="YSort/Scenery" instance=ExtResource( 4 )]
-position = Vector2( 216, 536 )
-
-[node name="Bush24" parent="YSort/Scenery" instance=ExtResource( 4 )]
-position = Vector2( 208, 976 )
-
-[node name="Bush25" parent="YSort/Scenery" instance=ExtResource( 4 )]
-position = Vector2( 368, 1224 )
-
-[node name="Bush26" parent="YSort/Scenery" instance=ExtResource( 4 )]
-position = Vector2( 176, 1336 )
-
-[node name="Bush27" parent="YSort/Scenery" instance=ExtResource( 4 )]
-position = Vector2( 576, 1520 )
-
-[node name="FlatBush" parent="YSort/Scenery" instance=ExtResource( 5 )]
-position = Vector2( 1256, 832 )
-
-[node name="FlatBush2" parent="YSort/Scenery" instance=ExtResource( 5 )]
-position = Vector2( 1064, 896 )
-
-[node name="FlatBush3" parent="YSort/Scenery" instance=ExtResource( 5 )]
-position = Vector2( 856, 760 )
-
-[node name="FlatBush4" parent="YSort/Scenery" instance=ExtResource( 5 )]
-position = Vector2( 1192, 640 )
-
-[node name="FlatBush5" parent="YSort/Scenery" instance=ExtResource( 5 )]
-position = Vector2( 960, 480 )
-
-[node name="FlatBush6" parent="YSort/Scenery" instance=ExtResource( 5 )]
-position = Vector2( 928, 1120 )
-
-[node name="FlatBush7" parent="YSort/Scenery" instance=ExtResource( 5 )]
-position = Vector2( 1536, 1048 )
-
-[node name="FlatBush8" parent="YSort/Scenery" instance=ExtResource( 5 )]
-position = Vector2( 1840, 1120 )
-
-[node name="FlatBush9" parent="YSort/Scenery" instance=ExtResource( 5 )]
-position = Vector2( 1824, 544 )
-
-[node name="FlatBush10" parent="YSort/Scenery" instance=ExtResource( 5 )]
-position = Vector2( 2200, 504 )
-
-[node name="FlatBush11" parent="YSort/Scenery" instance=ExtResource( 5 )]
-position = Vector2( 2080, 1520 )
-
-[node name="FlatBush12" parent="YSort/Scenery" instance=ExtResource( 5 )]
-position = Vector2( 1528, 1472 )
-
-[node name="FlatBush13" parent="YSort/Scenery" instance=ExtResource( 5 )]
-position = Vector2( 1288, 1544 )
-
-[node name="FlatBush14" parent="YSort/Scenery" instance=ExtResource( 5 )]
-position = Vector2( 1000, 1496 )
-
-[node name="FlatBush15" parent="YSort/Scenery" instance=ExtResource( 5 )]
-position = Vector2( 824, 1424 )
-
-[node name="FlatBush16" parent="YSort/Scenery" instance=ExtResource( 5 )]
-position = Vector2( 384, 1416 )
-
-[node name="FlatBush17" parent="YSort/Scenery" instance=ExtResource( 5 )]
-position = Vector2( 248, 1160 )
-
-[node name="FlatBush18" parent="YSort/Scenery" instance=ExtResource( 5 )]
-position = Vector2( 424, 920 )
-
-[node name="FlatBush19" parent="YSort/Scenery" instance=ExtResource( 5 )]
-position = Vector2( 704, 264 )
-
-[node name="Bush28" parent="YSort/Scenery" instance=ExtResource( 4 )]
-position = Vector2( 1072, 1128 )
-
 [node name="Items" type="YSort" parent="YSort"]
-
-[node name="Coin" parent="YSort/Items" instance=ExtResource( 16 )]
-position = Vector2( 902.297, 848.004 )
-
-[node name="Coin2" parent="YSort/Items" instance=ExtResource( 16 )]
-position = Vector2( 789.153, 924.621 )
-
-[node name="Coin3" parent="YSort/Items" instance=ExtResource( 16 )]
-position = Vector2( 744.608, 900.567 )
-
-[node name="Coin4" parent="YSort/Items" instance=ExtResource( 16 )]
-position = Vector2( 786.48, 880.076 )
-
-[node name="Coin5" parent="YSort/Items" instance=ExtResource( 16 )]
-position = Vector2( 782.026, 742.878 )
-
-[node name="Coin6" parent="YSort/Items" instance=ExtResource( 16 )]
-position = Vector2( 1006.53, 758.023 )
-
-[node name="Coin7" parent="YSort/Items" instance=ExtResource( 16 )]
-position = Vector2( 970.897, 733.969 )
 
 [node name="Gates" type="Node" parent="."]
 
