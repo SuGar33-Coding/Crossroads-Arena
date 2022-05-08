@@ -258,6 +258,10 @@ position = Vector2( 2, 0 )
 texture = ExtResource( 17 )
 flip_v = true
 
+[node name="Shield" type="Sprite" parent="Control/Armor/Background/MarginContainer/VBoxContainer/HBoxContainer/Control/Sprite"]
+show_behind_parent = true
+position = Vector2( 6, 0 )
+
 [node name="WeaponContainer" type="ScrollContainer" parent="Control/Armor/Background/MarginContainer/VBoxContainer/HBoxContainer"]
 margin_left = 192.0
 margin_right = 246.0

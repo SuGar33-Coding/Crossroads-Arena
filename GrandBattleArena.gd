@@ -144,7 +144,7 @@ func _physics_process(_delta):
 							PlayerStats.incrementPlayerLevel()
 							strPillarAnimation.play("Chosen")
 							strPillarLabel.visible = false
-							camera.add_trauma(.5)
+							camera.add_trauma(.75)
 							strParticles.emitting = true
 					playerNearCon:
 						if conReady:
@@ -153,7 +153,7 @@ func _physics_process(_delta):
 							conPillarAnimation.play("Chosen")
 							conPillarLabel.visible = false
 							conParticles.emitting = true
-							camera.add_trauma(.5)
+							camera.add_trauma(.75)
 					playerNearDex:
 						if dexReady:
 							PlayerStats.baseDex += 1
@@ -161,7 +161,7 @@ func _physics_process(_delta):
 							dexPillarAnimation.play("Chosen")
 							dexPillarLabel.visible = false
 							dexParticles.emitting = true
-							camera.add_trauma(.5)
+							camera.add_trauma(.75)
 		else:
 			# If we just want it to go dark on use, take out the if statements here
 			#strPillarAnimation.play("Idle")

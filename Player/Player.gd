@@ -206,7 +206,9 @@ func checkArmorStats():
 	baseArmorValue = 0
 	
 	# Check if weapon provides armor
-	baseArmorValue += attackPivot.weaponStats.resource.bonusArmor
+	var currentWeapon : WeaponInstance = inventory.getWeapons()["0"]
+	if is_instance_valid(currentWeapon):
+		baseArmorValue += currentWeapon.resource.bonusArmor
 	
 	armorEffects = []
 	stats.armorSpeedModifier = 1.0
