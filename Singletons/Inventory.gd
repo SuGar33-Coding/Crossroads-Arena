@@ -82,7 +82,8 @@ func getItemsInDirectory(path):
 			file_name = dir.get_next()
 
 func resetInventory():
-	addCoins(100)
+	_coins = 0
+	addCoins(500)
 	for key in _inventory.keys():
 		for lowerKey in _inventory[key].keys():
 			_inventory[key][lowerKey] = null

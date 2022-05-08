@@ -86,17 +86,17 @@ custom_constants/margin_bottom = 11
 [node name="VBoxContainer" type="VBoxContainer" parent="Control/Armor/Background/MarginContainer"]
 margin_left = 19.0
 margin_top = 11.0
-margin_right = 266.0
+margin_right = 265.0
 margin_bottom = 209.0
 
 [node name="Header" type="HBoxContainer" parent="Control/Armor/Background/MarginContainer/VBoxContainer"]
-margin_right = 247.0
+margin_right = 246.0
 margin_bottom = 40.0
 rect_min_size = Vector2( 0, 40 )
 alignment = 1
 
 [node name="TitleBG" type="TextureRect" parent="Control/Armor/Background/MarginContainer/VBoxContainer/Header"]
-margin_right = 247.0
+margin_right = 246.0
 margin_bottom = 40.0
 rect_min_size = Vector2( 100, 0 )
 size_flags_horizontal = 3
@@ -112,7 +112,7 @@ valign = 1
 
 [node name="HBoxContainer" type="HBoxContainer" parent="Control/Armor/Background/MarginContainer/VBoxContainer"]
 margin_top = 44.0
-margin_right = 247.0
+margin_right = 246.0
 margin_bottom = 198.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
@@ -258,21 +258,25 @@ position = Vector2( 2, 0 )
 texture = ExtResource( 17 )
 flip_v = true
 
+[node name="Shield" type="Sprite" parent="Control/Armor/Background/MarginContainer/VBoxContainer/HBoxContainer/Control/Sprite"]
+show_behind_parent = true
+position = Vector2( 6, 0 )
+
 [node name="WeaponContainer" type="ScrollContainer" parent="Control/Armor/Background/MarginContainer/VBoxContainer/HBoxContainer"]
 margin_left = 192.0
-margin_right = 247.0
+margin_right = 246.0
 margin_bottom = 154.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 
 [node name="GridContainer" type="GridContainer" parent="Control/Armor/Background/MarginContainer/VBoxContainer/HBoxContainer/WeaponContainer"]
-margin_right = 55.0
+margin_right = 54.0
 margin_bottom = 154.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 
 [node name="0" type="CenterContainer" parent="Control/Armor/Background/MarginContainer/VBoxContainer/HBoxContainer/WeaponContainer/GridContainer"]
-margin_right = 55.0
+margin_right = 54.0
 margin_bottom = 75.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
@@ -293,7 +297,7 @@ texture = ExtResource( 14 )
 
 [node name="1" type="CenterContainer" parent="Control/Armor/Background/MarginContainer/VBoxContainer/HBoxContainer/WeaponContainer/GridContainer"]
 margin_top = 79.0
-margin_right = 55.0
+margin_right = 54.0
 margin_bottom = 154.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
@@ -508,11 +512,11 @@ custom_constants/margin_bottom = 11
 [node name="VBoxContainer" type="VBoxContainer" parent="Control/Stats/Background/MarginContainer"]
 margin_left = 19.0
 margin_top = 11.0
-margin_right = 371.0
+margin_right = 370.0
 margin_bottom = 111.0
 
 [node name="Header" type="HBoxContainer" parent="Control/Stats/Background/MarginContainer/VBoxContainer"]
-margin_right = 352.0
+margin_right = 351.0
 margin_bottom = 40.0
 rect_min_size = Vector2( 0, 40 )
 alignment = 1
@@ -622,12 +626,12 @@ valign = 1
 
 [node name="ScrollContainer" type="ScrollContainer" parent="Control/Stats/Background/MarginContainer/VBoxContainer"]
 margin_top = 44.0
-margin_right = 352.0
+margin_right = 351.0
 margin_bottom = 100.0
 size_flags_vertical = 3
 
 [node name="GridContainer" type="GridContainer" parent="Control/Stats/Background/MarginContainer/VBoxContainer/ScrollContainer"]
-margin_right = 352.0
+margin_right = 351.0
 margin_bottom = 56.0
 size_flags_horizontal = 3
 size_flags_vertical = 3

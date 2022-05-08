@@ -3,14 +3,8 @@ class_name Arena extends Node2D
 export (Array,Resource) var encounters
 export var multiEncounterChance := 0.5 
 
-var Fighter = preload("res://Actors/Fighters/Bandit/Bandit.tscn")
-var Slime = preload("res://Actors/Slime/Slime.tscn")
-var Brute = preload("res://Actors/Brute/Brute.tscn")
-var ChaosKnight = preload("res://Actors/Fighters/ChaosKnight/ChaosKnight.tscn")
-var Rogue = preload("res://Actors/Dashers/Rogue/Rogue.tscn")
-var Charger = preload("res://Actors/Chargers/Charger/Charger.tscn")
-var Ranger = preload("res://Actors/Fighters/Ranger/Ranger.tscn")
-var Mage = preload("res://Actors/Fighters/Mage/Mage.tscn")
+const NUM_SCENERY := 200
+
 var Encounter = preload("res://World/Encounters/Encounter.tscn")
 var WorldItem = preload("res://Items/WorldItem.tscn")
 var numEncounters := 0
@@ -40,6 +34,7 @@ onready var dexPillarLabel := $YSort/DexPillar/Label
 onready var shopUI := $UIHandler/Shop
 onready var shopkeep : ShopKeep = $YSort/ShopKeep
 onready var scenery : YSort = $YSort/Scenery
+onready var tileMap : TileMap = $Navigation2D/TileMap
 var largeSpawns : Array
 var medSpawns : Array
 var smallSpawns : Array
@@ -60,6 +55,8 @@ func _ready():
 	shopkeep.connect("body_entered", self, "_player_entered_shopkeep")
 	shopkeep.connect("body_exited", self, "_player_exited_shopkeep")
 	
+	generateScenery()
+	
 	# TODO: Add starting weapon choices like this
 	var startingItem : ItemInstance = get_node(ItemManager.createItemFromPath("res://Items/ItemResources/Armor/Chest/Defender.tres"))
 	
@@ -68,8 +65,7 @@ func _ready():
 	worldItem.global_position = newWaveButtonSprite.global_position + Vector2(30, 0)
 	itemSort.add_child(worldItem)
 	
-	# startingItem  = get_node(ItemManager.createItemFromPath("res://Weapons/Swords/OldSword.tres"))
-	startingItem  = get_node(ItemManager.createItemFromPath("res://Weapons/Aoe/FireBallStaff.tres"))
+	startingItem  = get_node(ItemManager.createItemFromPath("res://Weapons/Swords/OldSword.tres"))
 	
 	worldItem = WorldItem.instance()
 	worldItem.init(startingItem)
@@ -144,25 +140,31 @@ func _physics_process(_delta):
 							PlayerStats.baseStr += 1
 							PlayerStats.incrementPlayerLevel()
 							strPillarAnimation.play("Chosen")
+							conPillarAnimation.play("Idle")
+							dexPillarAnimation.play("Idle")
 							strPillarLabel.visible = false
-							camera.add_trauma(.5)
+							camera.add_trauma(.75)
 							strParticles.emitting = true
 					playerNearCon:
 						if conReady:
 							PlayerStats.baseCon += 1
 							PlayerStats.incrementPlayerLevel()
 							conPillarAnimation.play("Chosen")
+							strPillarAnimation.play("Idle")
+							dexPillarAnimation.play("Idle")
 							conPillarLabel.visible = false
 							conParticles.emitting = true
-							camera.add_trauma(.5)
+							camera.add_trauma(.75)
 					playerNearDex:
 						if dexReady:
 							PlayerStats.baseDex += 1
 							PlayerStats.incrementPlayerLevel()
 							dexPillarAnimation.play("Chosen")
+							strPillarAnimation.play("Idle")
+							conPillarAnimation.play("Idle")
 							dexPillarLabel.visible = false
 							dexParticles.emitting = true
-							camera.add_trauma(.5)
+							camera.add_trauma(.75)
 		else:
 			# If we just want it to go dark on use, take out the if statements here
 			#strPillarAnimation.play("Idle")
@@ -204,14 +206,9 @@ func generateScenery():
 				vegetationScenes.append(resource)
 			file_name = dir.get_next()
 	
-	print(camera.limit_right)
-	print(camera.limit_left)
-	
-	print(camera.limit_bottom)
-	print(camera.limit_top)
 	var xRange := int(camera.limit_right - camera.limit_left)
 	var yRange := int(camera.limit_bottom - camera.limit_top)
-	for _i in range(100):
+	for _i in range(NUM_SCENERY):
 		var xpos = randi() % xRange + camera.limit_left
 		var ypos = randi() % yRange + camera.limit_top
 		var pos := Vector2(xpos, ypos)
@@ -219,7 +216,13 @@ func generateScenery():
 		
 		scenery.add_child(instance)
 		instance.global_position = pos
-		instance.checkWalls()
+	
+	yield(get_tree().create_timer(.1), "timeout")
+	var removedChildren := []
+	for child in scenery.get_children():
+		if child.checkWalls(removedChildren):
+			removedChildren.append(child)
+	
 
 func spawnEnemies():
 	spawnLabel.visible = false

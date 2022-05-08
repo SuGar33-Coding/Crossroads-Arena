@@ -57,7 +57,6 @@ scale_curve = SubResource( 6 )
 color_ramp = SubResource( 4 )
 
 [sub_resource type="CircleShape2D" id=8]
-radius = 40.0
 
 [node name="FlatBush" type="Area2D"]
 position = Vector2( 0, -2.00226 )
@@ -90,6 +89,7 @@ process_material = SubResource( 7 )
 texture = ExtResource( 3 )
 
 [node name="WallCollision" type="Area2D" parent="."]
+collision_layer = 0
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="WallCollision"]
 shape = SubResource( 8 )

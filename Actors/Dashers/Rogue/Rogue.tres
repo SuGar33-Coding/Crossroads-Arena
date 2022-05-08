@@ -8,14 +8,14 @@
 [resource]
 script = ExtResource( 1 )
 unitType = 3
-strength = 0
+strength = 1
 con = -2
 dex = 5
 armor = 0
 detectionRange = 2000.0
 leaveRange = 2500.0
-maxCoinDrop = 5
-minCoinDrop = 1
+maxCoinDrop = 20
+minCoinDrop = 5
 dropChance = 0.2
 itemDrops = [  ]
 weaponResources = [ ExtResource( 3 ), ExtResource( 3 ), ExtResource( 3 ), ExtResource( 2 ) ]

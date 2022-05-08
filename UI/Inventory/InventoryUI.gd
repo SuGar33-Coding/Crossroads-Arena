@@ -9,10 +9,18 @@ onready var chestSprite : Sprite = $Control/Armor/Background/MarginContainer/VBo
 onready var legSprite : Sprite = $Control/Armor/Background/MarginContainer/VBoxContainer/HBoxContainer/Control/Sprite/LegSprite
 onready var backSprite : Sprite = $Control/Armor/Background/MarginContainer/VBoxContainer/HBoxContainer/Control/Sprite/BackWeapon
 onready var frontSprite : Sprite = $Control/Armor/Background/MarginContainer/VBoxContainer/HBoxContainer/Control/Sprite/FrontWeapon
+onready var shieldSprite : Sprite = $Control/Armor/Background/MarginContainer/VBoxContainer/HBoxContainer/Control/Sprite/Shield
+
+var playerNode
 
 func _ready():
 	controlNode.visible = false
 	Inventory.connect("inventory_changed", self, "updateStats")
+	
+	var world = get_tree().current_scene
+	playerNode = world.getPlayerNode()
+	
+	shieldSprite.position.x = playerNode.shieldSprite.position.x
 
 func toggleVisible():
 	controlNode.visible = not controlNode.visible
@@ -26,9 +34,6 @@ func setVisible(visible : bool):
 	updateStats()
 
 func updateStats(_bag1 = null, _bag2 = null):
-	var world = get_tree().current_scene
-	var playerNode = world.getPlayerNode()
-	
 	headSprite.texture = playerNode.headSprite.texture
 	chestSprite.texture = playerNode.chestSprite.texture
 	legSprite.texture = playerNode.legSprite.texture
@@ -42,3 +47,5 @@ func updateStats(_bag1 = null, _bag2 = null):
 	frontSprite.flip_v = playerNode.weaponSprite.flip_v
 	frontSprite.flip_h = not frontSprite.flip_v
 	frontSprite.hframes = playerNode.weaponSprite.hframes
+	
+	shieldSprite.texture = playerNode.shieldSprite.texture

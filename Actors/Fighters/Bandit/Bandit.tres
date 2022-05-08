@@ -1,4 +1,4 @@
-[gd_resource type="Resource" load_steps=7 format=2]
+[gd_resource type="Resource" load_steps=10 format=2]
 
 [ext_resource path="res://Actors/Generic/StatsResource.gd" type="Script" id=1]
 [ext_resource path="res://Items/ItemResources/Armor/Feet/Boots.tres" type="Resource" id=2]
@@ -6,6 +6,9 @@
 [ext_resource path="res://Weapons/Swords/LongSword.tres" type="Resource" id=4]
 [ext_resource path="res://Weapons/Swing/Glaive.tres" type="Resource" id=5]
 [ext_resource path="res://Assets/CharacterAssets/BanditEdit.png" type="Texture" id=6]
+[ext_resource path="res://Items/ItemResources/Armor/Head/IronHelmet.tres" type="Resource" id=7]
+[ext_resource path="res://Items/ItemResources/Armor/Head/Cowl.tres" type="Resource" id=8]
+[ext_resource path="res://Items/ItemResources/Armor/Chest/Leather.tres" type="Resource" id=9]
 
 [resource]
 script = ExtResource( 1 )
@@ -19,6 +22,6 @@ leaveRange = 2500.0
 maxCoinDrop = 5
 minCoinDrop = 1
 dropChance = 0.2
-itemDrops = [ ExtResource( 2 ) ]
+itemDrops = [ ExtResource( 9 ), ExtResource( 2 ), ExtResource( 8 ), ExtResource( 7 ) ]
 weaponResources = [ ExtResource( 5 ), ExtResource( 4 ), ExtResource( 3 ) ]
 texture = ExtResource( 6 )

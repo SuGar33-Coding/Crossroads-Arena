@@ -6,7 +6,8 @@ enum WeaponType {
 	HEAVY,
 	SPEAR,
 	RANGED,
-	AOE
+	AOE,
+	DUAL
 }
 
 enum AoeType {
@@ -25,6 +26,10 @@ export(float) var radius = 15.5
 export(float) var length = 10.5
 # Number of seconds between each attack
 export(float) var attackSpeed = .7
+export var hasShield : bool = false
+export var bonusArmor : int = 0
+# Dual/Shield
+export var offhandSprite : Texture
 
 export(Array, Resource) var effectResources
 # SFX

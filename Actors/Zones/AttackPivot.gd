@@ -19,6 +19,7 @@ export var swingDegrees := 110.0
 export(Array, Resource) var weaponStatsResources : Array
 
 onready var weaponSprite : Sprite = $WeaponRestingPos/Weapon
+onready var shieldSprite : Sprite = Sprite.new()
 onready var restingPos := $WeaponRestingPos
 onready var swipe := $Swipe
 onready var tween := $WeaponTween
@@ -43,6 +44,9 @@ var userStr: int = 0 setget setUserStr
 var weaponMat: ShaderMaterial
 var shaderTime: = 0.0
 var returnRot := 0.0
+
+func init(shield : Sprite):
+	shieldSprite = shield
 
 func _ready():
 	# Choose random weapon
@@ -164,18 +168,7 @@ func setWeapon(weaponStats : WeaponInstance):
 	weaponSprite.flip_v = weaponStats.flip
 	weaponSprite.flip_h = not weaponStats.flip
 	
-	if weaponStats.weaponType == WeaponStats.WeaponType.MELEE or weaponStats.weaponType == WeaponStats.WeaponType.SWORD:
-		restingPos.position = meleeRestingCoord
-		weaponSprite.rotation = restingRotation
-		returnRot = weaponSprite.rotation
-		swordAnimDist = weaponCollision.position - restingPos.position
-		swipe.frame = 0
-		
-		swipe.position = weaponCollision.position
-		# Ratios I found from doing testing with OG sprite
-		swipe.scale.x = .6 * (weaponStats.radius)/10
-		swipe.scale.y = 1.5 * (weaponStats.length/2 + weaponStats.radius)/10
-	elif weaponStats.weaponType == WeaponStats.WeaponType.HEAVY:
+	if weaponStats.weaponType == WeaponStats.WeaponType.HEAVY:
 		restingPos.position = meleeRestingCoord + Vector2(-15, 15)
 		weaponSprite.rotation = deg2rad(-165)
 		returnRot = deg2rad(-165)
@@ -198,6 +191,7 @@ func setWeapon(weaponStats : WeaponInstance):
 		# Ratios I found from doing testing with OG sprite
 		swipe.scale.x = .6 * (weaponStats.radius)/10
 		swipe.scale.y = 1.5 * (weaponStats.length/2 + weaponStats.radius)/10
+		self.show_behind_parent = false
 	elif weaponStats.weaponType == WeaponStats.WeaponType.RANGED:
 		restingPos.set_deferred("position", Vector2(15, 0))
 		weaponSprite.set_deferred("rotation", deg2rad(RANGED_ROTATION))
@@ -206,7 +200,7 @@ func setWeapon(weaponStats : WeaponInstance):
 		if self.show_behind_parent:
 			swipe.set_deferred("flip_h", not swipe.flip_h)
 		self.show_behind_parent = false
-	else:
+	elif weaponStats.weaponType == WeaponStats.WeaponType.AOE:
 		restingPos.position = Vector2(10, 0)
 		weaponSprite.set_deferred("rotation", deg2rad(AOE_ROTATION))
 		returnRot = deg2rad(AOE_ROTATION)
@@ -215,6 +209,25 @@ func setWeapon(weaponStats : WeaponInstance):
 		if self.show_behind_parent:
 			swipe.set_deferred("flip_h", not swipe.flip_h)
 		self.show_behind_parent = false
+	else:
+		# Melee, sword, and shield types
+		restingPos.position = meleeRestingCoord
+		weaponSprite.rotation = restingRotation
+		returnRot = weaponSprite.rotation
+		swordAnimDist = weaponCollision.position - restingPos.position
+		swipe.frame = 0
+		
+		swipe.position = weaponCollision.position
+		# Ratios I found from doing testing with OG sprite
+		swipe.scale.x = .6 * (weaponStats.radius)/10
+		swipe.scale.y = 1.5 * (weaponStats.length/2 + weaponStats.radius)/10
+		
+	if weaponStats.resource.hasShield:
+		shieldSprite.texture = weaponStats.resource.offhandSprite
+		shieldSprite.visible = true
+		self.show_behind_parent = false
+	else:
+		shieldSprite.visible = false
 		
 	if not weaponStats.weaponType == WeaponStats.WeaponType.RANGED:
 		weaponSprite.hframes = 1
@@ -226,7 +239,6 @@ func setWeapon(weaponStats : WeaponInstance):
 # TODO: Can set tween delay rather than making multiple tweens
 func _on_WeaponTween_tween_completed():
 	if weaponStats.weaponType == WeaponStats.WeaponType.SPEAR:
-		self.show_behind_parent = not self.show_behind_parent
 		backTween.interpolate_property(weaponSprite, "position", weaponSprite.position, Vector2(weaponStats.length/2, 0), self.tweenLength, Tween.TRANS_LINEAR, Tween.EASE_IN_OUT)
 
 		# Add the .007 so if player is spam clicking it feels more fluid/no stop on swing
@@ -235,7 +247,8 @@ func _on_WeaponTween_tween_completed():
 		backTween.interpolate_property(weaponSprite, "rotation", weaponSprite.rotation - deg2rad(STAFF_ROTATION), weaponSprite.rotation + deg2rad(STAFF_ROTATION)*2, tweenLength/5)
 		backTween.interpolate_property(weaponSprite, "rotation", weaponSprite.rotation + deg2rad(STAFF_ROTATION)*2, returnRot, tweenLength/3, Tween.TRANS_LINEAR, Tween.EASE_IN_OUT, tweenLength/5)
 	else:
-		self.show_behind_parent = not self.show_behind_parent
+		if not weaponStats.resource.hasShield:
+			self.show_behind_parent = not self.show_behind_parent
 		backTween.interpolate_property(weaponSprite, "position", weaponSprite.position, Vector2(-20, 5), self.tweenLength, Tween.TRANS_LINEAR, Tween.EASE_IN_OUT)
 		backTween.interpolate_property(weaponSprite, "rotation", weaponSprite.rotation, restingRotation - deg2rad(50), self.tweenLength, Tween.TRANS_LINEAR, Tween.EASE_IN)
 
