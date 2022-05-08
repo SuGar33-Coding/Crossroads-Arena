@@ -4,6 +4,7 @@ class_name Fighter
 
 # The chance they drop their weapon if they are dropping an item
 const weaponDropChance := .25
+const SHIELD_DIST : int = 5
 
 var weaponStats : WeaponInstance
 var WorldItem = preload("res://Items/WorldItem.tscn")
@@ -22,6 +23,7 @@ onready var shadowSprite := $Shadow
 onready var bloodParticles := $AttackPivot/Particles2D
 onready var burnParticles := $BurnParticles
 onready var effectsTimer := $AttackPivot/EffectsTimer
+onready var shieldSprite : Sprite = $Sprite/Shield
 
 var sinX = rand_range(0, TAU)
 var noise := OpenSimplexNoise.new()
@@ -61,6 +63,7 @@ func _ready():
 	animationPlayer.connect("animation_finished", self, "_anim_finished")
 	animationPlayer.play("Idle")
 	
+	attackPivot.init(shieldSprite)
 	attackPivot.setUserStr(stats.strength)
 	stats.connect("strChanged", self, "_strength_changed")
 	
@@ -147,11 +150,19 @@ func flipLeft():
 	sprite.flip_h = true
 	attackPivot.scale.y = -1
 	shadowSprite.position.x = leftShadowX
+	shieldSprite.position.x = -SHIELD_DIST
+	shieldSprite.flip_h = true
+	shieldSprite.show_behind_parent = false
+	attackPivot.show_behind_parent = true
 	
 func flipRight():
 	sprite.flip_h = false
 	attackPivot.scale.y = 1
 	shadowSprite.position.x = rightShadowX
+	shieldSprite.position.x = SHIELD_DIST
+	shieldSprite.flip_h = false
+	shieldSprite.show_behind_parent = true
+	attackPivot.show_behind_parent = false
 	
 func findClosestAlly():
 	var otherActors = get_parent().get_children()

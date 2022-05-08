@@ -119,7 +119,7 @@ func _physics_process(delta):
 			elif chargingRanged and (not Input.is_action_pressed("attack")) and weaponStats.weaponType == WeaponStats.WeaponType.RANGED:
 				fireRangedAttack()
 				
-			elif Input.is_action_just_pressed("fire") and (weaponStats.weaponType == WeaponStats.WeaponType.SWORD) and attackTimer.is_stopped():
+			elif Input.is_action_just_pressed("fire") and (weaponStats.resource.hasShield) and attackTimer.is_stopped():
 				emit_signal("parry")
 				self.startParry()
 
@@ -152,16 +152,13 @@ func getRangedAttackTime() -> float:
 
 
 func startParry():
-	weaponSprite.flip_h = not weaponSprite.flip_h
-	weaponSprite.flip_v = not weaponSprite.flip_v
 	var tweenLen = animationPlayer.current_animation_length * .5
 	comboCounter = 0
 	comboTimer.start(comboTime*.5)
 	attackTimer.start(max(weaponStats.attackSpeed * .4 * PlayerStats.attackSpeed, comboTime*.5))
-	weaponSprite.set_deferred("rotation", returnRot)
-	parryTween.interpolate_property(weaponSprite, "position", Vector2(0, 5), parryPos, tweenLen*.5, Tween.TRANS_LINEAR, Tween.EASE_IN_OUT)
+	parryTween.interpolate_property(shieldSprite, "position", shieldSprite.position, parryPos.rotated(self.global_rotation), tweenLen*.5, Tween.TRANS_LINEAR, Tween.EASE_IN_OUT)
 	#parryTween.interpolate_property(attackSignalPos, "position", attackSignalPos.position, parryPos - attackSignalPos.position, tweenLen*.5, Tween.TRANS_LINEAR, Tween.EASE_IN_OUT)
-	parryTween.interpolate_property(weaponSprite, "position", parryPos, Vector2.ZERO, tweenLen, Tween.TRANS_LINEAR, Tween.EASE_IN_OUT, tweenLen)
+	parryTween.interpolate_property(shieldSprite, "position", parryPos.rotated(self.global_rotation), Vector2.ZERO, tweenLen, Tween.TRANS_LINEAR, Tween.EASE_IN_OUT, tweenLen)
 	#parryTween.interpolate_property(attackSignalPos, "position", parryPos - attackSignalPos.position, attackSignalPos.position, tweenLen, Tween.TRANS_LINEAR, Tween.EASE_IN_OUT, tweenLen)
 	parryTween.start()
 
@@ -179,8 +176,8 @@ func setWeapon(weaponStats : WeaponInstance):
 		rangedFx.visible = false
 	.setWeapon(weaponStats)
 	
-	if weaponStats.weaponType == WeaponStats.WeaponType.SWORD:
-		parryPos = swordAnimDist * .75
+	if weaponStats.resource.hasShield:
+		parryPos = swordAnimDist * .75 - Vector2(0, shieldSprite.position.y)
 
 func resetFlip():
 	weaponSprite.flip_v = weaponStats.flip

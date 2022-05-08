@@ -26,7 +26,7 @@ var baseColor := Color(1,1,1)
 var effects := []
 var armorEffects := []
 var effectsReset := false
-var shieldDistance : int = 6
+var shieldDistance : int = 5
 
 onready var stats = get_node("/root/PlayerStats")
 onready var inventory = get_node("/root/Inventory")
@@ -156,6 +156,8 @@ func _physics_process(delta):
 		shieldSprite.position.x = -shieldDistance
 		shadowSprite.position.x = .5
 		attackPivot.scale.y = -1
+		shieldSprite.show_behind_parent = false
+		attackPivot.show_behind_parent = true
 	else:
 		sprite.flip_h = false
 		headSprite.flip_h = false
@@ -166,6 +168,8 @@ func _physics_process(delta):
 		shieldSprite.position.x = shieldDistance
 		shadowSprite.position.x = 1.25
 		attackPivot.scale.y = 1
+		shieldSprite.show_behind_parent = true
+		attackPivot.show_behind_parent = false
 
 	attackPivot.look_at(mousePos)
 

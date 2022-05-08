@@ -5,8 +5,8 @@
 [resource]
 script = ExtResource( 1 )
 encounterSize = 1
-gruntFilepaths = [ "res://Actors/Fighters/Barbarian.tres", "res://Actors/Fighters/Ushanka.tres" ]
-specialFilepaths = [ "res://Actors/Fighters/Mage/Mage.tres" ]
-commanderFilepaths = [ "res://Actors/Brute/Brute.tres" ]
+gruntFilepaths = [ "res://Actors/Fighters/TestStat.tres" ]
+specialFilepaths = [ "res://Actors/Fighters/TestStat.tres" ]
+commanderFilepaths = [ "res://Actors/Fighters/TestStat.tres" ]
 difficultyLevel = 0
 guaranteeBoss = false
