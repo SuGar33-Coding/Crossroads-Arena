@@ -140,6 +140,8 @@ func _physics_process(_delta):
 							PlayerStats.baseStr += 1
 							PlayerStats.incrementPlayerLevel()
 							strPillarAnimation.play("Chosen")
+							conPillarAnimation.play("Idle")
+							dexPillarAnimation.play("Idle")
 							strPillarLabel.visible = false
 							camera.add_trauma(.75)
 							strParticles.emitting = true
@@ -148,6 +150,8 @@ func _physics_process(_delta):
 							PlayerStats.baseCon += 1
 							PlayerStats.incrementPlayerLevel()
 							conPillarAnimation.play("Chosen")
+							strPillarAnimation.play("Idle")
+							dexPillarAnimation.play("Idle")
 							conPillarLabel.visible = false
 							conParticles.emitting = true
 							camera.add_trauma(.75)
@@ -156,6 +160,8 @@ func _physics_process(_delta):
 							PlayerStats.baseDex += 1
 							PlayerStats.incrementPlayerLevel()
 							dexPillarAnimation.play("Chosen")
+							strPillarAnimation.play("Idle")
+							conPillarAnimation.play("Idle")
 							dexPillarLabel.visible = false
 							dexParticles.emitting = true
 							camera.add_trauma(.75)

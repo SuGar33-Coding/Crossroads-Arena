@@ -70,6 +70,8 @@ func _ready():
 	var weaponResource : Resource = weaponStatsResources[randi() % weaponStatsResources.size()]
 	weaponStats = get_node(ItemManager.createItemFromPath(weaponResource.resource_path))
 	
+	if weaponStats.resource.hasShield:
+		stats.armorValue += weaponStats.resource.bonusArmor
 	attackPivot.setWeapon(weaponStats)
 
 func _physics_process(_delta):
