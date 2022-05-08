@@ -1,6 +1,4 @@
-extends Hitbox
-
-class_name WeaponHitbox
+class_name WeaponHitbox extends Hitbox
 
 const strKnockbackRatio = 1.05
 

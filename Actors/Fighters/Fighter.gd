@@ -182,29 +182,22 @@ func playMeleeAttack():
 	animationPlayer.playback_speed = 1
 	animationPlayer.play("MeleeAttack")
 
-func addEffects(effectResources : Array):
-	for effectResource in effectResources:
-		effectResource = effectResource as Effect
-		effects.append({"effect": effectResource, "ticks": effectResource.totalTicks})
-
 func _hurtbox_area_entered(area: Hitbox):
 	# Stop any sheen
 	attackPivot.weaponMat.set_shader_param("active", false)
 	
-	
-	addEffects(area.effectResources)
-	
 	._hurtbox_area_entered(area)
 	# Only play damaged if we're not dead
-	if(stats.health >= 1):
-		animationPlayer.stop(true)
-		# Stun duration is scaled by knockback value
-		animationPlayer.playback_speed = 350 / area.knockbackValue
-		animationPlayer.play("Damaged")
-	else:
-		# If you die add some extra knockback
-		knockback = area.getKnockbackVector(self.global_position) * 1.5
-		Friction = Friction * 1.8
+	if (area is WeaponHitbox):
+		if(stats.health >= 1):
+			animationPlayer.stop(true)
+			# Stun duration is scaled by knockback value
+			animationPlayer.playback_speed = 350 / area.knockbackValue
+			animationPlayer.play("Damaged")
+		else:
+			# If you die add some extra knockback
+			knockback = area.getKnockbackVector(self.global_position) * 1.5
+			Friction = Friction * 1.8
 
 # Handle actor's weapon being parried by player
 func _weapon_parried(area : WeaponHitbox):

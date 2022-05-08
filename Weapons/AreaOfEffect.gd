@@ -12,7 +12,7 @@ var totalTicks := 2
 var numTicks := 0
 var lifetime := 1.0
 var fromPlayer : bool = false
-var speed
+var speed : float
 var velocity := Vector2.ZERO
 var weaponStats : WeaponInstance
 var source
@@ -24,14 +24,14 @@ var targetPosition := Vector2.ZERO
 var checkPosition := false
 var fired := false
 
-onready var weaponHitbox := $WeaponHitbox
-onready var collision := $CollisionShape2D
-onready var tickTimer := $TickTimer
-onready var hurtTimer := $HurtTimer
-onready var particles := $Particles2D
-onready var sprite := $Sprite
-onready var animationPlayer := $AnimationPlayer
-onready var crosshair := $CrosshairSprite
+onready var weaponHitbox : WeaponHitbox = $WeaponHitbox
+onready var sustainHitbox : SustainHitbox = $SustainHitbox
+onready var collision : CollisionShape2D = $CollisionShape2D
+onready var tickTimer : Timer = $TickTimer
+onready var particles : Particles2D = $Particles2D
+onready var sprite : Sprite = $Sprite
+onready var animationPlayer : AnimationPlayer = $AnimationPlayer
+onready var crosshair : Sprite = $CrosshairSprite
 
 func init(weaponStats: WeaponInstance, source, sourceStr: int, lifetime: float, numberOfTicks: int):
 	self.weaponStats = weaponStats
@@ -43,13 +43,15 @@ func init(weaponStats: WeaponInstance, source, sourceStr: int, lifetime: float, 
 	self.userStr = sourceStr * 1/3
 	
 	self.fromPlayer = (source.name == "Player")
-	
-	
-	
-
+		
 func _ready():
 	weaponHitbox.setWeapon(weaponStats)
 	weaponHitbox.setSource(self, userStr)
+
+	self.weaponHitbox.set_collision_mask_bit(4, true)
+	self.weaponHitbox.set_collision_mask_bit(5, false)
+	self.sustainHitbox.set_collision_mask_bit(4, true)
+	self.sustainHitbox.set_collision_mask_bit(5, false)
 	
 	# Crosshair radius is 20, so scale that to aoe
 	crosshair.scale.x = .33333
@@ -57,7 +59,6 @@ func _ready():
 	crosshair.visible = false
 	
 	tickTimer.connect("timeout", self, "_tick_timeout")
-	hurtTimer.connect("timeout", self, "_hurt_timeout")
 	
 	speed = weaponStats.projectileSpeed
 	
@@ -70,6 +71,8 @@ func _ready():
 		particles.lifetime = aoeEffect.particleLifetime
 		particles.amount = aoeEffect.numParticles
 		particles.speed_scale = aoeEffect.speedScale
+
+		sustainHitbox.effectResources = weaponHitbox.effectResources
 	
 func _physics_process(delta):
 	var move = move_and_collide(velocity * delta)
@@ -99,6 +102,8 @@ func fire(userPosition : Vector2, targetPosition : Vector2, startingRotation := 
 	if fromPlayer:
 		self.weaponHitbox.set_collision_mask_bit(4, false)
 		self.weaponHitbox.set_collision_mask_bit(5, true)
+		self.sustainHitbox.set_collision_mask_bit(4, false)
+		self.sustainHitbox.set_collision_mask_bit(5, true)
 	match aoeEffect.aoeType:
 		AoeFX.Type.PLACE:
 			# Aoe spawns on given point
@@ -116,6 +121,7 @@ func fire(userPosition : Vector2, targetPosition : Vector2, startingRotation := 
 			sprite.texture = weaponStats.projectileTexture
 			sprite.global_rotation = startingRotation
 			sprite.set_deferred("visible", true)
+
 		AoeFX.Type.LOBBED:
 			# Has an arched projectile originating from the user that bursts into an aoe
 			self.global_position = userPosition
@@ -154,20 +160,21 @@ func startAoe():
 
 	match weaponStats.aoeType:
 		WeaponStats.AoeType.IMPACT:
-			startImpact()
+			yield(startImpact(), "completed")
 			# clean up here instad of via sustain
-			killSelf()
+			stopAoe()
+
 		WeaponStats.AoeType.SUSTAIN:
 			startSustain()
+
 		WeaponStats.AoeType.IMPACT_AND_SUSTAIN:
-			startImpact()
+			yield(startImpact(), "completed")
 			startSustain()
 
 func startImpact():
 	weaponHitbox.collision.set_deferred("disabled", false)
 	yield(get_tree().create_timer(0.1), "timeout")
-	weaponHitbox.collision.set_deferred("disabled", true)	
-	pass
+	weaponHitbox.collision.set_deferred("disabled", true)
 
 func startSustain():
 	particles.set_deferred("emitting", true)
@@ -180,11 +187,20 @@ func startSustain():
 func stopMovement():
 	velocity = Vector2.ZERO
 	
-func killSelf():
-	# TODO: Instead have a stop emitting function that stops emitting and kills itself after full lifetime
+func stopAoe():
+	tickTimer.stop()
+	if (weaponStats.aoeType == WeaponStats.AoeType.SUSTAIN || weaponStats.aoeType == WeaponStats.AoeType.IMPACT_AND_SUSTAIN):
+		# wait for particles to finish before killing
+		particles.set_deferred("emitting", false)
+		yield(get_tree().create_timer(particles.lifetime), "timeout")
 	queue_free()
 
 # Ticker for reapplying effects
 func _tick_timeout():
-	weaponHitbox.collision.set_deferred("disabled", false)
-	# TODO: Apply effect
+	# TODO: this is bad, make this better (faster ticks? maybe always have the sustain on?)
+	sustainHitbox.collision.set_deferred("disabled", false)
+	yield(get_tree().create_timer(0.1), "timeout")
+	sustainHitbox.collision.set_deferred("disabled", true)
+	numTicks += 1
+	if numTicks >= totalTicks:
+		stopAoe()

@@ -196,25 +196,35 @@ func sightCheck() -> bool:
 	
 	return false
 	
+func addEffects(effectResources : Array):
+	for effectResource in effectResources:
+		effectResource = effectResource as Effect
+		effects.append({"effect": effectResource, "ticks": effectResource.totalTicks})
+
 func _hurtbox_area_entered(area : Hitbox):
-	var damageAmount = max(1, int(area.damage * (1 - ( max((stats.armorValue - area.armorPierce), 0) /100.0))))
+	print(area.effectResources)
+	addEffects(area.effectResources)
+
+	if (area is WeaponHitbox):
+		var damageAmount = max(1, int(area.damage * (1 - ( max((stats.armorValue - area.armorPierce), 0) /100.0))))
+
+		var text = floatingText.instance()
+		text.amount = damageAmount
+		add_child(text)
+		
+		var hitEffect = HitEffect.instance()
+		hitEffect.init(area.getSourcePos())
+		add_child(hitEffect)
+		
+		if area.fromPlayer:
+			PlayerStats.currentXP += min(stats.health, damageAmount)
+		
+		if willStun():
+			switchToStun()
+		stats.health -= damageAmount
+		knockback = area.getKnockbackVector(self.global_position)
 	
-	var text = floatingText.instance()
-	text.amount = damageAmount
-	add_child(text)
-	
-	var hitEffect = HitEffect.instance()
-	hitEffect.init(area.getSourcePos())
-	add_child(hitEffect)
-	
-	if area.fromPlayer:
-		PlayerStats.currentXP += min(stats.health, damageAmount)
-	
-	if willStun():
-		switchToStun()
-	stats.health -= damageAmount
-	knockback = area.getKnockbackVector(self.global_position)
-	
+	# TODO: Move this and the death check to the health setter getter
 	damagedSfx.play()
 
 func _dexterity_changed(value):

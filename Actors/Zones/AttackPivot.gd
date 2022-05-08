@@ -147,7 +147,7 @@ func startAOEAttack(targetGlobalPos : Vector2, sourceStr := 0):
 	
 	var world = get_tree().current_scene
 	# Have to set it before you add it as a child otherwise the room area's think you are exiting them
-	areaOfEffect.global_position = targetGlobalPos
+	areaOfEffect.global_position = self.global_position 
 	world.get_node("YSort").add_child(areaOfEffect)
 	
 	# TODO: Possibly pass in a rotation if it is a directional aoe (like a cone)
