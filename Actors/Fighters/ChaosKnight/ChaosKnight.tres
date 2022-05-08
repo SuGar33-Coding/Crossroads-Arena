@@ -8,7 +8,7 @@
 [resource]
 script = ExtResource( 1 )
 unitType = 0
-strength = 2
+strength = 4
 con = 2
 dex = 0
 armor = 20

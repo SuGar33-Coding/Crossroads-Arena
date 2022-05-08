@@ -13,9 +13,9 @@
 [resource]
 script = ExtResource( 2 )
 unitType = 0
-strength = 5
-con = 5
-dex = 0
+strength = 2
+con = 2
+dex = 2
 armor = 0
 detectionRange = 2000.0
 leaveRange = 2500.0

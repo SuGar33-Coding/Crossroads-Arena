@@ -3,14 +3,6 @@ class_name Arena extends Node2D
 export (Array,Resource) var encounters
 export var multiEncounterChance := 0.5 
 
-var Fighter = preload("res://Actors/Fighters/Bandit/Bandit.tscn")
-var Slime = preload("res://Actors/Slime/Slime.tscn")
-var Brute = preload("res://Actors/Brute/Brute.tscn")
-var ChaosKnight = preload("res://Actors/Fighters/ChaosKnight/ChaosKnight.tscn")
-var Rogue = preload("res://Actors/Dashers/Rogue/Rogue.tscn")
-var Charger = preload("res://Actors/Chargers/Charger/Charger.tscn")
-var Ranger = preload("res://Actors/Fighters/Ranger/Ranger.tscn")
-var Mage = preload("res://Actors/Fighters/Mage/Mage.tscn")
 var Encounter = preload("res://World/Encounters/Encounter.tscn")
 var WorldItem = preload("res://Items/WorldItem.tscn")
 var numEncounters := 0
