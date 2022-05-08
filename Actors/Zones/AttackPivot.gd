@@ -226,7 +226,7 @@ func setWeapon(weaponStats : WeaponInstance):
 		shieldSprite.texture = weaponStats.resource.offhandSprite
 		shieldSprite.visible = true
 		self.show_behind_parent = false
-	else:
+	elif is_instance_valid(shieldSprite):
 		shieldSprite.visible = false
 		
 	if not weaponStats.weaponType == WeaponStats.WeaponType.RANGED:

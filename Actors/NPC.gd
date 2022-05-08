@@ -202,7 +202,6 @@ func addEffects(effectResources : Array):
 		effects.append({"effect": effectResource, "ticks": effectResource.totalTicks})
 
 func _hurtbox_area_entered(area : Hitbox):
-	print(area.effectResources)
 	addEffects(area.effectResources)
 
 	if (area is WeaponHitbox):

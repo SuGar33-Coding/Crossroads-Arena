@@ -902,6 +902,9 @@ texture = ExtResource( 2 )
 hframes = 5
 frame = 1
 
+[node name="Shield" type="Sprite" parent="Sprite" index="0"]
+position = Vector2( 6, 0 )
+
 [node name="HurtboxCollision" parent="Hurtbox" index="0"]
 disabled = true
 

@@ -1206,6 +1206,9 @@ scale = Vector2( 0.75, 0.75 )
 texture = ExtResource( 2 )
 hframes = 9
 
+[node name="Shield" type="Sprite" parent="Sprite" index="0"]
+position = Vector2( 6, 0 )
+
 [node name="HurtboxCollision" parent="Hurtbox" index="0"]
 position = Vector2( 0, -5 )
 shape = SubResource( 2 )
