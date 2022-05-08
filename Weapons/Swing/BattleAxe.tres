@@ -29,4 +29,5 @@ projectileSpeed = 1500.0
 projectileRange = 350.0
 aoeNumberOfTicks = 3
 aoeLifetime = 3.0
-instantTick = false
+aoeType = 0
+instantApplySustain = false
