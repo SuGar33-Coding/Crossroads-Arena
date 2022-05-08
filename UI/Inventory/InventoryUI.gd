@@ -48,4 +48,5 @@ func updateStats(_bag1 = null, _bag2 = null):
 	frontSprite.flip_h = not frontSprite.flip_v
 	frontSprite.hframes = playerNode.weaponSprite.hframes
 	
+	shieldSprite.visible = playerNode.shieldSprite.visible
 	shieldSprite.texture = playerNode.shieldSprite.texture

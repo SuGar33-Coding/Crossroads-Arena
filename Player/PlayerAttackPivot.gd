@@ -158,7 +158,7 @@ func startParry():
 	attackTimer.start(max(weaponStats.attackSpeed * .4 * PlayerStats.attackSpeed, comboTime*.5))
 	parryTween.interpolate_property(shieldSprite, "position", shieldSprite.position, parryPos.rotated(self.global_rotation), tweenLen*.5, Tween.TRANS_LINEAR, Tween.EASE_IN_OUT)
 	#parryTween.interpolate_property(attackSignalPos, "position", attackSignalPos.position, parryPos - attackSignalPos.position, tweenLen*.5, Tween.TRANS_LINEAR, Tween.EASE_IN_OUT)
-	parryTween.interpolate_property(shieldSprite, "position", parryPos.rotated(self.global_rotation), Vector2.ZERO, tweenLen, Tween.TRANS_LINEAR, Tween.EASE_IN_OUT, tweenLen)
+	parryTween.interpolate_property(shieldSprite, "position", parryPos.rotated(self.global_rotation), shieldSprite.position, tweenLen, Tween.TRANS_LINEAR, Tween.EASE_IN_OUT, tweenLen)
 	#parryTween.interpolate_property(attackSignalPos, "position", parryPos - attackSignalPos.position, attackSignalPos.position, tweenLen, Tween.TRANS_LINEAR, Tween.EASE_IN_OUT, tweenLen)
 	parryTween.start()
 
