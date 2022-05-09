@@ -1,0 +1,30 @@
+[gd_resource type="Resource" load_steps=13 format=2]
+
+[ext_resource path="res://Weapons/Spears/Pike.tres" type="Resource" id=1]
+[ext_resource path="res://Actors/Generic/StatsResource.gd" type="Script" id=2]
+[ext_resource path="res://Weapons/Swords/BaseSword.tres" type="Resource" id=3]
+[ext_resource path="res://Assets/CharacterAssets/LightArmor.png" type="Texture" id=4]
+[ext_resource path="res://Items/ItemResources/Armor/Head/IronHelmet.tres" type="Resource" id=5]
+[ext_resource path="res://Items/ItemResources/Armor/Feet/IronBoots.tres" type="Resource" id=6]
+[ext_resource path="res://Items/ItemResources/Armor/Chest/HalfPlate.tres" type="Resource" id=7]
+[ext_resource path="res://Items/ItemResources/Armor/Chest/Leather.tres" type="Resource" id=8]
+[ext_resource path="res://Weapons/Swing/Glaive.tres" type="Resource" id=9]
+[ext_resource path="res://Items/ItemResources/Armor/Head/HornedHelm.tres" type="Resource" id=10]
+[ext_resource path="res://Weapons/Swords/Cutlass.tres" type="Resource" id=11]
+[ext_resource path="res://Weapons/Shields/Shield.tres" type="Resource" id=12]
+
+[resource]
+script = ExtResource( 2 )
+unitType = 0
+strength = 1
+con = 1
+dex = 0
+armor = 10
+detectionRange = 2000.0
+leaveRange = 2500.0
+maxCoinDrop = 10
+minCoinDrop = 3
+dropChance = 0.2
+itemDrops = [ ExtResource( 8 ), ExtResource( 5 ), ExtResource( 10 ), ExtResource( 6 ), ExtResource( 7 ) ]
+weaponResources = [ ExtResource( 3 ), ExtResource( 11 ), ExtResource( 1 ), ExtResource( 9 ), ExtResource( 12 ) ]
+texture = ExtResource( 4 )

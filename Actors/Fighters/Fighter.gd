@@ -152,19 +152,21 @@ func flipLeft():
 	sprite.flip_h = true
 	attackPivot.scale.y = -1
 	shadowSprite.position.x = leftShadowX
-	shieldSprite.position.x = -SHIELD_DIST
-	shieldSprite.flip_h = true
-	shieldSprite.show_behind_parent = false
-	attackPivot.show_behind_parent = true
+	if shieldSprite.visible:
+		shieldSprite.position.x = -SHIELD_DIST
+		shieldSprite.flip_h = true
+		shieldSprite.show_behind_parent = false
+		attackPivot.show_behind_parent = true
 	
 func flipRight():
 	sprite.flip_h = false
 	attackPivot.scale.y = 1
 	shadowSprite.position.x = rightShadowX
-	shieldSprite.position.x = SHIELD_DIST
-	shieldSprite.flip_h = false
-	shieldSprite.show_behind_parent = true
-	attackPivot.show_behind_parent = false
+	if shieldSprite.visible:
+		shieldSprite.position.x = SHIELD_DIST
+		shieldSprite.flip_h = false
+		shieldSprite.show_behind_parent = true
+		attackPivot.show_behind_parent = false
 	
 func findClosestAlly():
 	var otherActors = get_parent().get_children()

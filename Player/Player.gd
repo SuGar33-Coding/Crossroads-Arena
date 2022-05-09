@@ -147,29 +147,19 @@ func _physics_process(delta):
 	# Make sprite turn towards mouse
 	var mousePos = self.get_global_mouse_position()
 	if mousePos.x < global_position.x:
-		sprite.flip_h = true
-		headSprite.flip_h = true
-		chestSprite.flip_h = true
-		legSprite.flip_h = true
-		backSprite.flip_h = true
-		shieldSprite.flip_h = true
-		shieldSprite.position.x = -shieldDistance
+		sprite.scale.x = -1
 		shadowSprite.position.x = .5
 		attackPivot.scale.y = -1
-		shieldSprite.show_behind_parent = false
-		attackPivot.show_behind_parent = true
+		if shieldSprite.visible:
+			shieldSprite.show_behind_parent = false
+			attackPivot.show_behind_parent = true
 	else:
-		sprite.flip_h = false
-		headSprite.flip_h = false
-		chestSprite.flip_h = false
-		legSprite.flip_h = false
-		backSprite.flip_h = false
-		shieldSprite.flip_h = false
-		shieldSprite.position.x = shieldDistance
+		sprite.scale.x = 1
 		shadowSprite.position.x = 1.25
 		attackPivot.scale.y = 1
-		shieldSprite.show_behind_parent = true
-		attackPivot.show_behind_parent = false
+		if shieldSprite.visible:
+			shieldSprite.show_behind_parent = true
+			attackPivot.show_behind_parent = false
 
 	attackPivot.look_at(mousePos)
 

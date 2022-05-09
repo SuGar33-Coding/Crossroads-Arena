@@ -4,9 +4,9 @@
 
 [resource]
 script = ExtResource( 1 )
-encounterSize = 0
+encounterSize = 1
 gruntFilepaths = [ "res://Actors/Fighters/Bandit/Bandit.tres" ]
 specialFilepaths = [ "res://Actors/Fighters/Ranger/Ranger.tres" ]
-commanderFilepaths = [ "res://Actors/Brute/Brute.tres" ]
-difficultyLevel = 1
+commanderFilepaths = [ "res://Actors/Chargers/Charger/Charger.tres", "res://Actors/Brute/Brute.tres" ]
+difficultyLevel = 2
 guaranteeBoss = false

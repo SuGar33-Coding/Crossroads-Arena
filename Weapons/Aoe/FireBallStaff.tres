@@ -31,5 +31,5 @@ projectileRange = 250.0
 aoeEffect = ExtResource( 1 )
 aoeNumberOfTicks = 4
 aoeLifetime = 2.0
-aoeType = 0
+aoeType = 1
 instantApplySustain = true

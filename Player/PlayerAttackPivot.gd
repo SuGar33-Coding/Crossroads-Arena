@@ -156,9 +156,12 @@ func startParry():
 	comboCounter = 0
 	comboTimer.start(comboTime*.5)
 	attackTimer.start(max(weaponStats.attackSpeed * .4 * PlayerStats.attackSpeed, comboTime*.5))
-	parryTween.interpolate_property(shieldSprite, "position", shieldSprite.position, parryPos.rotated(self.global_rotation), tweenLen*.5, Tween.TRANS_LINEAR, Tween.EASE_IN_OUT)
+	var endpoint : Vector2 = parryPos.rotated(self.rotation)
+	if self.scale.y < 0:
+		endpoint.x = -endpoint.x
+	parryTween.interpolate_property(shieldSprite, "position", shieldSprite.position, endpoint, tweenLen*.5, Tween.TRANS_LINEAR, Tween.EASE_IN_OUT)
 	#parryTween.interpolate_property(attackSignalPos, "position", attackSignalPos.position, parryPos - attackSignalPos.position, tweenLen*.5, Tween.TRANS_LINEAR, Tween.EASE_IN_OUT)
-	parryTween.interpolate_property(shieldSprite, "position", parryPos.rotated(self.global_rotation), shieldSprite.position, tweenLen, Tween.TRANS_LINEAR, Tween.EASE_IN_OUT, tweenLen)
+	parryTween.interpolate_property(shieldSprite, "position", endpoint, shieldSprite.position, tweenLen, Tween.TRANS_LINEAR, Tween.EASE_IN_OUT, tweenLen)
 	#parryTween.interpolate_property(attackSignalPos, "position", parryPos - attackSignalPos.position, attackSignalPos.position, tweenLen, Tween.TRANS_LINEAR, Tween.EASE_IN_OUT, tweenLen)
 	parryTween.start()
 

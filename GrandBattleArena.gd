@@ -2,6 +2,7 @@ class_name Arena extends Node2D
 
 export (Array,Resource) var encounters
 export var multiEncounterChance := 0.5 
+export var ENCOUNTERS_PATH : String = "res://World/Encounters/"
 
 const NUM_SCENERY := 200
 
@@ -58,7 +59,7 @@ func _ready():
 	generateScenery()
 	
 	# TODO: Add starting weapon choices like this
-	var startingItem : ItemInstance = get_node(ItemManager.createItemFromPath("res://Items/ItemResources/Armor/Chest/Defender.tres"))
+	var startingItem : ItemInstance = get_node(ItemManager.createItemFromPath("res://Items/ItemResources/Armor/Chest/Leather.tres"))
 	
 	var worldItem = WorldItem.instance()
 	worldItem.init(startingItem)
@@ -89,6 +90,8 @@ func _ready():
 	# Sorted encounters will be a dictionary of dictionaries corresponding to the levels of the encounters
 	# Each of these arrays will contain three arrays corresponding to each of the sizes of the encounters
 	# Reminder: Decided not to sort by size because size should factor into difficulty level
+	getAllEncounters(ENCOUNTERS_PATH)
+	
 	for encounter in encounters:
 		if maxEncounterDifficulty < encounter.difficultyLevel:
 			maxEncounterDifficulty = encounter.difficultyLevel
@@ -111,6 +114,8 @@ func _physics_process(_delta):
 	elif Input.is_action_just_released("wheelup"):
 		camera.zoom.x -= .25
 		camera.zoom.y -= .25
+	elif Input.is_action_just_pressed("coins"):
+		Inventory.addCoins(100)
 		
 	if numEncounters <= 0:
 		
@@ -186,6 +191,20 @@ func _physics_process(_delta):
 				shopUI.toggleVisible()
 		elif shopUI.isVisible():
 			shopUI.toggleVisible()
+
+func getAllEncounters(path : String):
+	var dir = Directory.new()
+	if dir.open(path) == OK:
+		dir.list_dir_begin(true, true)
+		var file_name : String = dir.get_next()
+		while file_name != "":
+			if dir.current_is_dir():
+				getAllEncounters(path+"/"+file_name)
+			elif file_name.ends_with(".tres"):
+				var resource := load(path+"/"+file_name)
+				if resource is EncounterStats and resource.difficultyLevel != 0:
+					encounters.append(resource)
+			file_name = dir.get_next()
 
 func playPillarReadies():
 	strPillarAnimation.play("Ready")

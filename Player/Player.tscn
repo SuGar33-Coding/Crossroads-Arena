@@ -592,7 +592,7 @@ tracks/1/keys = {
 "values": [ 0.0 ]
 }
 tracks/2/type = "value"
-tracks/2/path = NodePath("Sprite:scale")
+tracks/2/path = NodePath("ShadowSprite:scale")
 tracks/2/interp = 1
 tracks/2/loop_wrap = true
 tracks/2/imported = false
@@ -604,7 +604,7 @@ tracks/2/keys = {
 "values": [ Vector2( 1, 1 ) ]
 }
 tracks/3/type = "value"
-tracks/3/path = NodePath("ShadowSprite:scale")
+tracks/3/path = NodePath("ShadowSprite:modulate")
 tracks/3/interp = 1
 tracks/3/loop_wrap = true
 tracks/3/imported = false
@@ -613,10 +613,10 @@ tracks/3/keys = {
 "times": PoolRealArray( 0 ),
 "transitions": PoolRealArray( 1 ),
 "update": 0,
-"values": [ Vector2( 1, 1 ) ]
+"values": [ Color( 1, 1, 1, 1 ) ]
 }
 tracks/4/type = "value"
-tracks/4/path = NodePath("ShadowSprite:modulate")
+tracks/4/path = NodePath("Sprite/HeadSprite:frame")
 tracks/4/interp = 1
 tracks/4/loop_wrap = true
 tracks/4/imported = false
@@ -624,11 +624,11 @@ tracks/4/enabled = true
 tracks/4/keys = {
 "times": PoolRealArray( 0 ),
 "transitions": PoolRealArray( 1 ),
-"update": 0,
-"values": [ Color( 1, 1, 1, 1 ) ]
+"update": 1,
+"values": [ 0 ]
 }
 tracks/5/type = "value"
-tracks/5/path = NodePath("Sprite/HeadSprite:frame")
+tracks/5/path = NodePath("Sprite/ChestSprite:frame")
 tracks/5/interp = 1
 tracks/5/loop_wrap = true
 tracks/5/imported = false
@@ -640,24 +640,12 @@ tracks/5/keys = {
 "values": [ 0 ]
 }
 tracks/6/type = "value"
-tracks/6/path = NodePath("Sprite/ChestSprite:frame")
+tracks/6/path = NodePath("Sprite/LegSprite:frame")
 tracks/6/interp = 1
 tracks/6/loop_wrap = true
 tracks/6/imported = false
 tracks/6/enabled = true
 tracks/6/keys = {
-"times": PoolRealArray( 0 ),
-"transitions": PoolRealArray( 1 ),
-"update": 1,
-"values": [ 0 ]
-}
-tracks/7/type = "value"
-tracks/7/path = NodePath("Sprite/LegSprite:frame")
-tracks/7/interp = 1
-tracks/7/loop_wrap = true
-tracks/7/imported = false
-tracks/7/enabled = true
-tracks/7/keys = {
 "times": PoolRealArray( 0 ),
 "transitions": PoolRealArray( 1 ),
 "update": 1,
@@ -828,7 +816,6 @@ collision_layer = 2
 script = ExtResource( 2 )
 
 [node name="ShadowSprite" type="Sprite" parent="."]
-visible = false
 position = Vector2( 0.5, 5 )
 texture = ExtResource( 10 )
 
@@ -839,25 +826,22 @@ shape = SubResource( 1 )
 
 [node name="Sprite" type="Sprite" parent="."]
 material = ExtResource( 14 )
-position = Vector2( 0, -5 )
+position = Vector2( 1, -5 )
 texture = ExtResource( 1 )
 hframes = 5
 
 [node name="HeadSprite" type="Sprite" parent="Sprite"]
 use_parent_material = true
 hframes = 5
-frame = 1
 
 [node name="ChestSprite" type="Sprite" parent="Sprite"]
 use_parent_material = true
 texture = ExtResource( 15 )
 hframes = 5
-frame = 1
 
 [node name="LegSprite" type="Sprite" parent="Sprite"]
 use_parent_material = true
 hframes = 5
-frame = 1
 
 [node name="BackWeapon" type="Sprite" parent="Sprite"]
 show_behind_parent = true
@@ -910,7 +894,6 @@ collision_mask = 32
 
 [node name="Swipe" parent="AttackPivot" index="1"]
 position = Vector2( 0, 0 )
-rotation = -1.5708
 frame = 0
 
 [node name="Weapon" parent="AttackPivot/WeaponRestingPos" index="0"]
@@ -935,7 +918,6 @@ collision_layer = 16
 
 [node name="HurtboxCollision" parent="Hurtbox" index="0"]
 position = Vector2( 0, -4 )
-disabled = true
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 autoplay = "Idle"
