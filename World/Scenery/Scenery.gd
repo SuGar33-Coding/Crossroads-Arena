@@ -1,14 +1,28 @@
-class_name Scenery extends WorldSpawn
+class_name Scenery extends Node2D
 
-onready var animationPlayer := $AnimationPlayer
-onready var collider := $CollisionShape2D
-onready var shakeFx: Particles2D = $Particles2D 
+onready var wallCollision : Area2D = $WallCollision
 
-func _ready():
-	self.connect("body_entered", self, "_play_shake")
+var checkedOthers : bool = false
 
-func _play_shake(_body):
-	if animationPlayer != null:
-		animationPlayer.play("Shake")
-	if shakeFx != null:
-		shakeFx.emitting = true
+func _physics_process(_delta):
+	if is_instance_valid(wallCollision) and checkedOthers:
+		var overlappingBods : Array = wallCollision.get_overlapping_bodies()
+		overlappingBods.erase(self)
+		if overlappingBods.size() > 0:
+			self.queue_free()
+		else:
+			wallCollision.queue_free()
+
+func checkWalls(removedChildren : Array) -> bool:
+	var overlappingBods = wallCollision.get_overlapping_bodies()
+	#overlappingBods.append_array(wallCollision.get_overlapping_areas())
+	var trueOverlapping := []
+	for bod in overlappingBods:
+		if not bod in overlappingBods and bod != self:
+			trueOverlapping.append(bod)
+	if trueOverlapping.size() > 0:
+		self.queue_free()
+		return true
+	else:
+		checkedOthers = true
+		return false
