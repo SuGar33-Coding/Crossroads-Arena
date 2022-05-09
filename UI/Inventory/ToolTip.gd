@@ -2,12 +2,15 @@ class_name ToolTip extends Popup
 
 var statRow = preload("res://UI/Inventory/StatRow.tscn")
 const EffectsIconScene = preload("res://UI/EffectsUI/EffectsIcon.tscn")
+const ModifierNameScene = preload("res://UI/Inventory/ModifierName.tscn")
 
 onready var statsContainer: VBoxContainer = $Panel/MarginContainer/StatsContainer
 onready var itemNameTag: Label = $Panel/MarginContainer/StatsContainer/ItemName
 onready var valueLabel: Label = $Panel/MarginContainer/StatsContainer/HBoxContainer/ValueLabel
 
 var itemInstance: ItemInstance setget setItemInstance
+var modifier: Modifier
+var modifierLabel : Label = null
 var valFmtStr = "%d"
 var dmgFmtStr = "%d"
 var atkSpdFmtStr = "%.1f/s"
@@ -27,6 +30,18 @@ func _process(_delta):
 func setItemInstance(newItemInstance):
 	itemInstance = newItemInstance
 	itemNameTag.text = itemInstance.itemName
+	if is_instance_valid(itemInstance.modifier) and itemInstance.modifier.name != "":
+		self.modifier = itemInstance.modifier
+		if not is_instance_valid(modifierLabel):
+			self.modifierLabel = ModifierNameScene.instance()
+			statsContainer.add_child(self.modifierLabel)
+			statsContainer.move_child(self.modifierLabel, 0)
+		self.modifierLabel.text = itemInstance.modifier.name
+	elif is_instance_valid(modifierLabel):
+		statsContainer.remove_child(self.modifierLabel)
+		self.modifierLabel = null
+		self.modifier = null
+		
 	var nameColor : Color = Constants.getRarityColor(itemInstance.itemRarity)
 	itemNameTag.add_color_override("font_color", nameColor)
 	
