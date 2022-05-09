@@ -8,5 +8,5 @@ encounterSize = 0
 gruntFilepaths = [ "res://Actors/Chargers/Charger/Charger.tres" ]
 specialFilepaths = [ "res://Actors/Chargers/Charger/Charger.tres" ]
 commanderFilepaths = [ "res://Actors/Chargers/Charger/Charger.tres" ]
-difficultyLevel = 1
+difficultyLevel = 0
 guaranteeBoss = false

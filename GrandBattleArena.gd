@@ -8,6 +8,7 @@ const NUM_SCENERY := 200
 
 var Encounter = preload("res://World/Encounters/Encounter.tscn")
 var WorldItem = preload("res://Items/WorldItem.tscn")
+var DirectionArrowScene : = preload("res://UI/DirectionArrow.tscn")
 var numEncounters := 0
 var playerNearButton := false
 var playerNearShop := false
@@ -282,8 +283,15 @@ func spawnNewEncounter(encounterStats : EncounterStats):
 	newEncounter.global_position = spawnLocation.global_position
 	people.add_child(newEncounter)
 	
+	for actor in newEncounter.currentActors:
+		var newArrow : DirectionArrow = DirectionArrowScene.instance()
+		getPlayerNode().add_child(newArrow)
+		newArrow.target = actor
+	
 	newWaveButtonSprite.play("Pressed") 
 	strPillarAnimation.play("Idle")
+	conPillarAnimation.play("Idle")
+	dexPillarAnimation.play("Idle")
 
 #(Un)pauses a single node
 func set_pause_node(node : Node, pause : bool) -> void:

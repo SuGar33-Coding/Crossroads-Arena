@@ -76,7 +76,7 @@ func initArmorTooltip(armorInstance: ItemInstance):
 		oldArmor = oldArmorInstance.resource as Armor
 	
 	addStatRow("Type", Armor.Type.keys()[armorResource.type])
-	addStatRow("Def", str(armorResource.defenseValue), str(oldArmor.defenseValue) if hasOld else "", true)
+	addStatRow("Def", str(armorResource.defenseValue) + "%", str(oldArmor.defenseValue)  + "%" if hasOld else "", true)
 	if armorResource.speedModifier != 0:
 		addStatRow("Spd", str(armorResource.speedModifier), str(oldArmor.speedModifier) if hasOld else "", true)
 	

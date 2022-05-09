@@ -6,12 +6,9 @@
 margin_right = 21.0
 margin_bottom = 6.0
 mouse_filter = 2
-__meta__ = {
-"_edit_use_anchors_": false
-}
 
 [node name="Label" type="Label" parent="."]
-margin_bottom = 11.0
+margin_bottom = 7.0
 size_flags_vertical = 0
 custom_fonts/font = ExtResource( 1 )
 valign = 1

@@ -41,6 +41,6 @@ func _updateDisplay():
 	
 	dashLabel.text = secondsfmt % (PlayerStats.dashDelay * pow(PlayerStats.dexDashRatio, PlayerStats.dex))
 	
-	armorLabel.text = str(playerNode.baseArmorValue)
+	armorLabel.text = str(playerNode.baseArmorValue) + "%"
 	
 	speedLabel.text = str(int(PlayerStats.baseSpeed * pow(PlayerStats.dexMoveRatio, PlayerStats.baseDex)))
