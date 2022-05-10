@@ -4,7 +4,7 @@
 [ext_resource path="res://Assets/WeaponAssets/Aoe/Item__22.png" type="Texture" id=2]
 [ext_resource path="res://Assets/WeaponAssets/Ranged/Projectiles/Flame.png" type="Texture" id=3]
 [ext_resource path="res://Weapons/WeaponStats.gd" type="Script" id=4]
-[ext_resource path="res://Items/Effects/LightBurn.tres" type="Resource" id=5]
+[ext_resource path="res://Items/Effects/LightestBurn.tres" type="Resource" id=5]
 
 [resource]
 script = ExtResource( 4 )
@@ -31,5 +31,7 @@ projectileRange = 250.0
 aoeEffect = ExtResource( 1 )
 aoeNumberOfTicks = 4
 aoeLifetime = 2.0
-aoeType = 1
+aoeType = 2
 instantApplySustain = true
+sustainRadius = 30.0
+sustainLength = 0.0

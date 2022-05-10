@@ -277,6 +277,8 @@ func _process_effects():
 		
 		var removeArray = []
 		
+		effectsReset = false
+		
 		# TODO: as of rn enemies are not effected by stat changes
 		for i in range(effects.size()):
 			var effectEntry = effects[i]

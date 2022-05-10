@@ -24,11 +24,12 @@ var targetPosition := Vector2.ZERO
 var checkPosition := false
 var fired := false
 
-onready var weaponHitbox : WeaponHitbox = $WeaponHitbox
-onready var sustainHitbox : SustainHitbox = $SustainHitbox
-onready var collision : CollisionShape2D = $CollisionShape2D
+onready var collision : CollisionShape2D = $Collision
+onready var offsetNode : Node2D = $OffsetNode
+onready var weaponHitbox : WeaponHitbox = $OffsetNode/WeaponHitbox
+onready var sustainHitbox : SustainHitbox = $OffsetNode/SustainHitbox
 onready var tickTimer : Timer = $TickTimer
-onready var particles : Particles2D = $Particles2D
+onready var particles : Particles2D = $OffsetNode/Particles2D
 onready var sprite : Sprite = $Sprite
 onready var animationPlayer : AnimationPlayer = $AnimationPlayer
 onready var crosshair : Sprite = $CrosshairSprite
@@ -53,6 +54,8 @@ func _ready():
 	self.sustainHitbox.set_collision_mask_bit(4, true)
 	self.sustainHitbox.set_collision_mask_bit(5, false)
 	
+	sustainHitbox.collision.disabled = true
+	
 	# Crosshair radius is 20, so scale that to aoe
 	crosshair.scale.x = .33333
 	crosshair.scale.y = .33333
@@ -73,13 +76,16 @@ func _ready():
 		particles.speed_scale = aoeEffect.speedScale
 
 		sustainHitbox.effectResources = weaponHitbox.effectResources
+		var sustainShape = sustainHitbox.collision.shape as CapsuleShape2D
+		sustainShape.height = weaponStats.sustainLength
+		sustainShape.radius = weaponStats.sustainRadius
 	
 func _physics_process(delta):
 	var move = move_and_collide(velocity * delta)
 	
 	if( (not aoeEffect.aoeType == AoeFX.Type.LOBBED and move != null) or (checkPosition and targetPosition.distance_to(self.global_position) < THRESHOLD)):
 		checkPosition = false
-		self.startAoe()
+		startAoe()
 		velocity = Vector2.ZERO
 	
 	if(fired):
@@ -150,13 +156,13 @@ func fire(userPosition : Vector2, targetPosition : Vector2, startingRotation := 
 	
 # Starts the particle and damaging affects of the aoe
 func startAoe():
+	collision.disabled = true
 	sprite.set_deferred("visible", false)
 	crosshair.visible = false
 
 	# We want ysort to be better so move all of the visuals up but the root node down
 	self.global_position.y += aoeEffect.ysortOffset
-	particles.global_position.y -= aoeEffect.ysortOffset
-	weaponHitbox.global_position.y -= aoeEffect.ysortOffset
+	offsetNode.global_position.y -= aoeEffect.ysortOffset
 
 	match weaponStats.aoeType:
 		WeaponStats.AoeType.IMPACT:

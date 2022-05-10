@@ -22,6 +22,8 @@ var projectileSpeed : float = 1500
 var projectileRange : float = 350
 
 # AOE Stuff
+var sustainLength : float
+var sustainRadius : float
 var aoeEffect : Resource
 var aoeNumberOfTicks := 3
 var aoeLifetime := 3.0
@@ -56,10 +58,11 @@ func _setResource(newResource):
 	projectileSpeed = weaponStats.projectileSpeed
 	projectileRange = weaponStats.projectileRange
 	
+	sustainLength = weaponStats.sustainLength
+	sustainRadius = weaponStats.sustainRadius
 	aoeEffect = weaponStats.aoeEffect
 	aoeNumberOfTicks = weaponStats.aoeNumberOfTicks
 	aoeLifetime = weaponStats.aoeLifetime
-	
 	aoeType = weaponStats.aoeType
 	instantApplySustain = weaponStats.instantApplySustain
 

@@ -48,5 +48,7 @@ export(float) var aoeLifetime = 3.0
 export(AoeType) var aoeType = AoeType.IMPACT
 # whether or not to instantly do one of the sustain ticks on aoe start
 export(bool) var instantApplySustain = false
+export(float) var sustainRadius = 15.5
+export(float) var sustainLength = 0
 # aoe angle should be < 0 if you don't want it to rotate
 #export var aoeAngle : float = -1.0
