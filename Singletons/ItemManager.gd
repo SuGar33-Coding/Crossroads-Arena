@@ -1,7 +1,7 @@
 extends Node
 
 # Chance that default modifier is used
-const DEFAULT_CHANCE : float = .5
+const DEFAULT_CHANCE : float = .1
 const MODIFIER_PATH : String = "res://Items/Modifiers/"
 var defaultModifier : Modifier = preload("res://Items/Modifiers/FlatModifier.tres")
 var modifierResources : Array = []

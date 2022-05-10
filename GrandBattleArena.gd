@@ -19,6 +19,7 @@ var waveNumber := 0
 var sortedEncounters := {}
 var maxEncounterDifficulty := 0
 
+onready var hyperlanes : TileMap = $SimpleNavigation2D/WalkableTiles
 onready var people := $YSort/People
 onready var camera := $YSort/Player/MainCamera
 onready var itemSort := $YSort/Items
@@ -232,7 +233,7 @@ func generateScenery():
 		var xpos = randi() % xRange + camera.limit_left
 		var ypos = randi() % yRange + camera.limit_top
 		var pos := Vector2(xpos, ypos)
-		var instance = vegetationScenes[randi() % vegetationScenes.size()].instance() as WorldSpawn
+		var instance = vegetationScenes[randi() % vegetationScenes.size()].instance() as Scenery
 		
 		scenery.add_child(instance)
 		instance.global_position = pos

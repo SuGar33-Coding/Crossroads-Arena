@@ -61,14 +61,17 @@ mouse_filter = 2
 margin_right = 51.0
 margin_bottom = 8.0
 size_flags_horizontal = 3
+size_flags_vertical = 1
 custom_fonts/font = SubResource( 3 )
 text = "Now This"
 align = 1
+valign = 1
 
 [node name="HBoxContainer" type="HBoxContainer" parent="Panel/MarginContainer/StatsContainer"]
 margin_top = 12.0
 margin_right = 51.0
-margin_bottom = 25.0
+margin_bottom = 46.0
+size_flags_vertical = 3
 alignment = 1
 
 [node name="TextureRect" type="TextureRect" parent="Panel/MarginContainer/StatsContainer/HBoxContainer"]
@@ -82,9 +85,9 @@ stretch_mode = 4
 
 [node name="ValueLabel" type="Label" parent="Panel/MarginContainer/StatsContainer/HBoxContainer"]
 margin_left = 31.0
-margin_top = 3.0
+margin_top = 13.0
 margin_right = 36.0
-margin_bottom = 10.0
+margin_bottom = 20.0
 custom_fonts/font = ExtResource( 3 )
 text = "21"
 align = 2
