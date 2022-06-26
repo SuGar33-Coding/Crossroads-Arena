@@ -6,7 +6,7 @@
 script = ExtResource( 1 )
 encounterSize = 1
 gruntFilepaths = [ "res://Actors/Brute/Brute.tres", "res://Actors/Chargers/Charger/Charger.tres", "res://Actors/Dashers/Rogue/Rogue.tres", "res://Actors/Fighters/Mage/Mage.tres", "res://Actors/Fighters/Ushanka.tres", "res://Actors/Fighters/Barbarian.tres" ]
-specialFilepaths = [ "res://Actors/Fighters/TestStat.tres" ]
-commanderFilepaths = [ "res://Actors/Fighters/TestStat.tres" ]
+specialFilepaths = [ "res://Actors/Fighters/Barbarian.tres" ]
+commanderFilepaths = [ "res://Actors/Fighters/Barbarian.tres" ]
 difficultyLevel = 0
 guaranteeBoss = false

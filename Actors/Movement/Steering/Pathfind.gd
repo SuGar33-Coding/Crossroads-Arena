@@ -1,6 +1,4 @@
-extends Movement
-
-class_name Pathfind
+class_name Pathfind extends Movement
 
 export var pointIncrementThreshold = 10
 

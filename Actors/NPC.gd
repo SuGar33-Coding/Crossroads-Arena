@@ -25,6 +25,8 @@ enum State {
 	STUN
 }
 
+const takeOrders : TakeOrders = preload("res://Actors/Movement/TakeOrders.tres")
+
 var HitEffect = preload("res://FX/HitEffect.tscn")
 var floatingText = preload("res://UI/FloatingText.tscn")
 var state = State.IDLE
@@ -39,6 +41,8 @@ var isTargetVisible := false
 var MaxSpeed: float
 # effects will be a list of effects resources and remaining ticks until effect goes away
 var effects := []
+var leader : Leader
+var leadNode : Leader
 
 onready var movement: Movement = movementResource
 onready var sprite := $Sprite
@@ -75,9 +79,14 @@ func _physics_process(delta):
 	
 	findClosestAlly()
 	
+	var effectiveMovement = movement
+	if (is_instance_valid(leader)):
+		effectiveMovement = takeOrders
+#	print(leader)
+	
 	match state:
 		State.IDLE:
-			velocity = movement.getIdleVelocity(self, delta)
+			velocity = effectiveMovement.getIdleVelocity(self, delta)
 			if willChase():
 				switchToChase()
 		State.CHASE:
@@ -96,11 +105,13 @@ func _physics_process(delta):
 							path = nav2d.get_simple_path(nav2d.get_closest_point(global_position), nav2d.get_closest_point(self.getTargetPos()), false)
 						pathfindTimer.start(pathfindTime)
 						pathIdx = 0
-					velocity = movement.getMovementVelocity(self, self.getTargetPos(), delta)
+					velocity = effectiveMovement.getMovementVelocity(self, self.getTargetPos(), delta)
+					if (is_instance_valid(leadNode)):
+						velocity *= 0.9
 		State.ATTACK:
-			velocity = movement.getIdleVelocity(self, delta)
+			velocity = effectiveMovement.getIdleVelocity(self, delta)
 		State.STUN:
-			velocity = movement.getIdleVelocity(self, delta)
+			velocity = effectiveMovement.getIdleVelocity(self, delta)
 	
 	if willFlipLeft():
 		flipLeft()

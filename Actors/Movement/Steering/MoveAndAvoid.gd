@@ -1,6 +1,4 @@
-extends Pathfind
-
-class_name MoveAndAvoid
+class_name MoveAndAvoid extends Pathfind
 
 export var SmoothForce : float = .1
 export var radius : float = 125.0

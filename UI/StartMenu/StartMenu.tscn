@@ -38,9 +38,6 @@ margin_top = 128.0
 margin_right = 960.0
 margin_bottom = 552.0
 script = ExtResource( 5 )
-__meta__ = {
-"_edit_use_anchors_": false
-}
 
 [node name="startGame" parent="Control" instance=ExtResource( 2 )]
 anchor_left = 0.5

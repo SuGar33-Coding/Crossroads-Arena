@@ -1,8 +1,9 @@
-[gd_scene load_steps=57 format=2]
+[gd_scene load_steps=58 format=2]
 
 [ext_resource path="res://GrandBattleArena.gd" type="Script" id=1]
 [ext_resource path="res://Assets/TileSets/RockBase.tres" type="TileSet" id=2]
 [ext_resource path="res://Player/Player.tscn" type="PackedScene" id=3]
+[ext_resource path="res://World/Encounters/TestEncounter.tres" type="Resource" id=4]
 [ext_resource path="res://Audio/BGM/Wave of Darkness II.mp3" type="AudioStream" id=7]
 [ext_resource path="res://UI/UIHandler.tscn" type="PackedScene" id=8]
 [ext_resource path="res://Assets/WorldAssets/grassTileMap.png" type="Texture" id=9]
@@ -525,6 +526,7 @@ color = Color( 0.121569, 0.796078, 0.211765, 1 )
 
 [node name="World" type="Node2D"]
 script = ExtResource( 1 )
+encounters = [ ExtResource( 4 ) ]
 multiEncounterChance = 0.2
 
 [node name="Navigation2D" type="Navigation2D" parent="."]

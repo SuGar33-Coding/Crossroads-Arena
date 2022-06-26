@@ -1,6 +1,4 @@
-extends Resource
-
-class_name Movement
+class_name Movement extends Resource
 
 # Get direction directly towards target
 func getMovementDirection(selfNode: KinematicBody2D, targetPos: Vector2, _delta: float):

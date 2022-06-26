@@ -6,6 +6,8 @@ class_name Encounter
 
 signal encounter_finished()
 
+var LeaderNode = preload("res://Actors/Movement/Leader.tscn")
+
 export var checkTime := 3.0
 
 """
@@ -39,21 +41,28 @@ func _ready():
 	
 	var numGrunts : int = randi() % GSPAWN_VAR[encounterSize] + GSPAWN_MINS[encounterSize]
 	var numSpecial : int = randi() % SSPAWN_VAR[encounterSize] + SSPAWN_MINS[encounterSize]
-	var numBoss : int = randi() % BSPAWN_VAR[encounterSize] + BSPAWN_MINS[encounterSize]
+	var numBoss : int = 1#randi() % BSPAWN_VAR[encounterSize] + BSPAWN_MINS[encounterSize]
 	
 	numActors = numGrunts + numSpecial + numBoss
 	
-	for _i in range(numGrunts):
-		var pathToResource = encounterStats.gruntFilepaths[randi() % encounterStats.gruntFilepaths.size()]
-		spawnActor(pathToResource)
-		
+	var leader: Fighter
+	for _k in range(numBoss):
+		var pathToResource = encounterStats.commanderFilepaths[randi() % encounterStats.commanderFilepaths.size()]
+		var newActor = spawnActor(pathToResource)
+		var leadNode = LeaderNode.instance()
+		newActor.attackPivot.add_child(leadNode)
+		newActor.leadNode = leadNode
+		leader = newActor
+	
 	for _j in range(numSpecial):
 		var pathToResource = encounterStats.specialFilepaths[randi() % encounterStats.specialFilepaths.size()]
 		spawnActor(pathToResource)
-		
-	for _k in range(numBoss):
-		var pathToResource = encounterStats.commanderFilepaths[randi() % encounterStats.commanderFilepaths.size()]
-		spawnActor(pathToResource)
+	
+	for _i in range(numGrunts):
+		var pathToResource = encounterStats.gruntFilepaths[randi() % encounterStats.gruntFilepaths.size()]
+		var newActor = spawnActor(pathToResource)
+		leader.leadNode.addFollower(newActor)
+		print(newActor.leader)
 
 func spawnActor(pathToResource : String):
 	# Resource loader should cache resources so they are not reloaded every time
@@ -77,6 +86,8 @@ func spawnActor(pathToResource : String):
 	newActor.connect("no_health", self, "npc_no_health")
 	currentActors.append(newActor)
 	self.add_child(newActor)
+	
+	return newActor
 	
 func killSelf():
 	emit_signal("encounter_finished")

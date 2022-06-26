@@ -1,6 +1,4 @@
-extends NPC
-
-class_name Fighter
+class_name Fighter extends NPC
 
 # The chance they drop their weapon if they are dropping an item
 const weaponDropChance := .25
