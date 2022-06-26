@@ -1,7 +1,7 @@
 [gd_scene load_steps=28 format=2]
 
 [ext_resource path="res://Weapons/Swords/BaseSword.tres" type="Resource" id=1]
-[ext_resource path="res://Actors/Movement/FlankAndBurst.tres" type="Resource" id=2]
+[ext_resource path="res://Actors/Movement/Steering/FlankAndBurst.tres" type="Resource" id=2]
 [ext_resource path="res://Actors/Zones/AttackPivot.tscn" type="PackedScene" id=3]
 [ext_resource path="res://Actors/Zones/DetectionZone.tscn" type="PackedScene" id=4]
 [ext_resource path="res://Actors/NPC.tscn" type="PackedScene" id=5]
@@ -11,6 +11,7 @@
 [ext_resource path="res://Weapons/Swords/Dagger.tres" type="Resource" id=9]
 [ext_resource path="res://Assets/CharacterAssets/Rogue.png" type="Texture" id=10]
 [ext_resource path="res://Assets/CharacterAssets/Attack.png" type="Texture" id=11]
+
 
 [sub_resource type="Curve" id=1]
 _data = [ Vector2( 0, 1 ), 0.0, 0.0, 0, 0, Vector2( 1, 0.163636 ), 0.0, 0.0, 0, 0 ]

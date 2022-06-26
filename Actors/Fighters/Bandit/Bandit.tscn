@@ -2,7 +2,7 @@
 
 [ext_resource path="res://Weapons/Swords/LongSword.tres" type="Resource" id=1]
 [ext_resource path="res://Weapons/Swing/Glaive.tres" type="Resource" id=2]
-[ext_resource path="res://Actors/Movement/FlankAndPoke.tres" type="Resource" id=3]
+[ext_resource path="res://Actors/Movement/Steering/FlankAndPoke.tres" type="Resource" id=3]
 [ext_resource path="res://Actors/NPC.tscn" type="PackedScene" id=4]
 [ext_resource path="res://Actors/Fighters/Fighter.gd" type="Script" id=5]
 [ext_resource path="res://Assets/CharacterAssets/Shadows/MediumShadow.png" type="Texture" id=6]
@@ -12,6 +12,7 @@
 [ext_resource path="res://Weapons/Spears/BaseSpear.tres" type="Resource" id=10]
 [ext_resource path="res://Actors/Fighters/Bandit/Bandit.tres" type="Resource" id=11]
 [ext_resource path="res://Assets/CharacterAssets/Attack.png" type="Texture" id=12]
+
 
 [sub_resource type="Curve" id=1]
 _data = [ Vector2( 0, 1 ), 0.0, 0.0, 0, 0, Vector2( 1, 0.163636 ), 0.0, 0.0, 0, 0 ]

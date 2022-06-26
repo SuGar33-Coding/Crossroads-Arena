@@ -4,7 +4,7 @@
 [ext_resource path="res://Assets/CharacterAssets/Charger.png" type="Texture" id=2]
 [ext_resource path="res://Actors/Chargers/Charger/Charger.gd" type="Script" id=3]
 [ext_resource path="res://Actors/NPC.tscn" type="PackedScene" id=4]
-[ext_resource path="res://Actors/Movement/MaintainAndCharge.tres" type="Resource" id=5]
+[ext_resource path="res://Actors/Movement/Steering/MaintainAndCharge.tres" type="Resource" id=5]
 [ext_resource path="res://Assets/CharacterAssets/Shadows/MediumShadow.png" type="Texture" id=6]
 [ext_resource path="res://Weapons/Spears/GreatSpear.tres" type="Resource" id=7]
 [ext_resource path="res://Actors/Zones/AttackPivot.tscn" type="PackedScene" id=8]
@@ -12,6 +12,7 @@
 [ext_resource path="res://Actors/Fighters/ChaosKnight/ChaosKnight.tres" type="Resource" id=10]
 [ext_resource path="res://Assets/CharacterAssets/Attack.png" type="Texture" id=11]
 [ext_resource path="res://FX/Charge.tscn" type="PackedScene" id=12]
+
 
 [sub_resource type="Curve" id=1]
 _data = [ Vector2( 0, 1 ), 0.0, 0.0, 0, 0, Vector2( 1, 0.163636 ), 0.0, 0.0, 0, 0 ]

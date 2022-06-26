@@ -1,6 +1,7 @@
 [gd_resource type="Resource" load_steps=2 format=2]
 
-[ext_resource path="res://Actors/Movement/MaintainAndCharge.gd" type="Script" id=1]
+[ext_resource path="res://Actors/Movement/Steering/MaintainAndCharge.gd" type="Script" id=1]
+
 
 [resource]
 script = ExtResource( 1 )

@@ -10,7 +10,7 @@
 [ext_resource path="res://Assets/CharacterAssets/Bandit.png" type="Texture" id=8]
 [ext_resource path="res://Weapons/Spears/BaseSpear.tres" type="Resource" id=9]
 [ext_resource path="res://Assets/CharacterAssets/Attack.png" type="Texture" id=10]
-[ext_resource path="res://Actors/Movement/FlankAndPoke.tres" type="Resource" id=11]
+[ext_resource path="res://Actors/Movement/Steering/FlankAndPoke.tres" type="Resource" id=11]
 
 [sub_resource type="Curve" id=1]
 _data = [ Vector2( 0, 1 ), 0.0, 0.0, 0, 0, Vector2( 1, 0.163636 ), 0.0, 0.0, 0, 0 ]
