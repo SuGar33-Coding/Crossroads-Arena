@@ -23,8 +23,7 @@ func _physics_process(delta):
 func getTarget(follower: KinematicBody2D):
 	var followerIdx = followers.find(follower)
 	if (followerIdx >= 0):
-#		return defaultForm.curve.get_point_position(followerIdx % 2) + get_parent().global_position
-		return (get_child(followerIdx % 5) as Position2D).global_position #+ get_parent().global_position
+		return (get_child(followerIdx % 5) as Position2D).global_position
 	
 	assert(false, "No orders found for follower. Should never get here. Follower index: " + followerIdx)
 

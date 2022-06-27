@@ -146,10 +146,6 @@ points = PoolVector2Array( 0, 0, 24, 0, 24, 24, 0, 24 )
 [sub_resource type="RectangleShape2D" id=11]
 extents = Vector2( 16.1287, 19.299 )
 
-[sub_resource type="AtlasTexture" id=14]
-atlas = ExtResource( 11 )
-region = Rect2( 32, 0, 16, 16 )
-
 [sub_resource type="AtlasTexture" id=12]
 atlas = ExtResource( 11 )
 region = Rect2( 0, 0, 16, 16 )
@@ -158,17 +154,21 @@ region = Rect2( 0, 0, 16, 16 )
 atlas = ExtResource( 11 )
 region = Rect2( 16, 0, 16, 16 )
 
+[sub_resource type="AtlasTexture" id=14]
+atlas = ExtResource( 11 )
+region = Rect2( 32, 0, 16, 16 )
+
 [sub_resource type="SpriteFrames" id=15]
 animations = [ {
-"frames": [ SubResource( 14 ) ],
-"loop": true,
-"name": "Pressed",
-"speed": 5.0
-}, {
 "frames": [ SubResource( 12 ), SubResource( 13 ) ],
 "loop": true,
 "name": "Ready",
 "speed": 2.0
+}, {
+"frames": [ SubResource( 14 ) ],
+"loop": true,
+"name": "Pressed",
+"speed": 5.0
 } ]
 
 [sub_resource type="CapsuleShape2D" id=16]

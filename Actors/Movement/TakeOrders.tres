@@ -4,3 +4,4 @@
 
 [resource]
 script = ExtResource( 1 )
+radius = 75.0

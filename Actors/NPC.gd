@@ -82,7 +82,6 @@ func _physics_process(delta):
 	var effectiveMovement = movement
 	if (is_instance_valid(leader)):
 		effectiveMovement = takeOrders
-#	print(leader)
 	
 	match state:
 		State.IDLE:
