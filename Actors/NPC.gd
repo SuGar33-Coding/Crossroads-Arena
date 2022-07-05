@@ -17,6 +17,7 @@ const PERF_THRESHOLD = 500
 const HAIR_COLORS = [ "#090806", "#504444", "#b89778", "#e6cea8", "#533d32", "#8d4a43"]
 const SKIN_TONES = [ "#6a4e42", "#dcd0ba", "#e5c8a8", "#3b3024", "#cabfb1", "#885e42", "#debc99", "#a56b46"]
 const skinHairShader = preload("res://Actors/SkinHairShader.tres")
+const takeOrders : TakeOrders = preload("res://Actors/Movement/Orders/TakeOrders.tres")
 
 enum State {
 	IDLE,
@@ -25,7 +26,6 @@ enum State {
 	STUN
 }
 
-const takeOrders : TakeOrders = preload("res://Actors/Movement/TakeOrders.tres")
 
 var HitEffect = preload("res://FX/HitEffect.tscn")
 var floatingText = preload("res://UI/FloatingText.tscn")

@@ -1,14 +1,12 @@
-extends YSort
-
-class_name Encounter
+class_name Encounter extends YSort
 
 # BIG TODO: when 2 enemies die at the same time I don't think signal is called twice so button is not reset
 
 signal encounter_finished()
 
-var LeaderNode = preload("res://Actors/Movement/Leader.tscn")
-
 export var checkTime := 3.0
+
+const WedgeScene = preload("res://Actors/Movement/Orders/Formations/Wedge.tscn")
 
 """
 Rules For Encounter Sizes:
@@ -45,12 +43,18 @@ func _ready():
 	
 	numActors = numGrunts + numSpecial + numBoss
 	
-	var leader: Fighter
+	var leader
 	for _k in range(numBoss):
 		var pathToResource = encounterStats.commanderFilepaths[randi() % encounterStats.commanderFilepaths.size()]
 		var newActor = spawnActor(pathToResource)
-		var leadNode = LeaderNode.instance()
+		var leadNode := Leader.new()
 		newActor.attackPivot.add_child(leadNode)
+		
+		# TODO: Move this into some sort of init func in leadNode, maybe with an enum
+		var newWedgeForm : Formation = WedgeScene.instance()
+		leadNode.add_child(newWedgeForm)
+		leadNode.formation = newWedgeForm
+		
 		newActor.leadNode = leadNode
 		leader = newActor
 	
@@ -62,7 +66,6 @@ func _ready():
 		var pathToResource = encounterStats.gruntFilepaths[randi() % encounterStats.gruntFilepaths.size()]
 		var newActor = spawnActor(pathToResource)
 		leader.leadNode.addFollower(newActor)
-		print(newActor.leader)
 
 func spawnActor(pathToResource : String):
 	# Resource loader should cache resources so they are not reloaded every time
@@ -77,7 +80,9 @@ func spawnActor(pathToResource : String):
 			loadedActor = ResourceLoader.load(Constants.CHARGER_PATH)
 		StatsResource.UNIT_TYPE.DASHER:
 			loadedActor = ResourceLoader.load(Constants.DASHER_PATH)
-	var newActor : Fighter = loadedActor.instance()
+	
+	# NOTE: Type should be Fighter
+	var newActor : NPC = loadedActor.instance()
 	newActor.init(statResource)
 	
 	var spawnRange = SPAWN_RANGES[encounterSize]

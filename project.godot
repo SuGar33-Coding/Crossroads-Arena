@@ -129,6 +129,11 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://UI/FloatingText.gd"
 }, {
+"base": "Node2D",
+"class": "Formation",
+"language": "GDScript",
+"path": "res://Actors/Movement/Orders/Formations/Formation.gd"
+}, {
 "base": "",
 "class": "GitAPI",
 "language": "NativeScript",
@@ -177,7 +182,7 @@ _global_script_classes=[ {
 "base": "Node2D",
 "class": "Leader",
 "language": "GDScript",
-"path": "res://Actors/Movement/Leader.gd"
+"path": "res://Actors/Movement/Orders/Leader.gd"
 }, {
 "base": "Camera2D",
 "class": "MainCamera",
@@ -212,7 +217,7 @@ _global_script_classes=[ {
 "base": "Resource",
 "class": "Movement",
 "language": "GDScript",
-"path": "res://Actors/Movement/Steering/Movement.gd"
+"path": "res://Actors/Movement/Movement.gd"
 }, {
 "base": "KinematicBody2D",
 "class": "NPC",
@@ -297,7 +302,7 @@ _global_script_classes=[ {
 "base": "Movement",
 "class": "TakeOrders",
 "language": "GDScript",
-"path": "res://Actors/Movement/TakeOrders.gd"
+"path": "res://Actors/Movement/Orders/TakeOrders.gd"
 }, {
 "base": "Movement",
 "class": "TestingSteering",
@@ -359,6 +364,7 @@ _global_script_class_icons={
 "FlankAndBurst": "",
 "FlankAndPoke": "",
 "FloatingText": "",
+"Formation": "",
 "GitAPI": "",
 "HitEffect": "",
 "Hitbox": "",

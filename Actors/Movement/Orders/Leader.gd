@@ -6,8 +6,7 @@
 # be steered by other means.
 class_name Leader extends Node2D
 
-onready var defaultForm :Path2D = $DefaultForm
-
+var formation : Formation
 var followers := []
 
 func _process(delta):
@@ -21,14 +20,22 @@ func _physics_process(delta):
 	pass
 
 func getTarget(follower: KinematicBody2D):
-	var followerIdx = followers.find(follower)
+	var followerIdx := followers.find(follower)
 	if (followerIdx >= 0):
-		return (get_child(followerIdx % 5) as Position2D).global_position
+		return formation.getTarget(followerIdx)
 	
-	assert(false, "No orders found for follower. Should never get here. Follower index: " + followerIdx)
+	assert(false, "Follower is not following this leader. Should never get here. Follower index: %d" % followerIdx)
 
-func addFollower(follower: KinematicBody2D):
-	followers.push_back(follower)
-	follower.leader = self
+# Returns true if the add succeeded
+func addFollower(follower: KinematicBody2D) -> bool :
+	print(followers.size())
+	print(formation.maxFollowers)
+	print()
+	if followers.size() < formation.maxFollowers:
+		followers.push_back(follower)
+		follower.leader = self
+		return true
+	else:
+		push_warning("Max followers for the formation has been reached. Max: %d" % formation.maxFollowers)
+		return false
 	# TODO: Error handling/better system for adding followers
-#	assert(followers.size() <= 6, "Too many followers.")
