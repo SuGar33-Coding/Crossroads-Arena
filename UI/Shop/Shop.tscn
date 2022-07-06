@@ -1,8 +1,9 @@
-[gd_scene load_steps=6 format=2]
+[gd_scene load_steps=7 format=2]
 
 [ext_resource path="res://Themes/Fonts/MainFont.tres" type="DynamicFont" id=1]
 [ext_resource path="res://UI/Shop/ShopPanel.gd" type="Script" id=2]
 [ext_resource path="res://UI/Shop/Shop.gd" type="Script" id=3]
+[ext_resource path="res://UI/Shop/SellSlot.tscn" type="PackedScene" id=4]
 [ext_resource path="res://UI/Inventory/BagPanel.gd" type="Script" id=5]
 [ext_resource path="res://Themes/Colors/PanelBG.tres" type="StyleBox" id=7]
 
@@ -12,9 +13,6 @@ script = ExtResource( 3 )
 [node name="Control" type="Control" parent="."]
 anchor_right = 1.0
 anchor_bottom = 1.0
-__meta__ = {
-"_edit_use_anchors_": false
-}
 
 [node name="Bag" type="Control" parent="Control"]
 anchor_left = 0.0856557
@@ -142,7 +140,7 @@ margin_bottom = 40.0
 rect_min_size = Vector2( 0, 40 )
 
 [node name="TitleBG" type="TextureRect" parent="Control/Shop/Background/MarginContainer/VBoxContainer/Header"]
-margin_right = 262.0
+margin_right = 129.0
 margin_bottom = 40.0
 rect_min_size = Vector2( 100, 0 )
 size_flags_horizontal = 3
@@ -157,6 +155,17 @@ text = "Shop
 align = 1
 valign = 1
 
+[node name="0" parent="Control/Shop/Background/MarginContainer/VBoxContainer/Header" instance=ExtResource( 4 )]
+margin_left = 133.0
+margin_right = 262.0
+margin_bottom = 40.0
+
+[node name="SlotBg" parent="Control/Shop/Background/MarginContainer/VBoxContainer/Header/0" index="0"]
+margin_left = 44.0
+margin_top = 0.0
+margin_right = 84.0
+margin_bottom = 40.0
+
 [node name="ScrollContainer" type="ScrollContainer" parent="Control/Shop/Background/MarginContainer/VBoxContainer"]
 margin_top = 44.0
 margin_right = 262.0
@@ -169,3 +178,6 @@ margin_bottom = 287.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 columns = 4
+
+[editable path="Control/Shop/Background/MarginContainer/VBoxContainer/Header/0"]
+[editable path="Control/Shop/Background/MarginContainer/VBoxContainer/Header/0/SlotBg"]

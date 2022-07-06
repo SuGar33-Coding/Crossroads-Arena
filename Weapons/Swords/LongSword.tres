@@ -32,3 +32,5 @@ aoeNumberOfTicks = 3
 aoeLifetime = 3.0
 aoeType = 0
 instantApplySustain = false
+sustainRadius = 15.5
+sustainLength = 0.0

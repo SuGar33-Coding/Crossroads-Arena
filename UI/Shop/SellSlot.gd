@@ -1,10 +1,10 @@
 extends InventorySlot
 
 func getPanelName():
-	return 'shop'
+	return 'sell'
 
 func getPanelInventory() -> Dictionary:
-	return Inventory.getShop()
+	return Inventory._inventory.sell
 
 func autoEquip():
 	var itemInstance = getPanelInventory()[getSlotName()] as ItemInstance
@@ -17,13 +17,13 @@ func autoEquip():
 
 func get_drag_data(_position):
 	var bagSlot = get_parent().name
-	if Inventory.getShop()[bagSlot] != null:
+	if getPanelInventory()[bagSlot] != null:
 		var resource := (getPanelInventory()[bagSlot] as ItemInstance).resource
 		var data = {}
 		data.originNode = self
-		data.originPanel = "shop"
+		data.originPanel = "sell"
 		data.originSlotName = bagSlot
-		data.originResource = (Inventory.getShop()[bagSlot] as ItemInstance).resource
+		data.originResource = (getPanelInventory()[bagSlot] as ItemInstance).resource
 
 		var dragTexture = TextureRect.new()
 		dragTexture.expand = true
@@ -39,25 +39,15 @@ func get_drag_data(_position):
 
 		return data
 
-# Can only drag in items from bag, true as long as they can afford item in this spot
+# Can always drop item in sell slot
 func can_drop_data(_position, data):
 	var targetBagSlot = get_parent().name
 	data.targetSlotName = targetBagSlot
 	
 	if data.originPanel == "shop" or data.originPanel == "sell":
 		return false
-	elif Inventory.getShop()[targetBagSlot] == null:
-		# move an item
-		return true
-	else:
-		# swap an item
-		var targetItem : ItemInstance = Inventory.getShop()[targetBagSlot]
-		# Check if price of item in shop is more than current coins + coins they would get from selling item they're trying to swap
-		if targetItem.value > Inventory.getCoins() + Inventory.getBag()[data.originSlotName].value:
-			return false
-		else:
-			return true
+	return true
 
 
 func drop_data(_position, data):
-	Inventory.swapItems(data.originPanel, data.originSlotName, 'shop', data.targetSlotName)
+	Inventory.swapItems(data.originPanel, data.originSlotName, 'sell', data.targetSlotName)

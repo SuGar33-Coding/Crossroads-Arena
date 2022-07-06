@@ -1,4 +1,4 @@
-extends InventoryPanel
+class_name BagPanel extends InventoryPanel
 
 var tempalteBagSlot = preload("res://UI/Inventory/BagSlot.tscn")
 

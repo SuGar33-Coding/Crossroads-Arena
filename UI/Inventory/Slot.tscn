@@ -1,6 +1,13 @@
-[gd_scene load_steps=2 format=2]
+[gd_scene load_steps=3 format=2]
 
 [ext_resource path="res://Themes/Colors/SlotBG.tres" type="StyleBox" id=2]
+
+[sub_resource type="StyleBoxFlat" id=1]
+bg_color = Color( 1, 1, 1, 1 )
+corner_radius_top_left = 5
+corner_radius_top_right = 5
+corner_radius_bottom_right = 5
+corner_radius_bottom_left = 5
 
 [node name="SlotBg" type="Panel"]
 anchor_left = 0.024
@@ -40,6 +47,11 @@ margin_top = -10.0
 margin_right = 10.0
 margin_bottom = 10.0
 stretch_mode = 1
-__meta__ = {
-"_edit_use_anchors_": false
-}
+
+[node name="Border" type="Panel" parent="."]
+modulate = Color( 0, 0, 0, 1 )
+show_behind_parent = true
+margin_right = 40.0
+margin_bottom = 40.0
+mouse_filter = 2
+custom_styles/panel = SubResource( 1 )

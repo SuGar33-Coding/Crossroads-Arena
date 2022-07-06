@@ -53,6 +53,9 @@ var _inventory := {
 		"0": null,
 		"1": null
 	},
+	"sell": {
+		"0": null
+	}
 }
 
 var _coins: int = 0
@@ -137,8 +140,12 @@ func addCoins(numCoins: int):
 	_coins += numCoins
 	emit_signal("coins_changed", _coins)
 
-func buyItem(shopSlot):
-	var itemToBuy : ItemInstance = Inventory.getShop()[shopSlot]
+func buyItem(shopSlot, fromSell := false):
+	var itemToBuy : ItemInstance
+	if fromSell:
+		itemToBuy = Inventory._inventory.sell["0"]
+	else:
+		itemToBuy = Inventory.getShop()[shopSlot]
 	if is_instance_valid(itemToBuy):
 		addCoins(-1 * itemToBuy.value)
 	
@@ -157,18 +164,24 @@ func removeItem(panelName, panelSlot) -> ItemInstance:
 
 func swapItems(location1, slot1, location2, slot2):
 	
-	# TODO: Move this somewhere else maybe but only change money with swaps involving shop
-	# Due to all of the checks, only one location should ever be shop
-	if location1 == 'shop':
-		self.sellItem(slot2)
-		self.buyItem(slot1)
-	elif location2 == 'shop':
+	if location2 == 'sell':
 		self.sellItem(slot1)
-		self.buyItem(slot2)
-	
-	# do da swappe
-	var item1 = _inventory[location1][slot1]
-	_inventory[location1][slot1] = _inventory[location2][slot2]
-	_inventory[location2][slot2] = item1
-	
+		_inventory[location2][slot2] = _inventory[location1][slot1]
+		_inventory[location1][slot1] = null
+	else:
+		# TODO: Move this somewhere else maybe but only change money with swaps involving shop
+		# Due to all of the checks, only one location should ever be shop
+		if location1 == 'shop' or location1 == 'sell':
+			self.sellItem(slot2)
+			self.buyItem(slot1)
+			print("purchasing " + slot1)
+		elif location2 == 'shop':
+			self.sellItem(slot1)
+			self.buyItem(slot2)
+		
+		# do da swappe
+		var item1 = _inventory[location1][slot1]
+		_inventory[location1][slot1] = _inventory[location2][slot2]
+		_inventory[location2][slot2] = item1
+		
 	emit_signal("inventory_changed", location1, location2)
