@@ -1,6 +1,4 @@
-extends KinematicBody2D
-
-class_name NPC
+class_name NPC extends KinematicBody2D
 
 export var movementResource: Resource
 export var baseSpeed: float = 125
@@ -32,8 +30,8 @@ var floatingText = preload("res://UI/FloatingText.tscn")
 var state = State.IDLE
 var velocity := Vector2.ZERO
 var knockback := Vector2.ZERO
-var target: Node2D = null
-var closestAlly: NPC = null
+var target : Node2D setget setTarget
+var closestAlly: NPC
 var path: PoolVector2Array
 var pathIdx := 0
 var flag = true
@@ -42,15 +40,15 @@ var MaxSpeed: float
 # effects will be a list of effects resources and remaining ticks until effect goes away
 var effects := []
 var leader : Leader
-var leadNode : Leader
+var leadNode : Leader setget setLeadNode
 
-onready var movement: Movement = movementResource
+onready var movement : Movement = movementResource
 onready var sprite := $Sprite
 onready var stats : Stats = $Stats
 onready var hurtbox := $Hurtbox
-onready var simpleNav2d: Navigation2D = get_tree().get_current_scene().get_node("SimpleNavigation2D")
-onready var nav2d: Navigation2D = get_tree().get_current_scene().get_node("Navigation2D")
-onready var pathfindTimer: Timer = $PathfindTimer
+onready var simpleNav2d : Navigation2D = get_tree().get_current_scene().get_node("SimpleNavigation2D")
+onready var nav2d : Navigation2D = get_tree().get_current_scene().get_node("Navigation2D")
+onready var pathfindTimer : Timer = $PathfindTimer
 onready var movementTimer := $MovementTimer
 onready var damagedSfx := $DamagedSFX
 onready var collision := $CollisionShape2D
@@ -95,9 +93,9 @@ func _physics_process(delta):
 				lookAtTarget()
 				if willAttack():
 					switchToAttack()
-				if target != null: # TODO: look into this fix some more
+				if is_instance_valid(target):
 					isTargetVisible = sightCheck()
-					if nav2d != null and pathfindTimer.is_stopped(): # Last check is to make it not refresh if it doesn't use it
+					if is_instance_valid(nav2d) and pathfindTimer.is_stopped(): # Last check is to make it not refresh if it doesn't use it
 						if self.global_position.distance_to(self.getTargetPos()) > PERF_THRESHOLD:
 							path = simpleNav2d.get_simple_path(simpleNav2d.get_closest_point(global_position), simpleNav2d.get_closest_point(self.getTargetPos()), false)
 						else:
@@ -139,7 +137,18 @@ func _draw():
 				to = pos - global_position
 				draw_line(from, to, Color(0,0,1))
 				from = to
-	
+
+func setLeadNode(newLeadNode : Leader):
+	newLeadNode.target = target
+#	print(target)
+	leadNode = newLeadNode
+
+func setTarget(newTarget : Node2D):
+	print(newTarget)
+	if is_instance_valid(leadNode):
+		leadNode.target = newTarget
+	target = newTarget
+
 func lookAtTarget():
 	pass
 	

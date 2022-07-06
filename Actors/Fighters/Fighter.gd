@@ -84,7 +84,7 @@ func switchToChase() -> void:
 	.switchToChase()
 	var newTarget = detectionZone.getNewTarget()
 	if newTarget != null:
-		target = newTarget
+		self.target = newTarget
 	
 func switchToAttack():
 	animationPlayer.playback_speed = 1

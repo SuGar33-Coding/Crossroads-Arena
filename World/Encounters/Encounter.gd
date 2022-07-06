@@ -48,7 +48,7 @@ func _ready():
 		var pathToResource = encounterStats.commanderFilepaths[randi() % encounterStats.commanderFilepaths.size()]
 		var newActor = spawnActor(pathToResource)
 		var leadNode := Leader.new()
-		newActor.attackPivot.add_child(leadNode)
+		newActor.add_child(leadNode)
 		
 		# TODO: Move this into some sort of init func in leadNode, maybe with an enum
 		var newWedgeForm : Formation = WedgeScene.instance()
