@@ -11,7 +11,7 @@ func autoEquip():
 	if (is_instance_valid(itemInstance)):
 		var bagPanel = self.get_parent()
 		if get_tree().current_scene.get_node("UIHandler").shop.isVisible():
-			pass
+			Inventory.swapItems(getPanelName(), getSlotName(), "sell", "0")
 		else:
 			var slot = ""
 			# make this WAY more abstract/modular

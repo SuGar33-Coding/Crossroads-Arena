@@ -168,13 +168,16 @@ func swapItems(location1, slot1, location2, slot2):
 		self.sellItem(slot1)
 		_inventory[location2][slot2] = _inventory[location1][slot1]
 		_inventory[location1][slot1] = null
+		
 	else:
 		# TODO: Move this somewhere else maybe but only change money with swaps involving shop
 		# Due to all of the checks, only one location should ever be shop
-		if location1 == 'shop' or location1 == 'sell':
+		if location1 == 'shop':
 			self.sellItem(slot2)
 			self.buyItem(slot1)
-			print("purchasing " + slot1)
+		elif location1 == 'sell':
+			self.sellItem(slot2)
+			self.buyItem(slot1, true)
 		elif location2 == 'shop':
 			self.sellItem(slot1)
 			self.buyItem(slot2)

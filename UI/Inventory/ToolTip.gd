@@ -46,7 +46,7 @@ func setItemInstance(newItemInstance):
 	itemNameTag.add_color_override("font_color", nameColor)
 	
 	# Every item has a value
-	valueLabel.text = str(itemInstance.resource.value)
+	valueLabel.text = str(itemInstance.value)
 	
 	# Create the proper type of tooltip
 	# Yeah, I know Haskell
